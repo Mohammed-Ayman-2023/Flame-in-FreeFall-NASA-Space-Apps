@@ -1,11 +1,20 @@
 # Phase 1 status: data layer
 
-Built 2026-11-13 23:21. 14 of 25 in-scope investigations loaded; 1517 tests and 10107 values in the merged tables.
+Built 2026-11-13 23:34. 14 of 25 in-scope investigations loaded; 1517 tests and 10107 values in the merged tables.
 
 | psi_id | acronym | priority_tier | data_status | state | tests | evidence | high_issues | schema |
 |---|---|---|---|---|---|---|---|---|
-| PSI-68 | FLEX-2 | 1 | catalog only (per-test data not downloaded) | files present, loader not written yet | 0 | 0 | 0 |  |
-| PSI-106 | SLICE | 3 | catalog only | files present, loader not written yet | 0 | 0 | 0 |  |
+| PSI-142 | Cool-flame counterflow (FLEX) | 2 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-115 | SAME smoke model | 2 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-60 | SPICE soot analysis | 2 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-62 | BASS flame-spread model | 2 | catalog only (model; metadata only) | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-21 | ACME CLD Flame | 3 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-10 | ACME Flame Design | 3 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-23 | ACME s-Flame | 3 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-22 | ACME E-FIELD Flames | 3 | not requested | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-?? | ? | ? | unknown | catalog only (no files) | 0 | 0 | 0 |  |
+| PSI-68 | FLEX-2 | 1 | catalog only (per-test data not downloaded) | catalog only (page text saved; no per-test table) | 0 | 0 | 0 |  |
+| PSI-106 | SLICE | 3 | catalog only | catalog only (page text saved; no per-test table) | 0 | 0 | 0 |  |
 | PSI-25 | BASS-II | 1 | loaded | loaded | 129 | 309 | 0 | OK |
 | PSI-99 | Saffire-II | 1 | loaded | loaded | 19 | 19 | 0 | OK |
 | PSI-20 | ACME BRE | 1 | loaded | loaded | 43 | 18 | 1 | OK |
@@ -20,15 +29,6 @@ Built 2026-11-13 23:21. 14 of 25 in-scope investigations loaded; 1517 tests and 
 | EXT-SAFFIRE-456 | Saffire IV-VI (external) | 1 (external) | loaded | loaded | 6 | 50 | 0 | OK |
 | PSI-107 | SPICE | 2 | loaded | loaded | 469 | 0 | 1 | OK |
 | PSI-39 | CFI | 2 (bonus) | loaded | loaded | 79 | 0 | 1 | OK |
-| PSI-142 | Cool-flame counterflow (FLEX) | 2 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-115 | SAME smoke model | 2 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-60 | SPICE soot analysis | 2 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-62 | BASS flame-spread model | 2 | catalog only (model; metadata only) | no loader, no files | 0 | 0 | 0 |  |
-| PSI-21 | ACME CLD Flame | 3 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-10 | ACME Flame Design | 3 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-23 | ACME s-Flame | 3 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-22 | ACME E-FIELD Flames | 3 | not requested | no loader, no files | 0 | 0 | 0 |  |
-| PSI-?? | ? | ? | unknown | no loader, no files | 0 | 0 | 0 |  |
 
 ## Condition coverage (data where loaded, catalog otherwise)
 

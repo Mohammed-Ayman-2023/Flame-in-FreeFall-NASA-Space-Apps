@@ -21,7 +21,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
-PROC, OUT = ROOT / "data" / "processed", ROOT / "ml" / "v0"
+PROC, OUT = ROOT / "data" / "processed", ROOT / "ml" / "v1"
 CABIN_P = 1.0
 CABIN_NOTE = "assumed ~1 atm: ISS/Cygnus cabin air (not stated in the PSI files)"
 
@@ -250,7 +250,7 @@ def run() -> dict:
     B.to_csv(OUT / "B_solids_spread.csv", index=False)
     C.to_csv(OUT / "C_droplets.csv", index=False)
     Csim.to_csv(OUT / "C_droplets_simulation.csv", index=False)
-    rep = ["# ML tables v0: fill report", "", f"stats: {stats}", "",
+    rep = ["# ML tables v1: fill report", "", f"stats: {stats}", "",
            f"A label sources: {stats['saffire']} Saffire burns, {stats['bass2_presence']} BASS-II 'flame present' "
            f"steps, {stats['bass2_precise_limits']} BASS-II extinction/blowoff speeds from the fan calibration; "
            f"{stats['bass2_censored_limits']} BASS-II limits known only as upper bounds (not used as labels).", "",

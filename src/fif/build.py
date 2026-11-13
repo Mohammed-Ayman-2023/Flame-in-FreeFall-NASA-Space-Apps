@@ -79,8 +79,8 @@ def run(only: list[str] | None = None, verbose: bool = True) -> dict:
         raw_dir = RAW / psi
         if psi not in PLUGINS:
             has_files = raw_dir.exists() and any(p for p in raw_dir.iterdir() if p.name not in {".keep", "README.txt"})
-            status.append(dict(psi_id=psi, state="files present, loader not written yet" if has_files
-                               else "no loader, no files", tests=0, evidence=0, high_issues=0, schema=""))
+            status.append(dict(psi_id=psi, state=("catalog only (page text saved; no per-test table)" if has_files
+                                      else "catalog only (no files)"), tests=0, evidence=0, high_issues=0, schema=""))
             continue
         ok, missing = ready(psi, raw_dir)
         if not ok:

@@ -1,4 +1,4 @@
-"""Build the ML-ready tables (ml/v0/) from data/processed/. Run build_data.py first."""
+"""Build the ML-ready tables (ml/v1/) from data/processed/. Run build_data.py first."""
 import sys
 from pathlib import Path
 
