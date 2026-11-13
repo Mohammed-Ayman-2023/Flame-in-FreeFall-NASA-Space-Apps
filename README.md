@@ -62,7 +62,7 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 |---|---|
 | Data layer and dataset v1 | ✅ Done |
 | ML tables A-D | ✅ Done |
-| Predictive models | 🔄 In progress |
+| Predictive models (solids, gas flames, droplets) | ✅ Done: [`models/v1/MODELS.md`](models/v1/MODELS.md) |
 | Relevance ranking and gap map | 🔄 In progress |
 | Interactive dashboard | 🔄 In progress |
 
@@ -75,6 +75,7 @@ python -m venv .venv
 .venv/bin/pip install -r requirements.txt     # Windows: .venv\Scripts\pip install -r requirements.txt
 python scripts/build_data.py                   # rebuild data/processed/ from the raw files
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
+python scripts/train_models.py                 # train the models into models/v1/
 pytest -q                                      # data checks
 ```
 
@@ -86,6 +87,7 @@ data/raw/<id>/               source files exactly as downloaded or transcribed, 
 data/processed/              tests.csv, evidence.csv (one row per value), issues.csv (every correction)
 ml/v1/                       ML tables A-D and the dataset summary
 ml/SPEC.md                   ML column definitions, rules and limits
+models/v1/                   trained models, validation scores, habitat predictions (MODELS.md)
 qa/                          label spot-check against the original crew notes
 reports/                     load status per investigation, PSI-117 findings
 src/fif/                     shared schema, loaders (one per investigation), build and ML-table code

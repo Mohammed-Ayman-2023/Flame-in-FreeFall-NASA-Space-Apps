@@ -1,0 +1,91 @@
+{
+  "A_solids": {
+    "logistic": {
+      "roc_auc": 0.847,
+      "pr_auc_flameout": 0.587,
+      "balanced_accuracy": 0.82,
+      "brier": 0.0879,
+      "n": 414,
+      "n_flameout": 23
+    },
+    "gradient_boosting": {
+      "roc_auc": 0.948,
+      "pr_auc_flameout": 0.601,
+      "balanced_accuracy": 0.839,
+      "brier": 0.0323,
+      "n": 414,
+      "n_flameout": 23
+    },
+    "baseline_material_only": {
+      "roc_auc": 0.784,
+      "pr_auc_flameout": 0.452,
+      "balanced_accuracy": 0.716,
+      "brier": 0.0322,
+      "n": 414,
+      "n_flameout": 23
+    },
+    "materials_modelled": [
+      "PMMA",
+      "cotton-fiberglass",
+      "wax"
+    ],
+    "chosen": "gradient_boosting",
+    "habitat_note": "probabilities with 10-90 % bootstrap band; applicability vs nearest test of the same material"
+  },
+  "D_gas_flames": {
+    "concordance_leave_one_day_out": 0.753,
+    "n_days": 11,
+    "n": 132,
+    "n_self_extinguished": 102,
+    "n_censored": 30,
+    "o2_effect": {
+      "coef": 15.7356,
+      "exp(coef)": 6821380.5454,
+      "p": 0.0
+    },
+    "habitat_median_burn_s": 25.1,
+    "earth_median_burn_s": 5.5
+  },
+  "C_droplets": {
+    "burning_rate_mm2_s": {
+      "cv5_r2": 0.696,
+      "cv5_mae": 0.047,
+      "target_mean": 0.502,
+      "n": 257,
+      "leave_one_fuel_out": {
+        "methanol": {
+          "mae": 0.062,
+          "n": 150
+        },
+        "n-heptane": {
+          "mae": 0.112,
+          "n": 107
+        }
+      }
+    },
+    "extinction_diameter_mm": {
+      "cv5_r2": 0.901,
+      "cv5_mae": 0.225,
+      "target_mean": 2.129,
+      "n": 208,
+      "leave_one_fuel_out": {
+        "methanol": {
+          "mae": 0.683,
+          "n": 116
+        },
+        "n-heptane": {
+          "mae": 0.712,
+          "n": 77
+        },
+        "n-decane": {
+          "mae": 0.511,
+          "n": 6
+        },
+        "n-dodecane": {
+          "mae": 0.249,
+          "n": 9
+        }
+      }
+    }
+  }
+}
