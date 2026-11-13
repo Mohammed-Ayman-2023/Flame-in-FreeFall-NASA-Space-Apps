@@ -1,0 +1,9 @@
+# Dashboard dependencies (Streamlit Community Cloud reads this file next to the app)
+streamlit==1.67.0
+plotly==7.1.0
+pandas==2.3.3
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+lifelines==0.30.3
+joblib==1.6.0

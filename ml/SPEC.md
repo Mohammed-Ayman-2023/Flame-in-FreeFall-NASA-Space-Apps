@@ -78,8 +78,8 @@ One row = one ACME CFI-G (PSI-159) test: spherical porous-burner diffusion flame
 5. External literature rows (source_kind) can be included or excluded; results must be reported both ways.
 
 ## Known limits of v1
-* A is imbalanced (23 flame-outs in 414 ready rows). Only 6 solid burns are near habitat conditions (external
-  Saffire IV-VI); no PSI solid burn above 22 % O2. Models must report uncertainty and an applicability label.
+* A is imbalanced (23 flame-outs in 414 ready rows). Only 5 solid burns lie within ±5 % O2 and ±0.2 atm of the habitat
+  (external Saffire V-VI, including the Nomex that did not ignite); no PSI solid burn above 22 % O2. Models must report uncertainty and an applicability label.
 * B has 10 rows: descriptive only.
 * C covers 12-34 % O2 and 0.5-5 atm: the habitat point (30 %, 0.69 atm) is inside C's range (FLEX: 17 tests at 30-34 % O2, ~0.7 atm).
 * D covers 18-40 % O2 at 0.5-3 atm but has no tests between 25 % and 34 % O2.

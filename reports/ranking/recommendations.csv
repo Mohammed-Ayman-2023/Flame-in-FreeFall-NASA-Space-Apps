@@ -1,5 +1,5 @@
 priority,experiment,why,builds_on
-1,"Flammability and spread of cabin solids (PMMA, cotton, Nomex, foams) at 28-32 % O2, 0.6-0.8 atm, 0-20 cm/s air","No PSI solid-fuel burn above 22 % O2; only 6 near-habitat burns exist (Saffire IV-VI). Models cannot score cotton, Nomex or silicone.","BASS-II (PSI-25), Saffire IV-VI"
+1,"Flammability and spread of cabin solids (PMMA, cotton, Nomex, foams) at 28-32 % O2, 0.6-0.8 atm, 0-20 cm/s air","No PSI solid-fuel burn above 22 % O2; only 5 burns lie near the habitat atmosphere (Saffire V-VI, NASA literature). Models cannot score cotton, Nomex or silicone.","BASS-II (PSI-25), Saffire IV-VI"
 2,Smoke-detector response to smoke made at 30 % O2 and 0.69 atm,"SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.","SAME-R (PSI-101), SPICE (PSI-107)"
 3,Still-air self-extinction of gas and emulated-solid flames at 26-33 % O2,"ACME CFI-G has no tests between 25 % and 34 % O2, exactly where the habitat sits; burn time rises ~4.5x from Earth air to habitat air.","ACME CFI-G (PSI-159), ACME BRE (PSI-20)"
 4,"Release per-test FLEX-2 results (multicomponent droplets, 0.5-3 atm, up to 40 % O2)","FLEX-2 covers the habitat atmosphere on paper, but only its condition ranges are published in PSI.","FLEX (PSI-69), FLEX-2 (PSI-68)"

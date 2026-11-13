@@ -165,7 +165,7 @@ def mission_gaps(target: dict | None = None) -> pd.DataFrame:
 
 RECOMMENDATIONS = [
     dict(priority=1, experiment="Flammability and spread of cabin solids (PMMA, cotton, Nomex, foams) at 28-32 % O2, 0.6-0.8 atm, 0-20 cm/s air",
-         why="No PSI solid-fuel burn above 22 % O2; only 6 near-habitat burns exist (Saffire IV-VI). Models cannot score cotton, Nomex or silicone.",
+         why="No PSI solid-fuel burn above 22 % O2; only 5 burns lie near the habitat atmosphere (Saffire V-VI, NASA literature). Models cannot score cotton, Nomex or silicone.",
          builds_on="BASS-II (PSI-25), Saffire IV-VI"),
     dict(priority=2, experiment="Smoke-detector response to smoke made at 30 % O2 and 0.69 atm",
          why="SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.",

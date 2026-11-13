@@ -64,7 +64,7 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 | ML tables A-D | ✅ Done |
 | Predictive models (solids, gas flames, droplets) | ✅ Done: [`models/v1/MODELS.md`](models/v1/MODELS.md) |
 | Relevance ranking and gap map | ✅ Done: `reports/ranking/` (`python scripts/build_ranking.py`) |
-| Interactive dashboard | 🔄 In progress |
+| Interactive dashboard (Streamlit) | ✅ Done: `streamlit run app/streamlit_app.py` |
 
 ## Quick start
 
@@ -78,6 +78,7 @@ python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
 python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
 pytest -q                                      # data checks
+streamlit run app/streamlit_app.py             # open the dashboard
 ```
 
 ## Repository layout
@@ -90,8 +91,9 @@ ml/v1/                       ML tables A-D and the dataset summary
 ml/SPEC.md                   ML column definitions, rules and limits
 models/v1/                   trained models, validation scores, habitat predictions (MODELS.md)
 qa/                          label spot-check against the original crew notes
-reports/                     load status per investigation, PSI-117 findings
-src/fif/                     shared schema, loaders (one per investigation), build and ML-table code
+reports/                     load status per investigation, habitat ranking and gap map, PSI-117 findings
+app/                         Streamlit dashboard (findings, ranking, predictions, gap map, sources)
+src/fif/                     shared schema, loaders (one per investigation), build, ML tables, models, ranking
 tests/                       automated data checks
 ```
 

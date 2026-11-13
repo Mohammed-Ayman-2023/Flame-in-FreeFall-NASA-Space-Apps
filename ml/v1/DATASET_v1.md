@@ -38,7 +38,7 @@ Catalog only (no per-test data loaded): PSI-68 FLEX-2, PSI-106 SLICE, PSI-62, PS
 - Smoke detection (SAME, SAME-R, SPICE): 86 smoke tests + 469 soot-point settings, all in 21% O2 / 1 atm. None at habitat conditions.
 
 ## Known limits
-- No PSI solid-fuel burn above 22% O2; the near-habitat solids are 5 external Saffire IV-VI rows (+1 Nomex).
+- No PSI solid-fuel burn above 22% O2; the solids within ±5 % O2 and ±0.2 atm of the habitat are 5 external Saffire V-VI burns (incl. the Nomex that did not ignite).
 - Pressure for BASS-II rows is 1 atm (same MSG; BASS measured 0.97-1.01 atm). Saffire I-III cabin pressure from Olson et al. Table 1.
 - 5 BASS "no ignition" rows excluded as hardware/sample problems (exclude_reason column). 7 CFI-G igniter-voltage trials excluded.
 - Smoke/soot investigations are conditions only (results are in raw data not downloaded).
