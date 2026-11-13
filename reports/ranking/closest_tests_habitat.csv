@@ -1,0 +1,26 @@
+investigation_id,test_id,fuel,fuel_class,x_o2,pressure_atm,pressure_note,flow_cm_s,outcome_note,source_file,proximity
+PSI-69,PSI-69:41,methanol,liquid,0.3,0.703,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.999
+PSI-69,PSI-69:43,n-heptane,liquid,0.3,0.704,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.998
+PSI-69,PSI-69:42,n-heptane,liquid,0.3,0.704,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.998
+PSI-69,PSI-69:40,methanol,liquid,0.3,0.704,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.998
+PSI-69,PSI-69:25,methanol,liquid,0.3,0.707,reported,0.0,test end: Completion,PSI-69_Experimental_table_part1.tsv,0.998
+PSI-69,PSI-69:26,methanol,liquid,0.3,0.708,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.997
+PSI-69,PSI-69:28,n-heptane,liquid,0.3,0.71,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.997
+PSI-69,PSI-69:27,n-heptane,liquid,0.3,0.711,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.996
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,PMMA,solid,0.303,0.539,reported,20.0,flow 20 -> 5 cm/s at 1120 s; ended 1420 s,Urban2024_ICES-2024-365_Table1_transcribed.csv,0.832
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,PMMA,solid,0.288,0.545,reported,20.0,burned,Urban2024_ICES-2024-365_Table1_transcribed.csv,0.821
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,Cotton-fiberglass (SIBAL),solid,0.31,0.534,reported,20.0,burned,Urban2024_ICES-2024-365_Table1_transcribed.csv,0.807
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-1,Nomex fabric,solid,0.31,0.534,reported,20.0,did not ignite; not in Tables 1-2,Urban2024_ICES-2024-365_Table1_transcribed.csv,0.807
+PSI-20,PSI-20:2019-02-20:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,8 flames ignited on 2019-02-20 across O2 levels 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2021-01-20:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,15 flames ignited on 2021-01-20 across O2 levels 21; 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2020-10-17:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,13 flames ignited on 2020-10-17 across O2 levels 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-02-25:O2-26.5,C2H4 50% in N2,emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,8 flames ignited on 2019-02-25 across O2 levels 21; 26.5; 34; 40,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-02-08:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,10 flames ignited on 2019-02-08 across O2 levels 21; 26.5; 40,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-04-04:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,9 flames ignited on 2019-04-04 across O2 levels 21; 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-03-04:O2-26.5,C2H4 50% in N2,emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,6 flames ignited on 2019-03-04 across O2 levels 26.5; 40,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-03-11:O2-26.5,C2H4 50% in N2,emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,7 flames ignited on 2019-03-11 across O2 levels 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+PSI-20,PSI-20:2019-03-28:O2-26.5,C2H4 (pure),emulated_solid,0.265,0.694,named atmosphere in BRE objectives,0.0,8 flames ignited on 2019-03-28 across O2 levels 26.5; 34,PSI-20_Experimental_table_from_page.tsv,0.783
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,Cotton jersey,solid,0.262,0.698,reported,20.0,burned,Urban2024_ICES-2024-365_Table1_transcribed.csv,0.749
+PSI-69,PSI-69:37,methanol,liquid,0.34,0.703,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.725
+PSI-69,PSI-69:38,methanol,liquid,0.34,0.703,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.725
+PSI-69,PSI-69:39,n-heptane,liquid,0.34,0.704,reported,0.0,test end: Disruption,PSI-69_Experimental_table_part1.tsv,0.725

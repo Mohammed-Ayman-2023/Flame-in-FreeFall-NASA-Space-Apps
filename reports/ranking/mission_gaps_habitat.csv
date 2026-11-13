@@ -1,0 +1,6 @@
+fire_type,tests_total,tests_near_mission,status,o2_range,pressure_range,closest_test
+Burning solids (cabin materials),259,5,thin,14%-31%,0.53-1.02 atm,"EXT-SAFFIRE-456:VI-3 (30% O2, 0.54 atm)"
+Emulated burning solids,27,22,"covered (pressure from BRE objectives, not recorded per test)",21%-34%,0.56-1.00 atm,"PSI-20:2019-02-08:O2-26.5 (26% O2, 0.69 atm)"
+Smoke and fire detection,129,0,GAP: never tested,21%-21%,1.00-1.00 atm,"PSI-102:Teflon:c1 (21% O2, 1.00 atm)"
+"Fuel droplets (spilled liquids, sprays)",424,23,covered,10%-34%,0.50-5.00 atm,"PSI-69:41 (30% O2, 0.70 atm)"
+"Gas flames (leaks, fundamentals)",648,3,thin,18%-40%,0.50-3.00 atm,"PSI-159:21153A5 (33% O2, 0.50 atm)"

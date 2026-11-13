@@ -63,7 +63,7 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 | Data layer and dataset v1 | ✅ Done |
 | ML tables A-D | ✅ Done |
 | Predictive models (solids, gas flames, droplets) | ✅ Done: [`models/v1/MODELS.md`](models/v1/MODELS.md) |
-| Relevance ranking and gap map | 🔄 In progress |
+| Relevance ranking and gap map | ✅ Done: `reports/ranking/` (`python scripts/build_ranking.py`) |
 | Interactive dashboard | 🔄 In progress |
 
 ## Quick start
@@ -76,6 +76,7 @@ python -m venv .venv
 python scripts/build_data.py                   # rebuild data/processed/ from the raw files
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
+python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
 pytest -q                                      # data checks
 ```
 
