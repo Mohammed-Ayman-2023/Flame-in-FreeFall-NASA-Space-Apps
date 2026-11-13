@@ -42,3 +42,9 @@ Catalog only (no per-test data loaded): PSI-68 FLEX-2, PSI-106 SLICE, PSI-62, PS
 - Pressure for BASS-II rows is 1 atm (same MSG; BASS measured 0.97-1.01 atm). Saffire I-III cabin pressure from Olson et al. Table 1.
 - 5 BASS "no ignition" rows excluded as hardware/sample problems (exclude_reason column). 7 CFI-G igniter-voltage trials excluded.
 - Smoke/soot investigations are conditions only (results are in raw data not downloaded).
+
+## AI usage (NASA Space Apps declaration)
+The loaders and build code that produced these tables were written with AI assistance (Claude, Anthropic) and run
+and reviewed by the author. Values transcribed from paper tables were read with AI assistance and verified against
+the original PDFs where marked "VERIFIED" in each transcription file's header; flame-out labels were spot-checked
+against the original notes (qa/). No data values are AI-generated: every value comes from NASA PSI or a cited paper.
