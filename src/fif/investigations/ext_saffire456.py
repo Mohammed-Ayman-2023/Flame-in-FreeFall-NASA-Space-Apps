@@ -79,7 +79,7 @@ def build(raw_dir: Path) -> PluginResult:
                 o = olson.loc[t_["test_id"]]
                 t_["flags"] += (f"; Olson et al. Table 1 lists {o['o2_pct']}% O2 / {o['pressure_kpa']} kPa for this burn "
                                 f"(recorded at hatch closing / after O2 addition; ICES-2024 Table 1 test values kept); duct height {o['duct_h_cm']} cm")
-                for q, unit, v in (("flame_spread_rate", "mm/s", o["vf_cm_s"] * 10), ("pyrolysis_length", "cm", o["lp_cm"]),
+                for q, unit, v in (("flame_spread_rate", "mm/s", round(o["vf_cm_s"] * 10, 4)), ("pyrolysis_length", "cm", o["lp_cm"]),
                                    ("flame_length", "cm", o["lf_cm"]), ("flame_height", "cm", o["hf_cm"])):
                     ev.append(dict(investigation_id=PSI, test_id=t_["test_id"], dataset_id="olson_sibal_cotton",
                                    source_type="experiment", quantity=q, unit=unit, value=float(v),

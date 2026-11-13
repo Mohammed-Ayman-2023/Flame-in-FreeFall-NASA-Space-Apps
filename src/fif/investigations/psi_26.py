@@ -201,7 +201,7 @@ def build(raw_dir: Path) -> PluginResult:
         for _, r in o[o["flight"] == "BASS"].iterrows():
             if r["our_test_id"] not in known:
                 continue
-            for q, unit, v in (("flame_spread_rate", "mm/s", r["vf_cm_s"] * 10), ("flame_length", "cm", r["lf_cm"]),
+            for q, unit, v in (("flame_spread_rate", "mm/s", round(r["vf_cm_s"] * 10, 4)), ("flame_length", "cm", r["lf_cm"]),
                                ("flame_height", "cm", r["hf_cm"])):
                 if pd.notna(v):
                     ev.append(dict(investigation_id=PSI, test_id=r["our_test_id"], dataset_id="olson_sibal_cotton",
