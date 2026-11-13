@@ -1,0 +1,20 @@
+investigation_id,test_id,dataset_id,source_type,quantity,unit,value,x_name,x_value,x_unit,status,source_file,source_line
+PSI-99,PSI-99:2-1,saffire_burns,experiment,burn_length,cm,0.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,2
+PSI-99,PSI-99:2-2,saffire_burns,experiment,burn_length,cm,0.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,3
+PSI-99,PSI-99:2-2_1g,saffire_burns,experiment,flame_spread_rate,mm/s,1.2,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,3
+PSI-99,PSI-99:2-3,saffire_burns,experiment,burn_length,cm,0.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,4
+PSI-99,PSI-99:2-4,saffire_burns,experiment,burn_length,cm,0.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,5
+PSI-99,PSI-99:2-4_1g,saffire_burns,experiment,flame_spread_rate,mm/s,0.6,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,5
+PSI-99,PSI-99:2-5,saffire_burns,experiment,flame_spread_rate,mm/s,2.1,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,6
+PSI-99,PSI-99:2-5,saffire_burns,experiment,burn_length,cm,29.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,6
+PSI-99,PSI-99:2-5,saffire_burns,experiment,burn_time,s,145.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,6
+PSI-99,PSI-99:2-6,saffire_burns,experiment,flame_spread_rate,mm/s,2.6,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,7
+PSI-99,PSI-99:2-6,saffire_burns,experiment,burn_length,cm,29.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,7
+PSI-99,PSI-99:2-6,saffire_burns,experiment,burn_time,s,115.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,7
+PSI-99,PSI-99:2-7a,saffire_burns,experiment,burn_length,cm,5.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,8
+PSI-99,PSI-99:2-7a,saffire_burns,experiment,burn_time,s,140.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,8
+PSI-99,PSI-99:2-7b,saffire_burns,experiment,burn_length,cm,0.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,8
+PSI-99,PSI-99:2-8,saffire_burns,experiment,burn_length,cm,10.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,9
+PSI-99,PSI-99:2-8,saffire_burns,experiment,burn_time,s,600.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,9
+PSI-99,PSI-99:2-9,saffire_burns,experiment,burn_length,cm,10.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,10
+PSI-99,PSI-99:2-9,saffire_burns,experiment,burn_time,s,900.0,,,,ok,PSI-99_Experimental table_SAFFIRE-2.csv,10

@@ -1,0 +1,6 @@
+# Transcribed from NASA NTRS 20180005168 (Saffire I-III results), Table 1 (both parts).
+# NOT a NASA data file. VERIFIED against the PDF table (screenshots from Mo, 2026-11-13 21:50).
+# Blank = not given in the table.
+paper_sample,psi_id,psi_sample,material,width_cm,thickness_mm,length_cm,flow_cm_s,direction,o2_percent_text,ignition_power_w,ignition_time_s,burn_duration_s,ug_burn_length_text,ug_spread_rate_mm_s,g1_burn_length_text,g1_spread_text,note
+III-1,PSI-100,S1,Cotton-Fiberglass,40.6,0.37,94,25,Concurrent,21.2 to 21.0,182,8,300,~84 cm,2.3,Complete,Acceleratory,
+III-2,PSI-100,S2,Cotton-Fiberglass,40.6,0.37,~10 cm,25,Opposed,21.2 to 21.0,182,8,60,~10 cm,0.98,~0,n/a,

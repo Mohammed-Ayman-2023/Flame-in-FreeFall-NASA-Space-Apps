@@ -1,0 +1,13 @@
+# Transcribed from NASA NTRS 20180005168 (Saffire I-III results), Table 1 (both parts).
+# NOT a NASA data file. VERIFIED against the PDF table (screenshots from Mo, 2026-11-13 21:50).
+# Blank = not given in the table.
+paper_sample,psi_id,psi_sample,material,width_cm,thickness_mm,length_cm,flow_cm_s,direction,o2_percent_text,ignition_power_w,ignition_time_s,burn_duration_s,ug_burn_length_text,ug_spread_rate_mm_s,g1_burn_length_text,g1_spread_text,note
+II-1,PSI-99,2-1,Silicone,5,0.27,29,20,Concurrent,~22.1,80,9.2,Insignificant,~0,,~Complete,Acceleratory,
+II-2,PSI-99,2-2,Silicone,5,0.61,29,20,Concurrent,~22.1,80,9.2,Insignificant,~0,,7.6 cm,1.2 mm/s,
+II-3,PSI-99,2-3,Silicone,5,1.03,29,20,Concurrent,~22.1,80,9.2,Insignificant,~0,,~0,n/a,
+II-4,PSI-99,2-4,Silicone,5,0.37,29,20,Opposed,~22.1,80,9.2,Insignificant,~0,,Complete,0.6 mm/s,
+II-5,PSI-99,2-5,Cotton-Fiberglass,5,0.37,29,20,Concurrent,~22.1,80,9.2,145,29 cm,2.1,Complete,Acceleratory,
+II-6,PSI-99,2-6,Cotton-Fiberglass,5,0.37,29,25,Concurrent,~22.1,80,9.2,115,29 cm,2.6,Complete,Acceleratory,
+II-7,PSI-99,2-7,PMMA & Nomex,5,0.85 & 0.37,5 & 24,20,Concurrent,~22.1,80,9.2,140,5 cm & 0,,~0 (Nomex),n/a (Nomex),
+II-8,PSI-99,2-8,PMMA,5,See Fig. 5,29,20,Concurrent,22.1 to 22.0,97,30,600,~10 cm,,Complete,Acceleratory,
+II-9,PSI-99,2-9,PMMA,5,10,29,20,Concurrent,22.0 to 21.9,97,30,900,~10 cm,,Complete,Acceleratory,

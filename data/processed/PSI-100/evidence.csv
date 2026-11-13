@@ -1,0 +1,7 @@
+investigation_id,test_id,dataset_id,source_type,quantity,unit,value,x_name,x_value,x_unit,status,source_file,source_line
+PSI-100,PSI-100:S1,saffire_burns,experiment,flame_spread_rate,mm/s,2.3,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,2
+PSI-100,PSI-100:S1,saffire_burns,experiment,burn_length,cm,84.0,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,2
+PSI-100,PSI-100:S1,saffire_burns,experiment,burn_time,s,300.0,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,2
+PSI-100,PSI-100:S2,saffire_burns,experiment,flame_spread_rate,mm/s,0.98,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,3
+PSI-100,PSI-100:S2,saffire_burns,experiment,burn_length,cm,10.0,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,3
+PSI-100,PSI-100:S2,saffire_burns,experiment,burn_time,s,60.0,,,,from NTRS 20180005168 Table 1,NTRS-20180005168_Table1_transcribed.csv,3

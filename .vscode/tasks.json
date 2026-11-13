@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Create environment and install packages",
+      "type": "shell",
+      "command": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt",
+      "windows": { "command": "py -m venv .venv; .venv\\Scripts\\python -m pip install -r requirements.txt" },
+      "problemMatcher": []
+    },
+    {
+      "label": "2. Build the data layer",
+      "type": "shell",
+      "command": "${command:python.interpreterPath} scripts/build_data.py",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "3. Inspect a new investigation's files",
+      "type": "shell",
+      "command": "${command:python.interpreterPath} scripts/inspect_raw.py ${input:psi}",
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Run tests",
+      "type": "shell",
+      "command": "${command:python.interpreterPath} -m pytest -q",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    { "id": "psi", "type": "promptString", "description": "PSI ID", "default": "PSI-25" }
+  ]
+}

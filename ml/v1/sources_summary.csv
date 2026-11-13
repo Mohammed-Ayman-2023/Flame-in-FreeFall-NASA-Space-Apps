@@ -1,0 +1,15 @@
+investigation_id,acronym,fuel_class,tests,evidence_rows,o2_min,o2_max,p_min,p_max
+EXT-SAFFIRE-456,Saffire IV-VI (external),solid,6,50,0.22,0.31,0.5339,0.9869
+PSI-100,Saffire-III,solid,4,6,0.211,0.211,0.9771,0.9771
+PSI-101,SAME-R,smoke_source,109,0,0.21,0.21,1.0,1.0
+PSI-102,SAME,smoke_source,20,0,0.21,0.21,1.0,1.0
+PSI-107,SPICE,gas,469,0,0.21,0.21,1.0,1.0
+PSI-117,Cool-flame CFD (FLEX),liquid,72,8581,0.1,0.21,0.5,5.0
+PSI-159,ACME CFI-G,gas,179,265,0.179685675,0.3997,0.5,3.0
+PSI-20,ACME BRE,emulated_solid,43,18,0.21,0.4,,
+PSI-25,BASS-II,solid,129,309,0.136,0.222,,
+PSI-26,BASS,solid,110,138,0.159,0.2272,0.97,1.0087
+PSI-39,CFI,liquid,79,0,0.17,0.21,0.5,5.0
+PSI-69,FLEX,liquid,274,715,0.12,0.34,0.6925,3.0525
+PSI-98,Saffire-I,solid,4,6,0.215,0.216,1.0067,1.0067
+PSI-99,Saffire-II,solid,19,19,0.215,0.221,1.0165,1.0165

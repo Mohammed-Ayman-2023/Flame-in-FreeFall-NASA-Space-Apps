@@ -1,0 +1,13 @@
+# Transcribed from 'Flammability Aspects of Fabric in Opposed and Concurrent Air Flow in Microgravity' (Ferkul et al., US National Combustion Meeting 2013), Table I. PSI-26 Science Documents. Text table, copied exactly.
+test_no,width_cm,direction,flow_speeds_cm_s,comments
+1,2,Concurrent,10; 5,Single flow speed change
+7,2,Concurrent,10,
+8,2,Concurrent,5,
+4,2,Concurrent,22,
+10,1,Concurrent,11,
+5,2,Concurrent,5; 3; 1.5; 1,Flow reduction; quenching extinction observed
+6,2,Opposed,9,
+2,2,Concurrent,9; 44,Flow increase; blowoff extinction not attained
+3,2,Opposed,10; 20; 44,Flow increase; blowoff extinction not attained
+11,1,Concurrent,20,
+9,2,Opposed,10; 6; 4; 2; 1.5; 1,Flow reduction; extinction not observed

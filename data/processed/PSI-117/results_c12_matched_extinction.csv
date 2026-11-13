@@ -1,0 +1,5 @@
+d0_mm,dext_hot_mm_clean_expt,dext_cool_mm_clean_expt,status_cool,dext_hot_mm_clean_model,dext_cool_mm_clean_model,hot_error_mm,cool_error_mm
+4.408,4.059,,no_extinction_recorded,4.197,0.22316,0.1379999999999999,
+4.042,3.554,0.4,ok,3.69589,0.226994,0.14189000000000007,-0.17300600000000002
+4.137,3.571,,no_extinction_recorded,3.8303,0.2888,0.25929999999999964,
+4.039,3.577,0.497,ok,3.69188,0.218594,0.11487999999999987,-0.278406

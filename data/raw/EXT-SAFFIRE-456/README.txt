@@ -1,0 +1,1 @@
+External literature folder (NOT a PSI investigation): Saffire IV-VI results from NASA NTRS 20240002981 (ICES-2024-365). Source PDF: https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf

@@ -1,0 +1,310 @@
+investigation_id,test_id,dataset_id,source_type,quantity,unit,value,x_name,x_value,x_unit,status,source_file,source_line
+PSI-25,PSI-25:B1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!2
+PSI-25,PSI-25:B2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!3
+PSI-25,PSI-25:B3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!4
+PSI-25,PSI-25:B4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!5
+PSI-25,PSI-25:B5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!6
+PSI-25,PSI-25:B6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!7
+PSI-25,PSI-25:B6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!7
+PSI-25,PSI-25:B6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!7
+PSI-25,PSI-25:B7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!8
+PSI-25,PSI-25:B8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!9
+PSI-25,PSI-25:B9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!10
+PSI-25,PSI-25:B9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!10
+PSI-25,PSI-25:B10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!11
+PSI-25,PSI-25:B10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!11
+PSI-25,PSI-25:B10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!11
+PSI-25,PSI-25:B10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!11
+PSI-25,PSI-25:B10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!11
+PSI-25,PSI-25:B11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!12
+PSI-25,PSI-25:B11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!12
+PSI-25,PSI-25:B11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!12
+PSI-25,PSI-25:B11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!12
+PSI-25,PSI-25:B12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!13
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!14
+PSI-25,PSI-25:B14,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,2.01,,,,"fan pot 0.5, 2 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Bhattacharjee!15
+PSI-25,PSI-25:B14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!15
+PSI-25,PSI-25:B14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!15
+PSI-25,PSI-25:B14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!15
+PSI-25,PSI-25:B14,bass2_runs,experiment,low_flow_extinction_bound,cm/s,2.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!15
+PSI-25,PSI-25:B15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!16
+PSI-25,PSI-25:B16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!17
+PSI-25,PSI-25:B16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,0.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!17
+PSI-25,PSI-25:B17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!18
+PSI-25,PSI-25:B17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!18
+PSI-25,PSI-25:B18,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,37.75,,,,"fan pot 7, 0 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Bhattacharjee!19
+PSI-25,PSI-25:B18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!19
+PSI-25,PSI-25:B18,bass2_runs,experiment,blowoff_flow_bound,cm/s,10.0,,,,blow-off at or above this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!19
+PSI-25,PSI-25:B19,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,33.22,,,,"fan pot 6, 0 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Bhattacharjee!20
+PSI-25,PSI-25:B19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!20
+PSI-25,PSI-25:B19,bass2_runs,experiment,blowoff_flow_bound,cm/s,10.0,,,,blow-off at or above this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!20
+PSI-25,PSI-25:B20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!21
+PSI-25,PSI-25:B20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!21
+PSI-25,PSI-25:B21,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,6.34,,,,"fan fan_display 53, 1 restrictor(s): nearest calibration day (GMT 213); linear interpolation on fan_display",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Bhattacharjee!22
+PSI-25,PSI-25:B21,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!22
+PSI-25,PSI-25:B21,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!22
+PSI-25,PSI-25:B22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!23
+PSI-25,PSI-25:B22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Bhattacharjee!23
+PSI-25,PSI-25:F1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,9.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Ferkul!2
+PSI-25,PSI-25:F2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Ferkul!3
+PSI-25,PSI-25:F3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Ferkul!4
+PSI-25,PSI-25:F4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Ferkul!5
+PSI-25,PSI-25:M1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!2
+PSI-25,PSI-25:M1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!2
+PSI-25,PSI-25:M2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!3
+PSI-25,PSI-25:M2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!3
+PSI-25,PSI-25:M2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,13.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!3
+PSI-25,PSI-25:M2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,14.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!3
+PSI-25,PSI-25:M3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!4
+PSI-25,PSI-25:M3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!4
+PSI-25,PSI-25:M3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,18.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!4
+PSI-25,PSI-25:M4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!5
+PSI-25,PSI-25:M4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!5
+PSI-25,PSI-25:M4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!5
+PSI-25,PSI-25:M5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!6
+PSI-25,PSI-25:M5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,13.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!6
+PSI-25,PSI-25:M5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!6
+PSI-25,PSI-25:M5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!6
+PSI-25,PSI-25:M5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!6
+PSI-25,PSI-25:M6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!7
+PSI-25,PSI-25:M6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!7
+PSI-25,PSI-25:M6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!7
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,6.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!8
+PSI-25,PSI-25:M8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!9
+PSI-25,PSI-25:M8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!9
+PSI-25,PSI-25:M8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,7.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!9
+PSI-25,PSI-25:M8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!9
+PSI-25,PSI-25:M9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!10
+PSI-25,PSI-25:M9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,14.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!10
+PSI-25,PSI-25:M10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!11
+PSI-25,PSI-25:M10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,17.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!11
+PSI-25,PSI-25:M10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,14.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!11
+PSI-25,PSI-25:M10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!11
+PSI-25,PSI-25:M10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!11
+PSI-25,PSI-25:M11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!12
+PSI-25,PSI-25:M11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!12
+PSI-25,PSI-25:M11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!12
+PSI-25,PSI-25:M11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,12.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!12
+PSI-25,PSI-25:M12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!13
+PSI-25,PSI-25:M13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,6.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!14
+PSI-25,PSI-25:M13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!14
+PSI-25,PSI-25:M13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!14
+PSI-25,PSI-25:M14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!15
+PSI-25,PSI-25:M14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!15
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,7.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,18.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,16.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!16
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,6.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!17
+PSI-25,PSI-25:M17,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,5.033,,,,"upper bound: fan pot 0.3, 2 restrictor(s): same-day calibration; reading 0.3 below lowest calibrated pot 1: speed is below 5.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Miller!18
+PSI-25,PSI-25:M17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!18
+PSI-25,PSI-25:M17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!18
+PSI-25,PSI-25:M17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!18
+PSI-25,PSI-25:M17,bass2_runs,experiment,low_flow_extinction_bound,cm/s,3.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!18
+PSI-25,PSI-25:M18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!19
+PSI-25,PSI-25:M18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!19
+PSI-25,PSI-25:M18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!19
+PSI-25,PSI-25:M18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!19
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,17.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,14.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,7.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!20
+PSI-25,PSI-25:M20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!21
+PSI-25,PSI-25:M20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Miller!21
+PSI-25,PSI-25:O1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,20.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!2
+PSI-25,PSI-25:O1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!2
+PSI-25,PSI-25:O1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!2
+PSI-25,PSI-25:O1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!2
+PSI-25,PSI-25:O1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!2
+PSI-25,PSI-25:O3a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!4
+PSI-25,PSI-25:O3a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!4
+PSI-25,PSI-25:O3b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!5
+PSI-25,PSI-25:O3b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!5
+PSI-25,PSI-25:O3b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!5
+PSI-25,PSI-25:O3b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!5
+PSI-25,PSI-25:O4,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,1.007,,,,"upper bound: fan pot 0.36, 2 restrictor(s): same-day calibration; reading 0.36 below lowest calibrated pot 0.5: speed is below 1.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!6
+PSI-25,PSI-25:O4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!6
+PSI-25,PSI-25:O4,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!6
+PSI-25,PSI-25:O5a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!7
+PSI-25,PSI-25:O5a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!7
+PSI-25,PSI-25:O5a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!7
+PSI-25,PSI-25:O5a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!7
+PSI-25,PSI-25:O5b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!8
+PSI-25,PSI-25:O6,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,8.053,,,,"upper bound: fan pot 0.275, 2 restrictor(s): same-day calibration; reading 0.275 below lowest calibrated pot 2: speed is below 8.1 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!9
+PSI-25,PSI-25:O7,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,37.24,,,,"fan pot 10, 2 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!10
+PSI-25,PSI-25:O8a,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,8.053,,,,"upper bound: fan pot 0.31, 2 restrictor(s): same-day calibration; reading 0.31 below lowest calibrated pot 2: speed is below 8.1 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!11
+PSI-25,PSI-25:O8b,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,23.15,,,,"fan pot 6, 2 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!12
+PSI-25,PSI-25:O9,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,15.1,,,,"fan pot 4, 2 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!13
+PSI-25,PSI-25:O10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!14
+PSI-25,PSI-25:O10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!14
+PSI-25,PSI-25:O11,bass2_runs,experiment,blowoff_speed_from_fan_cal,cm/s,20.13,,,,"fan pot 6, 2 restrictor(s): same-day calibration; linear interpolation on pot",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!15
+PSI-25,PSI-25:O11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!15
+PSI-25,PSI-25:O11,bass2_runs,experiment,blowoff_flow_bound,cm/s,5.0,,,,blow-off at or above this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!15
+PSI-25,PSI-25:O13a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!17
+PSI-25,PSI-25:O13a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!17
+PSI-25,PSI-25:O13b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,7.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!18
+PSI-25,PSI-25:O13b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!18
+PSI-25,PSI-25:O14,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,5.98,,,,"fan fan_display 52, 1 restrictor(s): same-day calibration; linear interpolation on fan_display",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!19
+PSI-25,PSI-25:O14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!19
+PSI-25,PSI-25:O14,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!19
+PSI-25,PSI-25:O15a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!20
+PSI-25,PSI-25:O15b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!21
+PSI-25,PSI-25:O16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!22
+PSI-25,PSI-25:O17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!23
+PSI-25,PSI-25:O17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!23
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!24
+PSI-25,PSI-25:O19,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,5.98,,,,"fan fan_display 52, 1 restrictor(s): same-day calibration; linear interpolation on fan_display",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Olson!25
+PSI-25,PSI-25:O19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!25
+PSI-25,PSI-25:O19,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!25
+PSI-25,PSI-25:O20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!26
+PSI-25,PSI-25:O20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!26
+PSI-25,PSI-25:O20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,38.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!26
+PSI-25,PSI-25:O21,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,28.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!27
+PSI-25,PSI-25:O22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!28
+PSI-25,PSI-25:O22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,26.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!28
+PSI-25,PSI-25:O22,bass2_runs,experiment,blowoff_flow_bound,cm/s,26.5,,,,blow-off at or above this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Olson!28
+PSI-25,PSI-25:P1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!2
+PSI-25,PSI-25:P1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!2
+PSI-25,PSI-25:P1,bass2_runs,experiment,low_flow_extinction_bound,cm/s,2.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!2
+PSI-25,PSI-25:P2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!3
+PSI-25,PSI-25:P2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!3
+PSI-25,PSI-25:P2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!3
+PSI-25,PSI-25:P3a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!4
+PSI-25,PSI-25:P3a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!4
+PSI-25,PSI-25:P3b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!5
+PSI-25,PSI-25:P4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!6
+PSI-25,PSI-25:P5,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,4.026,,,,"upper bound: fan pot 0.28, 2 restrictor(s): same-day calibration; reading 0.28 below lowest calibrated pot 1: speed is below 4.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!7
+PSI-25,PSI-25:P5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!7
+PSI-25,PSI-25:P5,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!7
+PSI-25,PSI-25:P6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!8
+PSI-25,PSI-25:P8,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,15.37,,,,"fan fan_display 75, 2 restrictor(s): same-day calibration; linear interpolation on fan_display",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!9
+PSI-25,PSI-25:P8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!9
+PSI-25,PSI-25:P8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!9
+PSI-25,PSI-25:P8,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,15.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!9
+PSI-25,PSI-25:P9,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,4.026,,,,"upper bound: fan pot 0.28, 2 restrictor(s): same-day calibration; reading 0.28 below lowest calibrated pot 1: speed is below 4.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!10
+PSI-25,PSI-25:P9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!10
+PSI-25,PSI-25:P9,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!10
+PSI-25,PSI-25:P10,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,2.013,,,,"upper bound: fan fan_display 41, 2 restrictor(s): same-day calibration; reading 41 below lowest calibrated fan_display 42: speed is below 2.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!11
+PSI-25,PSI-25:P10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!11
+PSI-25,PSI-25:P10,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!11
+PSI-25,PSI-25:P12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!12
+PSI-25,PSI-25:P12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!12
+PSI-25,PSI-25:P12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!12
+PSI-25,PSI-25:P12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!12
+PSI-25,PSI-25:P12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,0.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!12
+PSI-25,PSI-25:P13a,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,4.026,,,,"upper bound: fan pot 0.26, 2 restrictor(s): same-day calibration; reading 0.26 below lowest calibrated pot 1: speed is below 4.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!13
+PSI-25,PSI-25:P13a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!13
+PSI-25,PSI-25:P13a,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!13
+PSI-25,PSI-25:P13b,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,4.026,,,,"upper bound: fan pot 0.32, 2 restrictor(s): same-day calibration; reading 0.32 below lowest calibrated pot 1: speed is below 4.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!14
+PSI-25,PSI-25:P13b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!14
+PSI-25,PSI-25:P13b,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!14
+PSI-25,PSI-25:P14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!15
+PSI-25,PSI-25:P15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!16
+PSI-25,PSI-25:P16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!17
+PSI-25,PSI-25:P16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!17
+PSI-25,PSI-25:P16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!17
+PSI-25,PSI-25:P17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!18
+PSI-25,PSI-25:P17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!18
+PSI-25,PSI-25:P17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!18
+PSI-25,PSI-25:P17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,22.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!18
+PSI-25,PSI-25:P17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!18
+PSI-25,PSI-25:P18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!19
+PSI-25,PSI-25:P18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!19
+PSI-25,PSI-25:P19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!20
+PSI-25,PSI-25:P19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,8.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!20
+PSI-25,PSI-25:P19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!20
+PSI-25,PSI-25:P20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!21
+PSI-25,PSI-25:P20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!21
+PSI-25,PSI-25:P21a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!22
+PSI-25,PSI-25:P21b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!23
+PSI-25,PSI-25:P22a,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,1.007,,,,"upper bound: fan pot 0.32, 2 restrictor(s): same-day calibration; reading 0.32 below lowest calibrated pot 0.5: speed is below 1.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!24
+PSI-25,PSI-25:P22a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!24
+PSI-25,PSI-25:P22a,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!24
+PSI-25,PSI-25:P22b,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,1.007,,,,"upper bound: fan pot 0.31, 2 restrictor(s): same-day calibration; reading 0.31 below lowest calibrated pot 0.5: speed is below 1.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!25
+PSI-25,PSI-25:P22b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!25
+PSI-25,PSI-25:P22b,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!25
+PSI-25,PSI-25:P23,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!26
+PSI-25,PSI-25:P23,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!26
+PSI-25,PSI-25:P24,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!27
+PSI-25,PSI-25:P24,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!27
+PSI-25,PSI-25:P25,bass2_runs,experiment,extinction_speed_from_fan_cal,cm/s,1.007,,,,"upper bound: fan pot 0.31, 2 restrictor(s): same-day calibration; reading 0.31 below lowest calibrated pot 0.5: speed is below 1.0 cm/s (upper bound)",BASS-II_Test_Matrix_by_PI_Final.xlsx + PSI-25_Reference Data_Fan calibration data.xlsx,Fernandez-Pello!28
+PSI-25,PSI-25:P25,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!28
+PSI-25,PSI-25:P25,bass2_runs,experiment,low_flow_extinction_bound,cm/s,5.0,,,,flame went out at or below this flow (A1),BASS-II_Test_Matrix_by_PI_Final.xlsx,Fernandez-Pello!28
+PSI-25,PSI-25:T1,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!2
+PSI-25,PSI-25:T2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,9.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!3
+PSI-25,PSI-25:T2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!3
+PSI-25,PSI-25:T2,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,4.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!3
+PSI-25,PSI-25:T3,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!4
+PSI-25,PSI-25:T4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,9.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!5
+PSI-25,PSI-25:T4,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!5
+PSI-25,PSI-25:T5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!6
+PSI-25,PSI-25:T5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!6
+PSI-25,PSI-25:T5,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!6
+PSI-25,PSI-25:T6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!7
+PSI-25,PSI-25:T6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!7
+PSI-25,PSI-25:T6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!7
+PSI-25,PSI-25:T6,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!7
+PSI-25,PSI-25:T7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!8
+PSI-25,PSI-25:T7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!8
+PSI-25,PSI-25:T7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!8
+PSI-25,PSI-25:T7,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!8
+PSI-25,PSI-25:T9,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!9
+PSI-25,PSI-25:T10,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!10
+PSI-25,PSI-25:T11,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!11
+PSI-25,PSI-25:T12,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!12
+PSI-25,PSI-25:T13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!13
+PSI-25,PSI-25:T13,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,1.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!13
+PSI-25,PSI-25:T14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!14
+PSI-25,PSI-25:T14,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!14
+PSI-25,PSI-25:T15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,9.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!15
+PSI-25,PSI-25:T15,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,29.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!15
+PSI-25,PSI-25:T16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!16
+PSI-25,PSI-25:T16,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!16
+PSI-25,PSI-25:T17,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,6.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!17
+PSI-25,PSI-25:T18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!18
+PSI-25,PSI-25:T18,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!18
+PSI-25,PSI-25:T19,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!19
+PSI-25,PSI-25:T20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!20
+PSI-25,PSI-25:T20,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,3.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!20
+PSI-25,PSI-25:T21,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,11.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!21
+PSI-25,PSI-25:T22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!22
+PSI-25,PSI-25:T22,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!22
+PSI-25,PSI-25:T23,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!23
+PSI-25,PSI-25:T24,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,10.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!24
+PSI-25,PSI-25:T25,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!25
+PSI-25,PSI-25:T25,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!25
+PSI-25,PSI-25:T26,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!26
+PSI-25,PSI-25:T26,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.5,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!26
+PSI-25,PSI-25:T27,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!27
+PSI-25,PSI-25:T27,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!27
+PSI-25,PSI-25:T28a,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!28
+PSI-25,PSI-25:T28b,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!29
+PSI-25,PSI-25:T29,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,5.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!30
+PSI-25,PSI-25:T29,bass2_runs,experiment,flame_present_at_flow,1=yes,1.0,flow_cm_s,2.0,cm/s,ok (A1: units assumed),BASS-II_Test_Matrix_by_PI_Final.xlsx,T'ien!30

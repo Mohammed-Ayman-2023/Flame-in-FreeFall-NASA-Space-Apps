@@ -1,0 +1,5 @@
+PSI-159 Version 1. Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases (ACME CFI-G). Submitted 20-Nov-2025. DOI: 10.60555/cyt1-kh64. Research Area: Combustion Science / Flames of Gaseous Fuels. Platform: ISS. Sponsors: NSF, CASIS; NASA GRC.
+Objectives: determine conditions for cool diffusion flames for propane, n-butane, n-pentane; normal and inverse flames; broad range of Zst, Tad and flow rate; CFD support; kinetics mechanism.
+Approach: spherical porous-burner diffusion flames on the ISS; multiple fuels, dilutions, flow rates, pressures; normal and inverse; cameras, radiometers, PMTs, thermocouples.
+Contacts: Peter B. Sunderland, Richard L. Axelbaum, Forman Williams, Dennis P. Stocker.
+(Pasted by the user 2026-11-13 23:12; table in two parts.)

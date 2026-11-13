@@ -1,0 +1,14 @@
+# EXTERNAL LITERATURE. Olson, Ruff, Ferkul, ... Urban, "The effect of duct size, sample size, and fuel composition on concurrent flame spread over large cellulose samples in microgravity" (accepted manuscript, UCL Discovery eprint 10164340), Table 1 "Thin Fuel Concurrent Flow Test Matrix and Flame Measurements".
+# VERIFIED against the user's screenshot of Table 1 (2026-11-13 22:52). https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf
+# Footnote +: O2/P for Saffire I-IV are the ISS atmosphere recorded at Cygnus hatch closing; Saffire V was depressurized and O2 added (26.9 % at 76 kPa).
+# Footnote *: Hf values marked * are estimates (no side view). Vf = flame spread rate (cm/s); Lf = flame length; Lp = pyrolysis length; Hf = flame height (cm).
+# BASS rows map to PSI-26 by sample number, flow and O2 (sample 11 -> PSI-26:65_11, sample 4 -> PSI-26:12_4).
+flight,paper_sample,our_test_id,material,length_cm,width_cm,holder,flow_cm_s,o2_pct,pressure_kpa,duct_l_cm,duct_w_cm,duct_h_cm,vf_cm_s,lf_cm,lp_cm,hf_cm,hf_estimated,surface_tc_cm
+I,1,PSI-98:S1,SIBAL,94,40.6,109x46,20,21.7,102,109,46,51,0.18,4,4,2.0,yes,"30, 60"
+II,5,PSI-99:2-5,SIBAL,29,5,109x46,20,22.1,103,109,46,51,0.21,4,4,1.0,yes,7.5
+II,6,PSI-99:2-6,SIBAL,29,5,109x46,25,22.1,103,109,46,51,0.26,5,5,0.9,yes,7.5
+III,1,PSI-100:S1,SIBAL,94,40.6,109x46,25,21.2,99,109,46,51,0.23,5,5,1.8,yes,"30, 60"
+IV,4,EXT-SAFFIRE-456:IV-1,SIBAL,50,40.6,109x46,20,23.1,99,109,46,30.5,0.36,8.5,8.5,2.7,no,"30, 42"
+V,5,EXT-SAFFIRE-456:V-2,Cotton,50,40.6,109x6,20,26.9,76,109,46,30.5,0.34,14,10,3.5,no,"30, 42"
+BASS,11,PSI-26:65_11,SIBAL,10,1.2,13x2.7,19,21.5,101,17,7.6,7.6,0.27,2.2,,0.4,no,
+BASS,4,PSI-26:12_4,SIBAL,10,2.2,13x3.8,22,21.6,101,17,7.6,7.6,0.51,6.2,,0.6,no,

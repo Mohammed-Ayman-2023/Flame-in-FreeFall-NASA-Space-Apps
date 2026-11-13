@@ -1,0 +1,266 @@
+investigation_id,test_id,dataset_id,source_type,quantity,unit,value,x_name,x_value,x_unit,status,source_file,source_line
+PSI-159,PSI-159:21088A1,cfig_tests,experiment,burn_time,s,50.0,,,,measured,PSI-159_table_part1.tsv,2
+PSI-159,PSI-159:21088A1,cfig_tests,experiment,peak_burner_temperature,C,290.617198,,,,measured,PSI-159_table_part1.tsv,2
+PSI-159,PSI-159:21088B1,cfig_tests,experiment,burn_time,s,43.0,,,,measured,PSI-159_table_part1.tsv,3
+PSI-159,PSI-159:21088B1,cfig_tests,experiment,peak_burner_temperature,C,276.009368,,,,measured,PSI-159_table_part1.tsv,3
+PSI-159,PSI-159:21088C1,cfig_tests,experiment,burn_time,s,42.0,,,,measured,PSI-159_table_part1.tsv,4
+PSI-159,PSI-159:21088C1,cfig_tests,experiment,peak_burner_temperature,C,266.374008,,,,measured,PSI-159_table_part1.tsv,4
+PSI-159,PSI-159:21088D1,cfig_tests,experiment,burn_time,s,61.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,5
+PSI-159,PSI-159:21088D1,cfig_tests,experiment,peak_burner_temperature,C,459.195642,,,,measured,PSI-159_table_part1.tsv,5
+PSI-159,PSI-159:21088F1,cfig_tests,experiment,burn_time,s,28.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,6
+PSI-159,PSI-159:21088F1,cfig_tests,experiment,peak_burner_temperature,C,532.162657,,,,measured,PSI-159_table_part1.tsv,6
+PSI-159,PSI-159:21088G1,cfig_tests,experiment,burn_time,s,42.0,,,,measured,PSI-159_table_part1.tsv,7
+PSI-159,PSI-159:21088G1,cfig_tests,experiment,peak_burner_temperature,C,226.739332,,,,measured,PSI-159_table_part1.tsv,7
+PSI-159,PSI-159:21088H1,cfig_tests,experiment,burn_time,s,62.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,8
+PSI-159,PSI-159:21088H1,cfig_tests,experiment,peak_burner_temperature,C,416.786789,,,,measured,PSI-159_table_part1.tsv,8
+PSI-159,PSI-159:21088J1,cfig_tests,experiment,burn_time,s,37.0,,,,measured,PSI-159_table_part1.tsv,9
+PSI-159,PSI-159:21088J1,cfig_tests,experiment,peak_burner_temperature,C,164.051351,,,,measured,PSI-159_table_part1.tsv,9
+PSI-159,PSI-159:21088K1,cfig_tests,experiment,burn_time,s,98.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,10
+PSI-159,PSI-159:21088K1,cfig_tests,experiment,peak_burner_temperature,C,340.169199,,,,measured,PSI-159_table_part1.tsv,10
+PSI-159,PSI-159:21088H2,cfig_tests,experiment,burn_time,s,127.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,11
+PSI-159,PSI-159:21088H2,cfig_tests,experiment,peak_burner_temperature,C,421.915051,,,,measured,PSI-159_table_part1.tsv,11
+PSI-159,PSI-159:21088M4,cfig_tests,experiment,burn_time,s,13.0,,,,measured,PSI-159_table_part1.tsv,12
+PSI-159,PSI-159:21088M4,cfig_tests,experiment,peak_burner_temperature,C,125.225207,,,,measured,PSI-159_table_part1.tsv,12
+PSI-159,PSI-159:21088L1,cfig_tests,experiment,burn_time,s,9.0,,,,measured,PSI-159_table_part1.tsv,13
+PSI-159,PSI-159:21088L1,cfig_tests,experiment,peak_burner_temperature,C,80.8277263,,,,measured,PSI-159_table_part1.tsv,13
+PSI-159,PSI-159:21088N1,cfig_tests,experiment,burn_time,s,7.0,,,,measured,PSI-159_table_part1.tsv,14
+PSI-159,PSI-159:21088N1,cfig_tests,experiment,peak_burner_temperature,C,53.3353079,,,,measured,PSI-159_table_part1.tsv,14
+PSI-159,PSI-159:21088P1,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part1.tsv,15
+PSI-159,PSI-159:21088P1,cfig_tests,experiment,peak_burner_temperature,C,74.1763366,,,,measured,PSI-159_table_part1.tsv,15
+PSI-159,PSI-159:21102A1,cfig_tests,experiment,burn_time,s,40.0,,,,measured,PSI-159_table_part1.tsv,16
+PSI-159,PSI-159:21102A1,cfig_tests,experiment,peak_burner_temperature,C,231.0,,,,measured,PSI-159_table_part1.tsv,16
+PSI-159,PSI-159:21102C1,cfig_tests,experiment,burn_time,s,41.0,,,,measured,PSI-159_table_part1.tsv,17
+PSI-159,PSI-159:21102C1,cfig_tests,experiment,peak_burner_temperature,C,269.0,,,,measured,PSI-159_table_part1.tsv,17
+PSI-159,PSI-159:21102B1,cfig_tests,experiment,burn_time,s,38.0,,,,measured,PSI-159_table_part1.tsv,18
+PSI-159,PSI-159:21102B1,cfig_tests,experiment,peak_burner_temperature,C,196.0,,,,measured,PSI-159_table_part1.tsv,18
+PSI-159,PSI-159:21102C2,cfig_tests,experiment,burn_time,s,63.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,19
+PSI-159,PSI-159:21102C2,cfig_tests,experiment,peak_burner_temperature,C,505.0,,,,measured,PSI-159_table_part1.tsv,19
+PSI-159,PSI-159:21102C3,cfig_tests,experiment,burn_time,s,82.0,,,,measured,PSI-159_table_part1.tsv,20
+PSI-159,PSI-159:21102C3,cfig_tests,experiment,peak_burner_temperature,C,388.0,,,,measured,PSI-159_table_part1.tsv,20
+PSI-159,PSI-159:21102C5,cfig_tests,experiment,burn_time,s,43.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,22
+PSI-159,PSI-159:21102C5,cfig_tests,experiment,peak_burner_temperature,C,449.0,,,,measured,PSI-159_table_part1.tsv,22
+PSI-159,PSI-159:21102C7,cfig_tests,experiment,burn_time,s,18.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,24
+PSI-159,PSI-159:21102C7,cfig_tests,experiment,peak_burner_temperature,C,298.0,,,,measured,PSI-159_table_part1.tsv,24
+PSI-159,PSI-159:21102M1,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part1.tsv,26
+PSI-159,PSI-159:21102M1,cfig_tests,experiment,peak_burner_temperature,C,75.0,,,,measured,PSI-159_table_part1.tsv,26
+PSI-159,PSI-159:21102M2,cfig_tests,experiment,burn_time,s,14.0,,,,measured,PSI-159_table_part1.tsv,27
+PSI-159,PSI-159:21102M2,cfig_tests,experiment,peak_burner_temperature,C,139.0,,,,measured,PSI-159_table_part1.tsv,27
+PSI-159,PSI-159:21106A4,cfig_tests,experiment,burn_time,s,60.0,,,,measured,PSI-159_table_part1.tsv,32
+PSI-159,PSI-159:21106A4,cfig_tests,experiment,peak_burner_temperature,C,283.0,,,,measured,PSI-159_table_part1.tsv,32
+PSI-159,PSI-159:21106B1,cfig_tests,experiment,burn_time,s,62.0,,,,measured,PSI-159_table_part1.tsv,33
+PSI-159,PSI-159:21106B1,cfig_tests,experiment,peak_burner_temperature,C,316.0,,,,measured,PSI-159_table_part1.tsv,33
+PSI-159,PSI-159:21106C1,cfig_tests,experiment,burn_time,s,63.0,,,,measured,PSI-159_table_part1.tsv,34
+PSI-159,PSI-159:21106C1,cfig_tests,experiment,peak_burner_temperature,C,242.0,,,,measured,PSI-159_table_part1.tsv,34
+PSI-159,PSI-159:21106D1,cfig_tests,experiment,burn_time,s,120.0,,,,measured,PSI-159_table_part1.tsv,35
+PSI-159,PSI-159:21106D1,cfig_tests,experiment,peak_burner_temperature,C,404.0,,,,measured,PSI-159_table_part1.tsv,35
+PSI-159,PSI-159:21106F1,cfig_tests,experiment,burn_time,s,72.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,36
+PSI-159,PSI-159:21106F1,cfig_tests,experiment,peak_burner_temperature,C,505.0,,,,measured,PSI-159_table_part1.tsv,36
+PSI-159,PSI-159:21106F3,cfig_tests,experiment,burn_time,s,13.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,38
+PSI-159,PSI-159:21106F3,cfig_tests,experiment,peak_burner_temperature,C,313.0,,,,measured,PSI-159_table_part1.tsv,38
+PSI-159,PSI-159:21106F4,cfig_tests,experiment,peak_burner_temperature,C,402.0,,,,measured,PSI-159_table_part1.tsv,39
+PSI-159,PSI-159:21106G6,cfig_tests,experiment,burn_time,s,20.0,,,,measured,PSI-159_table_part1.tsv,41
+PSI-159,PSI-159:21106G6,cfig_tests,experiment,peak_burner_temperature,C,195.0,,,,measured,PSI-159_table_part1.tsv,41
+PSI-159,PSI-159:21106G7,cfig_tests,experiment,burn_time,s,20.0,,,,measured,PSI-159_table_part1.tsv,42
+PSI-159,PSI-159:21106G7,cfig_tests,experiment,peak_burner_temperature,C,204.0,,,,measured,PSI-159_table_part1.tsv,42
+PSI-159,PSI-159:21106G9,cfig_tests,experiment,burn_time,s,14.0,,,,measured,PSI-159_table_part1.tsv,43
+PSI-159,PSI-159:21106G9,cfig_tests,experiment,peak_burner_temperature,C,129.0,,,,measured,PSI-159_table_part1.tsv,43
+PSI-159,PSI-159:21112A1,cfig_tests,experiment,burn_time,s,43.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,46
+PSI-159,PSI-159:21112A1,cfig_tests,experiment,peak_burner_temperature,C,513.074689,,,,measured,PSI-159_table_part1.tsv,46
+PSI-159,PSI-159:21112A2,cfig_tests,experiment,burn_time,s,44.0,,,,measured,PSI-159_table_part1.tsv,47
+PSI-159,PSI-159:21112A2,cfig_tests,experiment,peak_burner_temperature,C,306.401465,,,,measured,PSI-159_table_part1.tsv,47
+PSI-159,PSI-159:21112A3,cfig_tests,experiment,burn_time,s,95.0,,,,measured,PSI-159_table_part1.tsv,48
+PSI-159,PSI-159:21112A3,cfig_tests,experiment,peak_burner_temperature,C,423.011622,,,,measured,PSI-159_table_part1.tsv,48
+PSI-159,PSI-159:21112A4,cfig_tests,experiment,burn_time,s,185.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,49
+PSI-159,PSI-159:21112A4,cfig_tests,experiment,peak_burner_temperature,C,472.323053,,,,measured,PSI-159_table_part1.tsv,49
+PSI-159,PSI-159:21112A5,cfig_tests,experiment,burn_time,s,24.0,,,,measured,PSI-159_table_part1.tsv,50
+PSI-159,PSI-159:21112A5,cfig_tests,experiment,peak_burner_temperature,C,201.343312,,,,measured,PSI-159_table_part1.tsv,50
+PSI-159,PSI-159:21112C1,cfig_tests,experiment,burn_time,s,29.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,51
+PSI-159,PSI-159:21112C1,cfig_tests,experiment,peak_burner_temperature,C,529.294181,,,,measured,PSI-159_table_part1.tsv,51
+PSI-159,PSI-159:21112C2,cfig_tests,experiment,burn_time,s,29.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,52
+PSI-159,PSI-159:21112C2,cfig_tests,experiment,peak_burner_temperature,C,529.870579,,,,measured,PSI-159_table_part1.tsv,52
+PSI-159,PSI-159:21112A6,cfig_tests,experiment,burn_time,s,259.0,,,,measured,PSI-159_table_part1.tsv,53
+PSI-159,PSI-159:21112A6,cfig_tests,experiment,peak_burner_temperature,C,460.517765,,,,measured,PSI-159_table_part1.tsv,53
+PSI-159,PSI-159:21112F2,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part1.tsv,59
+PSI-159,PSI-159:21112F2,cfig_tests,experiment,peak_burner_temperature,C,95.0990032,,,,measured,PSI-159_table_part1.tsv,59
+PSI-159,PSI-159:21112F3,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part1.tsv,60
+PSI-159,PSI-159:21112F3,cfig_tests,experiment,peak_burner_temperature,C,105.264091,,,,measured,PSI-159_table_part1.tsv,60
+PSI-159,PSI-159:21112F4,cfig_tests,experiment,burn_time,s,10.0,,,,measured,PSI-159_table_part1.tsv,61
+PSI-159,PSI-159:21112F4,cfig_tests,experiment,peak_burner_temperature,C,136.737387,,,,measured,PSI-159_table_part1.tsv,61
+PSI-159,PSI-159:21112H1,cfig_tests,experiment,burn_time,s,12.0,,,,measured,PSI-159_table_part1.tsv,63
+PSI-159,PSI-159:21112H1,cfig_tests,experiment,peak_burner_temperature,C,154.162132,,,,measured,PSI-159_table_part1.tsv,63
+PSI-159,PSI-159:21112H2,cfig_tests,experiment,burn_time,s,11.0,,,,measured,PSI-159_table_part1.tsv,64
+PSI-159,PSI-159:21112H2,cfig_tests,experiment,peak_burner_temperature,C,155.395419,,,,measured,PSI-159_table_part1.tsv,64
+PSI-159,PSI-159:21125A2,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part1.tsv,67
+PSI-159,PSI-159:21125A2,cfig_tests,experiment,peak_burner_temperature,C,60.0,,,,measured,PSI-159_table_part1.tsv,67
+PSI-159,PSI-159:21125K1,cfig_tests,experiment,burn_time,s,35.0,,,,measured,PSI-159_table_part1.tsv,81
+PSI-159,PSI-159:21125K1,cfig_tests,experiment,peak_burner_temperature,C,227.0,,,,measured,PSI-159_table_part1.tsv,81
+PSI-159,PSI-159:21125K2,cfig_tests,experiment,burn_time,s,17.0,,,,measured,PSI-159_table_part1.tsv,82
+PSI-159,PSI-159:21125K2,cfig_tests,experiment,peak_burner_temperature,C,116.0,,,,measured,PSI-159_table_part1.tsv,82
+PSI-159,PSI-159:21125K3,cfig_tests,experiment,burn_time,s,125.0,,,,lower bound (flow terminated),PSI-159_table_part1.tsv,83
+PSI-159,PSI-159:21125K3,cfig_tests,experiment,peak_burner_temperature,C,481.0,,,,measured,PSI-159_table_part1.tsv,83
+PSI-159,PSI-159:21125D1,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,84
+PSI-159,PSI-159:21125D1,cfig_tests,experiment,peak_burner_temperature,C,34.0,,,,measured,PSI-159_table_part1.tsv,84
+PSI-159,PSI-159:21125D2,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,85
+PSI-159,PSI-159:21125D2,cfig_tests,experiment,peak_burner_temperature,C,32.0,,,,measured,PSI-159_table_part1.tsv,85
+PSI-159,PSI-159:21130A1,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,90
+PSI-159,PSI-159:21130A1,cfig_tests,experiment,peak_burner_temperature,C,39.4668576,,,,measured,PSI-159_table_part1.tsv,90
+PSI-159,PSI-159:21130A2,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,91
+PSI-159,PSI-159:21130A2,cfig_tests,experiment,peak_burner_temperature,C,34.3184151,,,,measured,PSI-159_table_part1.tsv,91
+PSI-159,PSI-159:21130A5,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,94
+PSI-159,PSI-159:21130A5,cfig_tests,experiment,peak_burner_temperature,C,34.0834658,,,,measured,PSI-159_table_part1.tsv,94
+PSI-159,PSI-159:21130A9,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part1.tsv,98
+PSI-159,PSI-159:21130A9,cfig_tests,experiment,peak_burner_temperature,C,137.818721,,,,measured,PSI-159_table_part1.tsv,98
+PSI-159,PSI-159:21130M1,cfig_tests,experiment,burn_time,s,6.0,,,,measured,PSI-159_table_part1.tsv,99
+PSI-159,PSI-159:21130M1,cfig_tests,experiment,peak_burner_temperature,C,65.14664623,,,,measured,PSI-159_table_part1.tsv,99
+PSI-159,PSI-159:21130M2,cfig_tests,experiment,burn_time,s,7.0,,,,measured,PSI-159_table_part1.tsv,100
+PSI-159,PSI-159:21130M2,cfig_tests,experiment,peak_burner_temperature,C,56.64455108,,,,measured,PSI-159_table_part1.tsv,100
+PSI-159,PSI-159:21130M3,cfig_tests,experiment,burn_time,s,5.0,,,,measured,PSI-159_table_part1.tsv,101
+PSI-159,PSI-159:21130M3,cfig_tests,experiment,peak_burner_temperature,C,69.44720456,,,,measured,PSI-159_table_part1.tsv,101
+PSI-159,PSI-159:21130G2,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part2.tsv,3
+PSI-159,PSI-159:21130G2,cfig_tests,experiment,peak_burner_temperature,C,35.7849125,,,,measured,PSI-159_table_part2.tsv,3
+PSI-159,PSI-159:21130G3,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part2.tsv,4
+PSI-159,PSI-159:21130G3,cfig_tests,experiment,peak_burner_temperature,C,33.34455353,,,,measured,PSI-159_table_part2.tsv,4
+PSI-159,PSI-159:21130G6,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part2.tsv,7
+PSI-159,PSI-159:21130G6,cfig_tests,experiment,peak_burner_temperature,C,34.03266412,,,,measured,PSI-159_table_part2.tsv,7
+PSI-159,PSI-159:21130G7,cfig_tests,experiment,burn_time,s,1.0,,,,measured,PSI-159_table_part2.tsv,8
+PSI-159,PSI-159:21130G7,cfig_tests,experiment,peak_burner_temperature,C,36.92329563,,,,measured,PSI-159_table_part2.tsv,8
+PSI-159,PSI-159:21130N1,cfig_tests,experiment,burn_time,s,6.0,,,,measured,PSI-159_table_part2.tsv,9
+PSI-159,PSI-159:21130N1,cfig_tests,experiment,peak_burner_temperature,C,72.69266247,,,,measured,PSI-159_table_part2.tsv,9
+PSI-159,PSI-159:21130N2,cfig_tests,experiment,burn_time,s,6.0,,,,measured,PSI-159_table_part2.tsv,10
+PSI-159,PSI-159:21130N2,cfig_tests,experiment,peak_burner_temperature,C,56.83256973,,,,measured,PSI-159_table_part2.tsv,10
+PSI-159,PSI-159:21130N3,cfig_tests,experiment,burn_time,s,5.0,,,,measured,PSI-159_table_part2.tsv,11
+PSI-159,PSI-159:21130N3,cfig_tests,experiment,peak_burner_temperature,C,89.44847822,,,,measured,PSI-159_table_part2.tsv,11
+PSI-159,PSI-159:21130N4,cfig_tests,experiment,burn_time,s,5.0,,,,measured,PSI-159_table_part2.tsv,12
+PSI-159,PSI-159:21130N4,cfig_tests,experiment,peak_burner_temperature,C,89.90328927,,,,measured,PSI-159_table_part2.tsv,12
+PSI-159,PSI-159:21137A1,cfig_tests,experiment,burn_time,s,19.0,,,,measured,PSI-159_table_part2.tsv,14
+PSI-159,PSI-159:21137A1,cfig_tests,experiment,peak_burner_temperature,C,132.6178451,,,,measured,PSI-159_table_part2.tsv,14
+PSI-159,PSI-159:21137A2,cfig_tests,experiment,burn_time,s,39.0,,,,measured,PSI-159_table_part2.tsv,15
+PSI-159,PSI-159:21137A2,cfig_tests,experiment,peak_burner_temperature,C,234.5749126,,,,measured,PSI-159_table_part2.tsv,15
+PSI-159,PSI-159:21137A3,cfig_tests,experiment,burn_time,s,124.0,,,,measured,PSI-159_table_part2.tsv,16
+PSI-159,PSI-159:21137A3,cfig_tests,experiment,peak_burner_temperature,C,397.8240746,,,,measured,PSI-159_table_part2.tsv,16
+PSI-159,PSI-159:21137B1,cfig_tests,experiment,burn_time,s,127.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,17
+PSI-159,PSI-159:21137B1,cfig_tests,experiment,peak_burner_temperature,C,179.839068,,,,measured,PSI-159_table_part2.tsv,17
+PSI-159,PSI-159:21137B2,cfig_tests,experiment,burn_time,s,147.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,18
+PSI-159,PSI-159:21137B2,cfig_tests,experiment,peak_burner_temperature,C,161.4007689,,,,measured,PSI-159_table_part2.tsv,18
+PSI-159,PSI-159:21137A4,cfig_tests,experiment,burn_time,s,35.0,,,,measured,PSI-159_table_part2.tsv,19
+PSI-159,PSI-159:21137A4,cfig_tests,experiment,peak_burner_temperature,C,234.0686037,,,,measured,PSI-159_table_part2.tsv,19
+PSI-159,PSI-159:21137A5,cfig_tests,experiment,burn_time,s,44.0,,,,measured,PSI-159_table_part2.tsv,20
+PSI-159,PSI-159:21137A5,cfig_tests,experiment,peak_burner_temperature,C,283.2118442,,,,measured,PSI-159_table_part2.tsv,20
+PSI-159,PSI-159:21137A6,cfig_tests,experiment,burn_time,s,22.0,,,,measured,PSI-159_table_part2.tsv,21
+PSI-159,PSI-159:21137A6,cfig_tests,experiment,peak_burner_temperature,C,172.1251976,,,,measured,PSI-159_table_part2.tsv,21
+PSI-159,PSI-159:21137A7,cfig_tests,experiment,burn_time,s,33.0,,,,measured,PSI-159_table_part2.tsv,22
+PSI-159,PSI-159:21137A7,cfig_tests,experiment,peak_burner_temperature,C,229.5978338,,,,measured,PSI-159_table_part2.tsv,22
+PSI-159,PSI-159:21137D1,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part2.tsv,23
+PSI-159,PSI-159:21137D1,cfig_tests,experiment,peak_burner_temperature,C,65.19673179,,,,measured,PSI-159_table_part2.tsv,23
+PSI-159,PSI-159:21137D2,cfig_tests,experiment,burn_time,s,11.0,,,,measured,PSI-159_table_part2.tsv,24
+PSI-159,PSI-159:21137D2,cfig_tests,experiment,peak_burner_temperature,C,134.2412688,,,,measured,PSI-159_table_part2.tsv,24
+PSI-159,PSI-159:21137C1,cfig_tests,experiment,burn_time,s,8.0,,,,measured,PSI-159_table_part2.tsv,25
+PSI-159,PSI-159:21137C1,cfig_tests,experiment,peak_burner_temperature,C,101.3609727,,,,measured,PSI-159_table_part2.tsv,25
+PSI-159,PSI-159:21153A1,cfig_tests,experiment,burn_time,s,59.0,,,,measured,PSI-159_table_part2.tsv,26
+PSI-159,PSI-159:21153A1,cfig_tests,experiment,peak_burner_temperature,C,198.8830252,,,,measured,PSI-159_table_part2.tsv,26
+PSI-159,PSI-159:21153A2,cfig_tests,experiment,burn_time,s,88.0,,,,measured,PSI-159_table_part2.tsv,27
+PSI-159,PSI-159:21153A2,cfig_tests,experiment,peak_burner_temperature,C,269.8475867,,,,measured,PSI-159_table_part2.tsv,27
+PSI-159,PSI-159:21153A3,cfig_tests,experiment,burn_time,s,258.0,,,,measured,PSI-159_table_part2.tsv,28
+PSI-159,PSI-159:21153A3,cfig_tests,experiment,peak_burner_temperature,C,374.0544372,,,,measured,PSI-159_table_part2.tsv,28
+PSI-159,PSI-159:21153F1,cfig_tests,experiment,burn_time,s,44.0,,,,measured,PSI-159_table_part2.tsv,29
+PSI-159,PSI-159:21153F1,cfig_tests,experiment,peak_burner_temperature,C,204.9444171,,,,measured,PSI-159_table_part2.tsv,29
+PSI-159,PSI-159:21153A4,cfig_tests,experiment,burn_time,s,56.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,30
+PSI-159,PSI-159:21153A4,cfig_tests,experiment,peak_burner_temperature,C,508.715304,,,,measured,PSI-159_table_part2.tsv,30
+PSI-159,PSI-159:21153A5,cfig_tests,experiment,burn_time,s,274.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,31
+PSI-159,PSI-159:21153A5,cfig_tests,experiment,peak_burner_temperature,C,421.2840689,,,,measured,PSI-159_table_part2.tsv,31
+PSI-159,PSI-159:21153C1,cfig_tests,experiment,burn_time,s,34.0,,,,measured,PSI-159_table_part2.tsv,32
+PSI-159,PSI-159:21153C1,cfig_tests,experiment,peak_burner_temperature,C,172.8039716,,,,measured,PSI-159_table_part2.tsv,32
+PSI-159,PSI-159:21153C2,cfig_tests,experiment,burn_time,s,51.0,,,,measured,PSI-159_table_part2.tsv,33
+PSI-159,PSI-159:21153C2,cfig_tests,experiment,peak_burner_temperature,C,238.7934911,,,,measured,PSI-159_table_part2.tsv,33
+PSI-159,PSI-159:21153C3,cfig_tests,experiment,burn_time,s,123.0,,,,measured,PSI-159_table_part2.tsv,34
+PSI-159,PSI-159:21153C3,cfig_tests,experiment,peak_burner_temperature,C,357.3984459,,,,measured,PSI-159_table_part2.tsv,34
+PSI-159,PSI-159:21153G1,cfig_tests,experiment,burn_time,s,131.0,,,,measured,PSI-159_table_part2.tsv,35
+PSI-159,PSI-159:21153G1,cfig_tests,experiment,peak_burner_temperature,C,359.0328722,,,,measured,PSI-159_table_part2.tsv,35
+PSI-159,PSI-159:21153C4,cfig_tests,experiment,burn_time,s,276.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,36
+PSI-159,PSI-159:21153C4,cfig_tests,experiment,peak_burner_temperature,C,436.2667166,,,,measured,PSI-159_table_part2.tsv,36
+PSI-159,PSI-159:21153C5,cfig_tests,experiment,burn_time,s,49.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,37
+PSI-159,PSI-159:21153C5,cfig_tests,experiment,peak_burner_temperature,C,511.7221784,,,,measured,PSI-159_table_part2.tsv,37
+PSI-159,PSI-159:21153C6,cfig_tests,experiment,burn_time,s,44.0,,,,measured,PSI-159_table_part2.tsv,38
+PSI-159,PSI-159:21153C6,cfig_tests,experiment,peak_burner_temperature,C,223.2070887,,,,measured,PSI-159_table_part2.tsv,38
+PSI-159,PSI-159:21153C7,cfig_tests,experiment,burn_time,s,61.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,39
+PSI-159,PSI-159:21153C7,cfig_tests,experiment,peak_burner_temperature,C,334.5683537,,,,measured,PSI-159_table_part2.tsv,39
+PSI-159,PSI-159:21162A1,cfig_tests,experiment,burn_time,s,43.0,,,,measured,PSI-159_table_part2.tsv,40
+PSI-159,PSI-159:21162A1,cfig_tests,experiment,peak_burner_temperature,C,182.037161,,,,measured,PSI-159_table_part2.tsv,40
+PSI-159,PSI-159:21162A2,cfig_tests,experiment,burn_time,s,71.0,,,,measured,PSI-159_table_part2.tsv,41
+PSI-159,PSI-159:21162A2,cfig_tests,experiment,peak_burner_temperature,C,261.6815899,,,,measured,PSI-159_table_part2.tsv,41
+PSI-159,PSI-159:21162A3,cfig_tests,experiment,burn_time,s,232.0,,,,measured,PSI-159_table_part2.tsv,42
+PSI-159,PSI-159:21162A3,cfig_tests,experiment,peak_burner_temperature,C,374.9717854,,,,measured,PSI-159_table_part2.tsv,42
+PSI-159,PSI-159:21162B1,cfig_tests,experiment,burn_time,s,158.0,,,,measured,PSI-159_table_part2.tsv,43
+PSI-159,PSI-159:21162B1,cfig_tests,experiment,peak_burner_temperature,C,360.8093385,,,,measured,PSI-159_table_part2.tsv,43
+PSI-159,PSI-159:21162A4,cfig_tests,experiment,burn_time,s,304.0,,,,measured,PSI-159_table_part2.tsv,44
+PSI-159,PSI-159:21162A4,cfig_tests,experiment,peak_burner_temperature,C,405.3290232,,,,measured,PSI-159_table_part2.tsv,44
+PSI-159,PSI-159:21162C1,cfig_tests,experiment,burn_time,s,19.0,,,,measured,PSI-159_table_part2.tsv,45
+PSI-159,PSI-159:21162C1,cfig_tests,experiment,peak_burner_temperature,C,162.2075945,,,,measured,PSI-159_table_part2.tsv,45
+PSI-159,PSI-159:21162C2,cfig_tests,experiment,burn_time,s,11.0,,,,measured,PSI-159_table_part2.tsv,46
+PSI-159,PSI-159:21162C2,cfig_tests,experiment,peak_burner_temperature,C,94.74583001,,,,measured,PSI-159_table_part2.tsv,46
+PSI-159,PSI-159:21162C3,cfig_tests,experiment,burn_time,s,9.0,,,,measured,PSI-159_table_part2.tsv,47
+PSI-159,PSI-159:21162C3,cfig_tests,experiment,peak_burner_temperature,C,73.13315747,,,,measured,PSI-159_table_part2.tsv,47
+PSI-159,PSI-159:21162C4,cfig_tests,experiment,burn_time,s,9.0,,,,measured,PSI-159_table_part2.tsv,48
+PSI-159,PSI-159:21162C4,cfig_tests,experiment,peak_burner_temperature,C,65.07509445,,,,measured,PSI-159_table_part2.tsv,48
+PSI-159,PSI-159:21162C5,cfig_tests,experiment,burn_time,s,9.0,,,,measured,PSI-159_table_part2.tsv,49
+PSI-159,PSI-159:21162C5,cfig_tests,experiment,peak_burner_temperature,C,63.16842314,,,,measured,PSI-159_table_part2.tsv,49
+PSI-159,PSI-159:21162D1,cfig_tests,experiment,burn_time,s,16.0,,,,measured,PSI-159_table_part2.tsv,50
+PSI-159,PSI-159:21162D1,cfig_tests,experiment,peak_burner_temperature,C,143.9003679,,,,measured,PSI-159_table_part2.tsv,50
+PSI-159,PSI-159:21162F2,cfig_tests,experiment,burn_time,s,10.0,,,,measured,PSI-159_table_part2.tsv,52
+PSI-159,PSI-159:21162F2,cfig_tests,experiment,peak_burner_temperature,C,67.10637802,,,,measured,PSI-159_table_part2.tsv,52
+PSI-159,PSI-159:21174A1,cfig_tests,experiment,burn_time,s,21.0,,,,measured,PSI-159_table_part2.tsv,53
+PSI-159,PSI-159:21174A1,cfig_tests,experiment,peak_burner_temperature,C,132.0,,,,measured,PSI-159_table_part2.tsv,53
+PSI-159,PSI-159:21174A2,cfig_tests,experiment,burn_time,s,29.0,,,,measured,PSI-159_table_part2.tsv,54
+PSI-159,PSI-159:21174A2,cfig_tests,experiment,peak_burner_temperature,C,175.0,,,,measured,PSI-159_table_part2.tsv,54
+PSI-159,PSI-159:21174A3,cfig_tests,experiment,burn_time,s,54.0,,,,measured,PSI-159_table_part2.tsv,55
+PSI-159,PSI-159:21174A3,cfig_tests,experiment,peak_burner_temperature,C,276.0,,,,measured,PSI-159_table_part2.tsv,55
+PSI-159,PSI-159:21174A4,cfig_tests,experiment,burn_time,s,210.0,,,,measured,PSI-159_table_part2.tsv,56
+PSI-159,PSI-159:21174A4,cfig_tests,experiment,peak_burner_temperature,C,421.0,,,,measured,PSI-159_table_part2.tsv,56
+PSI-159,PSI-159:21174B1,cfig_tests,experiment,burn_time,s,109.0,,,,measured,PSI-159_table_part2.tsv,57
+PSI-159,PSI-159:21174B1,cfig_tests,experiment,peak_burner_temperature,C,388.0,,,,measured,PSI-159_table_part2.tsv,57
+PSI-159,PSI-159:21174C1,cfig_tests,experiment,burn_time,s,30.0,,,,measured,PSI-159_table_part2.tsv,58
+PSI-159,PSI-159:21174C1,cfig_tests,experiment,peak_burner_temperature,C,156.0,,,,measured,PSI-159_table_part2.tsv,58
+PSI-159,PSI-159:21174C2,cfig_tests,experiment,burn_time,s,29.0,,,,measured,PSI-159_table_part2.tsv,59
+PSI-159,PSI-159:21174C2,cfig_tests,experiment,peak_burner_temperature,C,190.0,,,,measured,PSI-159_table_part2.tsv,59
+PSI-159,PSI-159:21174C3,cfig_tests,experiment,burn_time,s,35.0,,,,measured,PSI-159_table_part2.tsv,60
+PSI-159,PSI-159:21174C3,cfig_tests,experiment,peak_burner_temperature,C,246.0,,,,measured,PSI-159_table_part2.tsv,60
+PSI-159,PSI-159:21174C4,cfig_tests,experiment,burn_time,s,90.0,,,,measured,PSI-159_table_part2.tsv,61
+PSI-159,PSI-159:21174C4,cfig_tests,experiment,peak_burner_temperature,C,399.0,,,,measured,PSI-159_table_part2.tsv,61
+PSI-159,PSI-159:21174D1,cfig_tests,experiment,burn_time,s,83.0,,,,measured,PSI-159_table_part2.tsv,62
+PSI-159,PSI-159:21174D1,cfig_tests,experiment,peak_burner_temperature,C,393.0,,,,measured,PSI-159_table_part2.tsv,62
+PSI-159,PSI-159:21174F1,cfig_tests,experiment,burn_time,s,40.0,,,,measured,PSI-159_table_part2.tsv,63
+PSI-159,PSI-159:21174F1,cfig_tests,experiment,peak_burner_temperature,C,258.0,,,,measured,PSI-159_table_part2.tsv,63
+PSI-159,PSI-159:21174C5,cfig_tests,experiment,burn_time,s,34.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,64
+PSI-159,PSI-159:21174C5,cfig_tests,experiment,peak_burner_temperature,C,518.0,,,,measured,PSI-159_table_part2.tsv,64
+PSI-159,PSI-159:21174C6,cfig_tests,experiment,burn_time,s,251.0,,,,measured,PSI-159_table_part2.tsv,65
+PSI-159,PSI-159:21174C6,cfig_tests,experiment,peak_burner_temperature,C,488.0,,,,measured,PSI-159_table_part2.tsv,65
+PSI-159,PSI-159:21174F2,cfig_tests,experiment,burn_time,s,24.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,66
+PSI-159,PSI-159:21174F2,cfig_tests,experiment,peak_burner_temperature,C,200.0,,,,measured,PSI-159_table_part2.tsv,66
+PSI-159,PSI-159:21174F3,cfig_tests,experiment,burn_time,s,23.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,67
+PSI-159,PSI-159:21174F3,cfig_tests,experiment,peak_burner_temperature,C,203.0,,,,measured,PSI-159_table_part2.tsv,67
+PSI-159,PSI-159:21174F4,cfig_tests,experiment,burn_time,s,35.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,68
+PSI-159,PSI-159:21174F4,cfig_tests,experiment,peak_burner_temperature,C,242.0,,,,measured,PSI-159_table_part2.tsv,68
+PSI-159,PSI-159:21291A1,cfig_tests,experiment,burn_time,s,167.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,69
+PSI-159,PSI-159:21291A1,cfig_tests,experiment,peak_burner_temperature,C,364.0,,,,measured,PSI-159_table_part2.tsv,69
+PSI-159,PSI-159:21291C1,cfig_tests,experiment,burn_time,s,246.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,70
+PSI-159,PSI-159:21291C1,cfig_tests,experiment,peak_burner_temperature,C,435.0,,,,measured,PSI-159_table_part2.tsv,70
+PSI-159,PSI-159:21291C2,cfig_tests,experiment,burn_time,s,27.0,,,,measured,PSI-159_table_part2.tsv,71
+PSI-159,PSI-159:21291C2,cfig_tests,experiment,peak_burner_temperature,C,182.0,,,,measured,PSI-159_table_part2.tsv,71
+PSI-159,PSI-159:21291B1,cfig_tests,experiment,burn_time,s,32.0,,,,measured,PSI-159_table_part2.tsv,72
+PSI-159,PSI-159:21291B1,cfig_tests,experiment,peak_burner_temperature,C,193.0,,,,measured,PSI-159_table_part2.tsv,72
+PSI-159,PSI-159:21291H1,cfig_tests,experiment,burn_time,s,35.0,,,,measured,PSI-159_table_part2.tsv,73
+PSI-159,PSI-159:21291H1,cfig_tests,experiment,peak_burner_temperature,C,216.0,,,,measured,PSI-159_table_part2.tsv,73
+PSI-159,PSI-159:21291H2,cfig_tests,experiment,burn_time,s,158.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,74
+PSI-159,PSI-159:21291H2,cfig_tests,experiment,peak_burner_temperature,C,456.0,,,,measured,PSI-159_table_part2.tsv,74
+PSI-159,PSI-159:21291D1,cfig_tests,experiment,burn_time,s,47.0,,,,measured,PSI-159_table_part2.tsv,75
+PSI-159,PSI-159:21291D1,cfig_tests,experiment,peak_burner_temperature,C,258.0,,,,measured,PSI-159_table_part2.tsv,75
+PSI-159,PSI-159:21291G1,cfig_tests,experiment,burn_time,s,161.0,,,,measured,PSI-159_table_part2.tsv,76
+PSI-159,PSI-159:21291G1,cfig_tests,experiment,peak_burner_temperature,C,428.0,,,,measured,PSI-159_table_part2.tsv,76
+PSI-159,PSI-159:21291G2,cfig_tests,experiment,burn_time,s,60.0,,,,measured,PSI-159_table_part2.tsv,77
+PSI-159,PSI-159:21291G2,cfig_tests,experiment,peak_burner_temperature,C,311.0,,,,measured,PSI-159_table_part2.tsv,77
+PSI-159,PSI-159:21291J1,cfig_tests,experiment,burn_time,s,80.0,,,,lower bound (flow terminated),PSI-159_table_part2.tsv,78
+PSI-159,PSI-159:21291J1,cfig_tests,experiment,peak_burner_temperature,C,454.0,,,,measured,PSI-159_table_part2.tsv,78
+PSI-159,PSI-159:21291J2,cfig_tests,experiment,burn_time,s,27.0,,,,measured,PSI-159_table_part2.tsv,79
+PSI-159,PSI-159:21291J2,cfig_tests,experiment,peak_burner_temperature,C,152.0,,,,measured,PSI-159_table_part2.tsv,79
+PSI-159,PSI-159:21291J3,cfig_tests,experiment,burn_time,s,83.0,,,,measured,PSI-159_table_part2.tsv,80
+PSI-159,PSI-159:21291J3,cfig_tests,experiment,peak_burner_temperature,C,330.0,,,,measured,PSI-159_table_part2.tsv,80

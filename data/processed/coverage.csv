@@ -1,0 +1,26 @@
+psi_id,acronym,family,pillars,priority_tier,data_status,coverage_source,fuel_classes,o2_min,o2_max,p_min_atm,p_max_atm,flow_max_cm_s,gravity_values,tests,experiment_tests,simulation_tests
+PSI-26,BASS,solid materials (lab),prevention;suppression,1 (bonus),loaded,data,solid,0.159,0.2272,0.97,1.0087,30.0,0,110,110,0
+PSI-25,BASS-II,solid materials (lab),prevention;suppression;detection,1,loaded,data,solid,0.136,0.222,,,28.0,0,129,129,0
+PSI-98,Saffire-I,solid materials (spacecraft scale),prevention,1 (bonus),loaded,data,solid,0.215,0.216,1.0067,1.0067,20.0,0;1,4,4,0
+PSI-99,Saffire-II,solid materials (spacecraft scale),prevention,1,loaded,data,solid,0.215,0.221,1.0165,1.0165,25.0,0;1,19,19,0
+PSI-100,Saffire-III,solid materials (spacecraft scale),prevention,1 (bonus),loaded,data,solid,0.211,0.211,0.9771,0.9771,25.0,0;1,4,4,0
+PSI-20,ACME BRE,material emulator,prevention,1,loaded,data,emulated_solid,0.21,0.4,,,0.0,0,43,43,0
+PSI-69,FLEX,liquid fuels & suppression,suppression;prevention,1,loaded,data,liquid,0.12,0.34,0.6925,3.0525,0.0,0,274,274,0
+PSI-68,FLEX-2,liquid fuels & suppression,suppression;fundamental,1,catalog only (per-test data not downloaded),catalog,liquid,0.1,0.4,0.5,3.0,0.0,0,0,0,0
+PSI-39,CFI,liquid fuels & suppression,fundamental,2 (bonus),loaded,data,liquid,0.17,0.21,0.5,5.0,0.0,0,79,79,0
+PSI-142,Cool-flame counterflow (FLEX),liquid fuels & suppression,fundamental;suppression,2,not requested,catalog,liquid,,,,,,,0,0,0
+PSI-117,Cool-flame CFD (FLEX),liquid fuels & suppression,fundamental;suppression;detection,1,loaded,data,liquid,0.1,0.21,0.5,5.0,0.0,0,72,40,32
+PSI-102,SAME,smoke & detection,detection,1 (bonus),loaded,data,smoke_source,0.21,0.21,1.0,1.0,10.0,0,20,20,0
+PSI-101,SAME-R,smoke & detection,detection,1,loaded,data,smoke_source,0.21,0.21,1.0,1.0,8.1,0,109,109,0
+PSI-115,SAME smoke model,smoke & detection,detection,2,not requested,catalog,smoke_source,,,,,,,0,0,0
+PSI-107,SPICE,soot,detection;fundamental,2,loaded,data,gas,0.21,0.21,1.0,1.0,85.28,0,469,469,0
+PSI-60,SPICE soot analysis,soot,detection;fundamental,2,not requested,catalog,gas,,,,,,,0,0,0
+PSI-106,SLICE,soot,fundamental,3,catalog only,catalog,gas,0.21,0.21,1.0,1.0,,0,0,0,0
+PSI-21,ACME CLD Flame,fundamental flames,fundamental,3,not requested,catalog,gas,,,,,,0,0,0,0
+PSI-159,ACME CFI-G,fundamental flames,fundamental,1,loaded,data,gas,0.179685675,0.3997,0.5,3.0,0.0,0,179,179,0
+PSI-10,ACME Flame Design,fundamental flames,fundamental;detection,3,not requested,catalog,gas,,,,,,0,0,0,0
+PSI-23,ACME s-Flame,fundamental flames,fundamental,3,not requested,catalog,gas,,,,,,0,0,0,0
+PSI-22,ACME E-FIELD Flames,fundamental flames,fundamental,3,not requested,catalog,gas,,,,,,0,0,0,0
+PSI-62,BASS flame-spread model,solid materials (lab),prevention,2,catalog only (model; metadata only),catalog,solid,,,,,,,0,0,0
+PSI-??,?,unknown,,?,unknown,catalog,,,,,,,,0,0,0
+EXT-SAFFIRE-456,Saffire IV-VI (external),solid materials (spacecraft scale),,1 (external),loaded,data,solid,0.22,0.31,0.5339,0.9869,20.0,0,6,6,0

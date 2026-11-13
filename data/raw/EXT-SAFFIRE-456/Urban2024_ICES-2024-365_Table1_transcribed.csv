@@ -1,0 +1,11 @@
+# EXTERNAL LITERATURE (not a PSI investigation). Urban et al., "Preliminary Results from the Saffire VI Experiment", ICES-2024-365, NASA NTRS 20240002981.
+# Tables 1 and 2 VERIFIED against the PDF screenshots (2026-11-13 22:43). Empty = not available in the paper.
+# Heat release: o2cal = oxygen-consumption calorimetry (peak, total); fuelcal = fuel-consumption calorimetry (average, total). Do not mix the two.
+# Nomex sample VI-1 did not ignite (text); it is not in Tables 1-2, so its atmosphere is taken from VI-2 (same flight) in the loader.
+sample,material,thickness_mm,width_cm,length_cm,flow_cm_s,direction,pressure_kpa,o2_mol_percent,free_volume_m3,ignited,burn_duration_s,peak_hrr_o2cal_w,total_hr_o2cal_kj,avg_hrr_fuelcal_w,total_hr_fuelcal_kj,max_temp_sfu_outlet_c,max_temp_ffd_c,ffd_co2_increase_ppm,co2_partial_pressure_increase_mmhg,ffd_co_increase_ppm,note
+IV-1,SIBAL cloth,,41,50,20,Concurrent,100.0,22.0,17.9,yes,130,,,3150,409,45,25,1390,1.03,80,
+V-2,Cotton jersey,,41,50,20,Concurrent,70.7,26.2,19.0,yes,200,,,2800,560,46,23,2360,1.26,83,
+VI-1,Nomex fabric,,41,7,20,Concurrent,,,16.7,no,,,,,,,,,,,did not ignite; not in Tables 1-2
+VI-2,SIBAL cloth,,41,50,20,Concurrent,54.1,31.0,16.7,yes,112,3217,580,3650,409,48,20,2800,1.15,120,
+VI-3,Two-sided PMMA,10,41,18,20,Concurrent,54.6,30.3,16.7,yes,780,3080,1280,,,77,21,8539,3.51,308,flow 20 -> 5 cm/s at 1120 s; ended 1420 s
+VI-4,One-sided PMMA,5,41,18,20,Concurrent,55.2,28.8,16.7,yes,1200,1507,830,,,57,21,8117,3.37,320,

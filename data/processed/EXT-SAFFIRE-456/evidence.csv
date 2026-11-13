@@ -1,0 +1,51 @@
+investigation_id,test_id,dataset_id,source_type,quantity,unit,value,x_name,x_value,x_unit,status,source_file,source_line
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,burn_time,s,130.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,avg_heat_release_fuelcal,W,3150.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,total_heat_release_fuelcal,kJ,409.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,max_temp_sfu_outlet,C,45.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,max_temp_ffd,C,25.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,co2_increase_ffd,ppm,1390.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,co2_partial_pressure_increase,mmHg,1.03,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,saffire456,experiment,co_increase_ffd,ppm,80.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,2.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,burn_time,s,200.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,avg_heat_release_fuelcal,W,2800.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,total_heat_release_fuelcal,kJ,560.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,max_temp_sfu_outlet,C,46.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,max_temp_ffd,C,23.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,co2_increase_ffd,ppm,2360.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,co2_partial_pressure_increase,mmHg,1.26,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,saffire456,experiment,co_increase_ffd,ppm,83.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,3.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,burn_time,s,112.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,peak_heat_release_o2cal,W,3217.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,total_heat_release_o2cal,kJ,580.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,avg_heat_release_fuelcal,W,3650.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,total_heat_release_fuelcal,kJ,409.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,max_temp_sfu_outlet,C,48.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,max_temp_ffd,C,20.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,co2_increase_ffd,ppm,2800.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,co2_partial_pressure_increase,mmHg,1.15,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-2,saffire456,experiment,co_increase_ffd,ppm,120.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,5.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,burn_time,s,780.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,peak_heat_release_o2cal,W,3080.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,total_heat_release_o2cal,kJ,1280.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,max_temp_sfu_outlet,C,77.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,max_temp_ffd,C,21.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,co2_increase_ffd,ppm,8539.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,co2_partial_pressure_increase,mmHg,3.51,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-3,saffire456,experiment,co_increase_ffd,ppm,308.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,6.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,burn_time,s,1200.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,peak_heat_release_o2cal,W,1507.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,total_heat_release_o2cal,kJ,830.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,max_temp_sfu_outlet,C,57.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,max_temp_ffd,C,21.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,co2_increase_ffd,ppm,8117.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,co2_partial_pressure_increase,mmHg,3.37,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:VI-4,saffire456,experiment,co_increase_ffd,ppm,320.0,,,,external literature (verified vs PDF),Urban2024_ICES-2024-365_Table1_transcribed.csv,7.0
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,olson_sibal_cotton,experiment,flame_spread_rate,mm/s,3.5999999999999996,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,olson_sibal_cotton,experiment,pyrolysis_length,cm,8.5,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,olson_sibal_cotton,experiment,flame_length,cm,8.5,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:IV-1,olson_sibal_cotton,experiment,flame_height,cm,2.7,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,olson_sibal_cotton,experiment,flame_spread_rate,mm/s,3.4000000000000004,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,olson_sibal_cotton,experiment,pyrolysis_length,cm,10.0,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,olson_sibal_cotton,experiment,flame_length,cm,14.0,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
+EXT-SAFFIRE-456,EXT-SAFFIRE-456:V-2,olson_sibal_cotton,experiment,flame_height,cm,3.5,,,,external literature (Olson et al. Table 1; verified vs PDF),Olson_SIBAL-cotton_Table1_transcribed.csv,
