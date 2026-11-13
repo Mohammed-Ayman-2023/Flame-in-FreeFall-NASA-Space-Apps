@@ -102,17 +102,41 @@ tests/                       automated data checks
   and a verified paper disagree, the paper value is used and the PSI value is kept alongside.
 - **Experiments and simulations are never mixed**, and external literature rows are labelled as such.
 
-## Sources and licence
+## Sources and references
 
-NASA PSI data are released under CC0-1.0; each investigation's DOI is recorded in the catalog and on every row.
-Saffire IV-VI values are from Urban et al., *Preliminary Results from the Saffire VI Experiment*, ICES-2024-365
-(NASA NTRS 20240002981) and Olson et al., *The effect of duct size, sample size, and fuel composition on concurrent
-flame spread over large cellulose samples in microgravity* (UCL Discovery eprint 10164340).
+| Source | What we used | Licence / access |
+|---|---|---|
+| NASA Physical Sciences Informatics (PSI): BASS (PSI-26), BASS-II (PSI-25), Saffire I-III (PSI-98, 99, 100), FLEX (PSI-69), CFI (PSI-39), PSI-117, ACME BRE (PSI-20), ACME CFI-G (PSI-159), SPICE (PSI-107), SAME (PSI-102), SAME-R (PSI-101), plus catalog entries for PSI-68, 106, 62, 142, 115, 60, 10, 21, 22, 23 | Test matrices, analysed data, investigation pages | CC0-1.0; DOI of each investigation in `catalog/investigations.csv` and on every data row |
+| Urban et al., *Preliminary Results from the Saffire VI Experiment*, ICES-2024-365, NASA NTRS 20240002981 | Tables 1-2 (Saffire IV-VI conditions and results) | NASA Technical Reports Server, public |
+| Urban et al., *Fire Safety Implications of Preliminary Results from Saffire IV and V*, ICES-2021-266, NASA NTRS 20210011521 | Background on Saffire IV-V | NASA Technical Reports Server, public |
+| NASA NTRS 20180005168 (Saffire I-III results) | Table 1 (burn lengths, spread rates, conditions) | NASA Technical Reports Server, public |
+| Olson et al., *The effect of duct size, sample size, and fuel composition on concurrent flame spread over large cellulose samples in microgravity* (accepted manuscript, UCL Discovery eprint 10164340) | Table 1 (spread rates, cabin pressures) | Open-access repository; values cited, not redistributed text |
+| Ferkul et al. (2013), BASS fabric flammability paper | Table I (flow direction and speeds for BASS fabric tests) | Cited; values only |
+| Python: pandas, NumPy, SciPy, Matplotlib, openpyxl, pytest, Jupyter | Software | Open source (BSD / PSF / MIT) |
+
+## AI usage declaration
+
+This project used **Claude (Anthropic)**, an AI assistant, as a development aid. In line with the NASA Space Apps
+rules, AI involvement is declared here and in commit metadata (`Co-Authored-By` trailers):
+
+- **Code:** the data loaders, build pipeline, ML-table builder and tests were written with AI assistance and
+  reviewed and run by the author.
+- **Data:** values from images and PDFs (Saffire and BASS paper tables) were transcribed with AI assistance and
+  verified by the author against the original tables; flame-out labels were spot-checked against the original
+  crew notes (`qa/`).
+- **Documentation:** this README and the files in `ml/` were drafted with AI assistance.
+- No AI-generated images are used. No NASA logos, flags or mission insignia are used or modified.
+
+All scientific data come from NASA and the cited publications; nothing in the dataset is AI-generated.
+
+## Licence
+
+Original code and documentation: [Apache License 2.0](LICENSE). NASA data remain CC0-1.0 under their original terms.
 
 ## Author
 
 **Mohammed Ayman** · [GitHub](https://github.com/Mohammed-Ayman-2023)
 
-Data collection, cleaning and validation, dataset design, modelling and analysis.
+Project lead: data collection, validation, dataset design, modelling and analysis (with AI assistance, see above).
 
 Developed for the NASA Space Apps Challenge 2026.
