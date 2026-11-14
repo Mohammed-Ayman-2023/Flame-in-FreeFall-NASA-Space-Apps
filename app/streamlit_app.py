@@ -716,7 +716,9 @@ with tab_gap:
     wrap_table(gb.rename(columns={"material": "Material", "microgravity": "Microgravity (Saffire I-III, Cygnus)",
                                   "earth_1g": "Earth gravity (NASA 1 g companion test)",
                                   "partial_gravity": "What it suggests for the Moon"}))
-    st.caption("NASA NTRS 20180005168, Table 1: each Saffire sample was also burned in a 1 g test; microgravity "
+    st.caption("NASA NTRS 20180005168, Table 1 lists each Saffire sample's 1 g result next to its microgravity "
+               "result; Saffire-II samples match the size of NASA's 1 g screening test, NASA-STD-6001 Test 1 "
+               "(SAFFIRE-II readme). Microgravity "
                "burns at about 21-22 % O₂ and 1 atm with 20-25 cm/s flow. Where the bounds agree it is the best "
                "available guess, not a measurement: NASA's drop-tower centrifuge tests for FM2 found some materials "
                "burn at lower oxygen levels at lunar gravity than at 1 g.")
@@ -729,7 +731,7 @@ with tab_gap:
 # ================================================================= 5. DATA
 with tab_data:
     st.subheader("Dataset v1: 1,517 tests, 10,107 measured values, 14 sources")
-    st.markdown("Every value traces to its source file and line. Raw files are never edited; all 101 corrections are "
+    st.markdown("Every value traces to its source file and line. Raw files are never edited; all 103 corrections and source conflicts are "
                 "logged. Units: O2 as mole fraction, pressure in atm, air speed in cm/s.")
     src_t = SRC.merge(CAT[["psi_id", "doi"]] if "doi" in CAT else CAT[["psi_id"]], left_on="investigation_id",
                       right_on="psi_id", how="left").drop(columns=["psi_id"], errors="ignore")

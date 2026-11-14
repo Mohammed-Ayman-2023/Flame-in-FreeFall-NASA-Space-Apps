@@ -23,10 +23,12 @@ PSI-99,experimental_table,medium,typo,2-4: thickness '037 mm',read as 0.37 mm
 PSI-99,experimental_table,medium,typo,2-5: thickness '037 mm',read as 0.37 mm
 PSI-99,experimental_table,medium,missing value,2-6: Material blank,filled from NTRS 20180005168 Table 1 (Cotton-Fiberglass)
 PSI-99,experimental_table,medium,source conflict,2-6: airflow 20 (PSI) vs 25 (paper),used the verified results-table value; PSI value kept in flags
+PSI-99,readme,medium,source conflict,2-6: airflow 30 cm/s in the SAFFIRE-II Readme Table 1 vs 25 cm/s used,"kept the verified NTRS 20180005168 Table 1 value; the PSI experimental table, the NTRS paper and the readme do not all agree"
 PSI-99,experimental_table,medium,typo,2-6: thickness '037 mm',read as 0.37 mm
 PSI-99,experimental_table,medium,two materials in one row,"2-7 is PMMA (0.85 mm, 5 cm) followed by Nomex (0.37 mm, 24 cm)","split into tests 2-7a (PMMA) and 2-7b (Nomex), table Note 2"
 PSI-99,experimental_table,medium,missing value,2-8: thickness refers to a figure,left blank
 PSI-99,experimental_table,medium,missing value,2-9: Material blank,filled from NTRS 20180005168 Table 1 (PMMA)
+PSI-99,readme,medium,source conflict,2-9: airflow 30 cm/s in the SAFFIRE-II Readme Table 1 vs 20 cm/s used,"kept the verified NTRS 20180005168 Table 1 value; the PSI experimental table, the NTRS paper and the readme do not all agree"
 PSI-99,experimental_table,medium,missing condition,cabin pressure and gas mix not in the table,filled per flight from Olson et al. Table 1 (see _saffire.FLIGHT_P_KPA)
 PSI-99,experimental_table,low,encoding,column headers '?-g ...' have lost the micro sign,read as micro-g
 PSI-99,experimental_table,low,non-data rows,"6 rows are flow-visualisation runs or footnotes: ['F1C1/F1C2', 'F2C1/F2C2'] ...",excluded from tests; footnotes applied below

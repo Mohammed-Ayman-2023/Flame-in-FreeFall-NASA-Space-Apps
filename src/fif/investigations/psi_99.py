@@ -36,6 +36,9 @@ def build(raw_dir: Path) -> PluginResult:
             "excluded from tests; footnotes applied below")
     paper = read_paper_table(raw_dir)
     paper = paper.set_index("psi_sample") if len(paper) else paper
+    rm_path = raw_dir / "PSI-99_Readme_Table1_samples_transcribed.csv"
+    readme = ({r["sample"]: r for _, r in pd.read_csv(rm_path, comment="#", dtype=str).iterrows()}
+              if rm_path.exists() else {})
 
     burns = []
     for _, r in samples.iterrows():
@@ -60,6 +63,13 @@ def build(raw_dir: Path) -> PluginResult:
             log.add("experimental_table", "medium", "source conflict", f"{sid}: airflow {flow:g} (PSI) vs {pf:g} (paper)",
                     "used the verified results-table value; PSI value kept in flags")
             flow = pf
+        rm_row = readme.get(sid.replace("2-", "S"))
+        if rm_row is not None and first_number(rm_row["flow_cm_s"]) not in (None, flow):
+            rf = first_number(rm_row["flow_cm_s"])
+            flags.append(f"airflow: PSI readme Table 1 says {rf:g} cm/s (kept {flow:g} cm/s from the results table)")
+            log.add("readme", "medium", "source conflict",
+                    f"{sid}: airflow {rf:g} cm/s in the SAFFIRE-II Readme Table 1 vs {flow:g} cm/s used",
+                    f"kept the verified {PAPER} Table 1 value; the PSI experimental table, the NTRS paper and the readme do not all agree")
         common = dict(length_cm=first_number(r["Sample Length"]), width_cm=first_number(r["Sample Width (cm)"]),
                       x_o2=o2, flow_cm_s=flow, direction=str(r["Flow Direction"]).strip().lower(),
                       ignition_power_w=first_number(r["Ignition Power (W)"]),

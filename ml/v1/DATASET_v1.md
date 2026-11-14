@@ -1,6 +1,6 @@
 # Flame in Freefall: dataset v1 (frozen 2026-11-13 23:30 Cairo)
 
-**1,517 test rows, 10,107 evidence rows, 101 logged issues, 14 sources** (13 PSI investigations + 1 external NASA literature set).
+**1,517 test rows, 10,107 evidence rows, 103 logged issues, 14 sources** (13 PSI investigations + 1 external NASA literature set). Two source-conflict notes were added on 2026-11-14 from the SAFFIRE-II readme (PSI-99 airflow for samples 2-6 and 2-9); no values changed.
 Raw files are never edited; every correction is made in a loader and logged in `data/processed/issues.csv`. Every row carries source_file, flags and confidence.
 
 ## Sources

@@ -60,8 +60,9 @@ INVESTIGATIONS = {
     "PSI-98": dict(what="The first large spacecraft fire: a 94 × 40 cm cotton-fiberglass sheet burned inside an empty "
                         "Cygnus cargo ship after it left the ISS, to see how fast a big fire grows.",
                    area="prevention, detection", platform="Cygnus (after ISS)", years="2016"),
-    "PSI-99": dict(what="Nine smaller samples (fabric, acrylic, Nomex, silicone) burned on Cygnus, each also burned on "
-                        "Earth, to compare the flammability screening test with real microgravity fires.",
+    "PSI-99": dict(what="Nine 5 × 29 cm samples (silicone, cotton-fiberglass fabric, acrylic, acrylic joined to "
+                        "Nomex), the same size as NASA's 1 g screening test (NASA-STD-6001 Test 1), burned on Cygnus "
+                        "to compare microgravity flammability limits with that test.",
                    area="prevention", platform="Cygnus (after ISS)", years="2016"),
     "PSI-100": dict(what="A second large cotton-fiberglass sheet burned on Cygnus, with flow in both directions.",
                     area="prevention, detection", platform="Cygnus (after ISS)", years="2017"),
@@ -570,14 +571,15 @@ HARDWARE = {
                            "of their smoke instruments, a modified P-Trak, was first checked in the Dust "
                            "and Aerosol Measurement Feasibility Tests (DAFT and DAFT-2), which measured dust instead "
                            "of smoke (challenge brief; NASA Glenn Combustion Science page)."),
-    "saffire": dict(name="Saffire flight unit inside an empty Cygnus cargo vehicle", short="Saffire unit, Cygnus",
+    "saffire": dict(name="Saffire flight hardware inside an uncrewed Cygnus cargo vehicle", short="Saffire, Cygnus",
                     members=["PSI-98", "PSI-99", "PSI-100", "EXT-SAFFIRE-456"],
-                    text="Large samples burned in a flow tunnel inside Cygnus after it left the ISS, so a real "
-                         "spacecraft-sized fire could be studied without risk to a crew."),
+                    text="A sample card sits in the middle of a large flow duct; fans at the top draw air through "
+                         "it past flow straighteners. Burned inside Cygnus after it left the ISS, so a spacecraft-"
+                         "sized fire could be studied without risk to a crew (PSI-99 page)."),
 }
 HW_OF = {psi: k for k, g in HARDWARE.items() for psi in g["members"]}
-HARDWARE_SOURCE = ("NASA Space Apps 2026 challenge brief; Ferkul et al. 2013 (BASS duct); PSI investigation pages; "
-                   "catalog/investigations.csv")
+HARDWARE_SOURCE = ("NASA Space Apps 2026 challenge brief; Ferkul et al. 2013 (BASS duct); PSI investigation pages "
+                   "and the SAFFIRE-II readme (PSI-99); catalog/investigations.csv")
 
 
 def derived_from(K: dict, psi: str) -> str:
@@ -597,15 +599,24 @@ def hardware_text(K: dict, psi: str) -> str:
 
 # Instruments named on each NASA investigation page (data/raw/<id>/*_investigation_page.txt) or source report.
 SENSORS = {
-    "PSI-98": "two video cameras; thermocouples for flow, flame and plume temperature; two radiometers; solid-state "
-              "pressure, CO₂ and O₂ sensors; two anemometers (investigation page)",
-    "PSI-100": "camera images are the raw data PSI publishes for this investigation (PSI page)",
+    "PSI-98": "two cameras viewing the front of the sample; thermocouples at the duct inlet and outlet, embedded in the "
+              "sample and in the plume; radiometers viewing the front and back of the sample; solid-state CO₂, O₂ and "
+              "pressure sensors in the avionics bay; an anemometer on each side of the sample; a smoke wire at the "
+              "sample's leading edge for flow uniformity (SAFFIRE-II readme, Table 3: Saffire I, II and III diagnostics)",
+    "PSI-99": "two cameras viewing the front of the sample; thermocouples at the duct inlet and outlet, embedded in the "
+              "sample and in the plume; radiometers viewing the front and back of the sample; solid-state CO₂, O₂ and "
+              "pressure sensors in the avionics bay; an anemometer on each side of the sample; a smoke wire at the "
+              "sample's leading edge for flow uniformity (SAFFIRE-II readme, Table 3: Saffire I, II and III diagnostics)",
+    "PSI-100": "two cameras viewing the front of the sample; thermocouples at the duct inlet and outlet, embedded in the "
+              "sample and in the plume; radiometers viewing the front and back of the sample; solid-state CO₂, O₂ and "
+              "pressure sensors in the avionics bay; an anemometer on each side of the sample; a smoke wire at the "
+              "sample's leading edge for flow uniformity (SAFFIRE-II readme, Table 3: Saffire I, II and III diagnostics)",
     "PSI-26": "digital still camera through the top window (about 1 frame/s), video camera through the front window "
               "(30 frames/s), hot-wire anemometer for flow speed, wide-angle radiometer inside the duct "
               "(Ferkul et al. 2013)",
     "PSI-25": "video with flow speed, fan and radiometer overlay; Nikon D300s still camera; O₂ sensor; CDM CO₂ "
               "sensor and CSA-CP CO analyser (BASS-II data FAQ and science requirements document)",
-    "EXT-SAFFIRE-456": "Saffire flight unit; far-field CO₂ and CO sensors used for the cabin-air results "
+    "EXT-SAFFIRE-456": "far-field CO₂ and CO measurements used for the cabin-air results "
                        "(Urban et al. 2024, Table 2)",
     "PSI-102": "two smoke detectors, video cameras, thermophoretic samplers whose particles were sized by TEM after "
                "flight (investigation page)",

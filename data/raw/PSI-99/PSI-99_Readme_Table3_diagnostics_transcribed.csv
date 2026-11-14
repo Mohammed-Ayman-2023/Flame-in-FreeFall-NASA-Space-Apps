@@ -1,0 +1,13 @@
+# Transcribed from "PSI-99_Science Documents_SAFFIRE-II Readme.docx", Table 3 (Saffire I, II and III Diagnostics),
+# an image in the document. NOT a NASA data file. Transcribed 2026-11-14 and checked against the image.
+measurement,method,location
+Flow temperature,thermocouples,inlet and outlet of flow duct
+Flame temperature,thermocouples,embedded in sample
+Plume temperature,thermocouple,
+Flame radiation,radiometers,two viewing front of sample; two viewing back of sample
+CO2 mole fraction,solid-state sensor,in avionics bay
+O2 mole fraction,solid-state sensor,inlet to avionics bay
+Pressure,solid-state sensor,in avionics bay
+Flow velocity,anemometers,one on each side of sample
+Flame image,cameras,two viewing front of sample
+Flow uniformity,smoke wire,leading edge of sample

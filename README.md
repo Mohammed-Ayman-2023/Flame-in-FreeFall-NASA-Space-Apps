@@ -55,7 +55,7 @@ Every number carries an evidence label: **NASA measurement**, **Model prediction
 
 ## The dataset
 
-**Dataset v1** (frozen 2026-11-13): **1,517 tests, 10,107 measured values, 14 sources, 101 logged corrections.**
+**Dataset v1** (frozen 2026-11-13): **1,517 tests, 10,107 measured values, 14 sources, 103 logged corrections and source conflicts.**
 Every value traces back to its source file and line; raw files are never edited.
 
 | Fire type | Investigations |

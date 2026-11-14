@@ -1,0 +1,12 @@
+# Transcribed from "PSI-99_Science Documents_SAFFIRE-II Readme.docx", Table 1 (Saffire-II Samples), an image in the
+# document. NOT a NASA data file. Transcribed 2026-11-14 and checked against the image. Used only to flag conflicts.
+sample,material,thickness_text,flow_cm_s,igniter_position
+S1,Silicone,0.25 mm,20,Upstream
+S2,Silicone,0.61 mm,20,Upstream
+S3,Silicone,1.02 mm,20,Upstream
+S4,Silicone,0.36 mm,20,Downstream
+S5,SIBAL fabric,0.33 mm,20,Upstream
+S6,SIBAL fabric,0.33 mm,30,Upstream
+S7,PMMA to Nomex,0.33 mm,20,Upstream
+S8,Structured PMMA,10 mm (with tapered edge for ignition),20,Upstream
+S9,Flat PMMA,10 mm (with tapered edge for ignition),30,Upstream

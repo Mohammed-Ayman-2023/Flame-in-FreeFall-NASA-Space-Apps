@@ -19,8 +19,9 @@ the ranking, compare investigations, ask the archive questions answered with cit
 ## Project details
 **What it does.** Four parts, all open source:
 1. **Data layer.** One loader per investigation converts PSI test matrices, analysed data and NASA report tables to
-   one set of units (O2 mole fraction, atm, cm/s, mm). Every value keeps its source file and line; 101 corrections
-   are logged; raw files are never edited; transcribed tables were verified against the published PDFs.
+   one set of units (O2 mole fraction, atm, cm/s, mm). Every value keeps its source file and line; 103 corrections
+   and source conflicts are logged; raw files are never edited; transcribed tables were verified against the
+   published PDFs.
 2. **Models** (validated only on tests they never saw): solid-fuel flammability (gradient boosting with physics constraints, ROC-AUC 0.96),
    still-air gas-flame burn time (Weibull survival model, concordance 0.75 leaving out whole ISS days), droplet
    burning rate and extinction size (Gaussian process, R² 0.70 and 0.90). Every prediction carries an uncertainty
