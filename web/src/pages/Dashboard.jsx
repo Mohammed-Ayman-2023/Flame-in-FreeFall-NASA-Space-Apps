@@ -17,6 +17,7 @@ import findings from '../data/findings.json'
 import sources from '../data/sources.json'
 import bass2 from '../data/bass2_gas.json'
 import ragPrompt from '../data/rag_prompt.json'
+import { KEY_STORE, geminiAnswer, MiniMarkdown } from '../lib/rag'
 
 const ax = { fill: '#868B93', fontFamily: 'IBM Plex Mono, monospace', fontSize: 11 }
 const BADGE = { measured: 'measurement', model: 'prediction', gap: 'gap', literature: 'literature' }
@@ -202,36 +203,6 @@ export function MissionGaps() {
 
 /* ================================================================== ASK THE ARCHIVE */
 const EXAMPLES = ['Will a fire go out if we stop the fans at 34 % oxygen?', 'Do smoke detectors work in a lunar habitat?', 'Which materials still burn in oxygen-rich air?', 'How do we put out a fire with CO2 or helium?', 'What about Moon or Mars gravity?', 'Why does fire spread faster in small spaces?']
-const KEY_STORE = 'fif-gemini-key'
-let passagesP = null, bm25 = null
-function loadPassages() {
-  if (!passagesP) passagesP = fetch((import.meta.env.BASE_URL || './') + 'data/rag_passages.json').then(r => r.json())
-  return passagesP
-}
-const tok = s => (s.toLowerCase().replace(/₂/g, '2').match(/[a-z0-9]+(?:[.-][a-z0-9]+)*/g) || []).filter(t => t.length > 1 && !STOPW.has(t))
-const STOPW = new Set('the of and in to a is for on with by as at from that this are was were be an or it its which what how does do did can will would about into than then there their these those has have had not no but if we you our'.split(' '))
-function buildBM25(P) {
-  const docs = P.map(p => tok(`${p[0]} ${p[1]} ${p[2]} ${p[3]}`))
-  const df = new Map(); docs.forEach(d => new Set(d).forEach(t => df.set(t, (df.get(t) || 0) + 1)))
-  const avg = docs.reduce((s, d) => s + d.length, 0) / docs.length, N = docs.length
-  const tfs = docs.map(d => { const m = new Map(); d.forEach(t => m.set(t, (m.get(t) || 0) + 1)); return m })
-  return (q, k = 10) => {
-    const qs = [...new Set(tok(q))]
-    const sc = tfs.map((m, i) => { let s = 0; for (const t of qs) { const f = m.get(t); if (!f) continue; const idf = Math.log(1 + (N - df.get(t) + .5) / (df.get(t) + .5)); s += idf * f * 2.2 / (f + 1.2 * (.25 + .75 * docs[i].length / avg)) } return [s, i] })
-    return sc.filter(x => x[0] > 0).sort((a, b) => b[0] - a[0]).slice(0, k).map(([s, i]) => ({ score: s, h: P[i].slice(0, 3).filter(Boolean), text: P[i][3] }))
-  }
-}
-// the team's prompt (RAG/src/prompts.py), exported verbatim
-const buildPrompt = (question, documents) => `${ragPrompt.system}\n# RETRIEVED DOCUMENTS\n<documents>\n${documents || '(No documents were retrieved for this question.)'}\n</documents>\n\n# USER QUESTION\n<question>\n${question}\n</question>\n\nAnswer the question following every rule above. Use only the retrieved documents.`
-
-function MiniMarkdown({ text }) {
-  const lines = String(text).split('\n')
-  const inline = s => s.split(/(\*\*[^*]+\*\*)/g).map((p, i) => p.startsWith('**') && p.endsWith('**') ? <b key={i}>{p.slice(2, -2)}</b> : p)
-  return <div className="col" style={{ gap: 6, fontSize: 15, lineHeight: 1.6 }}>{lines.map((l, i) => l.trim() === '' ? null : /^\s*[-*•]\s+/.test(l)
-    ? <div key={i} className="row" style={{ alignItems: 'flex-start', gap: 8, paddingLeft: 6 }}><span style={{ color: 'var(--ember)' }}>•</span><span>{inline(l.replace(/^\s*[-*•]\s+/, ''))}</span></div>
-    : <p key={i} style={{ margin: 0 }}>{inline(l.replace(/^#+\s*/, ''))}</p>)}</div>
-}
-
 export function Ask() {
   const { mission } = useMission()
   const api = useApi()
@@ -240,7 +211,7 @@ export function Ask() {
   const [q, setQ] = useState(EXAMPLES[0])
   const hits = useMemo(() => (q.trim() ? search(q) : []), [q, search])
   const [key, setKey] = useState(() => { try { return sessionStorage.getItem(KEY_STORE) || '' } catch { return '' } })
-  const [remember, setRemember] = useState(() => { try { return !!sessionStorage.getItem(KEY_STORE) } catch { return false } })
+  const [remember, setRemember] = useState(true)
   const [ai, setAi] = useState(null)
   const [busy, setBusy] = useState(false)
   const serverAI = !!(api && api.ai_answers && api.ai_answers.available)
@@ -254,17 +225,7 @@ export function Ask() {
       }
       if (!key.trim()) { setAi({ error: 'Add a Gemini API key below to get an AI answer on this site.' }); return }
       try { remember ? sessionStorage.setItem(KEY_STORE, key.trim()) : sessionStorage.removeItem(KEY_STORE) } catch { /* private mode */ }
-      const P = await loadPassages()
-      if (!bm25) bm25 = buildBM25(P)
-      const got = bm25(q, 10)
-      const documents = 'Documents Retrieved From The Research Reports Data Base That Are Most Relevant To The Question: \n\n' + got.map((d, i) => `Document ${i + 1} [${d.h.join(' > ') || 'NASA report'}]:\n${d.text}`).join('\n\n')
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:generateContent`, {
-        method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': key.trim() },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: buildPrompt(q, documents) }] }], generationConfig: { temperature: 0.1 } }),
-      })
-      const j = await res.json()
-      if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
-      const answer = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')
+      const { answer, docs: got } = await geminiAnswer(q, key.trim())
       setAi({ answer: answer || 'Gemini returned no text.', docs: got, via: 'browser', model: ragPrompt.model })
     } catch (e) {
       setAi({ error: `Gemini could not answer (${e.message}). The cited search above still works.` })
@@ -297,7 +258,7 @@ export function Ask() {
           <label htmlFor="gkey" className="lab">Your Gemini API key (from Google AI Studio)</label>
           <div className="row" style={{ gap: 10, flexWrap: 'wrap' }}>
             <input id="gkey" type="password" autoComplete="off" spellCheck="false" value={key} onChange={e => setKey(e.target.value)} placeholder="Paste your key here, not in a chat" style={{ flex: 1, minWidth: 240, background: 'var(--panel2)', border: '1px solid var(--line2)', borderRadius: 8, color: 'var(--text)', padding: '11px 12px', fontFamily: 'var(--mono)', fontSize: 13 }} />
-            <label className="row" style={{ gap: 6, fontSize: 13 }}><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} />Remember in this tab</label>
+            <label className="row" style={{ gap: 6, fontSize: 13 }}><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} />Keep for this tab (also turns on AI answers in the chat)</label>
           </div>
           <span className="faint" style={{ fontSize: 12.5, lineHeight: 1.5 }}>The key goes only from your browser to Google's Gemini API; this site has no server and never sees or stores it (with "remember", it stays in this tab's session storage until you close it). On this static site the 4,086 passages are searched with BM25 keyword ranking in your browser instead of the team's embedding search.</span>
         </div>}
