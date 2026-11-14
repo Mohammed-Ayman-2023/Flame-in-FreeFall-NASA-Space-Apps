@@ -40,8 +40,9 @@ export function MissionPicker({ compact }) {
   const ref = useRef(null)
   useEffect(() => {
     const on = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
-    document.addEventListener('mousedown', on)
-    return () => document.removeEventListener('mousedown', on)
+    const k = e => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('mousedown', on); document.addEventListener('keydown', k)
+    return () => { document.removeEventListener('mousedown', on); document.removeEventListener('keydown', k) }
   }, [])
   return (
     <div ref={ref} style={{ position: 'relative' }}>
@@ -52,7 +53,7 @@ export function MissionPicker({ compact }) {
         <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="#A6AAB1" strokeWidth="2" /></svg>
       </button>
       {open && (
-        <div role="listbox" className="card" style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 320, padding: 8, zIndex: 40, boxShadow: '0 20px 50px rgba(0,0,0,.5)' }}>
+        <div role="listbox" className="card" style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 320, maxWidth: 'calc(100vw - 36px)', padding: 8, zIndex: 40, boxShadow: '0 20px 50px rgba(0,0,0,.5)' }}>
           {missions.map(m => (
             <button key={m.id} role="option" aria-selected={m.id === mission.id} type="button" onClick={() => { setMission(m.id); setOpen(false) }}
               style={{ width: '100%', textAlign: 'left', background: m.id === mission.id ? 'var(--ember-soft)' : 'transparent', border: 0, borderRadius: 8, padding: '10px 12px', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -68,18 +69,63 @@ export function MissionPicker({ compact }) {
 }
 
 const NAV = [['Learn', '/learn/1'], ['Fire Lab', '/lab'], ['Investigations', '/explore'], ['Compare', '/compare'], ['Briefing', '/briefing'], ['Gaps', '/gaps'], ['Equipment', '/equipment'], ['Methods', '/methods']]
-export function Nav({ active }) {
+
+/** NASA Space Apps Challenge logo, top left. The official file is not redrawn here: put the logo downloaded from
+    spaceappschallenge.org/brand at web/public/brand/space-apps-logo.svg (or .png). Until then a text badge shows. */
+export function SpaceAppsBadge() {
+  const base = import.meta.env.BASE_URL || './'
+  const [src, setSrc] = useState(base + 'brand/space-apps-logo.svg')
+  const [ok, setOk] = useState(true)
   return (
-    <header style={{ borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 30, background: 'rgba(10,11,13,.92)', backdropFilter: 'blur(8px)' }}>
-      <div className="wrap" style={{ padding: '14px 32px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 20, justifyContent: 'space-between' }}>
-        <Link to="/" className="row" style={{ gap: 10 }}><Mark /><span className="disp" style={{ fontWeight: 600, fontSize: 17 }}>Flame in Freefall</span></Link>
-        <nav aria-label="Main" className="wrap-row" style={{ gap: 22 }}>
-          {NAV.map(([n, to]) => (
-            <Link key={n} to={to} style={{ fontSize: 14, padding: '8px 2px', color: active === n ? 'var(--text)' : 'var(--muted)', borderBottom: `1px solid ${active === n ? 'var(--ember)' : 'transparent'}` }}>{n}</Link>
-          ))}
+    <a href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer" className="sa-badge" aria-label="NASA Space Apps Challenge 2026 (opens in a new tab)">
+      {ok
+        ? <img src={src} alt="NASA Space Apps Challenge" height="30" onError={() => (src.endsWith('.svg') ? setSrc(base + 'brand/space-apps-logo.png') : setOk(false))} />
+        : <span className="sa-text"><b>NASA Space Apps</b><span>Challenge 2026</span></span>}
+    </a>
+  )
+}
+
+function Brand() {
+  return (
+    <div className="row" style={{ gap: 12, minWidth: 0 }}>
+      <SpaceAppsBadge />
+      <span aria-hidden="true" className="brand-sep" style={{ width: 1, height: 26, background: 'var(--line2)' }} />
+      <Link to="/" className="row brand-link" style={{ gap: 10 }} aria-label="Flame in Freefall home"><Mark /><span className="disp" style={{ fontWeight: 600, fontSize: 17, whiteSpace: 'nowrap' }}>Flame in Freefall</span></Link>
+    </div>
+  )
+}
+
+export function Nav({ active, transparent }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (!open) return
+    const k = e => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k)
+  }, [open])
+  const skip = () => { const m = document.querySelector('main'); if (m) { m.setAttribute('tabindex', '-1'); m.focus(); m.scrollIntoView() } }
+  return (
+    <header className={'site-head' + (transparent ? ' clear' : '')}>
+      <button type="button" className="skip" onClick={skip}>Skip to content</button>
+      <div className="wrap head-row">
+        <Brand />
+        <nav aria-label="Main" className="nav-links">
+          {NAV.map(([n, to]) => <Link key={n} to={to} className={'nav-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
         </nav>
-        <MissionPicker />
+        <div className="row" style={{ gap: 10 }}>
+          <div className="hide-xs"><MissionPicker compact /></div>
+          <button type="button" className="btn sm nav-menu" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">{open ? <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" /> : <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" />}</svg>
+            Menu
+          </button>
+        </div>
       </div>
+      {open && (
+        <div id="mobile-nav" className="mobile-nav">
+          <nav aria-label="Main (menu)" className="wrap col" style={{ gap: 2, paddingTop: 8, paddingBottom: 16 }}>
+            {NAV.map(([n, to]) => <Link key={n} to={to} onClick={() => setOpen(false)} className={'m-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
+            <div style={{ paddingTop: 12 }}><MissionPicker /></div>
+          </nav>
+        </div>)}
     </header>
   )
 }
@@ -88,13 +134,13 @@ export function Footer() {
   return (
     <footer style={{ borderTop: '1px solid var(--line)', marginTop: 40 }}>
       <div className="wrap" style={{ padding: '32px 32px 40px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 20, fontSize: 13, color: 'var(--muted)' }}>
-        <div className="row" style={{ gap: 10 }}><Mark size={18} /><span>Flame in Freefall · NASA Space Apps Challenge 2026</span></div>
+        <div className="row" style={{ gap: 10 }}><Mark size={18} /><span>Flame in Freefall · NASA Space Apps Challenge 2026 · Zewail City &amp; Cairo University team</span></div>
         <div className="wrap-row mono" style={{ gap: 20, fontSize: 12 }}>
           <Link to="/methods">Methods &amp; data</Link>
           <a href="https://github.com/Mohammed-Ayman-2023/Flame-in-FreeFall-NASA-Space-Apps" target="_blank" rel="noreferrer">GitHub</a>
           <a href="https://psi.nasa.gov/physci/repo/search?q=combustion" target="_blank" rel="noreferrer">NASA PSI</a>
         </div>
-        <div className="mono faint" style={{ width: '100%', fontSize: 11 }}>NASA data CC0-1.0 · code Apache-2.0 · not affiliated with or endorsed by NASA · research and education tool, not a certified fire-safety system · AI use declared in the repository README</div>
+        <div className="mono faint" style={{ width: '100%', fontSize: 11 }}>NASA data CC0-1.0 · code Apache-2.0 · not affiliated with or endorsed by NASA · research and education tool, not a certified fire-safety system · AI use declared in the repository README · Earth imagery: NASA Visible Earth (Blue Marble); Moon and Mars surfaces illustrative</div>
       </div>
     </footer>
   )

@@ -123,7 +123,7 @@ export function Investigation({ id }) {
       <div className="split" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,2fr) minmax(0,1fr)', gap: 48 }}>
         <div className="col" style={{ gap: 36, minWidth: 0 }}>
           <div className="card" style={{ height: 300, background: VIS[fam], position: 'relative', overflow: 'hidden' }}>
-            <span className="mono" style={{ position: 'absolute', left: 16, bottom: 14, fontSize: 11, color: '#C9CDD3' }}>Illustration · NASA flight imagery for {inv.acronym} goes here (credit NASA)</span>
+            <span className="mono" style={{ position: 'absolute', left: 16, bottom: 14, fontSize: 11, color: '#C9CDD3' }}>Illustration of the fire type studied by {inv.acronym}, not flight imagery · see the NASA page for videos and images</span>
           </div>
           <div className="col" style={{ gap: 14 }}>
             <div className="eyebrow">Key result</div>
@@ -270,7 +270,7 @@ export function Gaps() {
       </div>
       <section style={{ marginTop: 56 }} className="col">
         <h2 className="h2" style={{ fontSize: 30, marginBottom: 4 }}>Moon and Mars: what we can say without partial-gravity data</h2>
-        <div style={{ display: 'grid', gap: 18 }}><GravityBounds /><BuoyancyPanel /></div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 18 }}><GravityBounds /><BuoyancyPanel /></div>
       </section>
       <section style={{ marginTop: 64 }}>
         <h2 className="h2" style={{ fontSize: 34, marginBottom: 12 }}>Five experiments NASA has not run yet</h2>

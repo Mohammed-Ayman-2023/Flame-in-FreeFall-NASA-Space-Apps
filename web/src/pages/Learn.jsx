@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from '../lib/router'
-import { Mark, Flame, Ev } from '../components/ui'
+import { Mark, Flame, Ev, SpaceAppsBadge } from '../components/ui'
 import SmokeSim from '../sims/SmokeSim'
 import PlumeSandbox from '../sims/PlumeSandbox'
 import { HARDWARE, Cutaway } from '../components/ModuleScene'
@@ -11,9 +11,10 @@ export const STEPS = [['Why fires start', '/learn/1'], ['How fire behaves', '/le
 
 export function LessonHeader({ k }) {
   return (
-    <header style={{ borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 30, background: 'rgba(10,11,13,.94)', backdropFilter: 'blur(8px)' }}>
-      <div style={{ maxWidth: 1344, margin: '0 auto', padding: '16px 32px', display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link to="/" className="row" style={{ gap: 10 }}><Mark /><span className="disp" style={{ fontWeight: 600, fontSize: 16 }}>Flame in Freefall</span></Link>
+    <header className="site-head">
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '16px 32px', display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="row" style={{ gap: 14 }}><SpaceAppsBadge /><span aria-hidden="true" style={{ width: 1, height: 26, background: 'var(--line2)' }} />
+          <Link to="/" className="row" style={{ gap: 10 }}><Mark /><span className="disp" style={{ fontWeight: 600, fontSize: 16, whiteSpace: 'nowrap' }}>Flame in Freefall</span></Link></div>
         <nav aria-label="Lesson steps" className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
           {STEPS.map(([t, to], i) => {
             const on = i === k, done = i < k, c = on ? 'var(--ember)' : done ? 'var(--text)' : 'var(--line2)'
@@ -21,7 +22,7 @@ export function LessonHeader({ k }) {
               <span key={t} className="row" style={{ gap: 8 }}>
                 <Link to={to} aria-current={on ? 'step' : undefined} className="row" style={{ gap: 8, fontSize: 13, color: on ? 'var(--text)' : done ? 'var(--muted)' : 'var(--faint)', fontWeight: on ? 600 : 400 }}>
                   <span className="mono" style={{ width: 22, height: 22, borderRadius: '50%', border: `2px solid ${c}`, background: on || done ? c : 'transparent', color: '#0A0B0D', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{i + 1}</span>
-                  <span className="hide-sm">{t}</span>
+                  <span className="hide-md">{t}</span>
                 </Link>
                 {i < STEPS.length - 1 && <span aria-hidden="true" style={{ width: 22, height: 2, background: done ? 'var(--ember)' : 'var(--line2)' }} />}
               </span>

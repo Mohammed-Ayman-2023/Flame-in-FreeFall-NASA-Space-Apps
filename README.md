@@ -65,7 +65,7 @@ A guided, visual product for crews, students and the public, which also works fo
 
 | Page | What it does |
 |---|---|
-| **Landing** | The 24 fires NASA lit in orbit, with a search box. A **mission picker** (challenge habitat 30 % / 0.69 atm, ISS air, NASA exploration atmospheres) drives every page. |
+| **Landing** | An interactive **3D scene** (three.js): Earth from NASA Blue Marble imagery with the ISS orbit, the Moon and Mars (sizes to scale, distances not). Pick orbit, Moon, Mars or Earth to fly the camera there and see the gravity, the buoyant flow a flame would draw there, and what the archive can and cannot say. Respects reduced motion, pauses off screen, has a non-3D fallback. Plus search, headline numbers and the six signature fires. A **mission picker** (challenge habitat 30 % / 0.69 atm, ISS air, NASA exploration atmospheres) drives every page. |
 | **Learn (5 steps)** | Why fires start, how fire behaves without gravity, prevention, the second line of defence, then the Fire Lab. |
 | **Fire Lab** | Three live labs: **gas leak** (ACME CFI-G survival model), **cabin material** (solids model), **spilled fuel** (droplet model). Sliders for oxygen, pressure, air speed, material, fuel, suppressant and droplet size. Each shows an animated flame on Earth vs in orbit, the prediction with its uncertainty, an inside/outside-tested-range label, a sweep chart, what moves the model most, an exact **Shapley "why not Earth air?" waterfall**, a **flammability map** (oxygen × air speed with every NASA test that kept burning or went out), the **flow regime** (buoyant speed and Richardson number at orbit, Moon, Mars, Earth gravity) and the **d²-law burn time** checked against 188 FLEX burns. |
 | **Investigations** | Explorer of all 24 investigations with filters; a page each: objective, hardware, samples and sizes, instruments, what varied and what stayed the same (computed from the data), key result, DOI. |
@@ -224,7 +224,7 @@ Dockerfile, render.yaml        one-container deployment; .github/workflows/pages
 | Explainability | own exact Shapley implementation (`src/fif/xai.py`), permutation importance |
 | Generative AI (optional) | Google Gemini `gemini-3.1-flash-lite` and `gemini-embedding-2`, LangChain, LangGraph, ChromaDB (team RAG module) |
 | Dashboard | Streamlit, Plotly, Matplotlib, HTML canvas simulator |
-| Website | React 18, Vite, hand-built SVG charts and animated flames (no chart library) |
+| Website | React 18, Vite, three.js (3D Earth / Moon / Mars scene), hand-built SVG charts and animated flames (no chart library); design pass guided by the UI/UX Pro Max skill checklist (focus states, reduced motion, 375-1440 px layouts) |
 | API and deployment | FastAPI, Uvicorn, Pydantic, Docker, GitHub Actions / Pages, Render, Hugging Face Spaces |
 | Quality | pytest (46 checks) |
 
@@ -270,6 +270,7 @@ GitHub Actions). The full site with the live API runs from the `Dockerfile`; see
 | NASA Glenn, [Combustion Science](https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/) | DAFT and SAME smoke-meter link |
 | NASA Spinoff [node 11065](https://spinoff.nasa.gov/node/11065), [11031](https://spinoff.nasa.gov/node/11031), [10564](https://spinoff.nasa.gov/node/10564); NTRS 20130011664, 20010074094, 20170000248, 20090002489 | Fine-water-mist extinguisher, smoke detection, firefighter air tanks and PBI clothing |
 | NASA Planetary Fact Sheet, <https://nssdc.gsfc.nasa.gov/planetary/factsheet/> | Gravity of Earth, Moon, Mars |
+| NASA Visible Earth, Blue Marble (public domain), via the `three-globe` npm package (MIT) | Earth texture, bump and water maps in the 3D scene |
 | NASA Space Apps 2026 challenge brief, *Flame in Freefall* | Habitat, spacesuit and Moon-base atmospheres; hardware groups; out-of-scope note on propellants |
 
 ## AI usage declaration
@@ -283,7 +284,7 @@ In line with the NASA Space Apps rules:
   shows them, and is labelled "AI-generated (Gemini)". The models, rankings, briefing and every number shown do not
   use generative AI.
 - All scientific data come from NASA and the cited publications; nothing in the dataset is AI-generated.
-- No AI-generated images are used. No NASA logos, flags or mission insignia are used or modified. This project is not
+- No AI-generated images are used. The Moon and Mars surfaces in the 3D scene are procedural illustrations generated in code. No NASA insignia, logotype, flags or mission insignia are used; the official NASA Space Apps Challenge logo (Space Apps brand page) is shown top left when its file is placed in `web/public/brand/`. This project is not
   affiliated with or endorsed by NASA, and it is a research and education tool, not a certified fire-safety system.
 
 ## Team
