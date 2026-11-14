@@ -92,29 +92,56 @@ async function readSSE(res, pick, onDelta) {
   return out
 }
 
-async function openRouter(prompt, key, model, onDelta) {
+// If the chosen free model sends nothing within FIRST_TOKEN_MS (busy, queued, or still "thinking"), or is rate-limited
+// or unavailable, the request is retried once on OpenRouter's free-models router, which picks an available free model.
+export const FALLBACK_MODEL = 'openrouter/free'
+const FIRST_TOKEN_MS = 20000
+
+async function openRouterOnce(prompt, key, model, onDelta, signal, onAlive) {
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
+    method: 'POST', signal,
     headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
-    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 900, stream: true }),
+    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 1200, reasoning: { effort: 'low' }, stream: true }),
   })
   if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
-  const answer = await readSSE(res, j => { if (j.error) throw new Error(j.error.message); return j.choices?.[0]?.delta?.content }, onDelta)
-  return { answer: answer || 'The model returned no text.', model }
+  let used = model
+  const answer = await readSSE(res, j => {
+    if (j.error) throw new Error(j.error.message)
+    if (j.model) used = j.model
+    const d = j.choices?.[0]?.delta || {}
+    if (d.reasoning || d.content) onAlive?.()
+    return d.content
+  }, onDelta)
+  return { answer: answer || 'The model returned no text.', model: used }
+}
+
+async function openRouter(prompt, key, model, onDelta, onStatus) {
+  const ctl = new AbortController()
+  let alive = false
+  const timer = setTimeout(() => { if (!alive) ctl.abort() }, FIRST_TOKEN_MS)
+  try {
+    return await openRouterOnce(prompt, key, model, onDelta, ctl.signal, () => { alive = true })
+  } catch (e) {
+    const retry = model !== FALLBACK_MODEL && (e.name === 'AbortError' || /429|rate|no endpoints|overloaded|unavailable|provider|timeout/i.test(e.message))
+    if (!retry) throw e
+    onStatus?.(`${model} did not respond in time; switched to ${FALLBACK_MODEL}`)
+    onDelta?.('')
+    return await openRouterOnce(prompt, key, FALLBACK_MODEL, onDelta)
+  } finally { clearTimeout(timer) }
 }
 
 /** A visitor's own key: OpenRouter keys start with "sk-or-", anything else is treated as a Gemini key. */
-export async function userAnswer(question, key, onDelta, onDocs) {
+export async function userAnswer(question, key, onDelta, onDocs, onStatus) {
   if (key.startsWith('sk-or-')) {
     const { got, prompt } = await retrieve(question)
     onDocs?.(got)
-    const r = await openRouter(prompt, key, DEFAULT_MODEL, onDelta)
+    const r = await openRouter(prompt, key, DEFAULT_MODEL, onDelta, onStatus)
     return { ...r, docs: got }
   }
   return geminiAnswer(question, key, onDelta, onDocs)
 }
 
-export async function defaultAnswer(question, onDelta, onDocs) {
+export async function defaultAnswer(question, onDelta, onDocs, onStatus) {
   const { got, prompt } = await retrieve(question)
   onDocs?.(got)
   let res, j
@@ -124,7 +151,7 @@ export async function defaultAnswer(question, onDelta, onDocs) {
     if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
     return { answer: j.answer || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
   }
-  const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta)
+  const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta, onStatus)
   return { ...r, docs: got }
 }
 
@@ -148,7 +175,7 @@ ${JSON.stringify(ctx, null, 1)}`
 }
 
 /** Stream a completion from the visitor's own key, else the site default (proxy or built-in key). */
-export async function llmExplain(prompt, onDelta) {
+export async function llmExplain(prompt, onDelta, onStatus) {
   const k = getKey()
   if (k && !k.startsWith('sk-or-')) {
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:streamGenerateContent?alt=sse`, {
@@ -158,14 +185,14 @@ export async function llmExplain(prompt, onDelta) {
     if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
     return { answer: await readSSE(res, j => (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join(''), onDelta), model: ragPrompt.model }
   }
-  if (k) return openRouter(prompt, k, DEFAULT_MODEL, onDelta)
+  if (k) return openRouter(prompt, k, DEFAULT_MODEL, onDelta, onStatus)
   if (PROXY) {
     const res = await fetch(PROXY, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt }) })
     const j = await res.json().catch(() => ({}))
     if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
     onDelta?.(j.answer || ''); return { answer: j.answer || '', model: j.model || DEFAULT_MODEL }
   }
-  if (OR_KEY) return openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta)
+  if (OR_KEY) return openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta, onStatus)
   throw new Error('no AI model is configured; add your own key in the chat')
 }
 export const aiAvailable = () => !!(getKey() || PROXY || OR_KEY)

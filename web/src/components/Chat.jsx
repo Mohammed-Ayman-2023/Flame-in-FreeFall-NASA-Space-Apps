@@ -71,7 +71,8 @@ export default function Chat() {
       } else if (willAI) {
         const onDelta = t => upd({ answer: t })
         const onDocs = d => upd({ rag_sources: d.map(x => ({ section: x.h.join(' › ') || 'NASA report' })) })
-        const r = k ? await userAnswer(question, k, onDelta, onDocs) : await defaultAnswer(question, onDelta, onDocs)
+        const onStatus = note => upd({ note })
+        const r = k ? await userAnswer(question, k, onDelta, onDocs, onStatus) : await defaultAnswer(question, onDelta, onDocs, onStatus)
         upd({ pending: false, answer: r.answer, model: r.model })
       }
     } catch (e) {
@@ -102,7 +103,7 @@ export default function Chat() {
                   <div style={{ border: '1px dashed var(--plasma)', borderRadius: 10, padding: 12, fontSize: 13, color: 'var(--muted)' }}>
                     <span className="mono" style={{ fontSize: 10, color: 'var(--plasma)' }}>AI ANSWER · {(m.ai.model || (key ? 'YOUR KEY' : DEFAULT_MODEL)).toUpperCase()}</span>
                     <div className="row" style={{ gap: 8, marginTop: 6 }}><span className="pulse" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--plasma)', display: 'inline-block' }} />
-                      {m.ai.rag_sources ? `Read ${m.ai.rag_sources.length} NASA report passages; writing the answer…` : 'Finding the NASA report passages…'} <span className="mono faint">{Math.max(0, Math.round((now - m.ai.t0) / 1000))} s</span></div>
+                      {m.ai.note || (m.ai.rag_sources ? `Read ${m.ai.rag_sources.length} NASA report passages; waiting for the model…` : 'Finding the NASA report passages…')} <span className="mono faint">{Math.max(0, Math.round((now - m.ai.t0) / 1000))} s</span></div>
                   </div>)}
                 {m.ai?.answer && (
                   <div style={{ border: '1px solid var(--plasma)', borderRadius: 10, padding: 12, fontSize: 14, lineHeight: 1.55 }}>

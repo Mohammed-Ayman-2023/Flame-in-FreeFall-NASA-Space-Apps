@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Nav, Footer, PageHead, Ev } from '../components/ui'
 import { Link } from '../lib/router'
 import { useMission } from '../lib/mission'
@@ -316,12 +316,14 @@ export function FlameSim({ mode, speed, build }) {
 export function AIExplain({ ctx }) {
   const { view } = useAudience()
   const sig = JSON.stringify(ctx)
-  const [st, setSt] = useState({ sig: '', text: '', busy: false, err: '', model: '' })
-  const cur = st.sig === sig ? st : { sig, text: '', busy: false, err: '', model: '' }
+  const [st, setSt] = useState({ sig: '', text: '', busy: false, err: '', model: '', note: '', t0: 0 })
+  const cur = st.sig === sig ? st : { sig, text: '', busy: false, err: '', model: '', note: '', t0: 0 }
+  const [, tick] = useState(0)
+  useEffect(() => { if (!cur.busy) return; const t = setInterval(() => tick(x => x + 1), 500); return () => clearInterval(t) }, [cur.busy])
   async function go() {
-    setSt({ sig, text: '', busy: true, err: '', model: '' })
+    setSt({ sig, text: '', busy: true, err: '', model: '', note: '', t0: Date.now() })
     try {
-      const r = await llmExplain(explainPrompt({ ...ctx, audience: view ? view.label.toLowerCase() : 'general technical' }), t => setSt(s => (s.sig === sig ? { ...s, text: t } : s)))
+      const r = await llmExplain(explainPrompt({ ...ctx, audience: view ? view.label.toLowerCase() : 'general technical' }), t => setSt(s => (s.sig === sig ? { ...s, text: t } : s)), note => setSt(s => (s.sig === sig ? { ...s, note } : s)))
       setSt(s => (s.sig === sig ? { ...s, text: r.answer || s.text, busy: false, model: r.model } : s))
     } catch (e) { setSt(s => (s.sig === sig ? { ...s, busy: false, err: e.message } : s)) }
   }
@@ -332,7 +334,8 @@ export function AIExplain({ ctx }) {
         <button type="button" className="btn sm" onClick={go} disabled={cur.busy || !aiAvailable()}>{cur.busy ? 'Explaining…' : cur.text ? 'Explain again' : 'Explain with AI'}</button>
       </div>
       {!aiAvailable() && <span className="faint" style={{ fontSize: 13 }}>No AI model is configured on this site; add your own key in the chat to use this.</span>}
-      {cur.busy && !cur.text && <span className="muted" style={{ fontSize: 13.5 }}>Sending the chart's numbers to {DEFAULT_MODEL}…</span>}
+      {cur.busy && !cur.text && <span className="muted row" style={{ fontSize: 13.5, gap: 8 }}><span className="pulse" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--plasma)', display: 'inline-block' }} />{cur.note || `Waiting for ${DEFAULT_MODEL} (free models can be busy; after 20 s it switches to OpenRouter's free router)`} <span className="mono faint">{Math.round((Date.now() - cur.t0) / 1000)} s</span></span>}
+      {cur.note && cur.text && <span className="faint" style={{ fontSize: 12 }}>{cur.note}</span>}
       {cur.err && <span className="muted" style={{ fontSize: 13.5, borderLeft: '3px solid var(--ember)', paddingLeft: 10 }}>The AI could not answer ({cur.err}). The chart above is unaffected.</span>}
       {cur.text && <div style={{ borderLeft: '3px solid #E8C15A', paddingLeft: 14 }}><MiniMarkdown text={cur.text + (cur.busy ? ' ▍' : '')} /></div>}
       <span className="src">AI-generated ({cur.model || DEFAULT_MODEL}) from the numbers in the chart only; it can still be wrong. The chart is the evidence.</span>
