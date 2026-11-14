@@ -205,3 +205,11 @@ html, body { overflow-x: hidden; }
   .nav-menu { padding: 8px 10px; }
 }
 .card { min-width: 0; }
+.view-bar { border-top: 1px solid var(--line); background: rgba(17,19,23,.6); }
+.view-select { background: var(--panel); color: var(--text); border: 1px solid var(--line2); border-radius: 6px; padding: 5px 8px; font-size: 13px; font-family: var(--sans); }
+.path-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); border: 1px solid var(--line2); border-radius: 999px; padding: 3px 10px 3px 4px; }
+.path-chip span { width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10.5px; background: var(--line2); color: var(--text); }
+.path-chip.done span { background: var(--muted); color: #0A0B0D; }
+.path-chip.on { color: var(--text); border-color: var(--ember); }
+.path-chip.on span { background: var(--ember); color: #0A0B0D; }
+.path-chip:hover { border-color: var(--muted); color: var(--text); }

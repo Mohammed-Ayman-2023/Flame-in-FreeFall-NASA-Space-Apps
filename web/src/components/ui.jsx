@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from '../lib/router'
 import { useMission } from '../lib/mission'
+import { useAudience, AUDIENCES } from '../lib/audience'
+import { useRoute } from '../lib/router'
 import { missions } from '../lib/data'
 
 export function Mark({ size = 22 }) {
@@ -95,8 +97,36 @@ function Brand() {
   )
 }
 
+/** The audience view: a bar under the header with the chosen view's path, the current step and the next one. */
+export function ViewBar() {
+  const { view, setView } = useAudience()
+  const route = useRoute().split('?')[0]
+  const idx = view ? view.path.findIndex(([, to]) => to === route || (to === '/learn/1' && route.startsWith('/learn/'))) : -1
+  const next = view && (idx >= 0 ? view.path[idx + 1] : view.path[0])
+  return (
+    <div className="view-bar">
+      <div className="wrap row" style={{ maxWidth: 1400, gap: 14, flexWrap: 'wrap', paddingTop: 7, paddingBottom: 7 }}>
+        <label htmlFor="view-pick" className="lab" style={{ whiteSpace: 'nowrap' }}>View</label>
+        <select id="view-pick" value={view?.id || ''} onChange={e => { setView(e.target.value); window.location.hash = e.target.value ? '#for--' + e.target.value : '#views' }} className="view-select">
+          <option value="">Everyone (all pages)</option>
+          {AUDIENCES.map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
+        </select>
+        {view ? <>
+          <Link to={'/for/' + view.id} className="mono hide-xs" style={{ fontSize: 11.5, color: route === '/for/' + view.id ? 'var(--ember)' : 'var(--muted)' }}>Your home</Link>
+          <nav aria-label={`Path for ${view.label}`} className="row hide-sm" style={{ gap: 6, flexWrap: 'wrap' }}>
+            {view.path.map(([t, to], i) => <Link key={t} to={to} aria-current={i === idx ? 'step' : undefined} className={'path-chip' + (i === idx ? ' on' : i < idx ? ' done' : '')}><span>{i + 1}</span>{t}</Link>)}
+          </nav>
+          {next && <Link to={next[1]} className="mono" style={{ fontSize: 11.5, color: 'var(--plasma)', marginLeft: 'auto' }}>Next: {next[0]} →</Link>}
+        </> : <Link to="/views" className="mono" style={{ fontSize: 11.5, color: 'var(--plasma)' }}>Choose a view for professors, students, researchers or engineers →</Link>}
+      </div>
+    </div>
+  )
+}
+
 export function Nav({ active, transparent }) {
   const [open, setOpen] = useState(false)
+  const { view } = useAudience()
+  const links = view ? [...view.path.map(([t]) => NAV.find(n => n[0] === t)).filter(Boolean), ...NAV.filter(n => !view.path.some(([t]) => t === n[0]))] : NAV
   useEffect(() => {
     if (!open) return
     const k = e => e.key === 'Escape' && setOpen(false)
@@ -109,7 +139,7 @@ export function Nav({ active, transparent }) {
       <div className="wrap head-row">
         <Brand />
         <nav aria-label="Main" className="nav-links">
-          {NAV.map(([n, to]) => <Link key={n} to={to} className={'nav-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
+          {links.map(([n, to]) => <Link key={n} to={to} className={'nav-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
         </nav>
         <div className="row" style={{ gap: 10 }}>
           <div className="hide-xs"><MissionPicker compact /></div>
@@ -122,10 +152,11 @@ export function Nav({ active, transparent }) {
       {open && (
         <div id="mobile-nav" className="mobile-nav">
           <nav aria-label="Main (menu)" className="wrap col" style={{ gap: 2, paddingTop: 8, paddingBottom: 16 }}>
-            {NAV.map(([n, to]) => <Link key={n} to={to} onClick={() => setOpen(false)} className={'m-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
+            {links.map(([n, to]) => <Link key={n} to={to} onClick={() => setOpen(false)} className={'m-a' + (active === n ? ' on' : '')} aria-current={active === n ? 'page' : undefined}>{n}</Link>)}
             <div style={{ paddingTop: 12 }}><MissionPicker /></div>
           </nav>
         </div>)}
+      <ViewBar />
     </header>
   )
 }

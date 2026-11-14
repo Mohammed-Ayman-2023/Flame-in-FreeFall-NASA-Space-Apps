@@ -1,5 +1,7 @@
 import { useRoute } from './lib/router'
 import { MissionProvider } from './lib/mission'
+import { AudienceProvider } from './lib/audience'
+import ViewHub, { ChooseView } from './pages/ViewHub'
 import Chat from './components/Chat'
 import Landing from './pages/Landing'
 import { Learn1, Learn2, Learn3, Learn4 } from './pages/Learn'
@@ -25,6 +27,8 @@ function Page({ route }) {
   if (path === '/findings') return <Findings />
   if (path === '/ranking') return <Ranking />
   if (path === '/ask') return <Ask />
+  if (path === '/views') return <ChooseView />
+  if (path.startsWith('/for/')) return <ViewHub id={path.slice(5)} />
   if (path === '/methods') return <Methods />
   return <Landing />
 }
@@ -32,9 +36,9 @@ function Page({ route }) {
 export default function App() {
   const route = useRoute()
   return (
-    <MissionProvider>
+    <AudienceProvider><MissionProvider>
       <Page key={route.split('?')[0]} route={route} />
       <Chat />
-    </MissionProvider>
+    </MissionProvider></AudienceProvider>
   )
 }

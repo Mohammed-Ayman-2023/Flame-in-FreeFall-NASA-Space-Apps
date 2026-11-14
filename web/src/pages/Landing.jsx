@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from 'react'
 import { Link, go } from '../lib/router'
 import { Nav, Ev, Footer } from '../components/ui'
 import { methods, investigations, physics, buoyantVelocity } from '../lib/data'
+import { ViewCards } from './ViewHub'
 
 const SpaceScene = lazy(() => import('../components/SpaceScene'))
 
@@ -103,6 +104,13 @@ export default function Landing() {
         </div>
       </section>
 
+      <section className="wrap" style={{ maxWidth: 1400, paddingTop: 40 }}>
+        <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 18 }}>
+          <h2 className="h2" style={{ fontSize: 26 }}>Choose your view</h2>
+          <span className="muted" style={{ fontSize: 14 }}>A guided path through the same NASA data, for how you will use it.</span>
+        </div>
+        <ViewCards />
+      </section>
       <section className="wrap" style={{ maxWidth: 1400, paddingTop: 40, paddingBottom: 56 }}>
         <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 18 }}>
           <h2 className="h2" style={{ fontSize: 26 }}>Six fires to start with</h2>

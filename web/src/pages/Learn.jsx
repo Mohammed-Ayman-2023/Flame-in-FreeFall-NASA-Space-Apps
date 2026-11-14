@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from '../lib/router'
-import { Mark, Flame, Ev, SpaceAppsBadge } from '../components/ui'
+import { Mark, Flame, Ev, SpaceAppsBadge, ViewBar } from '../components/ui'
 import SmokeSim from '../sims/SmokeSim'
 import PlumeSandbox from '../sims/PlumeSandbox'
 import { HARDWARE, Cutaway } from '../components/ModuleScene'
@@ -31,6 +31,7 @@ export function LessonHeader({ k }) {
         </nav>
         <Link to="/explore" className="mono" style={{ fontSize: 11, color: 'var(--muted)' }}>Skip to the archive →</Link>
       </div>
+      <ViewBar />
     </header>
   )
 }
