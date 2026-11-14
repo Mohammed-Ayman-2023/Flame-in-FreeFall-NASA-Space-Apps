@@ -66,3 +66,29 @@ def test_briefing_contains_every_section(K):
     for part in ("What the crew and designers should know", "Most relevant NASA investigations",
                  "Recommended next experiments", "Moon and Mars", "NASA Physical Sciences Informatics"):
         assert part in h
+
+
+def test_hardware_groups_match_challenge_brief():
+    assert set(Kn.HARDWARE["acme"]["members"]) == {"PSI-20", "PSI-159", "PSI-21", "PSI-10", "PSI-23", "PSI-22"}
+    assert set(Kn.HARDWARE["mdca"]["members"]) == {"PSI-69", "PSI-68", "PSI-39"}
+    assert set(Kn.HARDWARE["msg_duct"]["members"]) == {"PSI-26", "PSI-25", "PSI-107", "PSI-106"}
+
+
+def test_variables_split_varied_and_constant(K):
+    v = Kn.variables(K, "PSI-159")
+    assert any(x.startswith("O₂") for x in v["varied"])
+    assert any(x.startswith("air speed: 0 cm/s") for x in v["same"])
+    v = Kn.variables(K, "PSI-102")
+    assert any(x.startswith("O₂: 21%") for x in v["same"])
+
+
+def test_gravity_bounds_silicone_disagrees(K):
+    gb = Kn.gravity_bounds(K).set_index("material")
+    assert gb.at["Silicone", "partial_gravity"].startswith("bounds disagree")
+    assert gb.at["PMMA", "partial_gravity"].startswith("bounds agree")
+
+
+def test_every_investigation_has_hardware_and_samples(K):
+    it = Kn.investigation_table(K)
+    assert (it.hardware.str.len() > 0).all() and (it.samples.str.len() > 0).all()
+    assert "85 %" in Kn.CONTEXT["PSI-159"]

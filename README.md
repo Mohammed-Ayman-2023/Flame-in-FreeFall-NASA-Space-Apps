@@ -41,13 +41,13 @@ Every tab recomputes for it.
 
 | Tab | What it gives |
 |---|---|
-| **Crew briefing** | Six plain-language takeaways (ventilation, materials, toxic gases, spilled fuel, tight spaces, smoke detection), each with a number, an action, its source and an evidence label. **Download** the whole briefing as a one-page HTML file. |
+| **Crew briefing** | Why habitats use oxygen-rich air (spacesuit vs Earth vs Moon base) and six plain-language takeaways (ventilation, materials, toxic gases, spilled fuel, tight spaces, smoke detection), each with a number, an action, its source and an evidence label. **Download** the whole briefing as a one-page HTML file. |
 | **Key findings** | The headline results with their charts. |
 | **Ranking** | Transparent relevance score for every investigation, with adjustable weights and a reason per row. |
-| **Investigations** | What each of the 24 investigations tested and found, filters by fire type and safety need, and a side-by-side comparison of up to three. |
+| **Investigations** | For each of the 24 investigations: objective, key result, hardware, sample or burner shape and size, instruments, **what changed between its tests and what stayed the same** (computed from the data), and context from the challenge brief. Side-by-side comparison of up to three with a similar / different summary, and the shared-hardware groups (ACME in the CIR, droplets in the MDCA, the glovebox flow duct, SAME smoke hardware, Saffire on Cygnus). |
 | **Ask the archive** | Questions answered only from the project's NASA sources, with citations and links; it says so when the archive has no answer. Retrieval only (TF-IDF), no text generation. |
 | **Predict a fire** | The three models with uncertainty bands, an "inside / outside the tested range" label and "how this model decides" explanations. |
-| **Gaps & next tests** | Tests near the mission atmosphere per fire type, the partial-gravity gap, and five recommended experiments. |
+| **Gaps & next tests** | Tests near the mission atmosphere per fire type; Moon and Mars gravity: what PSI lacks, LUCI and FM2, E-FIELD Flames, and a 0 g vs 1 g bound from the Saffire burns (silicone burned on Earth but not in microgravity); five recommended experiments. |
 | **Data & sources** | Downloads of every table and the source list. |
 
 Every number carries an evidence label: **NASA measurement**, **Model prediction**, **NASA literature** or
@@ -100,7 +100,7 @@ python scripts/build_data.py                   # rebuild data/processed/ from th
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
 python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
-pytest -q                                      # 27 checks: data layer, model physics and labels, dashboard knowledge layer
+pytest -q                                      # 31 checks: data layer, model physics and labels, dashboard knowledge layer
 streamlit run app/streamlit_app.py             # open the dashboard
 ```
 
@@ -138,9 +138,14 @@ tests/                       automated data checks
 | NASA Physical Sciences Informatics (PSI): BASS (PSI-26), BASS-II (PSI-25), Saffire I-III (PSI-98, 99, 100), FLEX (PSI-69), CFI (PSI-39), PSI-117, ACME BRE (PSI-20), ACME CFI-G (PSI-159), SPICE (PSI-107), SAME (PSI-102), SAME-R (PSI-101), plus catalog entries for PSI-68, 106, 62, 142, 115, 60, 10, 21, 22, 23 | Test matrices, analysed data, investigation pages | CC0-1.0; DOI of each investigation in `catalog/investigations.csv` and on every data row |
 | Urban et al., *Preliminary Results from the Saffire VI Experiment*, ICES-2024-365, NASA NTRS 20240002981 | Tables 1-2 (Saffire IV-VI conditions and results) | NASA Technical Reports Server, public |
 | Urban et al., *Fire Safety Implications of Preliminary Results from Saffire IV and V*, ICES-2021-266, NASA NTRS 20210011521 | Background on Saffire IV-V | NASA Technical Reports Server, public |
-| NASA NTRS 20180005168 (Saffire I-III results) | Table 1 (burn lengths, spread rates, conditions) | NASA Technical Reports Server, public |
+| NASA NTRS 20180005168 (Saffire I-III results) | Table 1 (burn lengths, spread rates, conditions, and the 1 g companion burns used to bound partial gravity) | NASA Technical Reports Server, public |
 | Olson et al., *The effect of duct size, sample size, and fuel composition on concurrent flame spread over large cellulose samples in microgravity* (accepted manuscript, UCL Discovery eprint 10164340) | Table 1 (spread rates, cabin pressures) | Open-access repository; values cited, not redistributed text |
-| Ferkul et al. (2013), BASS fabric flammability paper | Table I (flow direction and speeds for BASS fabric tests) | Cited; values only |
+| Ferkul et al. (2013), BASS fabric flammability paper | Table I (flow direction and speeds for BASS fabric tests); description of the SPICE flow duct and BASS instruments | Cited; values only |
+| BASS-II data FAQ and science requirements document (PSI-25 science documents) | BASS-II instruments (video, still camera, radiometer, O₂, CO₂ and CO sensors) | NASA PSI, CC0-1.0 |
+| NASA Space Apps 2026 challenge brief, *Flame in Freefall* | Shared-hardware groups, spacesuit and Moon-base atmospheres, CFI-G inverse flames, DAFT link, E-FIELD Flames | Challenge resource |
+| Ferkul et al., *Lunar Combustion Investigation: Flammability Results from a Rotating Sounding Rocket*, NASA NTRS [20250010653](https://ntrs.nasa.gov/citations/20250010653) | LUCI description and result | NASA Technical Reports Server, public |
+| NASA, [Flammability of Materials on the Moon (FM2)](https://www.nasa.gov/flammability-of-materials-on-the-moon-fm2/); Zayac et al., NASA NTRS [20240015307](https://ntrs.nasa.gov/citations/20240015307) | FM2 description; lunar-gravity flammability finding | NASA, public |
+| NASA Glenn, [Combustion Science](https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/) | DAFT used SAME's modified P-Trak | NASA, public |
 | Python: pandas, NumPy, SciPy, Matplotlib, openpyxl, pytest, Jupyter | Software | Open source (BSD / PSF / MIT) |
 
 ## AI usage declaration

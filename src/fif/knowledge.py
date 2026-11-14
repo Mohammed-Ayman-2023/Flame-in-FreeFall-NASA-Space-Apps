@@ -187,8 +187,19 @@ def investigation_table(K: dict) -> pd.DataFrame:
                          years=info.get("years", ""), area=info.get("area", ""), what=info.get("what", r["name"]),
                          fuels=fuels, o2_tested=o2, pressure_tested=p, flow_tested=flow, n_tests=len(s),
                          data=level, doi=doi or "", link=link_of(psi, doi), key_result=key_result(K, psi),
-                         notes=r.notes if isinstance(r.notes, str) else ""))
+                         notes=r.notes if isinstance(r.notes, str) else "",
+                         hardware=hardware_text(K, psi), samples=sample_text(K, psi),
+                         measurements=measurements_text(K, psi), **_var_cols(K, psi),
+                         context=CONTEXT.get(psi, "")))
     return pd.DataFrame(rows)
+
+
+def _var_cols(K: dict, psi: str) -> dict:
+    v = variables(K, psi)
+    if not v["n"]:
+        return dict(varied="per-test data not loaded", held_same="per-test data not loaded")
+    return dict(varied="; ".join(v["varied"]) or "nothing recorded as varying",
+                held_same="; ".join(v["same"]) or "nothing recorded as constant")
 
 
 def key_result(K: dict, psi: str) -> str:
@@ -371,6 +382,12 @@ SYNONYMS = {
     "burn": "burning flammability", "burns": "burning flammability", "flammable": "flammability burning",
     "astronaut": "crew", "astronauts": "crew", "crew": "astronaut", "habitat": "lunar moon atmosphere",
     "nomex": "fabric fire resistant", "silicone": "rubber", "candle": "wax",
+    "sensor": "instruments measured camera radiometer", "sensors": "instruments measured camera radiometer",
+    "instrument": "instruments measured", "instruments": "measured sensors", "measure": "measured instruments",
+    "hardware": "apparatus rack glovebox duct", "apparatus": "hardware", "rig": "hardware apparatus",
+    "spacesuit": "suit pre-breathe 4.3 psi", "suit": "spacesuit", "prebreathe": "pre-breathe spacesuit",
+    "bends": "decompression pre-breathe", "gravity": "partial lunar g", "dust": "daft p-trak",
+    "varied": "changed between tests", "differ": "changed different", "similar": "shared hardware",
 }
 
 
@@ -383,6 +400,11 @@ def corpus(K: dict) -> list[dict]:
         P.append(dict(title=f"{r.acronym} ({r.psi_id})", text=f"{r.what} Key result: {r.key_result} Tested: O₂ "
                       f"{r.o2_tested}, pressure {r.pressure_tested}, fuels: {r.fuels}.", source=f"{r.acronym}, {r.link}",
                       badge="measured" if r.data == "test data loaded" else "literature", kind="Investigation"))
+        P.append(dict(title=f"{r.acronym} ({r.psi_id}): hardware, samples, instruments and variables",
+                      text=f"Hardware: {r.hardware}. Samples or burners: {r.samples}. Measured with: {r.measurements}. "
+                           f"Changed between tests: {r.varied}. Held the same: {r.held_same}. {r.context}",
+                      source=f"{r.acronym}, {r.link}", badge="measured" if r.data == "test data loaded" else "literature",
+                      kind="Investigation details"))
     ex = K["explain"]
     trs = ex["D_gas_flames"]["time_ratios"]
     P.append(dict(title="What makes a still-air flame last longer", badge="model", kind="Model explanation",
@@ -398,6 +420,20 @@ def corpus(K: dict) -> list[dict]:
                         f"{ex['A_solids']['glass_box_odds_ratios']['+1 % O2']:.2f}.")))
     P.append(dict(title="Moon and Mars gravity", badge="gap", kind="Gap", source="All PSI combustion investigations",
                   text=GRAVITY_NOTE))
+    for title_, text_, src_, url_ in PARTIAL_GRAVITY:
+        P.append(dict(title=f"Partial gravity: {title_}", text=text_, source=src_ + (f", {url_}" if url_ else ""),
+                      badge="gap" if title_.startswith("No partial") else "literature", kind="Partial gravity"))
+    gb = gravity_bounds(K)
+    P.append(dict(title="Saffire materials at 0 g and 1 g: bounding partial gravity", badge="measured",
+                  kind="Partial gravity", source="Saffire I-III, NASA NTRS 20180005168, Table 1",
+                  text=" ".join(f"{r.material}: microgravity {r.microgravity}; Earth {r.earth_1g}; {r.partial_gravity}."
+                                for r in gb.itertuples())))
+    for g in HARDWARE.values():
+        P.append(dict(title=f"Shared hardware: {g['name']}", text=g["text"] + " Investigations: " + ", ".join(g["members"]),
+                      source=HARDWARE_SOURCE, badge="literature", kind="Hardware"))
+    P.append(dict(title="Spacesuit, Earth and Moon base atmospheres: why habitats use oxygen-rich air",
+                  text=" ".join(f"{r.where}: {r.o2} O₂ at {r.psi}. {r.why}" for r in ATMOSPHERES.itertuples()),
+                  source=ATMOSPHERE_SOURCE, badge="literature", kind="Atmosphere"))
     P.append(dict(title="Suppression at habitat oxygen", badge="gap", kind="Gap", source="FLEX (PSI-69)",
                   text="CO₂ and helium suppressant tests on droplet flames only go up to 25 % O₂: putting out a fire "
                        "with these agents at 30-34 % O₂ is untested."))
@@ -426,7 +462,10 @@ class Archive:
         self.P = corpus(K)
         habitat = self.findings(0.30, 0.69, "the challenge habitat")  # in the vocabulary, not in the fixed set
         docs = [self._expand(f"{p['title']} {p['title']} {p['text']}") for p in self.P + habitat]
-        self.vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, stop_words="english", min_df=1)
+        from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
+        stop = list(ENGLISH_STOP_WORDS | {"best", "good", "available", "guess", "way", "really", "like", "know",
+                                          "tell", "use", "used", "using", "does", "did", "make", "makes"})
+        self.vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, stop_words=stop, min_df=1)
         self.M = self.vec.fit_transform(docs)[:len(self.P)]
 
     def findings(self, x_o2: float, p: float, label: str) -> list[dict]:
@@ -437,6 +476,7 @@ class Archive:
     @staticmethod
     def _expand(s: str) -> str:
         s = s.lower().replace("₂", "2")
+        s = re.sub(r"\b([a-z]+)-(ii|iii|i|r|g|2)\b", r"\1\2 \1-\2", s)  # CFI-G -> cfig, SAME-R -> samer
         extra = [SYNONYMS[w] for w in re.findall(r"[a-z0-9]+", s) if w in SYNONYMS]
         return s + " " + " ".join(extra)
 
@@ -472,6 +512,8 @@ def briefing_html(K: dict, mission_label: str, x_o2: float, p: float, ranking: p
                     f"<td>{e(r['why'])}</td></tr>" for _, r in top.iterrows())
     grows = "".join(f"<tr><td>{e(g.fire_type)}</td><td>{e(g.status)}</td><td>{g.tests_near_mission} of {g.tests_total}</td>"
                     f"<td>{e(g.o2_range)}, {e(g.pressure_range)}</td></tr>" for _, g in gaps.iterrows())
+    pgl = "".join(f"<li><b>{e(t_)}.</b> {e(x_)} <span class='src'>Source: {e(s_)}{(' · ' + e(u_)) if u_ else ''}</span></li>"
+                  for t_, x_, s_, u_ in PARTIAL_GRAVITY)
     recl = "".join(f"<li><b>{e(r['experiment'])}.</b> {e(r['why'])}</li>" for r in recs)
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     return f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Fire-safety briefing: {e(mission_label)}</title>
@@ -497,9 +539,285 @@ table{{border-collapse:collapse;width:100%;font-size:13px}} td,th{{border-bottom
 <table><tr><th>#</th><th>Investigation</th><th>Score /100</th><th>Why</th></tr>{rrows}</table>
 <h2>What has been tested near this atmosphere (±5 % O₂, ±0.2 atm)</h2>
 <table><tr><th>Fire type</th><th>Status</th><th>Tests near</th><th>Tested range</th></tr>{grows}</table>
+<h2>Moon and Mars gravity</h2><ul>{pgl}</ul>
 <h2>Recommended next experiments</h2><ol>{recl}</ol>
 <footer>Evidence labels: NASA measurement = a NASA test result; Model prediction = our model trained on NASA tests, validated
 on tests it never saw; NASA literature = statement from a NASA investigation page; Data gap = not covered.
 Data: NASA Physical Sciences Informatics (CC0) and NASA technical reports. Code, data and method: {REPO_URL}.
 Screening tool for research and design discussion, not a certification method. Built with AI assistance (declared in the repository).</footer>
 </body></html>"""
+
+
+# ------------------------------------------------------------------------- hardware, sensors, variables
+# Hardware families as described in the challenge brief (NASA Space Apps 2026, "Flame in Freefall").
+HARDWARE = {
+    "acme": dict(name="ACME modular hardware in the Combustion Integrated Rack (CIR)",
+                 short="ACME hardware, CIR", members=["PSI-20", "PSI-159", "PSI-21", "PSI-10", "PSI-23", "PSI-22"],
+                 text="The six ACME experiments all burned gaseous fuels with the same modular ACME hardware in the "
+                      "CIR, so their conditions and diagnostics are directly comparable."),
+    "mdca": dict(name="Multi-user Droplet Combustion Apparatus (MDCA) in the CIR", short="MDCA droplet rig, CIR",
+                 members=["PSI-69", "PSI-68", "PSI-39"],
+                 text="FLEX, FLEX-2 and the Cool Flames Investigation burned single liquid-fuel droplets in the same "
+                      "apparatus."),
+    "msg_duct": dict(name="Microgravity Science Glovebox (MSG) with the fan-driven flow duct built for SPICE",
+                     short="MSG + SPICE flow duct", members=["PSI-26", "PSI-25", "PSI-107", "PSI-106"],
+                     text="BASS, BASS-II, SPICE and SLICE shared one modular fan-driven duct in the glovebox, so solid "
+                          "and gas flames were burned in the same controlled air flow. The duct is 76 mm × 76 mm in "
+                          "cross-section (Ferkul et al. 2013)."),
+    "msg_smoke": dict(name="Microgravity Science Glovebox (MSG) with the SAME smoke hardware",
+                      short="MSG, SAME smoke hardware", members=["PSI-102", "PSI-101"],
+                      text="SAME and SAME-R heated materials until they smoked and passed the smoke to detectors. One "
+                           "of their smoke instruments, a modified P-Trak, was first checked in the Dust "
+                           "and Aerosol Measurement Feasibility Tests (DAFT and DAFT-2), which measured dust instead "
+                           "of smoke (challenge brief; NASA Glenn Combustion Science page)."),
+    "saffire": dict(name="Saffire flight unit inside an empty Cygnus cargo vehicle", short="Saffire unit, Cygnus",
+                    members=["PSI-98", "PSI-99", "PSI-100", "EXT-SAFFIRE-456"],
+                    text="Large samples burned in a flow tunnel inside Cygnus after it left the ISS, so a real "
+                         "spacecraft-sized fire could be studied without risk to a crew."),
+}
+HW_OF = {psi: k for k, g in HARDWARE.items() for psi in g["members"]}
+HARDWARE_SOURCE = ("NASA Space Apps 2026 challenge brief; Ferkul et al. 2013 (BASS duct); PSI investigation pages; "
+                   "catalog/investigations.csv")
+
+
+def derived_from(K: dict, psi: str) -> str:
+    """Analysis or model investigations: which flight data they build on (catalog column derived_from)."""
+    c = K["cat"]
+    v = c.loc[c.psi_id == psi, "derived_from"].dropna()
+    return str(v.iloc[0]) if len(v) else ""
+
+
+def hardware_text(K: dict, psi: str) -> str:
+    if psi in HW_OF:
+        return HARDWARE[HW_OF[psi]]["name"]
+    d = derived_from(K, psi)
+    plat = K["cat"].loc[K["cat"].psi_id == psi, "platform"].dropna()
+    base = str(plat.iloc[0]) if len(plat) else "not listed"
+    return f"{base}; builds on data from {d}" if d else base
+
+# Instruments named on each NASA investigation page (data/raw/<id>/*_investigation_page.txt) or source report.
+SENSORS = {
+    "PSI-98": "two video cameras; thermocouples for flow, flame and plume temperature; two radiometers; solid-state "
+              "pressure, CO₂ and O₂ sensors; two anemometers (investigation page)",
+    "PSI-100": "camera images are the raw data PSI publishes for this investigation (PSI page)",
+    "PSI-26": "digital still camera through the top window (about 1 frame/s), video camera through the front window "
+              "(30 frames/s), hot-wire anemometer for flow speed, wide-angle radiometer inside the duct "
+              "(Ferkul et al. 2013)",
+    "PSI-25": "video with flow speed, fan and radiometer overlay; Nikon D300s still camera; O₂ sensor; CDM CO₂ "
+              "sensor and CSA-CP CO analyser (BASS-II data FAQ and science requirements document)",
+    "EXT-SAFFIRE-456": "Saffire flight unit; far-field CO₂ and CO sensors used for the cabin-air results "
+                       "(Urban et al. 2024, Table 2)",
+    "PSI-102": "two smoke detectors, video cameras, thermophoretic samplers whose particles were sized by TEM after "
+               "flight (investigation page)",
+    "PSI-101": "the SAME instruments plus a new in-house instrument (M-pass); clean TEM grids after SAME's "
+               "contamination (investigation page)",
+    "PSI-159": "cameras, radiometers, photomultiplier tubes (PMTs) and thermocouples (investigation page)",
+    "PSI-20": "heat-flux sensor and burner surface temperature (investigation page)",
+    "PSI-68": "colour camera video; chamber pressure and temperature (investigation page)",
+    "PSI-69": "droplet imaging for burning rate and extinction size, heat radiation, soot and temperature "
+              "(investigation page goals)",
+    "PSI-106": "over 4,000 high-resolution flame images over 13 test days (investigation page)",
+}
+
+# Extra context from the challenge brief, shown with the investigation.
+CONTEXT = {
+    "PSI-159": "CFI-G ran the highest oxygen levels in microgravity: in inverse flames an oxygen-nitrogen mix of up "
+               "to 85 % O₂ flowed from the burner into a chamber of nitrogen and fuel. Our table holds only the "
+               "normal flames (fuel from the burner, 18-40 % O₂ around it), which is the cabin-like case.",
+    "PSI-20": "Although it burned gas, BRE is a materials-flammability study: the burner imitates a burning solid, "
+              "in still air, as a function of material properties.",
+    "PSI-22": "Electric fields act on the ions that occur naturally in flames, which lets this experiment mimic "
+              "partial gravity: the closest PSI comes to Moon or Mars conditions.",
+    "PSI-102": "One SAME instrument, a modified P-Trak, was used to measure dust in DAFT and DAFT-2.",
+    "PSI-101": "One SAME instrument, a modified P-Trak, was used to measure dust in DAFT and DAFT-2.",
+}
+
+# Columns that can vary between tests of one investigation, with how to show them.
+_VARS = [("fuel", "fuel or material", None), ("geometry", "sample or burner shape", None),
+         ("x_o2", "O₂", "{:.0%}"), ("pressure_atm", "pressure", "{:.2f} atm"), ("flow_cm_s", "air speed", "{:.0f} cm/s"),
+         ("flow_direction", "flow direction", None), ("d0_mm", "droplet size", "{:.1f} mm"),
+         ("thickness_mm", "thickness", "{:.2f} mm"), ("diameter_mm", "diameter", "{:.1f} mm"),
+         ("sample_width_cm", "sample width", "{:.0f} cm"),
+         ("x_co2", "CO₂ added", "{:.0%}"), ("x_he", "helium added", "{:.0%}"),
+         ("fuel_mole_fraction", "fuel dilution", "{:.0%}"), ("fuel_flow_mg_s", "fuel flow", "{:.2f} mg/s"), ("ignition_power_w", "igniter power", "{:.0f} W"),
+         ("heating_duration_s", "heating time", "{:.0f} s"), ("primary_aging_s", "smoke aging time", "{:.0f} s"),
+         ("t_ambient_k", "ambient temperature", "{:.0f} K")]
+
+
+def _fmt_vals(v: pd.Series, fmt: str | None) -> str:
+    u = v.dropna()
+    if fmt is None:
+        vals = sorted(set(u.astype(str).str.replace(r"\s*\(.*\)", "", regex=True)))
+        return ", ".join(vals[:4]) + (f" (+{len(vals) - 4} more)" if len(vals) > 4 else "")
+    lo, hi = fmt.format(u.min()), fmt.format(u.max())
+    if lo == hi and u.max() > u.min() and "%}" in fmt:
+        lo, hi = fmt.replace(":.0%", ":.1%").format(u.min()), fmt.replace(":.0%", ":.1%").format(u.max())
+    return lo if lo == hi else f"{lo} to {hi}"
+
+
+def variables(K: dict, psi: str) -> dict:
+    """What changed between the microgravity tests of one investigation and what was held the same."""
+    t = K["tests"]
+    s = t[(t.investigation_id == psi) & (t.gravity_g.fillna(0) == 0)]
+    if "exclude" in s:
+        s = s[~s.exclude.astype("boolean").fillna(False).astype(bool)]
+    varied, same = [], []
+    if not len(s):
+        return dict(varied=[], same=[], n=0)
+    for col, lab, fmt in _VARS:
+        if col not in s or s[col].notna().sum() == 0:
+            continue
+        u = s[col].dropna()
+        nun = u.round(4).nunique() if fmt else u.astype(str).nunique()
+        if col in ("x_co2", "x_he") and u.max() == 0:
+            continue
+        (varied if nun > 1 else same).append(f"{lab}: {_fmt_vals(u, fmt)}" + (f" ({nun} values)" if nun > 1 and fmt else ""))
+    return dict(varied=varied, same=same, n=len(s))
+
+
+def sample_text(K: dict, psi: str) -> str:
+    """Sample or burner shape and size, from the test table or the catalog."""
+    t, c = K["tests"], K["cat"]
+    s = t[(t.investigation_id == psi) & (t.gravity_g.fillna(0) == 0)]
+    parts = []
+    if len(s) and s.geometry.notna().any():
+        parts.append(_fmt_vals(s.geometry, None))
+    for col, lab, fmt in (("thickness_mm", "thickness", "{:.2f} mm"), ("d0_mm", "initial droplet diameter", "{:.1f} mm"),
+                          ("diameter_mm", "diameter", "{:.1f} mm"), ("sample_width_cm", "width", "{:.0f} cm"),
+                          ("sample_length_cm", "length", "{:.0f} cm"), ("size_mm", "size", "{:.1f} mm")):
+        if len(s) and col in s and s[col].notna().any():
+            if col == "size_mm" and len(parts) > 1:
+                continue
+            parts.append(f"{lab} {_fmt_vals(s[col], fmt)}")
+    if not parts:
+        g = c.loc[c.psi_id == psi, "geometry"].dropna()
+        parts.append(str(g.iloc[0]) + " (PSI listing)" if len(g) else "not listed")
+    return "; ".join(parts)
+
+
+def measurements_text(K: dict, psi: str) -> str:
+    """Instruments from the NASA page where named, otherwise the measurements listed in the catalog."""
+    c = K["cat"]
+    km = c.loc[c.psi_id == psi, "key_measurements"].dropna()
+    meas = str(km.iloc[0]) if len(km) else ""
+    sens = SENSORS.get(psi, "")
+    if sens and meas:
+        return f"{meas}. Instruments: {sens}"
+    return sens or meas or "not listed"
+
+
+def compare_summary(inv: pd.DataFrame, ids: list[str]) -> tuple[list[str], list[str]]:
+    """Plain-language similarities and differences between two or three investigations."""
+    r = inv.set_index("psi_id").loc[ids]
+    same, diff = [], []
+    hw = [HW_OF.get(i) for i in ids]
+    if hw[0] and len(set(hw)) == 1:
+        same.append(f"same hardware ({HARDWARE[hw[0]]['short']}), so conditions and diagnostics are directly comparable")
+    else:
+        diff.append("different hardware: " + "; ".join(f"{r.at[i, 'acronym']} used {HARDWARE[h]['short'] if h else 'its own setup'}"
+                                                       for i, h in zip(ids, hw)))
+    ft = r.fire_type.tolist()
+    (same if len(set(ft)) == 1 else diff).append(
+        f"fire type: {ft[0].split(' (')[0].lower()}" if len(set(ft)) == 1 else
+        "fire type: " + "; ".join(f"{r.at[i, 'acronym']} {r.at[i, 'fire_type'].split(' (')[0].lower()}" for i in ids))
+    o2 = r.o2_tested.tolist()
+    (same if len(set(o2)) == 1 else diff).append("O₂ tested: " + ("; ".join(f"{r.at[i, 'acronym']} {r.at[i, 'o2_tested']}" for i in ids)
+                                                                if len(set(o2)) > 1 else o2[0]))
+    areas = [set(a.replace(" ", "").split(",")) - {""} for a in r.area]
+    common = set.intersection(*areas) if areas else set()
+    if common:
+        same.append("safety need: " + ", ".join(sorted(common)))
+    return same, diff
+
+
+ATMOSPHERES = pd.DataFrame([
+    dict(where="Earth, sea level (and the ISS)", o2="21 %", psi="14.7 psi", atm=1.00, ppo2=0.21,
+         why="Normal air."),
+    dict(where="Spacesuit", o2="100 %", psi="4.3 psi", atm=round(4.3 * PSIA, 2), ppo2=round(4.3 * PSIA, 2),
+         why="Low pressure keeps the suit flexible; astronauts pre-breathe pure O₂ first to purge nitrogen and avoid the bends."),
+    dict(where="Moon base and pressurized rovers (expected)", o2="30 % or more", psi="10.2 psi or less",
+         atm=round(10.2 * PSIA, 2), ppo2=round(0.30 * 10.2 * PSIA, 2),
+         why="Between suit and Earth air, to shorten pre-breathing before moonwalks. Over 40 % more oxygen "
+             "fraction than Earth air (30/21 = 1.43), so materials burn more readily."),
+])
+ATMOSPHERE_SOURCE = "NASA Space Apps 2026 challenge brief (Flame in Freefall); NASA atmospheres in ACME BRE (PSI-20)"
+
+NTRS_LUCI = "https://ntrs.nasa.gov/citations/20250010653"
+NASA_COMBUSTION = "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/"
+NTRS_FM2 = "https://ntrs.nasa.gov/citations/20240015307"
+NASA_FM2 = "https://www.nasa.gov/flammability-of-materials-on-the-moon-fm2/"
+# (title, text, source label, url)
+PARTIAL_GRAVITY = [
+    ("No partial-gravity fire data in PSI yet",
+     "No PSI combustion investigation has burned anything at lunar (0.16 g) or Martian (0.38 g) gravity. NASA "
+     "expects such data from the Lunar-g Combustion Investigation (LUCI) and Flammability of Materials on the Moon (FM2).",
+     "Challenge brief", ""),
+    ("LUCI: simulated lunar gravity on a sounding rocket",
+     "LUCI burned a cotton-fiberglass (SIBAL) fabric and a 4 mm acrylic (PMMA) rod in air at normal pressure while "
+     "the Blue Origin New Shepard capsule spun at about 11 rpm to imitate lunar gravity: the first extended "
+     "(over 25 s) burns in simulated lunar gravity. The acrylic flame tip spread at about 1.5 mm/s. Results are "
+     "in NASA presentations, not in PSI.",
+     "Ferkul et al., NTRS 20250010653 (2025)", NTRS_LUCI),
+    ("FM2: the first fire experiment on the Moon",
+     "FM2 will burn four samples, one at a time, in atmospheres planned for lunar habitats, with cameras and "
+     "temperature, O₂ and CO₂ sensors. Drop-tower centrifuge tests behind it found that some materials burn at "
+     "lower oxygen levels in lunar gravity than on Earth: less heat loss than at 1 g, yet enough buoyant flow to "
+     "feed the flame.",
+     "NASA FM2 page; Zayac et al., NTRS 20240015307 (2024)", NASA_FM2),
+    ("Mimicked partial gravity: ACME E-FIELD Flames (PSI-22)",
+     "Electric fields acting on the ions in a flame can imitate buoyancy, so E-FIELD Flames is the closest PSI "
+     "comes to partial gravity. Its per-test data are not loaded here.",
+     "Challenge brief", ""),
+    ("Bounding with 0 g and 1 g, and its limit",
+     "Microgravity and Earth results can bracket intermediate gravity: where a material behaves the same at both, "
+     "that is the best available guess for the Moon. But the FM2 work shows the bracket is not always safe, since "
+     "some materials are most flammable at lunar gravity. Materials whose 0 g and 1 g results disagree should be "
+     "tested first.",
+     "Challenge brief; Zayac et al., NTRS 20240015307", NTRS_FM2),
+]
+
+
+def gravity_bounds(K: dict) -> pd.DataFrame:
+    """Saffire I-III materials burned in microgravity and in NASA's 1 g companion tests (NTRS 20180005168,
+    Table 1, 1 g columns): do the two bounds agree?"""
+    t, ev = K["tests"], K["ev"]
+    s = t[t.investigation_id.isin(["PSI-98", "PSI-99", "PSI-100"])].copy()
+    s["material"] = s.fuel.str.replace(r"\s*\(.*\)", "", regex=True)
+    q = ev[ev.investigation_id.isin(["PSI-98", "PSI-99", "PSI-100"])]
+    spread = q[q.quantity == "flame_spread_rate"].groupby("test_id").value.max()
+    length = q[q.quantity == "burn_length"].groupby("test_id").value.max()
+    s["spread"] = s.test_id.map(spread)
+    s["length"] = s.test_id.map(length)
+
+    def burned(r):
+        if r.ignited is True or r.ignited == "True" or (pd.notna(r.spread) and r.spread > 0):
+            return True
+        if pd.notna(r.length):
+            return bool(r.length > 0)
+        if isinstance(r.outcome_note, str) and "not ignited" in r.outcome_note:
+            return False
+        return None
+
+    s["burned"] = s.apply(burned, axis=1)
+    rows = []
+    for mat, g in s.groupby("material"):
+        out = {}
+        for gv, lab in ((0.0, "0g"), (1.0, "1g")):
+            h = g[g.gravity_g == gv]
+            k = h.burned.dropna()
+            sp = h.spread.dropna()
+            txt = (f"burned in {int(k.sum())} of {len(k)}" if len(k) else "no result recorded")
+            if len(sp):
+                txt += f"; spread {sp.min():.1f}" + (f"-{sp.max():.1f}" if sp.max() > sp.min() else "") + " mm/s"
+            if gv == 1.0 and h.outcome_note.astype(str).str.contains("acceleratory").any():
+                txt += "; spread kept accelerating"
+            out[lab] = (txt, (k.mean() if len(k) else None))
+        f0, f1 = out["0g"][1], out["1g"][1]
+        if f0 is None or f1 is None:
+            verdict = "not enough results"
+        elif (f0 > 0) == (f1 > 0):
+            verdict = "bounds agree: " + ("burns at any gravity" if f0 > 0 else "did not burn at either")
+        else:
+            verdict = "bounds disagree: partial gravity unknown, test it first"
+        rows.append(dict(material=mat, microgravity=out["0g"][0], earth_1g=out["1g"][0], partial_gravity=verdict))
+    return pd.DataFrame(rows)

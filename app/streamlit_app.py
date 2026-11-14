@@ -33,6 +33,9 @@ h1, h2, h3 {letter-spacing: -0.01em;}
 .inside {background:#e3f4e3; color:#006300;} .outside {background:#fdecdc; color:#8a3a12;}
 .gap {background:#fbe3e3; color:#9b2020;} .thin {background:#fff3d6; color:#7a5200;} .covered {background:#e3f4e3; color:#006300;}
 .small {font-size:0.85rem; color:#52514e;}
+.wt table {width:100%; border-collapse:collapse; font-size:0.86rem;}
+.wt th {text-align:left; background:#f1efe9; padding:6px 8px; border-bottom:1px solid #ddd8cc; vertical-align:top;}
+.wt td {padding:6px 8px; border-bottom:1px solid #ebe7de; vertical-align:top;}
 .badge {display:inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; letter-spacing: .01em;}
 .b-measured {background:#dcefdc; color:#1f6b2a;} .b-model {background:#dbe8f8; color:#1d4f91;}
 .b-literature {background:#ece3f5; color:#5b2d82;} .b-gap {background:#f7dcdc; color:#a32020;}
@@ -51,6 +54,12 @@ h1, h2, h3 {letter-spacing: -0.01em;}
 </style>""", unsafe_allow_html=True)
 
 BADGE_TXT = dict(measured="NASA measurement", model="Model prediction", literature="NASA literature", gap="Data gap")
+
+
+def wrap_table(df: pd.DataFrame, index: bool = False) -> None:
+    """A plain HTML table whose cells wrap, for text-heavy comparisons that st.dataframe would cut off."""
+    st.markdown('<div class="wt">' + df.to_html(index=index, escape=True, border=0, na_rep="—") + "</div>",
+                unsafe_allow_html=True)
 
 
 def badge(kind: str) -> str:
@@ -207,6 +216,15 @@ with tab_brief:
                 + (f'<p class="cav">⚠ {t_["caveat"]}</p>' if t_["caveat"] else "")
                 + f'<p class="src">Source: {t_["source"]} · more in “{t_["tab"]}”</p></div>', unsafe_allow_html=True)
         st.write("")
+    with st.expander("Why habitats will breathe this air: spacesuit, Earth and Moon base compared"):
+        at = Kn.ATMOSPHERES.rename(columns={"where": "Where", "o2": "Oxygen", "psi": "Pressure", "atm": "Pressure (atm)",
+                                            "ppo2": "O₂ partial pressure (atm)", "why": "Why"})
+        wrap_table(at.assign(**{"Pressure (atm)": at["Pressure (atm)"].map("{:.2f}".format),
+                                "O₂ partial pressure (atm)": at["O₂ partial pressure (atm)"].map("{:.2f}".format)}))
+        st.caption(f"The Moon base keeps about the same oxygen partial pressure as Earth air (so crews breathe "
+                   f"normally) but a much richer oxygen fraction, which is what makes materials burn more readily. "
+                   f"Your selection: {o2:.1%} O₂ at {p * 14.696:.1f} psi, O₂ partial pressure {o2 * p:.2f} atm. "
+                   f"Source: {Kn.ATMOSPHERE_SOURCE}.")
     st.markdown("#### Take it to the design review")
     html_brief = Kn.briefing_html(K, MISSION_LABEL, o2, p, R.rank(TARGET), R.mission_gaps(TARGET), R.RECOMMENDATIONS)
     c1, c2 = st.columns([1, 2])
@@ -384,7 +402,14 @@ with tab_inv:
         f'<p><b>What it tested.</b> {r_.what}</p><p><b>Key result.</b> {r_.key_result}</p>'
         f'<p class="small">Fuels: {r_.fuels} · O₂: {r_.o2_tested} · pressure: {r_.pressure_tested} · air speed: '
         f'{r_.flow_tested} · tests loaded: {r_.n_tests} · relevance to this mission: {r_.relevance:.0f}/100</p>'
-        f'<p class="small">Source: <a href="{r_.link}" target="_blank">{r_.doi or r_.link}</a></p></div>',
+        f'<p><b>Hardware.</b> {r_.hardware}</p>'
+        f'<p><b>Samples or burners.</b> {r_.samples}</p>'
+        f'<p><b>Measured with.</b> {r_.measurements}</p>'
+        f'<p><b>What changed between its tests.</b> {r_.varied}</p>'
+        f'<p><b>What stayed the same.</b> {r_.held_same}</p>'
+        + (f'<p class="cav">ⓘ {r_.context}</p>' if r_.context else "")
+        + f'<p class="small">Source: <a href="{r_.link}" target="_blank">{r_.doi or r_.link}</a> · variables computed '
+        f'from the microgravity tests loaded here; instruments from the NASA page or paper named in brackets</p></div>',
         unsafe_allow_html=True)
     st.markdown("#### Compare side by side")
     defaults = [x for x in ["EXT-SAFFIRE-456", "PSI-25", "PSI-159"] if x in inv.psi_id.values]
@@ -392,15 +417,30 @@ with tab_inv:
     comp = st.multiselect("Choose two or three", all_ids, key="inv_comp", max_selections=3,
                           format_func=lambda k: f"{inv.set_index('psi_id').at[k, 'acronym']} ({k})")
     if len(comp) >= 2:
-        ct = inv.set_index("psi_id").loc[comp, ["acronym", "fire_type", "platform", "fuels", "o2_tested",
-                                                 "pressure_tested", "flow_tested", "n_tests", "data", "relevance",
-                                                 "key_result"]]
+        same_, diff_ = Kn.compare_summary(inv, comp)
+        cs1, cs2 = st.columns(2)
+        cs1.markdown("**Similar**\n" + ("\n".join(f"- {x}" for x in same_) or "- nothing in common on these fields"))
+        cs2.markdown("**Different**\n" + ("\n".join(f"- {x}" for x in diff_) or "- no differences on these fields"))
+        ct = inv.set_index("psi_id").loc[comp, ["acronym", "fire_type", "hardware", "platform", "fuels", "samples",
+                                                 "o2_tested", "pressure_tested", "flow_tested", "varied", "held_same",
+                                                 "measurements", "n_tests", "data", "relevance", "key_result"]]
         ct.index = [inv.set_index("psi_id").at[k, "acronym"] for k in comp]
-        ct.columns = ["Investigation", "Fire type", "Platform", "Fuels", "O₂ tested", "Pressure tested",
-                      "Air speed tested", "Tests loaded", "Data", "Relevance to mission", "Key result"]
+        ct.columns = ["Investigation", "Fire type", "Hardware", "Platform", "Fuels", "Samples or burners", "O₂ tested",
+                      "Pressure tested", "Air speed tested", "Changed between tests", "Held the same",
+                      "Measured with", "Tests loaded", "Data", "Relevance to mission", "Key result"]
         ct["Relevance to mission"] = ct["Relevance to mission"].round(0).astype(int).astype(str) + " / 100"
-        st.dataframe(ct.drop(columns=["Investigation"]).T.astype(str), width="stretch")
+        wrap_table(ct.drop(columns=["Investigation"]).T.astype(str), index=True)
         st.caption("Conditions are shown as recorded by each investigation; different fire types are not pooled.")
+    st.markdown("#### Shared hardware: which investigations can be compared directly")
+    st.markdown('<span class="small">Investigations run in the same apparatus share its flow, chamber and '
+                'diagnostics, so their results line up more directly than results from different rigs.</span>',
+                unsafe_allow_html=True)
+    acr = inv.set_index("psi_id").acronym.to_dict()
+    hw_rows = [dict(Hardware=g["name"], Investigations=", ".join(f"{acr.get(m, m)} ({m})" for m in g["members"]),
+                    Notes=g["text"]) for g in Kn.HARDWARE.values()]
+    wrap_table(pd.DataFrame(hw_rows))
+    st.caption(f"Sources: {Kn.HARDWARE_SOURCE}. Model and analysis investigations (for example PSI-117, PSI-62) "
+               f"build on data from these flights; the detail card names which.")
 
 # ================================================================= ASK
 with tab_ask:
@@ -665,6 +705,22 @@ with tab_gap:
     st.plotly_chart(fig, width="stretch")
     st.caption("Microgravity tests in dataset v1, counted per cell (darker = more tests). Red box: the mission atmosphere.")
 
+    st.subheader("Moon and Mars gravity: what we can and cannot say")
+    for title_, text_, src_, url_ in Kn.PARTIAL_GRAVITY:
+        kind_ = "gap" if title_.startswith("No partial") else "literature"
+        link_ = f' · <a href="{url_}" target="_blank">open</a>' if url_ else ""
+        st.markdown(f'<div class="inv">{badge(kind_)} <b>{title_}</b><p>{text_}</p>'
+                    f'<p class="small">Source: {src_}{link_}</p></div>', unsafe_allow_html=True)
+    st.markdown("##### Bounding with our own data: Saffire materials at 0 g and 1 g")
+    gb = Kn.gravity_bounds(load_knowledge())
+    wrap_table(gb.rename(columns={"material": "Material", "microgravity": "Microgravity (Saffire I-III, Cygnus)",
+                                  "earth_1g": "Earth gravity (NASA 1 g companion test)",
+                                  "partial_gravity": "What it suggests for the Moon"}))
+    st.caption("NASA NTRS 20180005168, Table 1: each Saffire sample was also burned in a 1 g test; microgravity "
+               "burns at about 21-22 % O₂ and 1 atm with 20-25 cm/s flow. Where the bounds agree it is the best "
+               "available guess, not a measurement: NASA's drop-tower centrifuge tests for FM2 found some materials "
+               "burn at lower oxygen levels at lunar gravity than at 1 g.")
+
     st.subheader("Recommended next experiments")
     for rec in R.RECOMMENDATIONS:
         st.markdown(f"**{rec['priority']}. {rec['experiment']}**  \n{rec['why']}  \n"
@@ -698,7 +754,9 @@ with tab_data:
 FLEX (PSI-69), CFI (PSI-39), PSI-117, ACME BRE (PSI-20), ACME CFI-G (PSI-159), SPICE (PSI-107), SAME (PSI-102),
 SAME-R (PSI-101), and catalog entries for PSI-68, 106, 62, 142, 115, 60, 10, 21, 22, 23.
 Urban et al., ICES-2024-365 (NASA NTRS 20240002981); Urban et al., ICES-2021-266 (NTRS 20210011521);
-NASA NTRS 20180005168; Olson et al., UCL Discovery eprint 10164340; Ferkul et al. (2013).
+NASA NTRS 20180005168; Olson et al., UCL Discovery eprint 10164340; Ferkul et al. (2013); BASS-II data FAQ and
+science requirements document. Partial gravity: Ferkul et al., NTRS 20250010653 (LUCI); Zayac et al., NTRS 20240015307
+and the NASA FM2 page; NASA Glenn Combustion Science page (DAFT). NASA Space Apps 2026 challenge brief.
 
 **AI usage.** Built with the help of Claude (Anthropic), an AI assistant, for code, table transcription and
 documentation; transcriptions were verified against the original tables. No data values and no images are AI-generated.

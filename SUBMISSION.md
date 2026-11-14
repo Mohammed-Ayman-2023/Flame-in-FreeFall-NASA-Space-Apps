@@ -30,8 +30,9 @@ the ranking, compare investigations, ask the archive questions answered with cit
    type across oxygen and pressure.
 4. **Dashboard** (Streamlit): mission presets (challenge habitat, ISS, NASA's 26.5 % / 10.2 psia and 34 % /
    8.2 psia exploration atmospheres, or any O2 and pressure); a crew briefing of six takeaways that recompute for the
-   chosen air, downloadable as a one-page HTML file; the live ranking; an investigation explorer with side-by-side
-   comparison; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
+   chosen air, downloadable as a one-page HTML file; the live ranking; an investigation explorer that shows, for
+   every investigation, its hardware, sample or burner shapes and sizes, instruments, and what changed between its
+   tests versus what stayed the same, with side-by-side comparison and shared-hardware groups; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
    it has no answer; predictions with "how this model decides" explanations; the gap map; data downloads and
    sources. Every number is labelled NASA measurement, model prediction, NASA literature or data gap.
 
@@ -49,7 +50,10 @@ what they predict, and how confident that is. Researchers get a prioritised list
 - SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.
 - At NASA's proposed lunar atmosphere (34 % O2, 8.2 psia), inside the range CFI-G tested, the model predicts a
   median still-air burn of about 49 s, with 71 % of flames still burning after 30 s.
-- No PSI combustion investigation has burned anything at lunar or Martian gravity.
+- No PSI combustion investigation has burned anything at lunar or Martian gravity. Bounding with our own data:
+  in Saffire I-III, silicone burned in NASA's 1 g companion tests but in none of 4 microgravity burns, so its
+  partial-gravity behaviour is genuinely unknown; NASA's FM2 work reports some materials burn at lower oxygen
+  levels at lunar gravity than at 1 g, so 0 g and 1 g results do not always bound the Moon safely.
 
 **Recommended next experiments.** (1) Cabin solids at 28-32 % O2, 0.6-0.8 atm. (2) Smoke-detector response to smoke
 made in habitat air. (3) Still-air self-extinction at 24-33 % O2, where ACME CFI-G has no tests. (4) Publication of
@@ -63,6 +67,10 @@ NASA Technical Reports Server: NTRS 20240002981 (Saffire VI, ICES-2024-365), NTR
 ICES-2021-266), NTRS 20180005168 (Saffire I-III).
 
 ## Other references
+- NASA Space Apps 2026 challenge brief, *Flame in Freefall* (shared hardware, atmospheres, CFI-G, DAFT, E-FIELD).
+- Ferkul et al., LUCI flammability results, NASA NTRS 20250010653; Zayac et al., FM2, NASA NTRS 20240015307;
+  NASA FM2 page; NASA Glenn Combustion Science page (DAFT).
+- BASS-II data FAQ and science requirements document (PSI-25).
 - Olson et al., *The effect of duct size, sample size, and fuel composition on concurrent flame spread over large
   cellulose samples in microgravity*, accepted manuscript, UCL Discovery eprint 10164340.
 - Ferkul et al. (2013), BASS fabric flammability tests, Table I.
