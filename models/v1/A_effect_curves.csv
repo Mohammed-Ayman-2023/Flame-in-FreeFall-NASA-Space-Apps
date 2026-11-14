@@ -1,0 +1,205 @@
+material,shape,direction,factor,value,p_sustained,p_low,p_high
+PMMA,rod,opposed,x_o2,0.15,0.946,0.886,0.99
+PMMA,rod,opposed,x_o2,0.16,0.95,0.886,0.991
+PMMA,rod,opposed,x_o2,0.17,0.996,0.992,1.0
+PMMA,rod,opposed,x_o2,0.18,0.999,0.998,1.0
+PMMA,rod,opposed,x_o2,0.19,0.999,0.998,1.0
+PMMA,rod,opposed,x_o2,0.2,0.999,0.998,1.0
+PMMA,rod,opposed,x_o2,0.21,0.999,0.998,1.0
+PMMA,rod,opposed,x_o2,0.22,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.23,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.24,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.25,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.26,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.27,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.28,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.29,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.3,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.31,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.32,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.33,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.34,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.35,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.36,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.37,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.38,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.39,1.0,1.0,1.0
+PMMA,rod,opposed,x_o2,0.4,1.0,1.0,1.0
+PMMA,rod,opposed,pressure_atm,0.4,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.45,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.5,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.55,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.6,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.65,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.7,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.75,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.8,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.85,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.9,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,0.95,0.949,0.848,1.0
+PMMA,rod,opposed,pressure_atm,1.0,0.999,0.998,1.0
+PMMA,rod,opposed,pressure_atm,1.05,0.999,0.998,1.0
+PMMA,rod,opposed,pressure_atm,1.1,0.999,0.998,1.0
+PMMA,rod,opposed,pressure_atm,1.15,0.999,0.998,1.0
+PMMA,rod,opposed,pressure_atm,1.2,0.999,0.998,1.0
+PMMA,rod,opposed,flow_cm_s,0.5,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,0.6,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,0.72,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,0.865,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,1.038,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,1.246,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,1.495,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,1.795,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,2.154,0.999,0.997,1.0
+PMMA,rod,opposed,flow_cm_s,2.586,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,3.104,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,3.726,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,4.472,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,5.368,1.0,1.0,1.0
+PMMA,rod,opposed,flow_cm_s,6.443,0.956,0.917,1.0
+PMMA,rod,opposed,flow_cm_s,7.734,0.991,0.968,1.0
+PMMA,rod,opposed,flow_cm_s,9.283,0.986,0.944,1.0
+PMMA,rod,opposed,flow_cm_s,11.143,0.999,0.998,1.0
+PMMA,rod,opposed,flow_cm_s,13.375,0.999,0.998,1.0
+PMMA,rod,opposed,flow_cm_s,16.054,0.845,0.508,0.999
+PMMA,rod,opposed,flow_cm_s,19.27,0.872,0.709,0.999
+PMMA,rod,opposed,flow_cm_s,23.13,0.871,0.709,0.999
+PMMA,rod,opposed,flow_cm_s,27.763,0.871,0.709,0.999
+PMMA,rod,opposed,flow_cm_s,33.325,0.871,0.709,0.999
+PMMA,rod,opposed,flow_cm_s,40.0,0.871,0.709,0.999
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.15,0.998,0.998,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.16,0.998,0.998,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.17,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.18,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.19,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.2,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.21,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.22,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.23,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.24,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.25,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.26,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.27,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.28,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.29,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.3,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.31,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.32,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.33,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.34,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.35,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.36,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.37,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.38,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.39,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,x_o2,0.4,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.4,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.45,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.5,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.55,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.6,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.65,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.7,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.75,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.8,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.85,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.9,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,0.95,0.998,0.995,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,1.0,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,1.05,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,1.1,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,1.15,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,pressure_atm,1.2,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,0.5,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,0.6,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,0.72,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,0.865,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,1.038,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,1.246,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,1.495,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,1.795,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,2.154,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,2.586,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,3.104,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,3.726,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,4.472,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,5.368,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,6.443,0.996,0.992,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,7.734,1.0,0.999,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,9.283,0.999,0.998,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,11.143,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,13.375,1.0,1.0,1.0
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,16.054,0.99,0.976,0.997
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,19.27,0.991,0.981,0.999
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,23.13,0.991,0.981,0.998
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,27.763,0.992,0.981,0.999
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,33.325,0.992,0.981,0.999
+cotton-fiberglass,fabric sheet,concurrent,flow_cm_s,40.0,0.992,0.981,0.999
+wax,candle,stagnation,x_o2,0.15,0.87,0.701,0.992
+wax,candle,stagnation,x_o2,0.16,0.883,0.711,0.995
+wax,candle,stagnation,x_o2,0.17,0.956,0.911,0.999
+wax,candle,stagnation,x_o2,0.18,0.962,0.92,0.999
+wax,candle,stagnation,x_o2,0.19,0.962,0.92,0.999
+wax,candle,stagnation,x_o2,0.2,0.963,0.92,0.999
+wax,candle,stagnation,x_o2,0.21,0.963,0.92,0.999
+wax,candle,stagnation,x_o2,0.22,0.97,0.961,0.999
+wax,candle,stagnation,x_o2,0.23,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.24,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.25,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.26,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.27,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.28,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.29,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.3,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.31,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.32,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.33,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.34,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.35,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.36,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.37,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.38,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.39,0.976,0.968,1.0
+wax,candle,stagnation,x_o2,0.4,0.976,0.968,1.0
+wax,candle,stagnation,pressure_atm,0.4,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.45,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.5,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.55,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.6,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.65,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.7,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.75,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.8,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.85,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.9,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,0.95,0.733,0.334,0.996
+wax,candle,stagnation,pressure_atm,1.0,0.963,0.92,0.999
+wax,candle,stagnation,pressure_atm,1.05,0.963,0.92,0.999
+wax,candle,stagnation,pressure_atm,1.1,0.963,0.92,0.999
+wax,candle,stagnation,pressure_atm,1.15,0.963,0.92,0.999
+wax,candle,stagnation,pressure_atm,1.2,0.963,0.92,0.999
+wax,candle,stagnation,flow_cm_s,0.5,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,0.6,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,0.72,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,0.865,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,1.038,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,1.246,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,1.495,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,1.795,1.0,0.999,1.0
+wax,candle,stagnation,flow_cm_s,2.154,0.999,0.997,1.0
+wax,candle,stagnation,flow_cm_s,2.586,0.999,0.998,1.0
+wax,candle,stagnation,flow_cm_s,3.104,0.999,0.998,1.0
+wax,candle,stagnation,flow_cm_s,3.726,0.999,0.998,1.0
+wax,candle,stagnation,flow_cm_s,4.472,0.999,0.998,1.0
+wax,candle,stagnation,flow_cm_s,5.368,0.999,0.997,1.0
+wax,candle,stagnation,flow_cm_s,6.443,0.767,0.317,0.999
+wax,candle,stagnation,flow_cm_s,7.734,0.908,0.748,0.999
+wax,candle,stagnation,flow_cm_s,9.283,0.872,0.554,0.999
+wax,candle,stagnation,flow_cm_s,11.143,0.963,0.92,0.999
+wax,candle,stagnation,flow_cm_s,13.375,0.951,0.886,0.999
+wax,candle,stagnation,flow_cm_s,16.054,0.238,0.023,0.708
+wax,candle,stagnation,flow_cm_s,19.27,0.257,0.026,0.73
+wax,candle,stagnation,flow_cm_s,23.13,0.259,0.022,0.73
+wax,candle,stagnation,flow_cm_s,27.763,0.26,0.022,0.73
+wax,candle,stagnation,flow_cm_s,33.325,0.26,0.022,0.73
+wax,candle,stagnation,flow_cm_s,40.0,0.26,0.022,0.73

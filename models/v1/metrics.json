@@ -9,10 +9,10 @@
       "n_flameout": 23
     },
     "gradient_boosting": {
-      "roc_auc": 0.948,
-      "pr_auc_flameout": 0.601,
+      "roc_auc": 0.958,
+      "pr_auc_flameout": 0.598,
       "balanced_accuracy": 0.839,
-      "brier": 0.0323,
+      "brier": 0.0309,
       "n": 414,
       "n_flameout": 23
     },

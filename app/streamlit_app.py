@@ -68,6 +68,26 @@ def load_tables():
     return D, grid, tests, ev, src, cat, B
 
 
+@st.cache_data
+def load_explain():
+    import json
+    return (json.loads((ROOT / "models" / "v1" / "explain.json").read_text()),
+            pd.read_csv(ROOT / "models" / "v1" / "A_effect_curves.csv"),
+            pd.read_csv(ROOT / "models" / "v1" / "C_effect_curves.csv"))
+
+
+def hbar(labels, values, title, fmt="{:.2f}", color=BLUE, height=260, xrange=None, err=None):
+    fig = go.Figure(go.Bar(x=values, y=labels, orientation="h", marker=dict(color=color, line=dict(color="white", width=2)),
+                           text=[fmt.format(v) for v in values], textposition="outside",
+                           error_x=dict(type="data", symmetric=False, array=err[0], arrayminus=err[1], color=INK2)
+                           if err else None, hovertemplate="%{y}: %{x:.3f}<extra></extra>"))
+    base_layout(fig, height, xaxis_title=title, showlegend=False)
+    fig.update_yaxes(autorange="reversed", showgrid=False)
+    if xrange:
+        fig.update_xaxes(range=xrange)
+    return fig
+
+
 @st.cache_resource
 def load_models():
     return (joblib.load(ROOT / "models" / "v1" / "A_solids.joblib"),
@@ -138,7 +158,7 @@ with tab_find:
     fig.add_annotation(x=30, y=np.log10(1.3), text="habitat 30 %", showarrow=False, xanchor="left", xshift=6,
                        font=dict(color=CRITICAL, size=12))
     base_layout(fig, 430, xaxis_title="Oxygen (%)", yaxis_title="Burn time (s, log scale)")
-    fig.update_yaxes(type="log")
+    fig.update_yaxes(type="log", tickvals=[1, 3, 10, 30, 100, 300], minor=dict(showgrid=False, ticks=""))
     st.plotly_chart(fig, width="stretch")
     st.caption("179 ACME CFI-G tests (PSI-159), ethane / propane / n-butane on a spherical porous burner, 0.5-3 atm. "
                "Model: Weibull survival model, leave-one-ISS-day-out concordance 0.75.")
@@ -254,15 +274,21 @@ with tab_pred:
             st.markdown(f"Closest real test: **{app.nearest_test}** · gap {app.get('gap_x_o2', 0):.0%} O2, "
                         f"{app.get('gap_pressure_atm', 0):.2f} atm · geometry: {geom}")
             st.caption("Gradient boosting on 414 observations from 212 tests (BASS, BASS-II, Saffire I-VI); held-out "
-                       "ROC-AUC 0.95. Oxygen may only raise the risk. Cotton, Nomex and silicone have too few tests to model.")
+                       "ROC-AUC 0.96. More oxygen or pressure may only raise the risk. Cotton, Nomex and silicone have too few tests to model.")
         flows = np.linspace(0.5, 40, 80)
         qq = pd.DataFrame(dict(material_family=mat, geometry_class=geom, flow_direction=direc, flow_cm_s=flows, **TARGET))
         Xq = M._a_features(qq)
-        bq = np.array([b.predict_proba(Xq)[:, 1] for b in A_pack["boots"]])
+        jit = np.exp(np.linspace(-0.15, 0.15, 5))  # light smoothing over ±15 % air speed (tree models are step-shaped)
+
+        def smooth(frame):
+            out = []
+            for j in jit:
+                Xj = M._a_features(frame.assign(flow_cm_s=frame.flow_cm_s * j))
+                out.append([b.predict_proba(Xj)[:, 1] for b in A_pack["boots"]])
+            return np.array(out).mean(axis=0)  # shape: boots x points
+        bq = smooth(qq)
         curve = bq.mean(axis=0)
-        qe = qq.assign(x_o2=0.21, pressure_atm=1.0)
-        Xe = M._a_features(qe)
-        earth = np.mean([b.predict_proba(Xe)[:, 1] for b in A_pack["boots"]], axis=0)
+        earth = smooth(qq.assign(x_o2=0.21, pressure_atm=1.0)).mean(axis=0)
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=np.r_[flows, flows[::-1]], y=np.r_[np.percentile(bq, 90, 0), np.percentile(bq, 10, 0)[::-1]],
                                  fill="toself", fillcolor="rgba(42,120,214,0.15)", line=dict(width=0), name="80 % band",
@@ -276,10 +302,28 @@ with tab_pred:
                                  marker=dict(color=INK, size=6, opacity=0.35), customdata=np.c_[obs.test_id, (obs.x_o2 * 100).round(1)],
                                  hovertemplate="%{customdata[0]}: %{customdata[1]} % O2, %{x} cm/s<extra></extra>"))
         base_layout(fig, 360, xaxis_title="Air speed (cm/s)", yaxis_title="Chance the flame keeps burning")
-        st.caption("Curves are the average of 40 bootstrap models; the step shape comes from the tree model, so read "
-                   "the band rather than individual wiggles. Real tests are shown at their own O2 and pressure.")
+        st.caption("Curves: average of 40 bootstrap models, lightly smoothed over ±15 % air speed (tree models are "
+                   "step-shaped); read the band rather than individual wiggles. Real tests are shown at their own O2 and pressure.")
+
+
         fig.update_yaxes(range=[-0.05, 1.05], tickformat=".0%")
         st.plotly_chart(fig, width="stretch")
+        EX, ACURVE, _ = load_explain()
+        with st.expander("How this model decides", expanded=True):
+            e = EX["A_solids"]
+            imp = dict(sorted(e["importance_auc_drop"].items(), key=lambda kv: -kv[1]))
+            l, r = st.columns([1, 1])
+            l.plotly_chart(hbar(list(imp), [max(v, 0) for v in imp.values()], "Drop in ROC-AUC when the input is scrambled",
+                                fmt="{:.3f}", xrange=[0, max(imp.values()) * 1.3]), width="stretch")
+            r.markdown(f"""**Air speed matters most.** Flames starve at very low air speed and blow off at high speed:
+the "Goldilocks window" BASS-II found. **Material** comes next.
+
+**Oxygen and pressure follow physics by construction:** the model can only raise the chance of burning
+when either goes up. Most tests were run in cabin air, so their effect is learned from fewer tests.
+
+**Glass-box check** (simple logistic model, held-out ROC-AUC 0.85): each **+1 % O2 multiplies the odds of
+sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 atm by
+{e['glass_box_odds_ratios']['+0.1 atm pressure']:.2f}.""")
 
     elif kind == "Gas flame in still air":
         c1, c2 = st.columns(2)
@@ -308,8 +352,29 @@ with tab_pred:
         fig.add_vrect(x0=25, x1=34, fillcolor=MUTED, opacity=0.08, line_width=0)
         fig.add_vline(x=o2 * 100, line=dict(color=CRITICAL, width=2, dash="dot"))
         base_layout(fig, 340, xaxis_title="Oxygen (%)", yaxis_title="Median burn time (s, log)", showlegend=False)
-        fig.update_yaxes(type="log")
+        fig.update_yaxes(type="log", tickvals=[1, 3, 10, 30, 100, 300], minor=dict(showgrid=False, ticks=""))
         st.plotly_chart(fig, width="stretch")
+        EX, _, _ = load_explain()
+        with st.expander("How this model decides", expanded=True):
+            trs = EX["D_gas_flames"]["time_ratios"]
+            l, r = st.columns([1, 1])
+            vals = [t["time_ratio"] for t in trs]
+            err = ([t["ci95"][1] - t["time_ratio"] for t in trs], [t["time_ratio"] - t["ci95"][0] for t in trs])
+            l.plotly_chart(hbar([t["effect"] for t in trs], vals, "Burn-time multiplier (1 = no effect)",
+                                fmt="×{:.2f}", color=[ORANGE if v > 1 else BLUE for v in vals], height=300, err=err,
+                                xrange=[0, 1.55]),
+                           width="stretch")
+            o2r = trs[0]["time_ratio"]
+            pr = trs[1]["time_ratio"]
+            r.markdown(f"""Each factor **multiplies** the burn time. Read the bars as "this change makes the flame
+last ×N as long".
+
+**Oxygen dominates:** every **+1 % O2 makes the flame last ×{o2r:.2f}** (95 % interval
+{trs[0]['ci95'][0]:.2f}-{trs[0]['ci95'][1]:.2f}). From 21 % to 30 % O2 that compounds to
+**×{o2r ** 9:.1f}**; the habitat's lower pressure adds about ×{pr ** -3.1:.2f}, for roughly ×{o2r ** 9 * pr ** -3.1:.1f} overall.
+
+**More fuel flow shortens the burn** (×{trs[2]['time_ratio']:.2f} per doubling): bigger microgravity flames lose more heat by
+radiation, consistent with radiative extinction reported for spherical flames.""")
 
     else:
         c1, c2, c3 = st.columns(3)
@@ -333,7 +398,33 @@ with tab_pred:
             st.markdown(tag(app.label), unsafe_allow_html=True)
             st.markdown(f"Closest real test: **{app.nearest_test}**")
             st.caption("Gaussian process on FLEX (PSI-69) and PSI-117 experiments; 5-fold R² 0.70 (burning rate) and "
-                       "0.90 (extinction diameter). ± is one standard deviation. Not valid for fuels it has not seen.")
+                       "0.90 (extinction diameter). ± is one standard deviation. Not valid for fuels it has not seen. "
+                       "Suppressant (CO2, He) tests only go up to 25 % O2, so suppression at habitat oxygen is untested.")
+        EX, _, CCURVE = load_explain()
+        with st.expander("How this model decides", expanded=True):
+            rel = EX["C_droplets"]["input_relevance"]
+            l, r = st.columns([1, 1])
+            for col_, tgt, ttl in ((l, "burning_rate_mm2_s", "Burning rate: input relevance"),
+                                   (r, "extinction_diameter_mm", "Extinction size: input relevance")):
+                rr = dict(sorted(rel[tgt].items(), key=lambda kv: -kv[1]))
+                col_.plotly_chart(hbar(list(rr), list(rr.values()), ttl, fmt="{:.0%}", height=250,
+                                       xrange=[0, max(rr.values()) * 1.3]), width="stretch")
+            st.markdown("Relevance comes from the Gaussian process itself: an input the model needs to follow closely gets a "
+                        "short length scale. **Oxygen drives when the flame goes out; droplet size, oxygen and CO2 drive how "
+                        "fast it burns.** Pressure matters little in the tested range: the 1 atm and 0.69 atm curves "
+                        "below lie on top of each other.")
+            cc = CCURVE[(CCURVE.fuel == fuel) & (CCURVE.target == "burning_rate_mm2_s")]
+            fig = go.Figure()
+            for pp, col, nm in ((1.0, MUTED, "1 atm"), (0.69, BLUE, "0.69 atm")):
+                c_ = cc[cc.pressure_atm == pp]
+                fig.add_trace(go.Scatter(x=np.r_[c_.x_o2 * 100, c_.x_o2[::-1] * 100],
+                                         y=np.r_[c_.value + c_.sd, (c_.value - c_.sd)[::-1]], fill="toself",
+                                         fillcolor="rgba(42,120,214,0.12)" if pp == 0.69 else "rgba(138,137,132,0.12)",
+                                         line=dict(width=0), hoverinfo="skip", showlegend=False))
+                fig.add_trace(go.Scatter(x=c_.x_o2 * 100, y=c_.value, name=f"{fuel}, {nm}", line=dict(color=col, width=2.5),
+                                         hovertemplate="%{x:.0f} % O2: %{y:.2f} mm²/s<extra></extra>"))
+            base_layout(fig, 280, xaxis_title="Oxygen (%)  · 3 mm droplet, no suppressant", yaxis_title="Burning rate (mm²/s)")
+            st.plotly_chart(fig, width="stretch")
 
 # ================================================================= 4. GAPS
 with tab_gap:

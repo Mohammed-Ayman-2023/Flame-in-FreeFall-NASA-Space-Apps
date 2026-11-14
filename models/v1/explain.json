@@ -1,0 +1,109 @@
+{
+  "A_solids": {
+    "baseline_auc_in_sample": 0.996,
+    "importance_auc_drop": {
+      "Oxygen": 0.0225,
+      "Pressure": 0.0027,
+      "Air speed": 0.2147,
+      "Material": 0.0512,
+      "Shape": 0.0067,
+      "Flow direction": -0.0002
+    },
+    "glass_box_odds_ratios": {
+      "+1 % O2": 1.544,
+      "+0.1 atm pressure": 2.268
+    },
+    "glass_box_category_odds": {
+      "material = Nomex": 0.08,
+      "material = PMMA": 2.122,
+      "material = cotton": 1.45,
+      "material = cotton-fiberglass": 21.622,
+      "material = silicone": 0.119,
+      "material = wax": 1.624,
+      "shape = candle": 1.624,
+      "shape = fabric sheet": 1.018,
+      "shape = rod": 1.418,
+      "shape = sphere": 1.786,
+      "shape = thick slab": 1.217,
+      "shape = thin sheet": 0.202,
+      "direction = concurrent": 0.692,
+      "direction = opposed": 1.206,
+      "direction = stagnation": 4.177,
+      "direction = wake ignition": 0.296
+    },
+    "note": "importance = drop in ROC-AUC when that input is shuffled (bigger = relied on more); odds ratios from the logistic companion model (held-out ROC-AUC in metrics.json)"
+  },
+  "D_gas_flames": {
+    "time_ratios": [
+      {
+        "effect": "+1 % oxygen",
+        "time_ratio": 1.17,
+        "ci95": [
+          1.149,
+          1.192
+        ]
+      },
+      {
+        "effect": "+0.1 atm pressure",
+        "time_ratio": 0.967,
+        "ci95": [
+          0.946,
+          0.988
+        ]
+      },
+      {
+        "effect": "double the fuel flow",
+        "time_ratio": 0.646,
+        "ci95": [
+          0.519,
+          0.803
+        ]
+      },
+      {
+        "effect": "+10 % fuel in the fuel stream",
+        "time_ratio": 1.041,
+        "ci95": [
+          0.976,
+          1.111
+        ]
+      },
+      {
+        "effect": "propane instead of ethane",
+        "time_ratio": 0.6,
+        "ci95": [
+          0.41,
+          0.879
+        ]
+      },
+      {
+        "effect": "n-butane instead of ethane",
+        "time_ratio": 0.651,
+        "ci95": [
+          0.457,
+          0.928
+        ]
+      }
+    ],
+    "note": "time ratio > 1: the flame burns longer before going out by itself; 1 = no effect"
+  },
+  "C_droplets": {
+    "input_relevance": {
+      "burning_rate_mm2_s": {
+        "Oxygen": 0.253,
+        "Pressure (log)": 0.006,
+        "Droplet size": 0.319,
+        "CO2 added": 0.296,
+        "Helium added": 0.126
+      },
+      "extinction_diameter_mm": {
+        "Oxygen": 0.446,
+        "Pressure (log)": 0.098,
+        "Droplet size": 0.292,
+        "CO2 added": 0.1,
+        "Helium added": 0.064
+      }
+    },
+    "suppressant_tests_max_o2": 0.25,
+    "note": "relevance = share of 1/length-scale across the physical inputs (fuel identity excluded); suppressant (CO2, He) tests only go up to the O2 shown, so suppression at habitat O2 is untested"
+  }
+}

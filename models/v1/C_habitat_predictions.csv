@@ -1,5 +1,5 @@
-fuel,d0_mm,x_co2,x_he,atmosphere,x_o2,pressure_atm,burning_rate_mm2_s,burning_rate_mm2_s_sd,extinction_diameter_mm,extinction_diameter_mm_sd,nearest_test,gap_x_o2,gap_pressure_atm,label
-methanol,3.0,0.0,0.0,habitat,0.3,0.69,0.652,0.064,0.583,0.31,PSI-69:41,0.0,0.013,inside tested range
-methanol,3.0,0.0,0.0,earth_cabin,0.21,1.0,0.495,0.063,1.344,0.249,PSI-69:4,0.0,0.0,inside tested range
-n-heptane,3.0,0.0,0.0,habitat,0.3,0.69,0.746,0.064,1.64,1.037,PSI-69:43,0.0,0.014,inside tested range
-n-heptane,3.0,0.0,0.0,earth_cabin,0.21,1.0,0.538,0.062,1.39,0.248,PSI-117:dext1atm_C7_exp_3.91,0.0,0.0,inside tested range
+fuel,d0_mm,x_co2,x_he,atmosphere,x_o2,pressure_atm,burning_rate_mm2_s,burning_rate_mm2_s_sd,extinction_diameter_mm,extinction_diameter_mm_sd,nearest_test,gap_x_o2,gap_pressure_atm,gap_x_co2,gap_x_he,label
+methanol,3.0,0.0,0.0,habitat,0.3,0.69,0.652,0.064,0.583,0.31,PSI-69:41,0.0,0.013,0.0,0.0,inside tested range
+methanol,3.0,0.0,0.0,earth_cabin,0.21,1.0,0.495,0.063,1.344,0.249,PSI-69:4,0.0,0.0,0.0,0.0,inside tested range
+n-heptane,3.0,0.0,0.0,habitat,0.3,0.69,0.746,0.064,1.64,1.037,PSI-69:43,0.0,0.014,0.0,0.0,inside tested range
+n-heptane,3.0,0.0,0.0,earth_cabin,0.21,1.0,0.538,0.062,1.39,0.248,PSI-117:dext1atm_C7_exp_3.91,0.0,0.0,0.0,0.0,inside tested range

@@ -60,10 +60,10 @@ def _a_gbm() -> Pipeline:
     pre = ColumnTransformer([("num", "passthrough", A_NUM),
                              ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), A_CAT)])
     pre.set_output(transform="pandas")
-    # more O2 can only raise the chance of sustained burning
+    # physics: more O2, or more pressure, can only raise the chance of sustained burning
     return Pipeline([("pre", pre), ("clf", HistGradientBoostingClassifier(
         max_depth=3, learning_rate=0.08, max_iter=200, class_weight="balanced", random_state=0,
-        monotonic_cst={"num__x_o2": 1}))])
+        monotonic_cst={"num__x_o2": 1, "num__pressure_atm": 1}))])
 
 
 def _clf_metrics(y, p) -> dict:
@@ -258,13 +258,129 @@ def train_C() -> dict:
         Xs = np.column_stack([m["scaler"].transform(X[:, :len(C_NUM)]), X[:, len(C_NUM):]])
         mu, sd = m["model"].predict(Xs, return_std=True)
         Q[target], Q[target + "_sd"] = mu.round(3), sd.round(3)
-    app = applicability(Q, d, "fuel", dict(x_o2=0.04, pressure_atm=0.2))
+    app = applicability(Q, d, "fuel", dict(x_o2=0.04, pressure_atm=0.2, x_co2=0.05, x_he=0.05))
     pd.concat([Q, app], axis=1).to_csv(OUT / "C_habitat_predictions.csv", index=False)
     return res
+
+
+# ------------------------------------------------------------------------------------ explanations
+A_INPUTS = {"x_o2": "Oxygen", "pressure_atm": "Pressure", "flow_cm_s": "Air speed", "material_family": "Material",
+            "geometry_class": "Shape", "flow_direction": "Flow direction"}
+
+
+def explain_A() -> dict:
+    """What the solids model relies on (permutation importance per real input, on the bagged ensemble),
+    how each factor moves the answer (effect curves), and a glass-box logistic companion (odds ratios)."""
+    pack = joblib.load(OUT / "A_solids.joblib")
+    d, boots = pack["train"], pack["boots"]
+    y = d["flame_sustained"].to_numpy()
+
+    def score(frame):
+        X = _a_features(frame)
+        return roc_auc_score(y, np.mean([b.predict_proba(X)[:, 1] for b in boots], axis=0))
+
+    base = score(d)
+    rng = np.random.default_rng(0)
+    imp = {}
+    for col, name in A_INPUTS.items():
+        drops = []
+        for _ in range(8):
+            shuffled = d.copy()
+            shuffled[col] = rng.permutation(shuffled[col].to_numpy())
+            drops.append(base - score(shuffled))
+        imp[name] = round(float(np.mean(drops)), 4)
+    # effect curves for each modelled material at its most common shape and flow direction
+    curves = []
+    n_mat = d["material_family"].value_counts()
+    for mat in n_mat[n_mat >= MIN_ROWS_PER_MATERIAL].index:
+        g = d[d.material_family == mat]
+        geom, direc = g["geometry_class"].mode().iat[0], g["flow_direction"].mode().iat[0]
+        ref = dict(material_family=mat, geometry_class=geom, flow_direction=direc, flow_cm_s=10.0, **EARTH)
+        for factor, grid in (("x_o2", np.round(np.arange(0.15, 0.405, 0.01), 3)),
+                             ("pressure_atm", np.round(np.arange(0.4, 1.21, 0.05), 3)),
+                             ("flow_cm_s", np.round(np.geomspace(0.5, 40, 25), 3))):
+            q = pd.DataFrame([ref] * len(grid))
+            q[factor] = grid
+            X = _a_features(q)
+            pr = np.array([b.predict_proba(X)[:, 1] for b in boots])
+            for v, m_, lo, hi in zip(grid, pr.mean(0), np.percentile(pr, 10, 0), np.percentile(pr, 90, 0)):
+                curves.append(dict(material=mat, shape=geom, direction=direc, factor=factor, value=float(v),
+                                   p_sustained=round(float(m_), 3), p_low=round(float(lo), 3), p_high=round(float(hi), 3)))
+    pd.DataFrame(curves).to_csv(OUT / "A_effect_curves.csv", index=False)
+    # glass-box companion: logistic regression in plain units
+    X = _a_features(d)
+    lg = _a_logit().fit(X, y)
+    sc, coef = lg.named_steps["pre"].named_transformers_["num"], lg.named_steps["clf"].coef_[0]
+    sd = dict(zip(A_NUM, sc.scale_))
+    odds = {"+1 % O2": round(float(np.exp(coef[0] / sd["x_o2"] * 0.01)), 3),
+            "+0.1 atm pressure": round(float(np.exp(coef[1] / sd["pressure_atm"] * 0.1)), 3)}
+    cat_names = lg.named_steps["pre"].named_transformers_["cat"].get_feature_names_out(A_CAT)
+    cats = {n.replace("material_family_", "material = ").replace("geometry_class_", "shape = ")
+            .replace("flow_direction_", "direction = "): round(float(np.exp(c)), 3)
+            for n, c in zip(cat_names, coef[len(A_NUM):])}
+    return dict(baseline_auc_in_sample=round(base, 3), importance_auc_drop=imp,
+                glass_box_odds_ratios=odds, glass_box_category_odds=cats,
+                note="importance = drop in ROC-AUC when that input is shuffled (bigger = relied on more); "
+                     "odds ratios from the logistic companion model (held-out ROC-AUC in metrics.json)")
+
+
+def explain_D() -> dict:
+    """Weibull AFT coefficients as time ratios: how much each factor stretches or shrinks the burn time."""
+    pack = joblib.load(OUT / "D_gas_flames.joblib")
+    m = pack["model"]
+    c = m.params_.loc["lambda_"]
+    ci = m.confidence_intervals_.loc["lambda_"] if hasattr(m, "confidence_intervals_") else None
+
+    def tr(name, step, label):
+        val = float(np.exp(c[name] * step))
+        out = dict(effect=label, time_ratio=round(val, 3))
+        if ci is not None:
+            lo, hi = ci.loc[name].to_numpy()
+            out["ci95"] = [round(float(np.exp(lo * step)), 3), round(float(np.exp(hi * step)), 3)]
+        return out
+    return dict(time_ratios=[tr("x_o2", 0.01, "+1 % oxygen"), tr("pressure_atm", 0.1, "+0.1 atm pressure"),
+                             tr("log_mdot", np.log(2), "double the fuel flow"),
+                             tr("fuel_mole_fraction", 0.1, "+10 % fuel in the fuel stream"),
+                             tr("fuel_propane", 1, "propane instead of ethane"),
+                             tr("fuel_butane", 1, "n-butane instead of ethane")],
+                note="time ratio > 1: the flame burns longer before going out by itself; 1 = no effect")
+
+
+def explain_C() -> dict:
+    """Gaussian-process input relevance (1 / learned length scale on standardized inputs) and effect of O2."""
+    models = joblib.load(OUT / "C_droplets.joblib")
+    out = {}
+    names = ["Oxygen", "Pressure (log)", "Droplet size", "CO2 added", "Helium added"]
+    for target, pk in models.items():
+        ls = pk["model"].kernel_.k1.k2.length_scale
+        rel = 1 / np.asarray(ls)[:len(C_NUM)]
+        rel = rel / rel.sum()
+        out[target] = {n: round(float(r), 3) for n, r in zip(names, rel)}
+    curves = []
+    for target, pk in models.items():
+        for fuel in ("methanol", "n-heptane"):
+            for p in (0.69, 1.0):
+                q = pd.DataFrame(dict(fuel=fuel, d0_mm=3.0, x_co2=0.0, x_he=0.0, pressure_atm=p,
+                                      x_o2=np.round(np.arange(0.15, 0.355, 0.01), 3)))
+                X = _c_features(q, pk["fuels"])
+                Xs = np.column_stack([pk["scaler"].transform(X[:, :len(C_NUM)]), X[:, len(C_NUM):]])
+                mu, sd = pk["model"].predict(Xs, return_std=True)
+                for o2, a, b in zip(q.x_o2, mu, sd):
+                    curves.append(dict(target=target, fuel=fuel, pressure_atm=p, x_o2=float(o2),
+                                       value=round(float(a), 3), sd=round(float(b), 3)))
+    pd.DataFrame(curves).to_csv(OUT / "C_effect_curves.csv", index=False)
+    tr = models["burning_rate_mm2_s"]["train"]
+    sup = tr[(tr.x_co2.fillna(0) > 0) | (tr.x_he.fillna(0) > 0)]
+    return dict(input_relevance=out, suppressant_tests_max_o2=round(float(sup.x_o2.max()), 3),
+                note="relevance = share of 1/length-scale across the physical inputs (fuel identity excluded); "
+                     "suppressant (CO2, He) tests only go up to the O2 shown, so suppression at habitat O2 is untested")
 
 
 def run() -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     metrics = dict(A_solids=train_A(), D_gas_flames=train_D(), C_droplets=train_C())
     (OUT / "metrics.json").write_text(json.dumps(metrics, indent=2, default=str))
+    explain = dict(A_solids=explain_A(), D_gas_flames=explain_D(), C_droplets=explain_C())
+    (OUT / "explain.json").write_text(json.dumps(explain, indent=2, default=str))
+    metrics["explain"] = explain
     return metrics

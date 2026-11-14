@@ -77,7 +77,7 @@ python scripts/build_data.py                   # rebuild data/processed/ from th
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
 python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
-pytest -q                                      # data checks
+pytest -q                                      # 19 checks: data layer + model physics and labels
 streamlit run app/streamlit_app.py             # open the dashboard
 ```
 

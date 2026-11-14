@@ -1,28 +1,28 @@
 material_family,geometry_class,flow_direction,flow_cm_s,atmosphere,x_o2,pressure_atm,p_sustained,p_low,p_high,log_flow,nearest_test,gap_x_o2,gap_pressure_atm,gap_log_flow,label
 PMMA,thick slab,opposed,1.0,habitat,0.3,0.69,1.0,1.0,1.0,0.0,PSI-25:M12,0.083,0.31,0.0,outside tested range (extrapolation)
-PMMA,thick slab,opposed,5.0,habitat,0.3,0.69,1.0,0.999,1.0,1.6094379124341003,PSI-25:B1,0.078,0.31,0.0,outside tested range (extrapolation)
-PMMA,thick slab,opposed,10.0,habitat,0.3,0.69,0.999,0.983,1.0,2.302585092994046,PSI-25:M1,0.078,0.31,0.0,outside tested range (extrapolation)
-PMMA,thick slab,opposed,20.0,habitat,0.3,0.69,0.993,0.909,0.999,2.995732273553991,PSI-25:M2,0.078,0.31,0.0,outside tested range (extrapolation)
+PMMA,thick slab,opposed,5.0,habitat,0.3,0.69,1.0,0.998,1.0,1.6094379124341003,PSI-25:B1,0.078,0.31,0.0,outside tested range (extrapolation)
+PMMA,thick slab,opposed,10.0,habitat,0.3,0.69,0.999,0.979,1.0,2.302585092994046,PSI-25:M1,0.078,0.31,0.0,outside tested range (extrapolation)
+PMMA,thick slab,opposed,20.0,habitat,0.3,0.69,0.975,0.87,0.999,2.995732273553991,PSI-25:M2,0.078,0.31,0.0,outside tested range (extrapolation)
 PMMA,thick slab,opposed,1.0,earth_cabin,0.21,1.0,1.0,1.0,1.0,0.0,PSI-25:B9,0.0,0.0,0.0,inside tested range
 PMMA,thick slab,opposed,5.0,earth_cabin,0.21,1.0,1.0,1.0,1.0,1.6094379124341003,PSI-25:B6,0.0,0.0,0.0,inside tested range
-PMMA,thick slab,opposed,10.0,earth_cabin,0.21,1.0,0.997,0.998,1.0,2.302585092994046,PSI-25:B6,0.0,0.0,0.0,inside tested range
-PMMA,thick slab,opposed,20.0,earth_cabin,0.21,1.0,0.816,0.797,0.996,2.995732273553991,PSI-25:M15,0.0,0.0,0.0,inside tested range
+PMMA,thick slab,opposed,10.0,earth_cabin,0.21,1.0,0.999,0.997,1.0,2.302585092994046,PSI-25:B6,0.0,0.0,0.0,inside tested range
+PMMA,thick slab,opposed,20.0,earth_cabin,0.21,1.0,0.846,0.801,0.996,2.995732273553991,PSI-25:M15,0.0,0.0,0.0,inside tested range
 cotton-fiberglass,fabric sheet,concurrent,1.0,habitat,0.3,0.69,1.0,1.0,1.0,0.0,PSI-26:37_5,0.08,0.287,0.0,outside tested range (extrapolation)
 cotton-fiberglass,fabric sheet,concurrent,5.0,habitat,0.3,0.69,1.0,1.0,1.0,1.6094379124341003,EXT-SAFFIRE-456:VI-2,0.01,0.156,1.386,outside tested range (extrapolation)
 cotton-fiberglass,fabric sheet,concurrent,10.0,habitat,0.3,0.69,1.0,0.998,1.0,2.302585092994046,EXT-SAFFIRE-456:VI-2,0.01,0.156,0.693,inside tested range
-cotton-fiberglass,fabric sheet,concurrent,20.0,habitat,0.3,0.69,0.997,0.983,1.0,2.995732273553991,EXT-SAFFIRE-456:VI-2,0.01,0.156,0.0,inside tested range
+cotton-fiberglass,fabric sheet,concurrent,20.0,habitat,0.3,0.69,0.992,0.969,1.0,2.995732273553991,EXT-SAFFIRE-456:VI-2,0.01,0.156,0.0,inside tested range
 cotton-fiberglass,fabric sheet,concurrent,1.0,earth_cabin,0.21,1.0,1.0,1.0,1.0,0.0,PSI-26:37_5,0.01,0.023,0.0,inside tested range
 cotton-fiberglass,fabric sheet,concurrent,5.0,earth_cabin,0.21,1.0,1.0,1.0,1.0,1.6094379124341003,PSI-25:T25,0.002,0.0,0.0,inside tested range
 cotton-fiberglass,fabric sheet,concurrent,10.0,earth_cabin,0.21,1.0,1.0,1.0,1.0,2.302585092994046,PSI-26:13_10,0.006,0.016,0.095,inside tested range
-cotton-fiberglass,fabric sheet,concurrent,20.0,earth_cabin,0.21,1.0,0.994,0.976,0.998,2.995732273553991,PSI-26:65_11,0.005,0.009,0.0,inside tested range
-wax,candle,stagnation,1.0,habitat,0.3,0.69,1.0,0.998,1.0,0.0,PSI-26:48_82b,0.078,0.298,1.609,outside tested range (extrapolation)
-wax,candle,stagnation,5.0,habitat,0.3,0.69,0.996,0.982,1.0,1.6094379124341003,PSI-26:48_82b,0.078,0.298,0.0,outside tested range (extrapolation)
-wax,candle,stagnation,10.0,habitat,0.3,0.69,0.918,0.466,1.0,2.302585092994046,PSI-26:46_82,0.078,0.298,0.0,outside tested range (extrapolation)
-wax,candle,stagnation,20.0,habitat,0.3,0.69,0.253,0.011,0.989,2.995732273553991,PSI-26:46_82,0.078,0.298,0.693,outside tested range (extrapolation)
+cotton-fiberglass,fabric sheet,concurrent,20.0,earth_cabin,0.21,1.0,0.994,0.981,0.999,2.995732273553991,PSI-26:65_11,0.005,0.009,0.0,inside tested range
+wax,candle,stagnation,1.0,habitat,0.3,0.69,1.0,0.997,1.0,0.0,PSI-26:48_82b,0.078,0.298,1.609,outside tested range (extrapolation)
+wax,candle,stagnation,5.0,habitat,0.3,0.69,0.992,0.982,1.0,1.6094379124341003,PSI-26:48_82b,0.078,0.298,0.0,outside tested range (extrapolation)
+wax,candle,stagnation,10.0,habitat,0.3,0.69,0.918,0.449,1.0,2.302585092994046,PSI-26:46_82,0.078,0.298,0.0,outside tested range (extrapolation)
+wax,candle,stagnation,20.0,habitat,0.3,0.69,0.101,0.006,0.905,2.995732273553991,PSI-26:46_82,0.078,0.298,0.693,outside tested range (extrapolation)
 wax,candle,stagnation,1.0,earth_cabin,0.21,1.0,1.0,0.999,1.0,0.0,PSI-26:89_87,0.051,0.03,0.0,outside tested range (extrapolation)
-wax,candle,stagnation,5.0,earth_cabin,0.21,1.0,0.998,0.997,1.0,1.6094379124341003,PSI-26:48_82b,0.012,0.012,0.0,inside tested range
-wax,candle,stagnation,10.0,earth_cabin,0.21,1.0,0.988,0.926,0.999,2.302585092994046,PSI-26:46_82,0.012,0.012,0.0,inside tested range
-wax,candle,stagnation,20.0,earth_cabin,0.21,1.0,0.212,0.023,0.645,2.995732273553991,PSI-26:46_82,0.012,0.012,0.693,inside tested range
+wax,candle,stagnation,5.0,earth_cabin,0.21,1.0,0.998,0.998,1.0,1.6094379124341003,PSI-26:48_82b,0.012,0.012,0.0,inside tested range
+wax,candle,stagnation,10.0,earth_cabin,0.21,1.0,0.989,0.92,0.999,2.302585092994046,PSI-26:46_82,0.012,0.012,0.0,inside tested range
+wax,candle,stagnation,20.0,earth_cabin,0.21,1.0,0.251,0.026,0.73,2.995732273553991,PSI-26:46_82,0.012,0.012,0.693,inside tested range
 Nomex,fabric sheet,concurrent,1.0,habitat,0.3,0.69,,,,0.0,EXT-SAFFIRE-456:VI-1,0.01,0.156,2.996,not modelled: too few tests of this material (see observed tests)
 Nomex,fabric sheet,concurrent,5.0,habitat,0.3,0.69,,,,1.6094379124341003,EXT-SAFFIRE-456:VI-1,0.01,0.156,1.386,not modelled: too few tests of this material (see observed tests)
 Nomex,fabric sheet,concurrent,10.0,habitat,0.3,0.69,,,,2.302585092994046,EXT-SAFFIRE-456:VI-1,0.01,0.156,0.693,not modelled: too few tests of this material (see observed tests)
