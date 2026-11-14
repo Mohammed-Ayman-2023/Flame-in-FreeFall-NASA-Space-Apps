@@ -111,3 +111,12 @@ table.tbl td { padding: 14px; border-bottom: 1px solid var(--line); font-size: 1
   .hide-sm { display: none !important; }
 }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* live cabin stage overlays */
+@keyframes fill { from { width: 0 } to { width: 100% } }
+.cab-cap { position: absolute; left: 16px; bottom: 16px; max-width: min(520px, 46%); display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 10px; background: rgba(10,11,13,.84); backdrop-filter: blur(8px); }
+.cab-hud { position: absolute; right: 16px; top: 16px; width: 250px; padding: 10px 14px; border-radius: 10px; background: rgba(10,11,13,.84); backdrop-filter: blur(8px); display: flex; flex-direction: column; }
+@media (max-width: 760px) {
+  .cab-cap, .cab-hud { position: static; max-width: none; width: auto; border-radius: 0 0 10px 10px; }
+  .resp-steps { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
