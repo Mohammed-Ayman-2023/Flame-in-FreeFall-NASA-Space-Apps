@@ -11,7 +11,6 @@ import plotly.graph_objects as go
 import json
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -164,7 +163,7 @@ def sim_shape(g, air_cm_s, x_o2, p_atm, sooty=True):
 def flame_sim(mode, panes, speed, key):
     st.markdown("##### Flame simulator")
     html = SIM_HTML.replace("PARAMS", json.dumps(dict(mode=mode, panes=panes, speed=speed)))
-    components.html(html, height=420)
+    st.iframe(html, height=420)  # our own static template filled with model numbers, no user-supplied HTML
     st.caption("Timing and outcome come from our NASA-trained models (microgravity data). Flame shape follows buoyancy "
                "physics for the gravity you pick; colours, glow and flame size are illustrative, not to scale. NASA has "
                "no partial-gravity timing data, so at Moon, Mars or Earth gravity only the shape changes.")
@@ -207,6 +206,21 @@ def solid_shapley(mat, geom, direc, flow, o2_, p_):
     earth = pd.DataFrame([x.to_dict() | dict(x_o2=0.21, pressure_atm=1.0)])
     e_base, e_phi = XAI.exact_shapley(f, x, earth, {"Oxygen": ["x_o2"], "Pressure": ["pressure_atm"]})
     return base, phi, e_base, e_phi
+
+
+@st.cache_data(show_spinner=False, max_entries=300)
+def droplet_curve(fuel, d0, co2, he, p_):
+    C_pack = load_models()[2]
+    pk = C_pack["burning_rate_mm2_s"]
+    xs = np.round(np.arange(0.12, 0.3401, 0.005), 3)
+    out = {}
+    for pp in (1.0, p_):
+        q = pd.DataFrame(dict(fuel=fuel, d0_mm=d0, x_co2=co2, x_he=he, x_o2=xs, pressure_atm=pp))
+        X = M._c_features(q, pk["fuels"])
+        Xs = np.column_stack([pk["scaler"].transform(X[:, :len(M.C_NUM)]), X[:, len(M.C_NUM):]])
+        mu, sd = pk["model"].predict(Xs, return_std=True)
+        out[pp] = (mu, sd)
+    return xs, out
 
 
 @st.cache_data(show_spinner=False, max_entries=300)
@@ -363,18 +377,26 @@ with tab_brief:
 
 # ================================================================= 1. KEY FINDINGS
 with tab_find:
-    g_h = GRID_D[(GRID_D.x_o2 == 0.30) & (GRID_D.pressure_atm == 0.69)].iloc[0]
-    g_e = GRID_D[(GRID_D.x_o2 == 0.21) & (GRID_D.pressure_atm == 1.0)].iloc[0]
-    st.caption("Headline numbers at the challenge habitat (30 % O₂, 0.69 atm). The Crew briefing tab recomputes them "
-               "for any atmosphere.")
+    Kf = load_knowledge()
+    med_h, s30_h = Kn._d_predict(Kf, o2, p)
+    med_e, s30_e = Kn._d_predict(Kf, 0.21, 1.0)
+    st.caption(f"Headline numbers for the atmosphere in the sidebar: {MISSION_LABEL}. Change it and every number and "
+               "chart on this tab updates.")
+    near = TESTS[(TESTS.gravity_g.fillna(0) == 0) & ((TESTS.x_o2 - o2).abs() <= 0.05)
+                 & ((TESTS.pressure_atm - p).abs() <= 0.2)]
+    sm_near = near[(near.fuel_class.eq("smoke_source") | near.investigation_id.eq("PSI-107")) & near.parent_test.isna()
+                   & ~near.exclude.astype("boolean").fillna(False).astype(bool)]
+    so_near = near[near.fuel_class.eq("solid")]
+    so_psi = int((~so_near.investigation_id.str.startswith("EXT")).sum())
     c1, c2, c3, c4 = st.columns(4)
-    kpi(c1, f"{g_h.median_burn_s / g_e.median_burn_s:.1f}×", badge("model") + "<br>longer burn for a still-air gas "
-        "flame at the habitat than in Earth cabin air")
-    kpi(c2, f"{g_h.p_still_burning_30s:.0%}", badge("model") + "<br>of habitat flames predicted still burning after "
-        "30 s with no air flow (Earth air: ~0 %)")
-    kpi(c3, "0", badge("gap") + "<br>smoke-detection tests ever run above 21 % O₂ or below 1 atm")
-    kpi(c4, "5", badge("measured") + "<br>solid-fuel burns within ±5 % O₂ and ±0.2 atm of the habitat, none of "
-        "them in PSI")
+    kpi(c1, f"{med_h / med_e:.1f}×", badge("model") + f"<br>longer still-air burn for a gas flame here ({med_h:.0f} s) "
+        f"than in Earth cabin air ({med_e:.1f} s)")
+    kpi(c2, f"{s30_h:.0%}", badge("model") + f"<br>of flames predicted still burning after 30 s with no air flow "
+        f"(Earth air: {s30_e:.0%})")
+    kpi(c3, f"{len(sm_near)}", badge("gap" if len(sm_near) == 0 else "measured") + "<br>smoke and soot tests within "
+        "±5 % O₂ and ±0.2 atm of this atmosphere (all ran at 21 % O₂, 1 atm)")
+    kpi(c4, f"{len(so_near)}", badge("measured" if len(so_near) else "gap") + "<br>solid-fuel burns within ±5 % O₂ "
+        f"and ±0.2 atm of this atmosphere, {so_psi} of them in PSI")
     st.write("")
 
     st.subheader("1 · Cutting the ventilation may not put out a fire in an oxygen-rich habitat")
@@ -392,14 +414,16 @@ with tab_find:
                                  customdata=np.c_[s.fuel, s.pressure_atm.round(2), s.test_id],
                                  hovertemplate="%{customdata[2]}<br>%{customdata[0]}, %{customdata[1]} atm<br>"
                                                "O2 %{x:.1f} %<br>burn %{y:.0f} s<extra></extra>"))
-    gm = GRID_D[GRID_D.pressure_atm == 0.69]
-    fig.add_trace(go.Scatter(x=gm.x_o2 * 100, y=gm.median_burn_s, mode="lines", name="Model: median burn at 0.69 atm",
-                             line=dict(color=INK, width=2), hovertemplate="model median %{y:.0f} s at %{x:.0f} % O2<extra></extra>"))
+    o2line = np.round(np.arange(0.18, 0.4001, 0.005), 3)
+    med_line = [Kn._d_predict(Kf, xx, p)[0] for xx in o2line]
+    fig.add_trace(go.Scatter(x=o2line * 100, y=med_line, mode="lines", name=f"Model: median burn at {p:.2f} atm",
+                             line=dict(color=INK, width=2), hovertemplate="model median %{y:.0f} s at %{x:.1f} % O2<extra></extra>"))
     fig.add_vrect(x0=23.4, x1=33.2, fillcolor=MUTED, opacity=0.08, line_width=0)
     fig.add_annotation(x=28.3, y=np.log10(150), text="no tests between<br>24 % and 33 % O2", showarrow=False,
                        font=dict(color=INK2, size=12))
-    fig.add_vline(x=30, line=dict(color=CRITICAL, width=2, dash="dot"))
-    fig.add_annotation(x=30, y=np.log10(1.3), text="habitat 30 %", showarrow=False, xanchor="left", xshift=6,
+    fig.add_vline(x=o2 * 100, line=dict(color=CRITICAL, width=2, dash="dot"))
+    fig.add_annotation(x=o2 * 100, y=np.log10(1.3), text=f"your atmosphere {o2:.1%}", showarrow=False,
+                       xanchor="left" if o2 < 0.36 else "right", xshift=6 if o2 < 0.36 else -6,
                        font=dict(color=CRITICAL, size=12))
     base_layout(fig, 430, xaxis_title="Oxygen (%)", yaxis_title="Burn time (s, log scale)")
     fig.update_yaxes(type="log", tickvals=[1, 3, 10, 30, 100, 300], minor=dict(showgrid=False, ticks=""))
@@ -410,8 +434,9 @@ with tab_find:
     a, b = st.columns(2)
     with a:
         st.subheader("2 · Cabin materials still burn near habitat air")
-        st.markdown("Saffire IV-VI burned large samples on Cygnus at **26-31 % O2 and 0.53-0.70 atm**: fabric and "
-                    "plastic burned, Nomex did not ignite. Thick plastic (PMMA) released far more CO2 and CO than fabric.")
+        st.markdown("Saffire V and VI burned large samples on Cygnus at **26-31 % O2 and 0.53-0.70 atm**: fabric, "
+                    "cotton and plastic burned, Nomex did not ignite (Saffire IV-1 in cabin air is shown for comparison). "
+                    "Thick plastic (PMMA) released far more CO2 and CO than fabric.")
         x = EV[EV.investigation_id == "EXT-SAFFIRE-456"].pivot_table(index="test_id", columns="quantity", values="value")
         lab = {"EXT-SAFFIRE-456:IV-1": "IV-1 fabric (SIBAL) 22 %", "EXT-SAFFIRE-456:V-2": "V-2 cotton 26 %",
                "EXT-SAFFIRE-456:VI-2": "VI-2 fabric (SIBAL) 31 %", "EXT-SAFFIRE-456:VI-3": "VI-3 PMMA 10 mm 30 %",
@@ -890,8 +915,9 @@ sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 at
 last ×N as long".
 
 **Oxygen dominates:** every **+1 % O2 makes the flame last ×{o2r:.2f}** (95 % interval
-{trs[0]['ci95'][0]:.2f}-{trs[0]['ci95'][1]:.2f}). From 21 % to 30 % O2 that compounds to
-**×{o2r ** 9:.1f}**; the habitat's lower pressure adds about ×{pr ** -3.1:.2f}, for roughly ×{o2r ** 9 * pr ** -3.1:.1f} overall.
+{trs[0]['ci95'][0]:.2f}-{trs[0]['ci95'][1]:.2f}). From 21 % to {o2:.1%} O2 that compounds to
+**×{o2r ** ((o2 - 0.21) * 100):.1f}**; the pressure change from 1 atm to {p:.2f} atm adds ×{pr ** ((p - 1.0) / 0.1):.2f},
+for ×{o2r ** ((o2 - 0.21) * 100) * pr ** ((p - 1.0) / 0.1):.1f} overall (rounded effects; the exact figure is in "Why this number?").
 
 **More fuel flow shortens the burn** (×{trs[2]['time_ratio']:.2f} per doubling): bigger microgravity flames lose more heat by
 radiation, consistent with radiative extinction reported for spherical flames.""")
@@ -984,20 +1010,24 @@ the small shortfall is the ignition transient).""")
                                        xrange=[0, max(rr.values()) * 1.3]), width="stretch")
             st.markdown("Relevance comes from the Gaussian process itself: an input the model needs to follow closely gets a "
                         "short length scale. **Oxygen drives when the flame goes out; droplet size, oxygen and CO2 drive how "
-                        "fast it burns.** Pressure matters little in the tested range: the 1 atm and 0.69 atm curves "
-                        "below lie on top of each other.")
-            cc = CCURVE[(CCURVE.fuel == fuel) & (CCURVE.target == "burning_rate_mm2_s")]
+                        "fast it burns.** Pressure matters little in the tested range: compare the 1 atm curve with the "
+                        "curve at your pressure below.")
+            co2v, hev = (0.15 if sup.startswith("CO2") else 0.0), (0.15 if sup.startswith("He") else 0.0)
+            xs, cv = droplet_curve(fuel, float(d0), co2v, hev, float(p))
             fig = go.Figure()
-            for pp, col, nm in ((1.0, MUTED, "1 atm"), (0.69, BLUE, "0.69 atm")):
-                c_ = cc[cc.pressure_atm == pp]
-                fig.add_trace(go.Scatter(x=np.r_[c_.x_o2 * 100, c_.x_o2[::-1] * 100],
-                                         y=np.r_[c_.value + c_.sd, (c_.value - c_.sd)[::-1]], fill="toself",
-                                         fillcolor="rgba(42,120,214,0.12)" if pp == 0.69 else "rgba(138,137,132,0.12)",
-                                         line=dict(width=0), hoverinfo="skip", showlegend=False))
-                fig.add_trace(go.Scatter(x=c_.x_o2 * 100, y=c_.value, name=f"{fuel}, {nm}", line=dict(color=col, width=2.5),
-                                         hovertemplate="%{x:.0f} % O2: %{y:.2f} mm²/s<extra></extra>"))
-            base_layout(fig, 280, xaxis_title="Oxygen (%)  · 3 mm droplet, no suppressant", yaxis_title="Burning rate (mm²/s)")
+            for pp, col, fill, nm in ((1.0, MUTED, "rgba(138,137,132,0.12)", "1 atm"),
+                                      (float(p), BLUE, "rgba(42,120,214,0.12)", f"{p:.2f} atm (yours)")):
+                mu_, sd_ = cv[pp]
+                fig.add_trace(go.Scatter(x=np.r_[xs * 100, xs[::-1] * 100], y=np.r_[mu_ + sd_, (mu_ - sd_)[::-1]],
+                                         fill="toself", fillcolor=fill, line=dict(width=0), hoverinfo="skip", showlegend=False))
+                fig.add_trace(go.Scatter(x=xs * 100, y=mu_, name=f"{fuel}, {nm}", line=dict(color=col, width=2.5),
+                                         hovertemplate="%{x:.1f} % O2: %{y:.2f} mm²/s<extra></extra>"))
+            fig.add_vline(x=o2 * 100, line=dict(color=CRITICAL, width=2, dash="dot"))
+            base_layout(fig, 280, xaxis_title=f"Oxygen (%) · {d0:.1f} mm droplet, suppressant: {sup}",
+                        yaxis_title="Burning rate (mm²/s)")
             st.plotly_chart(fig, width="stretch")
+            st.caption("Curves recomputed from the Gaussian process for your droplet, suppressant and pressure; band = ±1 "
+                       "standard deviation. NASA's droplet tests reach 34 % O2, so the curve stops there.")
 
 # ================================================================= 4. GAPS
 with tab_gap:
