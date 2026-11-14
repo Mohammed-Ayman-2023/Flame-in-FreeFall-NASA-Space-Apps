@@ -280,3 +280,30 @@ export function ShapleyWaterfall({ title, sh, baseLabel, totalLabel, fmt, note }
     </div>
   )
 }
+
+/* ------------------------------------------------------------------ the dashboard's animated flame simulator */
+// Same template as app/assets/flame_sim.html (copied to public/sim, parameters passed in the URL hash) and the same
+// panes and shape rule as app/streamlit_app.py (sim_shape): timing from the NASA-trained models, shape from buoyancy.
+export const SIM_G = [['Orbit (ISS, 0 g)', 0], ['Moon (1.62 m/s²)', 1.62], ['Mars (3.71 m/s²)', 3.71], ['Earth (9.81 m/s²)', 9.81]]
+export function simShape(g, air, xo2, p, sooty = true) {
+  const ub = buoyantVelocity(g, 1000, 0.02) * 100, ubE = buoyantVelocity(9.81, 1000, 0.02) * 100
+  const up = Math.pow(Math.min(1, ub / ubE), 0.6), down = air / (air + ub + 5)
+  const soot = sooty ? Math.min(1, Math.max(0, 0.15 + 0.6 * up + 0.5 * (xo2 - 0.21) / 0.19)) : 0
+  return { up, down, soot, bright: xo2 / 0.21 * Math.pow(p, 0.3), flicker: up }
+}
+export function FlameSim({ mode, speed, build }) {
+  const [gi, setGi] = useState(0)
+  const [label, g] = SIM_G[gi]
+  const panes = build(g, label)
+  const src = (import.meta.env.BASE_URL || './') + 'sim/flame_sim.html#' + encodeURIComponent(JSON.stringify({ mode, panes, speed }))
+  return (
+    <div className="card" style={{ padding: '16px 14px 10px' }}>
+      <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 10, marginBottom: 10 }}>
+        <span style={{ fontSize: 15, fontWeight: 600 }}>Flame simulator · ISS cabin air vs your conditions</span>
+        <div className="seg" role="group" aria-label="Gravity for the flame simulator">{SIM_G.map(([l], i) => <button key={l} type="button" className={gi === i ? 'on' : ''} aria-pressed={gi === i} onClick={() => setGi(i)}>{l.split(' (')[0]}</button>)}</div>
+      </div>
+      <iframe key={src} src={src} title={`Animated flame simulator, ${mode}`} style={{ width: '100%', height: 420, border: 0, borderRadius: 10, background: '#07080a', display: 'block' }} loading="lazy" />
+      <div className="src" style={{ paddingTop: 8 }}>Timing and outcome come from our NASA-trained models (microgravity data). Flame shape follows buoyancy physics for the gravity you pick; colours, glow and flame size are illustrative, not to scale. NASA has no partial-gravity timing data, so at Moon, Mars or Earth gravity only the shape changes.</div>
+    </div>
+  )
+}

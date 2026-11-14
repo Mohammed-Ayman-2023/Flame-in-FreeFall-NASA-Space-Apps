@@ -5,6 +5,7 @@ import Landing from './pages/Landing'
 import { Learn1, Learn2, Learn3, Learn4 } from './pages/Learn'
 import FireLab from './pages/FireLab'
 import { Equipment } from './pages/Evidence'
+import { Findings, Ranking, Ask } from './pages/Dashboard'
 import { Explore, Investigation, Compare, Briefing, Gaps, Methods } from './pages/Archive'
 
 function Page({ route }) {
@@ -21,6 +22,9 @@ function Page({ route }) {
   if (path === '/briefing') return <Briefing />
   if (path === '/gaps') return <Gaps />
   if (path === '/equipment') return <Equipment />
+  if (path === '/findings') return <Findings />
+  if (path === '/ranking') return <Ranking />
+  if (path === '/ask') return <Ask />
   if (path === '/methods') return <Methods />
   return <Landing />
 }

@@ -13,7 +13,7 @@ const STOP = new Set('a an the of in on at to is are was were be been it its thi
 const norm = s => s.toLowerCase().replace(/₂/g, '2').replace(/\b([a-z]+)-(ii|iii|i|r|g|2)\b/g, '$1$2 $1-$2')
 const toks = s => { const w = norm(s).match(/[a-z0-9]+/g) || []; const out = w.filter(x => !STOP.has(x)); w.forEach(x => { if (synonyms[x]) out.push(...synonyms[x].split(' ')) }); return out }
 
-function useIndex(docs) {
+export function useIndex(docs, k = 3) {
   return useMemo(() => {
     const tf = docs.map(d => { const m = {}; toks(`${d.title} ${d.title} ${d.text}`).forEach(t => { m[t] = (m[t] || 0) + 1 }); return m })
     const df = {}; tf.forEach(m => Object.keys(m).forEach(t => { df[t] = (df[t] || 0) + 1 }))
@@ -24,9 +24,9 @@ function useIndex(docs) {
       const m = {}; toks(q).forEach(t => { m[t] = (m[t] || 0) + 1 })
       const qv = {}; let n = 0; for (const t in m) { qv[t] = (1 + Math.log(m[t])) * idf(t); n += qv[t] ** 2 } n = Math.sqrt(n) || 1
       return vecs.map((v, i) => { let s = 0; for (const t in qv) if (v[t]) s += v[t] * qv[t] / n; return [s * (docs[i].kind?.startsWith('Finding') ? 1.2 : 1), i] })
-        .sort((a, b) => b[0] - a[0]).slice(0, 3).filter(([s]) => s >= 0.08).map(([s, i]) => ({ ...docs[i], score: s }))
+        .sort((a, b) => b[0] - a[0]).slice(0, k).filter(([s]) => s >= 0.08).map(([s, i]) => ({ ...docs[i], score: s }))
     }
-  }, [docs])
+  }, [docs, k])
 }
 
 const SUGGEST = ['Will shutting off the fans put out a fire at 30% oxygen?', 'Which materials burned near habitat air?', 'Has smoke detection been tested in oxygen-rich air?', 'How would fire behave on the Moon?']

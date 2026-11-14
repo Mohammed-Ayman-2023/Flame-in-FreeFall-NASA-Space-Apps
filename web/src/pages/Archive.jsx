@@ -5,6 +5,7 @@ import { Nav, Footer, PageHead, Ev, Flame } from '../components/ui'
 import { BurnChart, CoverageMap, CoverageLegend } from '../components/charts'
 import { useMission } from '../lib/mission'
 import { AtmosphereTable, GravityBounds, BuoyancyPanel } from './Evidence'
+import { BriefingDownload, MissionGaps, ModelExplain, DataSources } from './Dashboard'
 import { investigations, invById, rankings, takeaways, recommendations, partialGravity, methods, hardware } from '../lib/data'
 
 const FAM = t => (t.startsWith('Burning') || t.startsWith('Emulated') ? 'solid' : t.startsWith('Fuel') ? 'droplet' : t.startsWith('Gas') ? 'gas' : 'smoke')
@@ -227,6 +228,7 @@ export function Briefing() {
     <main className="wrap" style={{ paddingTop: 48, paddingBottom: 60 }}>
       <PageHead eyebrow={`Crew briefing · recomputed for ${mission.name}`} title={`What the evidence says about fire in ${mission.air}.`}>
         <p className="p" style={{ fontSize: 16 }}>{mission.note}</p>
+        <div className="wrap-row" style={{ gap: 10 }}><BriefingDownload /><Link to="/ranking" className="btn">Full ranking with adjustable weights</Link></div>
       </PageHead>
       {tk.map((t, i) => (
         <article key={t.key} className="split" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: '18px 48px', padding: '32px 0', borderTop: '1px solid var(--line)' }}>
@@ -258,6 +260,7 @@ export function Gaps() {
     <Nav active="Gaps" />
     <main className="wrap" style={{ paddingTop: 48, paddingBottom: 60 }}>
       <PageHead eyebrow="Where the archive goes quiet" title="NASA has burned almost everything at 21% oxygen. Your mission air is somewhere else." />
+      <div style={{ marginBottom: 32 }}><MissionGaps /></div>
       <div className="split" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,2fr) minmax(0,1fr)', gap: 32 }}>
         <div className="col" style={{ gap: 14 }}>
           <div className="card" style={{ padding: '22px 10px 8px' }}><CoverageMap target={mission} /></div>
@@ -336,6 +339,8 @@ export function Methods() {
           <tbody>{saffire.map(r => <tr key={r[0]}><td className="mono">{r[0]}</td><td>{r[1]}</td><td className="mono">{r[2]}</td><td>{r[3]}</td><td className="mono">{r[4]}</td><td>{r[5] ? <span style={{ color: 'var(--good)' }}>✓ correct</span> : <span style={{ color: 'var(--ember)' }}>✗ missed</span>}</td></tr>)}</tbody>
         </table></div>
       </section>
+      <ModelExplain />
+      <DataSources />
     </main>
     <Footer />
   </>)

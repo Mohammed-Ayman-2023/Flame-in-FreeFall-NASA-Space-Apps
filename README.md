@@ -66,15 +66,17 @@ A guided, visual product for crews, students and the public, which also works fo
 | Page | What it does |
 |---|---|
 | **Landing** | An interactive **3D scene** (three.js): Earth from NASA Blue Marble imagery with the ISS orbit, the Moon and Mars (sizes to scale, distances not). Pick orbit, Moon, Mars or Earth to fly the camera there and see the gravity, the buoyant flow a flame would draw there, and what the archive can and cannot say. Respects reduced motion, pauses off screen, has a non-3D fallback. Plus search, headline numbers and the six signature fires. A **mission picker** (challenge habitat 30 % / 0.69 atm, ISS air, NASA exploration atmospheres) drives every page. |
+| **Key findings** | Four headline numbers recomputed for the chosen mission air (gas-flame burn time vs Earth air, chance still burning after 30 s, smoke and solid tests near this air) and the five findings with their charts: every ACME CFI-G flame with the survival-model curve, Saffire IV-VI cabin CO₂, flame spread vs duct size, smoke-detection gap, BASS-II carbon-monoxide ranking (CSV download). |
+| **Ranking** | The transparent relevance score with **adjustable weights** (atmosphere match, fire-type importance, data quality, number of tests): the order updates live, every row shows its four parts and the reason; CSV download; the 12 real tests closest to the mission air. |
 | **Learn (5 steps)** | Why fires start, how fire behaves without gravity, prevention, the second line of defence, then the Fire Lab. |
-| **Fire Lab** | Three live labs: **gas leak** (ACME CFI-G survival model), **cabin material** (solids model), **spilled fuel** (droplet model). Sliders for oxygen, pressure, air speed, material, fuel, suppressant and droplet size. Each shows an animated flame on Earth vs in orbit, the prediction with its uncertainty, an inside/outside-tested-range label, a sweep chart, what moves the model most, an exact **Shapley "why not Earth air?" waterfall**, a **flammability map** (oxygen × air speed with every NASA test that kept burning or went out), the **flow regime** (buoyant speed and Richardson number at orbit, Moon, Mars, Earth gravity) and the **d²-law burn time** checked against 188 FLEX burns. |
+| **Fire Lab** | Three live labs: **gas leak** (ACME CFI-G survival model), **cabin material** (solids model), **spilled fuel** (droplet model). Sliders for oxygen, pressure, air speed, material, fuel, suppressant and droplet size. Each shows an animated flame on Earth vs in orbit, the prediction with its uncertainty, an inside/outside-tested-range label, a sweep chart, what moves the model most, exact **Shapley explanations** (against 50 real NASA tests over all six inputs, precomputed with the model for every grid point, and against Earth cabin air), the dashboard's **animated flame simulator** (ISS air vs your conditions, at orbit, Moon, Mars or Earth gravity), a **flammability map** (oxygen × air speed with every NASA test that kept burning or went out), the **flow regime** (buoyant speed and Richardson number at orbit, Moon, Mars, Earth gravity) and the **d²-law burn time** checked against 188 FLEX burns. |
 | **Investigations** | Explorer of all 24 investigations with filters; a page each: objective, hardware, samples and sizes, instruments, what varied and what stayed the same (computed from the data), key result, DOI. |
 | **Compare** | Up to three investigations side by side with a similar / different summary. |
-| **Briefing** | Crew takeaways recomputed for the chosen mission air, each with a number, an action, an evidence label and its source; the most relevant investigations; why habitats use this air (spacesuit / Earth / Moon base). |
-| **Gaps** | Coverage map of oxygen × pressure tested by NASA against your mission; partial-gravity evidence (LUCI, FM2, E-FIELD); the 0 g / 1 g bound from Saffire materials; an interactive buoyancy chart; five recommended experiments. |
+| **Briefing** | Crew takeaways recomputed for the chosen mission air, a **downloadable one-page briefing (HTML)**, each with a number, an action, an evidence label and its source; the most relevant investigations; why habitats use this air (spacesuit / Earth / Moon base). |
+| **Gaps** | Tested / thin / gap status per fire type near the mission air; coverage map of oxygen × pressure tested by NASA against your mission; partial-gravity evidence (LUCI, FM2, E-FIELD); the 0 g / 1 g bound from Saffire materials; an interactive buoyancy chart; five recommended experiments. |
 | **Equipment** | Next-generation detectors, extinguishers, ventilation procedures, material screening, air quality and layout, each with numbers from the data; BASS-II carbon-monoxide ranking of cabin materials; interactive smoke-to-detector delay at 0 g, Moon, Mars and Earth; NASA fire technology used on Earth (water-mist extinguishers, smoke detection, firefighter air tanks and clothing). |
-| **Methods** | Dataset, models, validation scores, limits and sources. |
-| **Ask the archive** (chat on every page) | Cited answers from 137 NASA passages; with the API and a key, a Gemini answer grounded in 4,086 passages from NASA reports. |
+| **Methods** | Dataset audit (every logged correction), models tested on held-out data, the Saffire IV-VI hardest test, **how each model decides** (permutation importance, glass-box odds ratios, survival-model burn-time multipliers, Gaussian-process input relevance), and **data and sources** (per-investigation table, CSV downloads, references). |
+| **Ask the archive** (page, plus a chat on every page) | **Cited search** over the NASA-sourced summaries and the mission findings (TF-IDF with fire-safety synonyms, as in the dashboard), and the team's **Gemini RAG** answer: written only from retrieved passages of the 4,086 NASA report chunks, with the team's prompt rules, showing the passages it read. With the API running it uses the team's vector database; on the static site it searches the passages in the browser (BM25) and calls Gemini with the visitor's own key, which never leaves their browser except to Google. |
 
 The site calls the live API when one is running and otherwise works fully offline from model grids and data exported
 by `scripts/export_web.py`, telling the user which mode it is in.
@@ -183,7 +185,9 @@ app/
   assets/flame_sim.html        animated flame simulator (canvas) used by the dashboard
 web/                           the website (React + Vite)
   src/pages/                   Landing, Learn (5 steps), FireLab, Archive (explorer, investigation, compare,
-                               briefing, gaps, methods), Evidence (equipment & Earth, physics panels, maps)
+                               briefing, gaps, methods), Evidence (equipment & Earth, physics panels, maps,
+                               flame simulator), Dashboard (findings, ranking, ask, model explanations, sources)
+  public/sim/, public/data/    the dashboard's flame simulator; RAG passages loaded on demand
   src/components/              shared UI, charts, habitat-module scene, Ask-the-archive chat
   src/lib/                     data access and offline model grids, physics and Shapley helpers, API client, router
   src/data/                    JSON exported from the Python layer (scripts/export_web.py)
@@ -200,7 +204,7 @@ src/fif/                       the Python core
   genai.py                     adapter to the team's Gemini RAG module
   webdata.py                   shared data shaping for the API and the web export
 RAG/                           retrieval-augmented Gemini assistant (LangGraph + Chroma vector DB of NASA reports)
-scripts/                       build_data, build_ml, train_models, build_ranking, export_web, inspect_raw
+scripts/                       build_data, build_ml, train_models, build_ranking, export_web, export_web_extras, inspect_raw
 catalog/investigations.csv     every investigation: fuels, O₂ / pressure / flow ranges, DOI, status
 data/raw/<id>/                 source files as downloaded or transcribed, each with a README
 data/processed/                tests.csv, evidence.csv (one row per value), issues.csv
@@ -244,7 +248,7 @@ uvicorn server.main:app --port 8000         # website + live API at http://local
 ```
 
 Rebuild everything from the raw files: `python scripts/build_data.py`, `build_ml.py`, `train_models.py`,
-`build_ranking.py`, then `export_web.py` for the website. For front-end work, run the API and `npm run dev` in `web/`.
+`build_ranking.py`, then `export_web.py` and `export_web_extras.py` (Shapley grid, ranking extras, findings, RAG passages, flame simulator) for the website. For front-end work, run the API and `npm run dev` in `web/`.
 
 **Optional Gemini answers:** copy `.env.example` to `.env` and set `GOOGLE_API_KEY` (or add it as a secret on the
 host). `.env` and `.streamlit/secrets.toml` are git-ignored; never commit a key or paste it into a chat. Without a key
@@ -280,7 +284,7 @@ In line with the NASA Space Apps rules:
 - **Claude (Anthropic)** was used as a development assistant for code (loaders, pipeline, models, dashboard, website,
   API, tests), for transcribing values from paper tables (each verified by the team against the original) and for
   drafting documentation. AI-assisted commits carry `Co-Authored-By` trailers.
-- **Google Gemini** powers the optional AI answer in *Ask the archive*. It answers only from retrieved NASA passages,
+- **Google Gemini** powers the optional AI answer in *Ask the archive* (dashboard, API, and the website, where visitors may use their own Gemini key; it is sent only from their browser to Google and is never stored by the project). It answers only from retrieved NASA passages,
   shows them, and is labelled "AI-generated (Gemini)". The models, rankings, briefing and every number shown do not
   use generative AI.
 - All scientific data come from NASA and the cited publications; nothing in the dataset is AI-generated.

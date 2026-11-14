@@ -68,7 +68,7 @@ export function MissionPicker({ compact }) {
   )
 }
 
-const NAV = [['Learn', '/learn/1'], ['Fire Lab', '/lab'], ['Investigations', '/explore'], ['Compare', '/compare'], ['Briefing', '/briefing'], ['Gaps', '/gaps'], ['Equipment', '/equipment'], ['Methods', '/methods']]
+const NAV = [['Learn', '/learn/1'], ['Findings', '/findings'], ['Fire Lab', '/lab'], ['Ranking', '/ranking'], ['Investigations', '/explore'], ['Compare', '/compare'], ['Briefing', '/briefing'], ['Gaps', '/gaps'], ['Equipment', '/equipment'], ['Ask', '/ask'], ['Methods', '/methods']]
 
 /** NASA Space Apps Challenge logo, top left. The official file is not redrawn here: put the logo downloaded from
     spaceappschallenge.org/brand at web/public/brand/space-apps-logo.svg (or .png). Until then a text badge shows. */

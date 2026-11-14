@@ -3,7 +3,8 @@ import { Link } from '../lib/router'
 import { Ev, Flame, pct } from '../components/ui'
 import { BurnChart } from '../components/charts'
 import { LessonHeader } from './Learn'
-import { FlammabilityMap, ShapleyWaterfall } from './Evidence'
+import { FlammabilityMap, ShapleyWaterfall, FlameSim, simShape } from './Evidence'
+import shapSolids from '../data/shap_solids.json'
 import { useMission } from '../lib/mission'
 import { useApi, useLive } from '../lib/api'
 import { G, modelGas, modelSolids, modelDroplets, gasFlames, gasPredict, gasCurve, gasInGap, solidPredict, solidCurve, solidInside, dropPredict, dropInside, richardson, buoyantVelocity, d2Check, exactShapley } from '../lib/data'
@@ -184,6 +185,9 @@ function GasLab() {
           <BurnChart curve={curve} marker={{ o2, median: r.median }} />
         </div>
         <Story>{story}</Story>
+        <FlameSim mode="gas" speed={6} build={(g, gl) => [
+          { title: 'ISS cabin air · 21 % O₂, 1 atm, 0 g, still air', gravity_label: '0 g', air: 0, size: 1, t_end: Math.min(r0.median, 999), q: simShape(0, 0, 0.21, 1) },
+          { title: `Your conditions · ${o2}% O₂, ${fp(p)} atm, ${gl.split(' (')[0]}, still air`, gravity_label: gl, air: 0, size: Math.min(1.6, Math.max(0.8, Math.sqrt(o2 / 21))), t_end: Math.min(r.median, 999), extra: g > 0 ? 'timing from microgravity data; shape from buoyancy' : '', q: simShape(g, 0, o2 / 100, p) }]} />
         <div className="row" style={{ flexWrap: 'wrap', gap: 10 }}><Ev kind="prediction" /><span className="src">{modelGas.note}</span><Link to="/methods" className="mono" style={{ fontSize: 11, color: 'var(--plasma)' }}>How good is this model? →</Link></div>
       </div>
     </div>
@@ -193,6 +197,32 @@ function GasLab() {
 /* ------------------------------------------------------------------ cabin materials */
 const MATS = [['PMMA', 'Acrylic (PMMA) slab'], ['cotton-fiberglass', 'Cotton-fiberglass fabric'], ['wax', 'Wax (candle)'], ['Nomex', 'Nomex fabric'], ['silicone', 'Silicone'], ['cotton', 'Cotton']]
 const FLOWS = [1, 2, 5, 10, 20, 30, 50]
+/* Why this number? Exact Shapley values, against Earth air (2 inputs, from the grid) or against 50 real NASA tests
+   (all 6 inputs, precomputed with the model by scripts/export_web_extras.py, same reference as the dashboard). */
+function SolidShapley({ mat, oG, pG, flow }) {
+  const [ref, setRef] = useState('nasa')
+  const p = solidPredict(mat, oG, pG, flow)?.p
+  let sh = null
+  if (ref === 'earth') sh = exactShapley(pt => solidPredict(mat, pt.o2, pt.p, flow)?.p, { o2: oG, p: pG }, { o2: 21, p: 1.0 }, { Oxygen: ['o2'], Pressure: ['p'] })
+  else {
+    const r = shapSolids.rows.find(x => x[0] === mat && x[1] === oG && x[2] === pG && x[3] === flow)
+    if (r) { const phi = shapSolids.players.map((k, i) => ({ k, v: r[5 + i] })).sort((a, b) => Math.abs(b.v) - Math.abs(a.v)); sh = { base: r[4], total: r[4] + phi.reduce((a, b) => a + b.v, 0), phi } }
+  }
+  return (
+    <div className="col" style={{ gap: 10 }}>
+      <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+        <span className="lab">Why this number? (exact Shapley values)</span>
+        <div className="seg">{[['nasa', 'vs 50 real NASA tests'], ['earth', 'vs Earth cabin air']].map(([k, n]) => <button key={k} type="button" className={ref === k ? 'on' : ''} aria-pressed={ref === k} onClick={() => setRef(k)}>{n}</button>)}</div>
+      </div>
+      <ShapleyWaterfall title={ref === 'nasa' ? `Why ${pct(p)} instead of the average NASA test?` : `Why ${pct(p)} here instead of Earth air?`} sh={sh}
+        baseLabel={ref === 'nasa' ? 'Average NASA test' : 'Earth air (21%, 1 atm)'} totalLabel="This prediction" fmt={v => (v * 100).toFixed(1) + ' pts'}
+        note={ref === 'nasa'
+          ? `Each input's share of this prediction: start from the model's average over ${shapSolids.reference}, then each input moves the chance up (orange) or down (blue). The bars add up exactly. Computed over all 64 combinations of the six inputs (oxygen, pressure, air speed, material, sample shape, flow direction) with the model itself, no sampling, like the dashboard (src/fif/xai.py). They explain the model, not the physics.`
+          : `Against Earth cabin air with the same material and air speed (${flow} cm/s): how much of the change oxygen and pressure are each responsible for. Exact, from the model grid (oxygen rounded to 1 %). pts = percentage points.`} />
+    </div>
+  )
+}
+
 function SolidsLab() {
   const { mission } = useMission()
   const [mat, setMat] = useState('PMMA')
@@ -259,10 +289,7 @@ function SolidsLab() {
             : <LineChart pts={curve} band x={o2} xlabel="oxygen (%)" ylabel="chance of burning" marks={[15, 21, 30, 40]} />}
           <div className="src" style={{ padding: '0 10px 8px' }}>Other inputs held at your settings · band = 10–90% bootstrap · {mat}</div>
         </div>}
-        {modelled && <ShapleyWaterfall title={`Why ${pct(solidPredict(mat, oG, pG, flow)?.p)} here instead of Earth air?`}
-          sh={exactShapley(pt => solidPredict(mat, pt.o2, pt.p, flow)?.p, { o2: oG, p: pG }, { o2: 21, p: 1.0 }, { Oxygen: ['o2'], Pressure: ['p'] })}
-          baseLabel="Earth air (21%, 1 atm)" totalLabel="Your air" fmt={v => Math.round(v * 100) + ' pts'}
-          note={`Exact Shapley values against Earth air at the same air speed (${flow} cm/s) and material: how much of the change each input is responsible for. Computed from the precomputed model grid (oxygen rounded to 1%). Same method as the dashboard (src/fif/xai.py).`} />}
+        {modelled && <SolidShapley mat={mat} oG={oG} pG={pG} flow={flow} />}
         {modelled && <FlammabilityMap mat={mat} p={pG} o2={o2} flow={flow} />}
         <div className="grid2">
           <div className="card pad col" style={{ gap: 12 }}>
@@ -277,6 +304,9 @@ function SolidsLab() {
           </div>
           <Story>{story}</Story>
         </div>
+        {modelled && r && <FlameSim mode="solid" speed={4} build={(g, gl) => [
+          { title: 'ISS cabin air · 21 % O₂, 1 atm, 0 g', gravity_label: '0 g', air: flow, p_burn: solidPredict(mat, 21, 1.0, flow)?.p ?? r.p, direction: modelSolids.shapes[mat]?.direction, spread: 2.2, t_end: 30, q: simShape(0, flow, 0.21, 1) },
+          { title: `Your conditions · ${o2}% O₂, ${fp(p)} atm, ${gl.split(' (')[0]}`, gravity_label: gl, air: flow, p_burn: r.p, direction: modelSolids.shapes[mat]?.direction, spread: 2.2, t_end: 30, extra: g > 0 ? 'timing from microgravity data; shape from buoyancy' : '', q: simShape(g, flow, o2 / 100, p) }]} />}
         <div className="row" style={{ flexWrap: 'wrap', gap: 10 }}><Ev kind="prediction" /><span className="src">{modelSolids.note}</span><Link to="/methods" className="mono" style={{ fontSize: 11, color: 'var(--plasma)' }}>How good is this model? →</Link></div>
       </div>
     </div>
@@ -345,6 +375,9 @@ function DropLab() {
           baseLabel="Earth air (21%, 1 atm)" totalLabel="Your air" fmt={v => v.toFixed(2) + ' mm²/s'}
           note={`Exact Shapley values against Earth air with no suppressant, same fuel and ${d0} mm droplet. Computed from the precomputed Gaussian-process grid (oxygen rounded to 1%).`} />
         <Story>{story}</Story>
+        <FlameSim mode="droplet" speed={2} build={(g, gl) => [
+          { title: `ISS cabin air · 21 % O₂, 1 atm, 0 g · ${fuel}`, gravity_label: '0 g', air: 0, d0, K: r0.br, dext: Math.min(r0.ext, d0), t_end: Math.max(0, (d0 * d0 - Math.min(r0.ext, d0) ** 2) / r0.br), standoff: 6, q: simShape(0, 0, 0.21, 1, fuel !== 'methanol') },
+          { title: `Your conditions · ${o2}% O₂, ${fp(p)} atm, ${gl.split(' (')[0]} · ${fuel}`, gravity_label: gl, air: 0, d0, K: r.br, dext: Math.min(r.ext, d0), t_end: tb, standoff: 6 * Math.pow(21 / o2, 0.7), extra: g > 0 ? 'timing from microgravity data; shape from buoyancy' : '', q: simShape(g, 0, o2 / 100, p, fuel !== 'methanol') }]} />
         <div className="row" style={{ flexWrap: 'wrap', gap: 10 }}><Ev kind="prediction" /><span className="src">{modelDroplets.note}</span><Link to="/methods" className="mono" style={{ fontSize: 11, color: 'var(--plasma)' }}>How good is this model? →</Link></div>
       </div>
     </div>
