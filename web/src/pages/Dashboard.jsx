@@ -17,7 +17,7 @@ import findings from '../data/findings.json'
 import sources from '../data/sources.json'
 import bass2 from '../data/bass2_gas.json'
 import ragPrompt from '../data/rag_prompt.json'
-import { KEY_STORE, geminiAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
+import { KEY_STORE, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
 
 const ax = { fill: '#868B93', fontFamily: 'IBM Plex Mono, monospace', fontSize: 11 }
 const BADGE = { measured: 'measurement', model: 'prediction', gap: 'gap', literature: 'literature' }
@@ -229,7 +229,7 @@ export function Ask() {
         setAi({ answer: d.answer, docs: d.docs, via: 'default', model: d.model }); return
       }
       try { remember ? sessionStorage.setItem(KEY_STORE, key.trim()) : sessionStorage.removeItem(KEY_STORE) } catch { /* private mode */ }
-      const { answer, docs: got } = await geminiAnswer(q, key.trim())
+      const { answer, docs: got } = await userAnswer(q, key.trim())
       setAi({ answer: answer || 'Gemini returned no text.', docs: got, via: 'browser', model: ragPrompt.model })
     } catch (e) {
       setAi({ error: `The AI could not answer (${e.message}). The cited search above still works.` })
@@ -259,8 +259,8 @@ export function Ask() {
         <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}><h2 className="h2" style={{ fontSize: 24 }}>AI answer from the NASA reports (RAG)</h2><span className="ev"><i style={{ width: 8, height: 8, borderRadius: 2, background: '#E8C15A' }} />AI-generated</span></div>
         <p className="p" style={{ fontSize: 14.5 }}>The team's RAG assistant: it retrieves passages from 4,086 chunks of NASA PSI reports and NASA pages, then Gemini answers <b>only from those passages</b>, cites them, says "insufficient data" when they do not answer the question, and never extrapolates to Moon or Mars gravity (rules: RAG/src/prompts.py). It is generative AI, so it can still be wrong: read the passages it used.</p>
         {serverAI ? <span className="src">Connected to the project API: answers use the team's vector database (Gemini embeddings).</span> : <div className="col" style={{ gap: 8 }}>
-          {hasDefault && <span className="mono" style={{ fontSize: 12, color: 'var(--good)' }}>● Works without a key: the site's default model ({DEFAULT_MODEL}, via OpenRouter) answers. Add your own Gemini key below to use Gemini instead.</span>}
-          <label htmlFor="gkey" className="lab">Your Gemini API key (optional, from Google AI Studio)</label>
+          {hasDefault && <span className="mono" style={{ fontSize: 12, color: 'var(--good)' }}>● Works without a key: the site's default model ({DEFAULT_MODEL}, via OpenRouter) answers. Add your own Gemini or OpenRouter key below to use it instead.</span>}
+          <label htmlFor="gkey" className="lab">Your own key (optional): Gemini (Google AI Studio) or OpenRouter (sk-or-…)</label>
           <div className="row" style={{ gap: 10, flexWrap: 'wrap' }}>
             <input id="gkey" type="password" autoComplete="off" spellCheck="false" value={key} onChange={e => setKey(e.target.value)} placeholder="Paste your key here, not in a chat" style={{ flex: 1, minWidth: 240, background: 'var(--panel2)', border: '1px solid var(--line2)', borderRadius: 8, color: 'var(--text)', padding: '11px 12px', fontFamily: 'var(--mono)', fontSize: 13 }} />
             <label className="row" style={{ gap: 6, fontSize: 13 }}><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} />Keep for this tab (also turns on AI answers in the chat)</label>
@@ -270,7 +270,7 @@ export function Ask() {
         <div><button type="button" className="btn primary" disabled={busy || !q.trim()} onClick={askAI}>{busy ? 'Retrieving NASA passages and asking the AI…' : 'Get an AI answer to this question'}</button></div>
         {ai?.error && <div className="muted" style={{ fontSize: 14, borderLeft: '3px solid var(--ember)', paddingLeft: 12 }}>{ai.error}</div>}
         {ai?.answer && <div className="col" style={{ gap: 12, borderLeft: '3px solid #E8C15A', paddingLeft: 16 }}>
-          <span className="mono faint" style={{ fontSize: 11 }}>{ai.model} · written from {ai.docs.length} retrieved passages · {ai.via === 'server' ? 'project API' : ai.via === 'default' ? 'site default model via OpenRouter' : 'your Gemini key, in your browser'}</span>
+          <span className="mono faint" style={{ fontSize: 11 }}>{ai.model} · written from {ai.docs.length} retrieved passages · {ai.via === 'server' ? 'project API' : ai.via === 'default' ? 'site default model via OpenRouter' : 'your own key, in your browser'}</span>
           <MiniMarkdown text={ai.answer} />
           <details><summary style={{ fontSize: 14 }}>The {ai.docs.length} NASA passages Gemini read</summary>
             <div className="col" style={{ gap: 12, marginTop: 12 }}>{ai.docs.map((d, i) => <div key={i} className="col" style={{ gap: 4 }}><b style={{ fontSize: 13 }}>Document {i + 1}: {d.h.join(' › ') || 'NASA report'}</b><pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--muted)', lineHeight: 1.5 }}>{d.text.slice(0, 900)}{d.text.length > 900 ? ' …' : ''}</pre></div>)}</div>

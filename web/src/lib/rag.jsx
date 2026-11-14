@@ -68,6 +68,27 @@ async function retrieve(question) {
   return { got, prompt: buildPrompt(question, documents) }
 }
 
+async function openRouter(prompt, key, model) {
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
+    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1 }),
+  })
+  const j = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
+  return { answer: j.choices?.[0]?.message?.content || 'The model returned no text.', model: j.model || model }
+}
+
+/** A visitor's own key: OpenRouter keys start with "sk-or-", anything else is treated as a Gemini key. */
+export async function userAnswer(question, key) {
+  if (key.startsWith('sk-or-')) {
+    const { got, prompt } = await retrieve(question)
+    const r = await openRouter(prompt, key, DEFAULT_MODEL)
+    return { ...r, docs: got }
+  }
+  return geminiAnswer(question, key)
+}
+
 export async function defaultAnswer(question) {
   const { got, prompt } = await retrieve(question)
   let res, j
@@ -77,12 +98,6 @@ export async function defaultAnswer(question) {
     if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
     return { answer: j.answer || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
   }
-  res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json', authorization: `Bearer ${OR_KEY}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
-    body: JSON.stringify({ model: DEFAULT_MODEL, messages: [{ role: 'user', content: prompt }], temperature: 0.1 }),
-  })
-  j = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
-  return { answer: j.choices?.[0]?.message?.content || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
+  const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL)
+  return { ...r, docs: got }
 }

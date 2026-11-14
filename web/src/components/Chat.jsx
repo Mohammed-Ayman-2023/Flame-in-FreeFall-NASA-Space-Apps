@@ -4,7 +4,7 @@ import synonyms from '../data/synonyms.json'
 import { useMission } from '../lib/mission'
 import { Ev, Mark } from './ui'
 import { apiStatus, post } from '../lib/api'
-import { getKey, setKey, geminiAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
+import { getKey, setKey, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
 
 // Cited search always runs here in the browser: it returns the NASA passages that answer the question,
 // each with its source, and says so when nothing matches. When the API (server/main.py) is up and has a
@@ -61,7 +61,7 @@ export default function Chat() {
     }
     const k = getKey()
     if (!ai && (k || hasDefault)) {
-      try { const r = k ? await geminiAnswer(question, k) : await defaultAnswer(question); ai = { answer: r.answer, model: r.model, rag_sources: r.docs.map(d => ({ section: d.h.join(' › ') || 'NASA report' })) } }
+      try { const r = k ? await userAnswer(question, k) : await defaultAnswer(question); ai = { answer: r.answer, model: r.model, rag_sources: r.docs.map(d => ({ section: d.h.join(' › ') || 'NASA report' })) } }
       catch (e) { ai = { error: `The AI could not answer (${e.message}). The cited findings below still answer.` } }
     }
     setLog(l => [...l, { q: question, hits, ai }]); setBusy(false)
@@ -108,12 +108,12 @@ export default function Chat() {
           </div>
           <div style={{ padding: '10px 12px 0', borderTop: '1px solid var(--line)', fontSize: 12.5 }}>
             {serverAI ? <span className="mono" style={{ fontSize: 11, color: 'var(--good)' }}>● AI answers on: team RAG on the project server</span>
-              : key ? <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}><span className="mono" style={{ fontSize: 11, color: 'var(--good)' }}>● AI answers on: Gemini RAG with your key (this tab only)</span><button type="button" className="btn sm" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => { setKey(''); setKeyState('') }}>Remove key</button></span>
+              : key ? <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}><span className="mono" style={{ fontSize: 11, color: 'var(--good)' }}>● AI answers on: RAG with your own key (this tab only)</span><button type="button" className="btn sm" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => { setKey(''); setKeyState('') }}>Remove key</button></span>
               : keyOpen ? <form onSubmit={e => { e.preventDefault(); if (draft.trim()) { setKey(draft.trim()); setKeyState(draft.trim()); setDraft(''); setKeyOpen(false) } }} className="col" style={{ gap: 6 }}>
-                  <label htmlFor="chatkey" className="faint" style={{ fontSize: 11.5, lineHeight: 1.45 }}>Paste a Gemini API key (Google AI Studio). It stays in this tab and goes only to Google, never to us or GitHub.</label>
+                  <label htmlFor="chatkey" className="faint" style={{ fontSize: 11.5, lineHeight: 1.45 }}>Paste your own Gemini key (Google AI Studio) or OpenRouter key (sk-or-…). It stays in this tab and goes only to Google, never to us or GitHub.</label>
                   <div className="row" style={{ gap: 6 }}><input id="chatkey" type="password" autoComplete="off" spellCheck="false" value={draft} onChange={e => setDraft(e.target.value)} style={{ flex: 1, minWidth: 0, background: 'var(--bg)', border: '1px solid var(--line2)', borderRadius: 6, color: 'var(--text)', padding: '7px 9px', fontFamily: 'var(--mono)', fontSize: 12 }} /><button type="submit" className="btn sm">Turn on</button></div>
                 </form>
-              : hasDefault ? <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}><span className="mono" style={{ fontSize: 11, color: 'var(--good)' }}>● AI answers on: RAG with the site's default model ({DEFAULT_MODEL})</span><button type="button" className="btn sm" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => setKeyOpen(true)}>Use my Gemini key</button></span>
+              : hasDefault ? <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}><span className="mono" style={{ fontSize: 11, color: 'var(--good)' }}>● AI answers on: RAG with the site's default model ({DEFAULT_MODEL})</span><button type="button" className="btn sm" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => setKeyOpen(true)}>Use my own key</button></span>
               : <span className="row" style={{ gap: 8, flexWrap: 'wrap' }}><span className="faint" style={{ fontSize: 11.5 }}>AI answers (Gemini RAG over 4,086 NASA report passages) are off.</span><button type="button" className="btn sm" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => setKeyOpen(true)}>Turn on</button></span>}
           </div>
           <form onSubmit={e => { e.preventDefault(); ask(q) }} className="row" style={{ gap: 8, padding: 12 }}>
