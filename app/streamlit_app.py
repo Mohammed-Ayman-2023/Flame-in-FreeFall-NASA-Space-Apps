@@ -13,6 +13,7 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from fif import genai as GA  # noqa: E402
+from fif import xai as XAI  # noqa: E402
 from fif import knowledge as Kn  # noqa: E402
 from fif import models as M  # noqa: E402
 from fif import ranking as R  # noqa: E402
@@ -122,6 +123,59 @@ def hbar(labels, values, title, fmt="{:.2f}", color=BLUE, height=260, xrange=Non
     if xrange:
         fig.update_xaxes(range=xrange)
     return fig
+
+
+def waterfall(start_label, start, steps, end_label, fmt, title, height=320, ylim=None, step_fmt=None):
+    """Plotly waterfall: a reference value, one bar per input's Shapley contribution, the prediction."""
+    labels = [start_label] + [k for k, _ in steps] + [end_label]
+    vals = [start] + [v for _, v in steps] + [start + sum(v for _, v in steps)]
+    fig = go.Figure(go.Waterfall(
+        x=labels, y=vals, measure=["absolute"] + ["relative"] * len(steps) + ["total"],
+        text=[fmt(v) if i in (0, len(vals) - 1) else ("+" if v >= 0 else "−") + (step_fmt or fmt)(abs(v))
+              for i, v in enumerate(vals)],
+        textposition="outside", connector=dict(line=dict(color=GRID, width=1)),
+        increasing=dict(marker=dict(color=ORANGE)), decreasing=dict(marker=dict(color=BLUE)),
+        totals=dict(marker=dict(color=INK2)), hoverinfo="skip"))
+    base_layout(fig, height, yaxis_title=title, showlegend=False)
+    fig.update_xaxes(showgrid=False)
+    if ylim:
+        fig.update_yaxes(range=ylim)
+    return fig
+
+
+@st.cache_data(show_spinner=False, max_entries=300)
+def solid_shapley(mat, geom, direc, flow, o2_, p_):
+    A_pack = load_models()[0]
+    tr = A_pack["train"]
+    f = lambda d: np.mean([b.predict_proba(M._a_features(d))[:, 1] for b in A_pack["boots"]], axis=0)  # noqa: E731
+    x = pd.Series(dict(material_family=mat, geometry_class=geom, flow_direction=direc, flow_cm_s=flow, x_o2=o2_,
+                       pressure_atm=p_))
+    cols = list(x.index)
+    players = {"Oxygen": ["x_o2"], "Pressure": ["pressure_atm"], "Air speed": ["flow_cm_s"],
+               "Material": ["material_family"], "Sample shape": ["geometry_class"], "Flow direction": ["flow_direction"]}
+    bg = tr[cols].sample(n=min(50, len(tr)), random_state=0)
+    base, phi = XAI.exact_shapley(f, x, bg, players)
+    earth = pd.DataFrame([x.to_dict() | dict(x_o2=0.21, pressure_atm=1.0)])
+    e_base, e_phi = XAI.exact_shapley(f, x, earth, {"Oxygen": ["x_o2"], "Pressure": ["pressure_atm"]})
+    return base, phi, e_base, e_phi
+
+
+@st.cache_data(show_spinner=False, max_entries=300)
+def droplet_shapley(fuel, d0, co2, he, o2_, p_):
+    C_pack = load_models()[2]
+    x = pd.Series(dict(fuel=fuel, d0_mm=d0, x_co2=co2, x_he=he, x_o2=o2_, pressure_atm=p_))
+    ref = pd.DataFrame([x.to_dict() | dict(x_o2=0.21, pressure_atm=1.0, x_co2=0.0, x_he=0.0)])
+    players = {"Oxygen": ["x_o2"], "Pressure": ["pressure_atm"]}
+    if co2 or he:
+        players["Suppressant"] = ["x_co2", "x_he"]
+    out = {}
+    for target, pk in C_pack.items():
+        def f(d, pk=pk):
+            X = M._c_features(d, pk["fuels"])
+            Xs = np.column_stack([pk["scaler"].transform(X[:, :len(M.C_NUM)]), X[:, len(M.C_NUM):]])
+            return pk["model"].predict(Xs)
+        out[target] = XAI.exact_shapley(f, x, ref, players)
+    return out
 
 
 @st.cache_resource
@@ -587,6 +641,25 @@ with tab_pred:
 
         fig.update_yaxes(range=[-0.05, 1.05], tickformat=".0%")
         st.plotly_chart(fig, width="stretch")
+        with st.expander("Why this number? Each input's share of this prediction (exact Shapley values)", expanded=True):
+            with st.spinner("Computing exact Shapley values…"):
+                base, phi, e_base, e_phi = solid_shapley(mat, geom, direc, float(flow), float(o2), float(p))
+            steps = sorted(phi.items(), key=lambda kv: -abs(kv[1]))
+            l, r = st.columns([3, 2])
+            l.plotly_chart(waterfall("Average NASA test", base, steps, "This prediction",
+                                     lambda v: f"{v:.0%}", "Chance the flame keeps burning", ylim=[0, 1.12],
+                                     step_fmt=lambda v: f"{v * 100:.1f} pts"), width="stretch")
+            e_end = e_base + sum(e_phi.values())
+            r.markdown(f"""Read left to right: start from the model's average over real NASA tests
+(**{base:.0%}**), then each input moves the chance up (orange) or down (blue) until it reaches this prediction
+(**{base + sum(phi.values()):.0%}**). The bars add up exactly.
+
+**Against Earth cabin air** with the same sample and air speed, the chance goes from **{e_base:.0%}** to
+**{e_end:.0%}**: oxygen **{e_phi['Oxygen'] * 100:+.1f} points**, pressure **{e_phi['Pressure'] * 100:+.1f} points**
+(pts = percentage points).""")
+            st.caption("Exact Shapley values (what SHAP estimates), computed over all 64 combinations of the six inputs "
+                       "with 50 real tests as the reference; the model is the average of the 40 bootstrap models. "
+                       "They explain the model, not the physics: where the model extrapolates, so does the explanation.")
         EX, ACURVE, _ = load_explain()
         with st.expander("How this model decides", expanded=True):
             e = EX["A_solids"]
@@ -633,6 +706,25 @@ sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 at
         base_layout(fig, 340, xaxis_title="Oxygen (%)", yaxis_title="Median burn time (s, log)", showlegend=False)
         fig.update_yaxes(type="log", tickvals=[1, 3, 10, 30, 100, 300], minor=dict(showgrid=False, ticks=""))
         st.plotly_chart(fig, width="stretch")
+        with st.expander("Why this number? Each input's share against Earth cabin air (exact)", expanded=True):
+            coef = m.params_.loc["lambda_"].to_dict()
+            xq = dict(x_o2=float(o2), pressure_atm=float(p))
+            xr = dict(x_o2=0.21, pressure_atm=1.0)
+            fac = XAI.loglinear_contributions(coef, xq, xr, {"Oxygen": ["x_o2"], "Pressure": ["pressure_atm"]})
+            Gq = pd.DataFrame([dict(x_o2=0.21, pressure_atm=1.0, log_mdot=np.log(mdot), fuel_mole_fraction=0.3,
+                                    fuel_propane=int(fuel == "propane"), fuel_butane=int(fuel == "butane"))])
+            e_med = float(m.predict_median(Gq[feats]).iloc[0])
+            q_med = e_med * fac["Oxygen"] * fac["Pressure"]
+            l, r = st.columns([3, 2])
+            l.plotly_chart(hbar(list(fac), list(fac.values()), "Burn-time multiplier against Earth cabin air",
+                                fmt="×{:.2f}", color=[ORANGE if v > 1 else BLUE for v in fac.values()], height=200,
+                                xrange=[0, max(fac.values()) * 1.35]), width="stretch")
+            r.markdown(f"""Same fuel and fuel flow, Earth cabin air (21 % O₂, 1 atm): median **{e_med:.1f} s**.
+
+× oxygen **{fac['Oxygen']:.2f}** × pressure **{fac['Pressure']:.2f}** = **{q_med:.0f} s** at {o2:.1%} O₂ and
+{p:.2f} atm.""")
+            st.caption("The Weibull model is linear in log burn time, so each input's effect is an exact multiplier and the "
+                       "multipliers compose without any approximation (the Shapley values of log burn time).")
         EX, _, _ = load_explain()
         with st.expander("How this model decides", expanded=True):
             trs = EX["D_gas_flames"]["time_ratios"]
@@ -679,6 +771,18 @@ radiation, consistent with radiative extinction reported for spherical flames.""
             st.caption("Gaussian process on FLEX (PSI-69) and PSI-117 experiments; 5-fold R² 0.70 (burning rate) and "
                        "0.90 (extinction diameter). ± is one standard deviation. Not valid for fuels it has not seen. "
                        "Suppressant (CO2, He) tests only go up to 25 % O2, so suppression at habitat oxygen is untested.")
+        with st.expander("Why this number? Each input's share against Earth cabin air (exact Shapley values)", expanded=True):
+            sh = droplet_shapley(fuel, float(d0), 0.15 if sup.startswith("CO2") else 0.0,
+                                 0.15 if sup.startswith("He") else 0.0, float(o2), float(p))
+            l, r = st.columns(2)
+            for col_, tgt, ttl, unit in ((l, "burning_rate_mm2_s", "Burning rate K (mm²/s)", "mm²/s"),
+                                         (r, "extinction_diameter_mm", "Droplet size at flame-out (mm)", "mm")):
+                b_, ph_ = sh[tgt]
+                col_.plotly_chart(waterfall("Earth cabin air", b_, list(ph_.items()), "This prediction",
+                                            lambda v: f"{v:.2f}", ttl, height=290), width="stretch")
+            st.caption("Reference: the same fuel and droplet in Earth cabin air (21 % O₂, 1 atm) without suppressant. "
+                       "Exact Shapley values over every combination of the inputs that differ; the bars add up to the "
+                       "prediction. They explain the Gaussian-process model, which is not valid for fuels it has not seen.")
         EX, _, CCURVE = load_explain()
         with st.expander("How this model decides", expanded=True):
             rel = EX["C_droplets"]["input_relevance"]

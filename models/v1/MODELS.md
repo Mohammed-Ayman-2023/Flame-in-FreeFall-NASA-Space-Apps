@@ -120,6 +120,22 @@ habitat oxygen is untested, and queries with a suppressant at 30 % O2 are labell
 | Methanol | 0.652 ± 0.064 | 0.495 ± 0.063 | 0.583 ± 0.31 mm | 1.344 ± 0.249 mm |
 | n-Heptane | 0.746 ± 0.064 | 0.538 ± 0.062 | 1.64 ± 1.037 mm | 1.39 ± 0.248 mm |
 
+## Local explanations: "Why this number?" (`src/fif/xai.py`)
+
+The dashboard explains each single prediction with **exact Shapley values**, the quantity SHAP estimates. With six
+or fewer inputs every coalition can be enumerated (64 for the solids model), so there is no sampling error and the
+contributions add up exactly to the prediction minus the reference (checked in `tests/test_xai.py`).
+
+- **Solids:** six inputs (oxygen, pressure, air speed, material, sample shape, flow direction); reference = 50 real
+  tests from the training data, model = the average of the 40 bootstrap models. A second view uses Earth cabin air
+  with the same sample and air speed as the reference (oxygen and pressure only).
+- **Gas flames:** the Weibull model is linear in log burn time, so each input's effect against Earth cabin air is an
+  exact multiplier (the Shapley value of log burn time).
+- **Droplets:** oxygen, pressure and any suppressant against the same droplet in Earth cabin air, for burning rate and
+  extinction size.
+
+They explain the models, not the physics: where a model extrapolates, so does its explanation.
+
 ## What the three models agree on
 At habitat conditions every fire type burns **faster and longer** than in Earth cabin air: solids that burn on Earth
 keep burning, still-air gas flames last about 4.6 times longer, and droplet flames burn 30-40 % faster. The models

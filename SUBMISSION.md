@@ -35,7 +35,8 @@ the ranking, compare investigations, ask the archive questions answered with cit
    every investigation, its hardware, sample or burner shapes and sizes, instruments, and what changed between its
    tests versus what stayed the same, with side-by-side comparison and shared-hardware groups; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
    it has no answer, plus an optional AI answer from the team's RAG assistant (Gemini over 4,086 passages of NASA
-   reports, answering only from the passages it retrieved and showing them); predictions with "how this model decides" explanations; the gap map; data downloads and
+   reports, answering only from the passages it retrieved and showing them); predictions with "how this model decides" explanations and a "Why this number?" view of exact Shapley values
+   (each input's share of the prediction, against the average NASA test and against Earth cabin air); the gap map; data downloads and
    sources; an "Equipment & Earth" view of which research informs next-generation detectors, extinguishers,
    ventilation procedures and material screening, and of NASA fire technology already used on Earth (fine-water-mist
    extinguishers, smoke detection, firefighter air tanks and protective clothing). Every number is labelled NASA
