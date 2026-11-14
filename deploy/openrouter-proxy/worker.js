@@ -6,7 +6,7 @@
 //   OPENROUTER_API_KEY  (Secret)  your OpenRouter key
 //   ALLOWED_ORIGIN      (Text)    https://mohammed-ayman-2023.github.io
 //   MODEL               (Text)    optional, default "openrouter/free"
-const PROMPT_START = '# Role\nYou are the Flame in Freefall research assistant'
+const PROMPT_STARTS = ['# Role\nYou are the Flame in Freefall research assistant', '# Role\nYou explain a Flame in Freefall model prediction']
 const MAX_CHARS = 60000
 
 export default {
@@ -22,7 +22,7 @@ export default {
     let body
     try { body = await request.json() } catch { return json({ error: 'invalid JSON' }, 400) }
     const prompt = String(body?.prompt || '')
-    if (!prompt.startsWith(PROMPT_START) || prompt.length > MAX_CHARS) return json({ error: 'only the Flame in Freefall RAG prompt is accepted' }, 400)
+    if (!PROMPT_STARTS.some(s => prompt.startsWith(s)) || prompt.length > MAX_CHARS) return json({ error: 'only the Flame in Freefall RAG prompt is accepted' }, 400)
     const model = env.MODEL || 'openrouter/free'
     const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',

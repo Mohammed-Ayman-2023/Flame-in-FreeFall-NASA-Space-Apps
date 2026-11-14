@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Nav, Footer, PageHead, Ev } from '../components/ui'
 import { Link } from '../lib/router'
 import { useMission } from '../lib/mission'
+import { useAudience } from '../lib/audience'
+import { llmExplain, explainPrompt, aiAvailable, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
 import { equipment, earth, airQuality, smokeDelay, physics, atmospheres, gravityBounds, partialGravity,
   buoyantVelocity, richardson, solidTests, modelSolids } from '../lib/data'
 
@@ -304,6 +306,36 @@ export function FlameSim({ mode, speed, build }) {
       </div>
       <iframe key={src} src={src} title={`Animated flame simulator, ${mode}`} style={{ width: '100%', height: 420, border: 0, borderRadius: 10, background: '#07080a', display: 'block' }} loading="lazy" />
       <div className="src" style={{ paddingTop: 8 }}>Timing and outcome come from our NASA-trained models (microgravity data). Flame shape follows buoyancy physics for the gravity you pick; colours, glow and flame size are illustrative, not to scale. NASA has no partial-gravity timing data, so at Moon, Mars or Earth gravity only the shape changes.</div>
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ AI explanation of a Shapley chart */
+// Sends the exact numbers behind the chart (and nothing else) to the site's default model or the visitor's own key,
+// and streams a plain-language explanation. Labelled AI-generated; the chart above it is the evidence.
+export function AIExplain({ ctx }) {
+  const { view } = useAudience()
+  const sig = JSON.stringify(ctx)
+  const [st, setSt] = useState({ sig: '', text: '', busy: false, err: '', model: '' })
+  const cur = st.sig === sig ? st : { sig, text: '', busy: false, err: '', model: '' }
+  async function go() {
+    setSt({ sig, text: '', busy: true, err: '', model: '' })
+    try {
+      const r = await llmExplain(explainPrompt({ ...ctx, audience: view ? view.label.toLowerCase() : 'general technical' }), t => setSt(s => (s.sig === sig ? { ...s, text: t } : s)))
+      setSt(s => (s.sig === sig ? { ...s, text: r.answer || s.text, busy: false, model: r.model } : s))
+    } catch (e) { setSt(s => (s.sig === sig ? { ...s, busy: false, err: e.message } : s)) }
+  }
+  return (
+    <div className="card pad col" style={{ gap: 10, borderColor: '#5a4a24' }}>
+      <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
+        <span className="lab">AI explanation of this chart</span>
+        <button type="button" className="btn sm" onClick={go} disabled={cur.busy || !aiAvailable()}>{cur.busy ? 'Explaining…' : cur.text ? 'Explain again' : 'Explain with AI'}</button>
+      </div>
+      {!aiAvailable() && <span className="faint" style={{ fontSize: 13 }}>No AI model is configured on this site; add your own key in the chat to use this.</span>}
+      {cur.busy && !cur.text && <span className="muted" style={{ fontSize: 13.5 }}>Sending the chart's numbers to {DEFAULT_MODEL}…</span>}
+      {cur.err && <span className="muted" style={{ fontSize: 13.5, borderLeft: '3px solid var(--ember)', paddingLeft: 10 }}>The AI could not answer ({cur.err}). The chart above is unaffected.</span>}
+      {cur.text && <div style={{ borderLeft: '3px solid #E8C15A', paddingLeft: 14 }}><MiniMarkdown text={cur.text + (cur.busy ? ' ▍' : '')} /></div>}
+      <span className="src">AI-generated ({cur.model || DEFAULT_MODEL}) from the numbers in the chart only; it can still be wrong. The chart is the evidence.</span>
     </div>
   )
 }
