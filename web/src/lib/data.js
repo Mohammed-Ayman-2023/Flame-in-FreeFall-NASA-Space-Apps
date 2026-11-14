@@ -78,3 +78,27 @@ export function dropInside(fuel, o2, p, co2, he) {
 export const G = physics.gravity
 export function buoyantVelocity(g, dT, L, Tair = 295) { return Math.sqrt(Math.max(g, 0) * dT / Tair * L) }
 export function richardson(g, dT, L, u) { return Math.pow(buoyantVelocity(g, dT, L) / Math.max(u, 1e-6), 2) }
+
+// Exact interventional Shapley values against a reference point (same definition as src/fif/xai.py).
+// f(point) -> number; x, ref: objects; players: {name: [keys]}. Returns {base, total, phi: [{k, v}]}.
+export function exactShapley(f, x, ref, players) {
+  const names = Object.keys(players), n = names.length
+  const fact = k => (k <= 1 ? 1 : k * fact(k - 1))
+  const val = {}
+  for (let m = 0; m < 1 << n; m++) {
+    const pt = { ...ref }
+    names.forEach((nm, i) => { if (m & (1 << i)) players[nm].forEach(k => { pt[k] = x[k] }) })
+    val[m] = f(pt)
+  }
+  if (Object.values(val).some(v => v == null || !isFinite(v))) return null
+  const phi = names.map((nm, i) => {
+    let s = 0
+    for (let m = 0; m < 1 << n; m++) {
+      if (m & (1 << i)) continue
+      const size = names.filter((_, j) => m & (1 << j)).length
+      s += fact(size) * fact(n - size - 1) / fact(n) * (val[m | (1 << i)] - val[m])
+    }
+    return { k: nm, v: s }
+  })
+  return { base: val[0], total: val[(1 << n) - 1], phi }
+}

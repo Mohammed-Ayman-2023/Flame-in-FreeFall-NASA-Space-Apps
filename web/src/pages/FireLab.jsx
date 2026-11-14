@@ -3,10 +3,10 @@ import { Link } from '../lib/router'
 import { Ev, Flame, pct } from '../components/ui'
 import { BurnChart } from '../components/charts'
 import { LessonHeader } from './Learn'
-import { FlammabilityMap } from './Evidence'
+import { FlammabilityMap, ShapleyWaterfall } from './Evidence'
 import { useMission } from '../lib/mission'
 import { useApi, useLive } from '../lib/api'
-import { G, modelGas, modelSolids, modelDroplets, gasFlames, gasPredict, gasCurve, gasInGap, solidPredict, solidCurve, solidInside, dropPredict, dropInside, richardson, buoyantVelocity, d2Check } from '../lib/data'
+import { G, modelGas, modelSolids, modelDroplets, gasFlames, gasPredict, gasCurve, gasInGap, solidPredict, solidCurve, solidInside, dropPredict, dropInside, richardson, buoyantVelocity, d2Check, exactShapley } from '../lib/data'
 
 const near = (arr, v) => arr.reduce((a, b) => (Math.abs(b - v) < Math.abs(a - v) ? b : a))
 const fp = v => (+v).toFixed(2).replace(/0$/, '')
@@ -259,6 +259,10 @@ function SolidsLab() {
             : <LineChart pts={curve} band x={o2} xlabel="oxygen (%)" ylabel="chance of burning" marks={[15, 21, 30, 40]} />}
           <div className="src" style={{ padding: '0 10px 8px' }}>Other inputs held at your settings · band = 10–90% bootstrap · {mat}</div>
         </div>}
+        {modelled && <ShapleyWaterfall title={`Why ${pct(solidPredict(mat, oG, pG, flow)?.p)} here instead of Earth air?`}
+          sh={exactShapley(pt => solidPredict(mat, pt.o2, pt.p, flow)?.p, { o2: oG, p: pG }, { o2: 21, p: 1.0 }, { Oxygen: ['o2'], Pressure: ['p'] })}
+          baseLabel="Earth air (21%, 1 atm)" totalLabel="Your air" fmt={v => Math.round(v * 100) + ' pts'}
+          note={`Exact Shapley values against Earth air at the same air speed (${flow} cm/s) and material: how much of the change each input is responsible for. Computed from the precomputed model grid (oxygen rounded to 1%). Same method as the dashboard (src/fif/xai.py).`} />}
         {modelled && <FlammabilityMap mat={mat} p={pG} o2={o2} flow={flow} />}
         <div className="grid2">
           <div className="card pad col" style={{ gap: 12 }}>
@@ -335,6 +339,11 @@ function DropLab() {
           </div>
           <Bars title="What the model listens to (burning rate)" rows={Object.entries(rel).map(([k, v]) => ({ k, w: v, v: v.toFixed(2) }))} note="Share of the Gaussian process length-scales across the physical inputs." />
         </div>
+        <ShapleyWaterfall title="Why this burning rate instead of Earth air?"
+          sh={exactShapley(pt => dropPredict(fuel, pt.o2, pt.p, pt.co2, pt.he, d0)?.br, { o2: Math.round(o2), p: pG, co2, he }, { o2: 21, p: 1.0, co2: 0, he: 0 },
+            co2 || he ? { Oxygen: ['o2'], Pressure: ['p'], Suppressant: ['co2', 'he'] } : { Oxygen: ['o2'], Pressure: ['p'] })}
+          baseLabel="Earth air (21%, 1 atm)" totalLabel="Your air" fmt={v => v.toFixed(2) + ' mm²/s'}
+          note={`Exact Shapley values against Earth air with no suppressant, same fuel and ${d0} mm droplet. Computed from the precomputed Gaussian-process grid (oxygen rounded to 1%).`} />
         <Story>{story}</Story>
         <div className="row" style={{ flexWrap: 'wrap', gap: 10 }}><Ev kind="prediction" /><span className="src">{modelDroplets.note}</span><Link to="/methods" className="mono" style={{ fontSize: 11, color: 'var(--plasma)' }}>How good is this model? →</Link></div>
       </div>

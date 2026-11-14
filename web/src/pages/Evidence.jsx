@@ -199,6 +199,7 @@ export function BuoyancyPanel() {
         {[0.01, 0.1, 1, 10, 100, 1000, 10000].map(v => <g key={v}><line x1={L0} x2={w - R} y1={Y(v)} y2={Y(v)} stroke="#252930" /><text x={L0 - 8} y={Y(v) + 4} textAnchor="end" {...ax}>{v >= 1000 ? v / 1000 + 'k' : v}</text></g>)}
         {[0, 10, 20, 30, 40, 50, 60].map(u => <text key={u} x={X(Math.max(u, 0.5))} y={h - B + 20} textAnchor="middle" {...ax}>{u}</text>)}
         <text x={w - R} y={h - 6} textAnchor="end" {...ax}>FAN AIR SPEED (CM/S) →</text>
+        <text x={L0 + 8} y={T + 14} {...ax}>RICHARDSON Ri (BUOYANCY ÷ FAN)²</text>
         {lines.map(([n, g, c]) => <polyline key={n} points={us.map(u => `${X(u)},${Y(richardson(g, dT, Lcm / 100, u / 100))}`).join(' ')} fill="none" stroke={c} strokeWidth="2.2" />)}
         {lines.map(([n, , c], i) => <text key={n} x={L0 + 12 + i * 90} y={h - B - 10} fill={c} fontSize="12">— {n}</text>)}
       </svg>
@@ -249,3 +250,33 @@ export function FlammabilityMap({ mat, p, o2, flow }) {
 }
 
 export { partialGravity }
+
+/* ------------------------------------------------------------------ Shapley waterfall (Fire Lab) */
+export function ShapleyWaterfall({ title, sh, baseLabel, totalLabel, fmt, note }) {
+  if (!sh) return null
+  const steps = [{ k: baseLabel, a: 0, b: sh.base, kind: 'total' }]
+  let run = sh.base
+  sh.phi.forEach(s => { steps.push({ k: s.k, a: run, b: run + s.v, kind: s.v >= 0 ? 'up' : 'down', v: s.v }); run += s.v })
+  steps.push({ k: totalLabel, a: 0, b: sh.total, kind: 'total' })
+  const lo = Math.min(0, ...steps.map(s => Math.min(s.a, s.b))), hi = Math.max(...steps.map(s => Math.max(s.a, s.b))) * 1.08 || 1
+  const w = 900, rowH = 40, L = 200, R = 120, h = steps.length * rowH + 10
+  const X = v => L + (v - lo) / (hi - lo) * (w - L - R)
+  const col = { total: '#868B93', up: '#FF7A3D', down: '#7DB4FF' }
+  return (
+    <div className="card" style={{ padding: '16px 10px 6px' }}>
+      <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, padding: '0 10px 8px' }}><span style={{ fontSize: 15, fontWeight: 600 }}>{title}</span><Ev kind="prediction" small /></div>
+      <svg viewBox={`0 0 ${w} ${h}`} width="100%" role="img" aria-label={`${title}: ${sh.phi.map(s => `${s.k} ${s.v >= 0 ? '+' : ''}${fmt(s.v)}`).join(', ')}`} style={{ display: 'block' }}>
+        {steps.map((s, i) => {
+          const y = i * rowH + 6, x0 = X(Math.min(s.a, s.b)), x1 = X(Math.max(s.a, s.b))
+          return <g key={s.k}>
+            <text x={L - 12} y={y + 20} textAnchor="end" fill="#D7D9DD" fontSize="13">{s.k}</text>
+            <rect x={x0} y={y + 6} width={Math.max(2, x1 - x0)} height={20} rx="3" fill={col[s.kind]} />
+            {i > 0 && i < steps.length - 1 && <line x1={X(s.a)} x2={X(s.a)} y1={y - 14} y2={y + 6} stroke="#4A4F57" strokeDasharray="2 3" />}
+            <text x={x1 + 8} y={y + 20} {...ax} fill="#D7D9DD">{s.kind === 'total' ? fmt(s.b) : (s.v >= 0 ? '+' : '−') + fmt(Math.abs(s.v))}</text>
+          </g>
+        })}
+      </svg>
+      <div className="src" style={{ padding: '0 10px 8px' }}>{note}</div>
+    </div>
+  )
+}
