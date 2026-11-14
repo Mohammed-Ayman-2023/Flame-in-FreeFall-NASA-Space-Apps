@@ -109,10 +109,14 @@ INVESTIGATIONS = {
     "PSI-106": dict(what="How gas jet flames anchor and lift off in co-flowing air, for methane, ethylene and "
                          "nitrogen-diluted mixtures (12 test days).", area="fundamentals", platform="ISS glovebox",
                     years="2012"),
-    "PSI-21": dict(what="Coflow laminar diffusion flames from dilute to sooting gaseous fuels.", area="fundamentals",
-                   platform="ISS Combustion Integrated Rack", years=""),
-    "PSI-10": dict(what="Flame design: normal and inverse gas flames tuned to be soot-free.", area="fundamentals",
-                   platform="ISS Combustion Integrated Rack", years=""),
+    "PSI-21": dict(what="Methane and ethylene flames burning in a gentle coflow of air, from very dilute to heavily "
+                        "sooting, to measure flame shape, lift-off, temperature, extinction limits and soot as velocity "
+                        "and fuel dilution change, and to test computer models of soot.", area="fundamentals",
+                   platform="ISS Combustion Integrated Rack", years="2006-2022"),
+    "PSI-10": dict(what="Spherical ethylene and methane flames, normal (fuel from the burner) and inverse (oxidizer "
+                        "from the burner), in drop towers and on the ISS: when soot starts to form and when the flame "
+                        "goes out, as flow rate, mixture fraction (Zst), N₂ or CO₂ dilution and pressure change.",
+                   area="fundamentals", platform="ISS Combustion Integrated Rack + drop towers", years="1999-2025"),
     "PSI-23": dict(what="Structure and response of spherical gas diffusion flames.", area="fundamentals",
                    platform="ISS Combustion Integrated Rack", years=""),
     "PSI-22": dict(what="Methane and ethylene flames (diluted with nitrogen) in an electric field of up to 10 kV "
@@ -203,6 +207,8 @@ def investigation_table(K: dict) -> pd.DataFrame:
 
 # Sample or burner details stated on the NASA page, where the test table has none.
 PAGE_SAMPLES = {
+    "PSI-21": "coflow burner: a fuel jet surrounded by a slow coflow of air (investigation page)",
+    "PSI-10": "spherical burner for normal and inverse spherical flames; coflow flames as well (investigation page)",
     "PSI-39": "droplets suspended between hypodermic needles or tethered on silicon-carbide fibres; hot-wire igniter "
               "retracted after ignition (investigation page)",
     "PSI-22": "gas-jet burner, and the coflow burner shared with ACME CLD Flame; copper mesh electrode above the "
@@ -211,6 +217,11 @@ PAGE_SAMPLES = {
 
 # What the NASA page says was varied, for investigations without a loaded per-test table.
 PAGE_VARIABLES = {
+    "PSI-21": ("fuel (methane, ethylene), fuel dilution (dilute to heavily sooting) and flow velocity (investigation page)",
+               "coflow burner in the ACME hardware (investigation page)"),
+    "PSI-10": ("fuel (C₂H₄, CH₄), flow rate, stoichiometric mixture fraction Zst, inert (N₂ or CO₂) amount, pressure, and "
+               "flame direction (normal or inverse) (investigation page)",
+               "spherical burner in the ACME hardware (investigation page)"),
     "PSI-22": ("fuel (methane, ethylene), nitrogen dilution (stable to near-extinction flames), fuel flow rate, coflow "
                "velocity (with and without coflow), field strength (up to 10 kV) and polarity (investigation page)",
                "the ACME hardware in the CIR; mesh electrode above the burner (investigation page)"),
@@ -666,6 +677,10 @@ SENSORS = {
     "PSI-22": "high-resolution cameras for flame shape, luminosity and soot; spectral imaging with filters for "
               "chemiluminescence and soot volume fraction; thermopile detectors for radiant emission; recorded "
               "voltage-current curves (investigation page)",
+    "PSI-21": "OH* and CH* chemiluminescence imaging for lift-off and flame shape; soot luminosity and laser "
+              "extinction for soot temperature and volume fraction; thin-filament pyrometry for gas temperature "
+              "(investigation page)",
+    "PSI-10": "cameras, radiometers, photomultiplier tubes and thermocouples (investigation page)",
     "PSI-39": "black-and-white camera for droplet size; UV camera for OH* emission and flame size; narrow-band and "
               "wide-band radiometers for flame radiation; high-resolution cameras for monitoring (investigation page)",
     "PSI-107": "still and video cameras; measured flame height (luminous length), radiative heat loss and co-flow air "
@@ -683,6 +698,10 @@ CONTEXT = {
     "PSI-39": "The NASA page lists farnesane and pressures from 0.25 atm; the PSI table we loaded holds n-dodecane "
               "and two n-dodecane/iso-dodecane mixtures at 0.5-5 atm (the page itself gives both 0.25-5 and 0.25-0.5 "
               "atm). Sponsored by the ISS National Laboratory and NSF.",
+    "PSI-10": "Flame Design also ran inverse spherical flames, where the oxidizer flows from the burner, like the CFI-G "
+              "inverse flames. Its hypothesis: microgravity spherical flames go out once their peak temperature "
+              "drops below 1130 K. Tests ran in drop towers as well as on the ISS.",
+    "PSI-21": "E-FIELD Flames (PSI-22) used this same coflow burner for its coflow tests (PSI-22 page).",
     "PSI-107": "NASA's page gives co-flow speeds of 5.4-65 cm/s and 526 flames; the PSI table we loaded has 469 "
                "settings, 26 of them listed outside that speed range (0-85 cm/s). Values are shown as tabulated.",
     "PSI-22": "The challenge brief notes that this experiment mimicked partial gravity: the field acts on the ions "
