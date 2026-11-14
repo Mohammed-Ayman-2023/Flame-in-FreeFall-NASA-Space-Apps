@@ -82,9 +82,11 @@ INVESTIGATIONS = {
     "PSI-68": dict(what="Follow-on to FLEX with fuel mixtures closer to real fuels, droplet arrays and soot, over "
                         "0.5-3 atm and up to 40 % O₂. PSI lists its condition ranges, not per-test results.",
                    area="suppression, fundamentals", platform="ISS Combustion Integrated Rack", years="2016-2019"),
-    "PSI-39": dict(what="Cool-flame droplet tests (dodecane and mixtures) at 0.25-5 atm: the invisible low-"
-                        "temperature flame that can survive after the visible flame goes out.",
-                   area="fundamentals", platform="ISS Combustion Integrated Rack", years=""),
+    "PSI-39": dict(what="Droplets of n-dodecane, n-dodecane/iso-dodecane mixtures and farnesane, suspended between "
+                        "needles or on silicon-carbide fibres and lit by a retracting hot wire, to study cool flames "
+                        "(the dim low-temperature flame that can outlast the visible one): how pressure, helium "
+                        "dilution and droplet size change burning and extinction, and how soot forms.",
+                   area="fundamentals", platform="ISS Combustion Integrated Rack", years="2020-2021"),
     "PSI-117": dict(what="Droplet cool-flame measurements and simulations (heptane, decane, dodecane) and how outside "
                          "disturbances change them.", area="fundamentals", platform="ISS + simulation", years=""),
     "PSI-142": dict(what="Cool-flame transitions near radiation and stretch extinction in counterflow flames.",
@@ -198,6 +200,14 @@ def investigation_table(K: dict) -> pd.DataFrame:
                          context=CONTEXT.get(psi, "")))
     return pd.DataFrame(rows)
 
+
+# Sample or burner details stated on the NASA page, where the test table has none.
+PAGE_SAMPLES = {
+    "PSI-39": "droplets suspended between hypodermic needles or tethered on silicon-carbide fibres; hot-wire igniter "
+              "retracted after ignition (investigation page)",
+    "PSI-22": "gas-jet burner, and the coflow burner shared with ACME CLD Flame; copper mesh electrode above the "
+              "burner (investigation page)",
+}
 
 # What the NASA page says was varied, for investigations without a loaded per-test table.
 PAGE_VARIABLES = {
@@ -656,6 +666,8 @@ SENSORS = {
     "PSI-22": "high-resolution cameras for flame shape, luminosity and soot; spectral imaging with filters for "
               "chemiluminescence and soot volume fraction; thermopile detectors for radiant emission; recorded "
               "voltage-current curves (investigation page)",
+    "PSI-39": "black-and-white camera for droplet size; UV camera for OH* emission and flame size; narrow-band and "
+              "wide-band radiometers for flame radiation; high-resolution cameras for monitoring (investigation page)",
     "PSI-107": "still and video cameras; measured flame height (luminous length), radiative heat loss and co-flow air "
                "velocity distribution; a flow duct with integrated nozzles and fuel delivery in the glovebox "
                "(investigation page)",
@@ -668,6 +680,9 @@ CONTEXT = {
                "normal flames (fuel from the burner, 18-40 % O₂ around it), which is the cabin-like case.",
     "PSI-20": "Although it burned gas, BRE is a materials-flammability study: the burner imitates a burning solid, "
               "in still air, as a function of material properties.",
+    "PSI-39": "The NASA page lists farnesane and pressures from 0.25 atm; the PSI table we loaded holds n-dodecane "
+              "and two n-dodecane/iso-dodecane mixtures at 0.5-5 atm (the page itself gives both 0.25-5 and 0.25-0.5 "
+              "atm). Sponsored by the ISS National Laboratory and NSF.",
     "PSI-107": "NASA's page gives co-flow speeds of 5.4-65 cm/s and 526 flames; the PSI table we loaded has 469 "
                "settings, 26 of them listed outside that speed range (0-85 cm/s). Values are shown as tabulated.",
     "PSI-22": "The challenge brief notes that this experiment mimicked partial gravity: the field acts on the ions "
@@ -690,10 +705,10 @@ _VARS = [("fuel", "fuel or material", None), ("geometry", "sample or burner shap
          ("t_ambient_k", "ambient temperature", "{:.0f} K")]
 
 
-def _fmt_vals(v: pd.Series, fmt: str | None) -> str:
+def _fmt_vals(v: pd.Series, fmt: str | None, strip: bool = True) -> str:
     u = v.dropna()
     if fmt is None:
-        vals = sorted(set(u.astype(str).str.replace(r"\s*\(.*\)", "", regex=True)))
+        vals = sorted(set(u.astype(str).str.replace(r"\s*\(.*\)", "", regex=True) if strip else u.astype(str)))
         return ", ".join(vals[:4]) + (f" (+{len(vals) - 4} more)" if len(vals) > 4 else "")
     lo, hi = fmt.format(u.min()), fmt.format(u.max())
     if lo == hi and u.max() > u.min() and "%}" in fmt:
@@ -714,10 +729,12 @@ def variables(K: dict, psi: str) -> dict:
         if col not in s or s[col].notna().sum() == 0:
             continue
         u = s[col].dropna()
-        nun = u.round(4).nunique() if fmt else u.astype(str).nunique()
+        strip = col != "geometry"  # fuel labels carry trade names in brackets; geometry brackets carry meaning
+        nun = (u.round(4).nunique() if fmt else
+               (u.astype(str).str.replace(r"\s*\(.*\)", "", regex=True) if strip else u.astype(str)).str.strip().nunique())
         if col in ("x_co2", "x_he") and u.max() == 0:
             continue
-        (varied if nun > 1 else same).append(f"{lab}: {_fmt_vals(u, fmt)}" + (f" ({nun} values)" if nun > 1 and fmt else ""))
+        (varied if nun > 1 else same).append(f"{lab}: {_fmt_vals(u, fmt, strip)}" + (f" ({nun} values)" if nun > 1 and fmt else ""))
     return dict(varied=varied, same=same, n=len(s))
 
 
@@ -727,7 +744,7 @@ def sample_text(K: dict, psi: str) -> str:
     s = t[(t.investigation_id == psi) & (t.gravity_g.fillna(0) == 0)]
     parts = []
     if len(s) and s.geometry.notna().any():
-        parts.append(_fmt_vals(s.geometry, None))
+        parts.append(_fmt_vals(s.geometry, None, strip=False))
     for col, lab, fmt in (("thickness_mm", "thickness", "{:.2f} mm"), ("d0_mm", "initial droplet diameter", "{:.1f} mm"),
                           ("diameter_mm", "diameter", "{:.1f} mm"), ("sample_width_cm", "width", "{:.0f} cm"),
                           ("sample_length_cm", "length", "{:.0f} cm"), ("size_mm", "size", "{:.1f} mm")):
@@ -735,6 +752,8 @@ def sample_text(K: dict, psi: str) -> str:
             if col == "size_mm" and len(parts) > 1:
                 continue
             parts.append(f"{lab} {_fmt_vals(s[col], fmt)}")
+    if psi in PAGE_SAMPLES:
+        parts.append(PAGE_SAMPLES[psi])
     if not parts:
         g = c.loc[c.psi_id == psi, "geometry"].dropna()
         parts.append(str(g.iloc[0]) + " (catalog, from the NASA page or listing)" if len(g) else "not listed")
