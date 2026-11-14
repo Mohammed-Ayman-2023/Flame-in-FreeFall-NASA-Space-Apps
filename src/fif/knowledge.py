@@ -97,8 +97,10 @@ INVESTIGATIONS = {
                     area="detection", platform="ISS glovebox", years="2010"),
     "PSI-115": dict(what="Modelling and simulation of smoke generation in microgravity using SAME data.",
                     area="detection", platform="simulation", years=""),
-    "PSI-107": dict(what="Gas jet flames in co-flowing air, raising the fuel flow until the flame starts releasing "
-                         "soot (its smoke point), for six fuels and three nozzle sizes.",
+    "PSI-107": dict(what="Gas jet flames (methane, ethylene, propane, propylene and propylene mixtures) from 0.41, "
+                         "0.76 and 1.6 mm nozzles in co-flowing air: the fuel flow was raised until each flame started "
+                         "releasing soot (its smoke point), to measure how burner size, air speed and fuel change "
+                         "sooting.",
                     area="detection, fundamentals", platform="ISS glovebox", years="2010-2012"),
     "PSI-60": dict(what="Computational and experimental analysis of the SPICE soot data sets.", area="fundamentals",
                    platform="analysis", years=""),
@@ -628,6 +630,9 @@ SENSORS = {
     "PSI-69": "droplet imaging for burning rate and extinction size, heat radiation, soot and temperature "
               "(investigation page goals)",
     "PSI-106": "over 4,000 high-resolution flame images over 13 test days (investigation page)",
+    "PSI-107": "still and video cameras; measured flame height (luminous length), radiative heat loss and co-flow air "
+               "velocity distribution; a flow duct with integrated nozzles and fuel delivery in the glovebox "
+               "(investigation page)",
 }
 
 # Extra context from the challenge brief, shown with the investigation.
@@ -637,6 +642,8 @@ CONTEXT = {
                "normal flames (fuel from the burner, 18-40 % O₂ around it), which is the cabin-like case.",
     "PSI-20": "Although it burned gas, BRE is a materials-flammability study: the burner imitates a burning solid, "
               "in still air, as a function of material properties.",
+    "PSI-107": "NASA's page gives co-flow speeds of 5.4-65 cm/s and 526 flames; the PSI table we loaded has 469 "
+               "settings, 26 of them listed outside that speed range (0-85 cm/s). Values are shown as tabulated.",
     "PSI-22": "Electric fields act on the ions that occur naturally in flames, which lets this experiment mimic "
               "partial gravity: the closest PSI comes to Moon or Mars conditions.",
     "PSI-102": "One SAME instrument, a modified P-Trak, was used to measure dust in DAFT and DAFT-2.",
