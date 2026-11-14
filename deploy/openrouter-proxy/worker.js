@@ -6,7 +6,7 @@
 //   OPENROUTER_API_KEY  (Secret)  your OpenRouter key
 //   ALLOWED_ORIGIN      (Text)    https://mohammed-ayman-2023.github.io
 //   MODEL               (Text)    optional, default "openrouter/free"
-const PROMPT_STARTS = ['# Role\nYou are the Flame in Freefall research assistant', '# Role\nYou explain a Flame in Freefall model prediction']
+const PROMPT_STARTS = ['# Role\nYou are the Flame in Freefall research assistant']
 const MAX_CHARS = 60000
 
 export default {

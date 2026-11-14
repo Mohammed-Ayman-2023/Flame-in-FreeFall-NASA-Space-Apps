@@ -3,7 +3,7 @@ import { Link } from '../lib/router'
 import { Ev, Flame, pct } from '../components/ui'
 import { BurnChart } from '../components/charts'
 import { LessonHeader } from './Learn'
-import { FlammabilityMap, ShapleyWaterfall, FlameSim, simShape, AIExplain } from './Evidence'
+import { FlammabilityMap, ShapleyWaterfall, FlameSim, simShape } from './Evidence'
 import shapSolids from '../data/shap_solids.json'
 import { useMission } from '../lib/mission'
 import { useApi, useLive } from '../lib/api'
@@ -168,16 +168,6 @@ function GasLab() {
             { k: `Pressure ${fp(p)} atm`, w: Math.abs(Math.log(fP)) + 1e-4, v: '×' + fP.toFixed(2), color: 'var(--plasma)' },
             { k: 'This air', w: 0, v: '≈ ' + Math.round(r0.median * fO2 * fP) + ' s', strong: true },
           ]} note="Time ratios from the survival model: +1% O₂ multiplies burn time by 1.17 (95% CI 1.15–1.19); +0.1 atm by 0.97." />
-          <AIExplain ctx={{
-            model: 'Gas-flame model: Weibull accelerated-failure-time survival model on 132 NASA ACME CFI-G still-air flames (PSI-159); flames still burning when the fuel was cut count as at-least values',
-            predicts: 'median time a still-air gas flame burns before going out by itself, in seconds',
-            inputs: { fuel, oxygen_percent: o2, pressure_atm: p },
-            reference: 'Earth cabin air (21 % O2, 1 atm), same fuel', reference_median_s: +r0.median.toFixed(1),
-            exact_multiplicative_contributions: { Oxygen: +fO2.toFixed(2), Pressure: +fP.toFixed(2) },
-            prediction_median_s: Math.round(r0.median * fO2 * fP), still_burning_after_30_s_percent: Math.round(r.s30 * 100),
-            inside_tested_range: !gap && pTested,
-            notes: ['In this model contributions multiply (time ratios); +1 % O2 multiplies burn time by 1.17 (95 % CI 1.15-1.19), +0.1 atm by 0.97.', `NASA has no tests between ${modelGas.gap[0]} % and ${modelGas.gap[1]} % O2.`],
-          }} />
           <div className="card pad col" style={{ gap: 12 }}>
             <span className="lab">What happened in the nearest NASA tests</span>
             {win.length ? <>
@@ -229,16 +219,6 @@ function SolidShapley({ mat, oG, pG, flow, inside }) {
         note={ref === 'nasa'
           ? `Each input's share of this prediction: start from the model's average over ${shapSolids.reference}, then each input moves the chance up (orange) or down (blue). The bars add up exactly. Computed over all 64 combinations of the six inputs (oxygen, pressure, air speed, material, sample shape, flow direction) with the model itself, no sampling, like the dashboard (src/fif/xai.py). They explain the model, not the physics.`
           : `Against Earth cabin air with the same material and air speed (${flow} cm/s): how much of the change oxygen and pressure are each responsible for. Exact, from the model grid (oxygen rounded to 1 %). pts = percentage points.`} />
-      {sh && <AIExplain ctx={{
-        model: 'Solids flammability model: gradient boosting with physics constraints (more oxygen or pressure can only raise the chance of burning), trained on NASA BASS, BASS-II and Saffire tests',
-        predicts: 'chance that the flame keeps burning (sustained burning) instead of going out',
-        inputs: { material: mat, sample_shape: modelSolids.shapes[mat]?.geometry, flow_direction: modelSolids.shapes[mat]?.direction, oxygen_percent: oG, pressure_atm: pG, air_speed_cm_s: flow },
-        reference: ref === 'nasa' ? `average model output over ${shapSolids.reference}` : 'Earth cabin air (21 % O2, 1 atm), same material and air speed',
-        reference_value_percent: +(sh.base * 100).toFixed(1), prediction_percent: +(sh.total * 100).toFixed(1),
-        contributions_percentage_points: Object.fromEntries(sh.phi.map(x => [x.k, +(x.v * 100).toFixed(1)])),
-        inside_tested_range: !!inside,
-        notes: ['Contributions add up exactly to the prediction minus the reference value.', 'The model is not trained at Moon or Mars gravity.'],
-      }} />}
     </div>
   )
 }
@@ -394,17 +374,6 @@ function DropLab() {
             co2 || he ? { Oxygen: ['o2'], Pressure: ['p'], Suppressant: ['co2', 'he'] } : { Oxygen: ['o2'], Pressure: ['p'] })}
           baseLabel="Earth air (21%, 1 atm)" totalLabel="Your air" fmt={v => v.toFixed(2) + ' mm²/s'}
           note={`Exact Shapley values against Earth air with no suppressant, same fuel and ${d0} mm droplet. Computed from the precomputed Gaussian-process grid (oxygen rounded to 1%).`} />
-        {(() => { const shd = exactShapley(pt => dropPredict(fuel, pt.o2, pt.p, pt.co2, pt.he, d0)?.br, { o2: Math.round(o2), p: pG, co2, he }, { o2: 21, p: 1.0, co2: 0, he: 0 }, co2 || he ? { Oxygen: ['o2'], Pressure: ['p'], Suppressant: ['co2', 'he'] } : { Oxygen: ['o2'], Pressure: ['p'] })
-          return shd && <AIExplain ctx={{
-            model: 'Droplet model: Gaussian process trained on NASA FLEX droplet tests (PSI-69)',
-            predicts: 'droplet burning rate K in mm2/s (how fast d-squared shrinks); burn time follows the d2-law t = (d0^2 - d_out^2)/K',
-            inputs: { fuel, droplet_diameter_mm: d0, oxygen_percent: Math.round(o2), pressure_atm: pG, co2_fraction_added: co2, helium_fraction_added: he },
-            reference: 'Earth cabin air (21 % O2, 1 atm, no suppressant), same fuel and droplet size',
-            reference_value_mm2_s: +shd.base.toFixed(3), prediction_mm2_s: +shd.total.toFixed(3), predicted_burn_time_s: +tb.toFixed(1),
-            contributions_mm2_s: Object.fromEntries(shd.phi.map(x => [x.k, +x.v.toFixed(3)])),
-            inside_tested_range: !!inside,
-            notes: ['NASA tested CO2 and helium suppressants only up to 25 % O2.', `The d2-law reproduces ${d2Check.n} measured FLEX burn times with R2 = ${d2Check.r2}.`],
-          }} /> })()}
         <Story>{story}</Story>
         <FlameSim mode="droplet" speed={2} build={(g, gl) => [
           { title: `ISS cabin air · 21 % O₂, 1 atm, 0 g · ${fuel}`, gravity_label: '0 g', air: 0, d0, K: r0.br, dext: Math.min(r0.ext, d0), t_end: Math.max(0, (d0 * d0 - Math.min(r0.ext, d0) ** 2) / r0.br), standoff: 6, q: simShape(0, 0, 0.21, 1, fuel !== 'methanol') },

@@ -101,7 +101,7 @@ async function openRouterOnce(prompt, key, model, onDelta, signal, onAlive) {
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST', signal,
     headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
-    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 1200, reasoning: { effort: 'low' }, stream: true }),
+    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 1200, stream: true }),
   })
   if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
   let used = model
@@ -126,7 +126,10 @@ async function openRouter(prompt, key, model, onDelta, onStatus) {
     if (!retry) throw e
     onStatus?.(`${model} did not respond in time; switched to ${FALLBACK_MODEL}`)
     onDelta?.('')
-    return await openRouterOnce(prompt, key, FALLBACK_MODEL, onDelta)
+    const c2 = new AbortController(), t2 = setTimeout(() => c2.abort(), 45000)
+    try { return await openRouterOnce(prompt, key, FALLBACK_MODEL, onDelta, c2.signal) }
+    catch (e2) { throw new Error(e2.name === 'AbortError' ? 'the free models did not answer in time; please try again in a minute' : e2.message) }
+    finally { clearTimeout(t2) }
   } finally { clearTimeout(timer) }
 }
 
@@ -154,45 +157,3 @@ export async function defaultAnswer(question, onDelta, onDocs, onStatus) {
   const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta, onStatus)
   return { ...r, docs: got }
 }
-
-/* ---------------------------------------------------------------- AI explanation of a model prediction (no retrieval) */
-export const EXPLAIN_START = '# Role\nYou explain a Flame in Freefall model prediction'
-export function explainPrompt(ctx) {
-  return `${EXPLAIN_START} to a ${ctx.audience || 'general technical'} reader.
-# Rules
-- Use ONLY the numbers in DATA. Never invent numbers, tests, materials or sources.
-- Shapley values split the model's prediction among its inputs relative to a reference; they explain the MODEL, not the physics. Say so once.
-- Go through the contributions from largest to smallest absolute size, saying whether each raises or lowers the prediction and by how much (use the units given).
-- You may add one short "Physics context" sentence per input from standard combustion knowledge, only if it agrees with the sign of that contribution, and label it as general knowledge.
-- If DATA says the conditions are outside the tested range, state clearly that the prediction and its explanation are extrapolations.
-- 150-220 words. Plain language. No headings other than the three below.
-# Response format
-**What the model predicts:** one or two sentences.
-**What drives it:** short bullets, largest first.
-**Caveats:** one to three bullets (tested range, what Shapley values can and cannot say, and DATA notes).
-# DATA
-${JSON.stringify(ctx, null, 1)}`
-}
-
-/** Stream a completion from the visitor's own key, else the site default (proxy or built-in key). */
-export async function llmExplain(prompt, onDelta, onStatus) {
-  const k = getKey()
-  if (k && !k.startsWith('sk-or-')) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:streamGenerateContent?alt=sse`, {
-      method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': k },
-      body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 600 } }),
-    })
-    if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
-    return { answer: await readSSE(res, j => (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join(''), onDelta), model: ragPrompt.model }
-  }
-  if (k) return openRouter(prompt, k, DEFAULT_MODEL, onDelta, onStatus)
-  if (PROXY) {
-    const res = await fetch(PROXY, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt }) })
-    const j = await res.json().catch(() => ({}))
-    if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
-    onDelta?.(j.answer || ''); return { answer: j.answer || '', model: j.model || DEFAULT_MODEL }
-  }
-  if (OR_KEY) return openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta, onStatus)
-  throw new Error('no AI model is configured; add your own key in the chat')
-}
-export const aiAvailable = () => !!(getKey() || PROXY || OR_KEY)
