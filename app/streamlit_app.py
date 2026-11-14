@@ -12,6 +12,7 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from fif import knowledge as Kn  # noqa: E402
 from fif import models as M  # noqa: E402
 from fif import ranking as R  # noqa: E402
 
@@ -32,7 +33,30 @@ h1, h2, h3 {letter-spacing: -0.01em;}
 .inside {background:#e3f4e3; color:#006300;} .outside {background:#fdecdc; color:#8a3a12;}
 .gap {background:#fbe3e3; color:#9b2020;} .thin {background:#fff3d6; color:#7a5200;} .covered {background:#e3f4e3; color:#006300;}
 .small {font-size:0.85rem; color:#52514e;}
+.badge {display:inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; letter-spacing: .01em;}
+.b-measured {background:#dcefdc; color:#1f6b2a;} .b-model {background:#dbe8f8; color:#1d4f91;}
+.b-literature {background:#ece3f5; color:#5b2d82;} .b-gap {background:#f7dcdc; color:#a32020;}
+.tk {border: 1px solid #e6e5e1; border-radius: 12px; padding: 16px 18px; background: #ffffff; height: 100%;}
+.tk .num {font-size: 1.9rem; font-weight: 700; color: #b8441a; line-height: 1.15; margin-top: 6px;}
+.tk h4 {font-size: 1.02rem; margin: 6px 0 6px 0; color: #0b0b0b; padding: 0;}
+.tk p {font-size: 0.88rem; color: #3a4556; margin: 4px 0;}
+.tk .act {font-weight: 600; color: #14213d;} .tk .cav {color: #8a5a00;} .tk .src {color: #6b7280; font-size: 0.78rem;}
+.banner {background: #f3f2ef; border-left: 5px solid #8a8984; border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; color: #3a4556;}
+.mission {background: #0f1c2e; color: #e3e8ef; border-radius: 12px; padding: 14px 18px;}
+.mission b {color: #ffffff;} .mission .k {font-size: 1.45rem; font-weight: 700; color: #f07c4a;}
+.inv {border: 1px solid #e6e5e1; border-radius: 12px; padding: 16px 18px; background: #ffffff;}
+.inv h4 {margin: 2px 0 6px 0; padding: 0;}
+.ans {border: 1px solid #e6e5e1; border-left: 5px solid #2a78d6; border-radius: 10px; padding: 12px 16px; background: #ffffff; margin-bottom: 10px;}
+.ans h4 {font-size: 1rem; margin: 6px 0 4px 0; padding: 0;} .ans p {font-size: 0.9rem; margin: 4px 0; color: #3a4556;}
 </style>""", unsafe_allow_html=True)
+
+BADGE_TXT = dict(measured="NASA measurement", model="Model prediction", literature="NASA literature", gap="Data gap")
+
+
+def badge(kind: str) -> str:
+    return f'<span class="badge b-{kind}">{BADGE_TXT[kind]}</span>'
+
+
 
 
 def base_layout(fig: go.Figure, height=380, **kw) -> go.Figure:
@@ -89,6 +113,21 @@ def hbar(labels, values, title, fmt="{:.2f}", color=BLUE, height=260, xrange=Non
 
 
 @st.cache_resource
+def load_knowledge():
+    return Kn.load()
+
+
+@st.cache_resource
+def load_archive():
+    return Kn.Archive(load_knowledge())
+
+
+@st.cache_data
+def investigations_overview():
+    return Kn.investigation_table(load_knowledge())
+
+
+@st.cache_resource
 def load_models():
     return (joblib.load(ROOT / "models" / "v1" / "A_solids.joblib"),
             joblib.load(ROOT / "models" / "v1" / "D_gas_flames.joblib"),
@@ -98,17 +137,41 @@ def load_models():
 D, GRID_D, TESTS, EV, SRC, CAT, B = load_tables()
 
 # ---------------------------------------------------------------- sidebar: the mission atmosphere
+MISSION_KEYS = list(Kn.MISSIONS) + ["custom"]
+
+
+def _apply_mission():
+    m = Kn.MISSIONS.get(st.session_state["mission"])
+    if m:
+        st.session_state["o2_pct"] = round(m["x_o2"] * 100, 1)
+        st.session_state["p_atm"] = round(m["pressure_atm"], 3)
+
+
+def _custom():
+    for k, m in Kn.MISSIONS.items():
+        if (abs(st.session_state["o2_pct"] - m["x_o2"] * 100) < 0.05
+                and abs(st.session_state["p_atm"] - m["pressure_atm"]) < 0.0015):
+            st.session_state["mission"] = k
+            return
+    st.session_state["mission"] = "custom"
+
+
 with st.sidebar:
     st.markdown("### Mission atmosphere")
-    st.caption("Default: a crewed habitat at 30 % O2 and 0.69 atm, in microgravity.")
-    def _reset():
-        st.session_state["o2_pct"], st.session_state["p_atm"] = 30.0, 0.69
+    st.session_state.setdefault("mission", "habitat")
     st.session_state.setdefault("o2_pct", 30.0)
     st.session_state.setdefault("p_atm", 0.69)
-    o2 = st.slider("Oxygen (%)", 15.0, 40.0, step=0.5, key="o2_pct") / 100
-    p = st.slider("Pressure (atm)", 0.40, 1.20, step=0.01, key="p_atm")
-    st.caption(f"O2 partial pressure: **{o2 * p:.3f} atm** (Earth sea level: 0.21 atm)")
-    st.button("Reset to habitat (30 %, 0.69 atm)", on_click=_reset)
+    st.selectbox("Preset", MISSION_KEYS, key="mission", on_change=_apply_mission,
+                 format_func=lambda k: Kn.MISSIONS[k]["label"] if k in Kn.MISSIONS else "Custom atmosphere")
+    o2 = st.slider("Oxygen (%)", 15.0, 40.0, step=0.5, key="o2_pct", on_change=_custom) / 100
+    p = st.slider("Pressure (atm)", 0.40, 1.20, step=0.001, format="%.3f", key="p_atm", on_change=_custom)
+    st.caption(f"{p * 101.325:.1f} kPa · {p * 14.696:.1f} psia · O₂ partial pressure **{o2 * p:.3f} atm** "
+               "(Earth sea level 0.21)")
+    MISSION = Kn.MISSIONS.get(st.session_state["mission"])
+    MISSION_LABEL = MISSION["label"] if MISSION else f"Custom atmosphere · {o2:.1%} O₂, {p:.2f} atm"
+    if MISSION:
+        st.caption(f"{MISSION['note']} *Source: {MISSION['source']}.*")
+    st.markdown(f'<div class="banner"><b>Moon and Mars gravity.</b> {Kn.GRAVITY_NOTE}</div>', unsafe_allow_html=True)
     st.divider()
     st.markdown("**Dataset v1** · 1,517 tests · 14 sources")
     st.caption("NASA PSI open data (CC0) + NASA technical reports. "
@@ -116,27 +179,64 @@ with st.sidebar:
 TARGET = dict(x_o2=o2, pressure_atm=p)
 
 st.title("🔥 Flame in Freefall")
-st.markdown("##### Which microgravity fire experiments matter for a crewed habitat at "
-            f"**{o2:.0%} O2 and {p:.2f} atm**, what do they predict, and what has never been tested?")
+st.markdown("##### Which NASA microgravity fire experiments matter for the air your crew will breathe, what do they "
+            "predict, and what has never been tested?")
 
-tab_find, tab_rank, tab_pred, tab_gap, tab_data = st.tabs(
-    ["Key findings", "Relevance ranking", "Predict a fire", "Gap map & recommendations", "Data & sources"])
+tab_brief, tab_find, tab_rank, tab_inv, tab_ask, tab_pred, tab_gap, tab_data = st.tabs(
+    ["Crew briefing", "Key findings", "Ranking", "Investigations", "Ask the archive", "Predict a fire",
+     "Gaps & next tests", "Data & sources"])
+
+# ================================================================= 0. CREW BRIEFING
+with tab_brief:
+    K = load_knowledge()
+    st.markdown(f'<div class="mission"><span class="k">{MISSION_LABEL}</span><br>'
+                f'<b>{o2:.1%}</b> oxygen · <b>{p:.3f} atm</b> ({p * 101.325:.1f} kPa, {p * 14.696:.1f} psia) · '
+                f'O₂ partial pressure <b>{o2 * p:.3f} atm</b> · evidence from microgravity tests</div>',
+                unsafe_allow_html=True)
+    st.write("")
+    st.markdown("#### What the crew and habitat designers should know")
+    st.caption("Six takeaways, recomputed for the atmosphere in the sidebar. Every number comes from NASA test data or "
+               "from a model trained on it, and the label on each card says which.")
+    tks = Kn.takeaways(K, o2, p)
+    for row in (tks[:3], tks[3:]):
+        cols = st.columns(3)
+        for col, t_ in zip(cols, row):
+            col.markdown(
+                f'<div class="tk">{badge(t_["badge"])}<div class="num">{t_["number"]}</div><h4>{t_["title"]}</h4>'
+                f'<p>{t_["text"]}</p><p class="act">→ {t_["action"]}</p>'
+                + (f'<p class="cav">⚠ {t_["caveat"]}</p>' if t_["caveat"] else "")
+                + f'<p class="src">Source: {t_["source"]} · more in “{t_["tab"]}”</p></div>', unsafe_allow_html=True)
+        st.write("")
+    st.markdown("#### Take it to the design review")
+    html_brief = Kn.briefing_html(K, MISSION_LABEL, o2, p, R.rank(TARGET), R.mission_gaps(TARGET), R.RECOMMENDATIONS)
+    c1, c2 = st.columns([1, 2])
+    c1.download_button("Download the mission briefing (HTML)", html_brief.encode("utf-8"),
+                       file_name=f"fire_safety_briefing_{st.session_state['mission']}.html", mime="text/html",
+                       type="primary")
+    c2.caption("One page: these takeaways, the six most relevant NASA investigations, what has and has not been tested "
+               "near this atmosphere, the recommended next experiments and every source. Open it in a browser and "
+               "print to PDF.")
 
 # ================================================================= 1. KEY FINDINGS
 with tab_find:
     g_h = GRID_D[(GRID_D.x_o2 == 0.30) & (GRID_D.pressure_atm == 0.69)].iloc[0]
     g_e = GRID_D[(GRID_D.x_o2 == 0.21) & (GRID_D.pressure_atm == 1.0)].iloc[0]
+    st.caption("Headline numbers at the challenge habitat (30 % O₂, 0.69 atm). The Crew briefing tab recomputes them "
+               "for any atmosphere.")
     c1, c2, c3, c4 = st.columns(4)
-    kpi(c1, f"{g_h.median_burn_s / g_e.median_burn_s:.1f}×", "longer burn for a still-air gas flame at habitat vs Earth cabin air (model)")
-    kpi(c2, f"{g_h.p_still_burning_30s:.0%}", "of habitat flames predicted still burning after 30 s with no air flow (Earth air: ~0 %)")
-    kpi(c3, "0", "smoke-detection tests ever run above 21 % O2 or below 1 atm")
-    kpi(c4, "5", "solid-fuel burns within ±5 % O2 and ±0.2 atm of the habitat, none of them in PSI")
+    kpi(c1, f"{g_h.median_burn_s / g_e.median_burn_s:.1f}×", badge("model") + "<br>longer burn for a still-air gas "
+        "flame at the habitat than in Earth cabin air")
+    kpi(c2, f"{g_h.p_still_burning_30s:.0%}", badge("model") + "<br>of habitat flames predicted still burning after "
+        "30 s with no air flow (Earth air: ~0 %)")
+    kpi(c3, "0", badge("gap") + "<br>smoke-detection tests ever run above 21 % O₂ or below 1 atm")
+    kpi(c4, "5", badge("measured") + "<br>solid-fuel burns within ±5 % O₂ and ±0.2 atm of the habitat, none of "
+        "them in PSI")
     st.write("")
 
     st.subheader("1 · Cutting the ventilation may not put out a fire in an oxygen-rich habitat")
     st.markdown("Stopping air flow is a standard first step against a spacecraft fire: without flow, a microgravity "
                 "flame starves. **ACME CFI-G** gas flames burning in still air did go out on their own at ≤ 25 % O2, "
-                "within seconds. At 34-40 % O2 they kept burning, and 30 of 91 were still alight when the crew cut the fuel. "
+                "within seconds. At 33-40 % O2 they kept burning, and 30 of 91 were still alight when the crew cut the fuel. "
                 "**ACME BRE** reports the same for emulated burning solids.")
     d = D[D.ready_burn_time].copy()
     fig = go.Figure()
@@ -151,8 +251,8 @@ with tab_find:
     gm = GRID_D[GRID_D.pressure_atm == 0.69]
     fig.add_trace(go.Scatter(x=gm.x_o2 * 100, y=gm.median_burn_s, mode="lines", name="Model: median burn at 0.69 atm",
                              line=dict(color=INK, width=2), hovertemplate="model median %{y:.0f} s at %{x:.0f} % O2<extra></extra>"))
-    fig.add_vrect(x0=25, x1=34, fillcolor=MUTED, opacity=0.08, line_width=0)
-    fig.add_annotation(x=29.5, y=np.log10(400), text="no tests between 25 % and 34 % O2", showarrow=False,
+    fig.add_vrect(x0=23.4, x1=33.2, fillcolor=MUTED, opacity=0.08, line_width=0)
+    fig.add_annotation(x=28.3, y=np.log10(150), text="no tests between<br>24 % and 33 % O2", showarrow=False,
                        font=dict(color=INK2, size=12))
     fig.add_vline(x=30, line=dict(color=CRITICAL, width=2, dash="dot"))
     fig.add_annotation(x=30, y=np.log10(1.3), text="habitat 30 %", showarrow=False, xanchor="left", xshift=6,
@@ -238,11 +338,102 @@ with tab_rank:
                "atmospheres named in its objectives. Catalog-only investigations are scored from their published ranges.")
     st.markdown("#### The real tests closest to this mission atmosphere")
     ct = R.closest_tests(TARGET, k=12)
-    st.dataframe(ct.drop(columns=["source_file"]), hide_index=True, width="stretch", column_config={
-        "investigation_id": "ID", "test_id": "Test", "x_o2": st.column_config.NumberColumn("O2", format="%.3f"),
+    st.dataframe(ct.drop(columns=["source_file", "fuel_class"]), hide_index=True, width="stretch", column_config={
+        "investigation_id": "ID", "test_id": "Test", "fuel": "Fuel",
+        "x_o2": st.column_config.NumberColumn("O2", format="%.3f"),
         "pressure_atm": st.column_config.NumberColumn("Pressure (atm)", format="%.2f"),
         "pressure_note": "Pressure source", "flow_cm_s": "Air speed (cm/s)", "outcome_note": "What happened",
         "proximity": st.column_config.ProgressColumn("Closeness", min_value=0, max_value=1, format="%.2f")})
+
+# ================================================================= INVESTIGATIONS
+with tab_inv:
+    st.subheader("Every NASA fire investigation, summarized")
+    st.markdown('<span class="small">What each investigation tested, its key result in one sentence, the conditions '
+                'it covered and how relevant it is to the mission atmosphere. Numbers are computed from the loaded '
+                'test data; descriptions restate the NASA investigation pages.</span>', unsafe_allow_html=True)
+    inv = investigations_overview().merge(R.rank(TARGET)[["psi_id", "relevance", "fire_type"]], on="psi_id", how="left")
+    f1, f2, f3 = st.columns([1, 1, 1])
+    fire = f1.multiselect("Fire type", sorted(inv.fire_type.dropna().unique()), placeholder="All fire types")
+    area = f2.multiselect("Safety need", ["prevention", "detection", "suppression", "fundamentals"],
+                          placeholder="All needs")
+    data_only = f3.toggle("Only investigations with test data", value=False)
+    view = inv.copy()
+    if fire:
+        view = view[view.fire_type.isin(fire)]
+    if area:
+        view = view[view.area.apply(lambda a: any(x in a for x in area))]
+    if data_only:
+        view = view[view.data == "test data loaded"]
+    view = view.sort_values("relevance", ascending=False)
+    st.dataframe(view[["acronym", "psi_id", "fire_type", "relevance", "n_tests", "o2_tested", "pressure_tested",
+                       "data", "key_result"]], hide_index=True, width="stretch", height=380, column_config={
+        "acronym": "Investigation", "psi_id": "ID", "fire_type": "Fire type",
+        "relevance": st.column_config.ProgressColumn("Relevance to mission", min_value=0, max_value=100, format="%.0f"),
+        "n_tests": st.column_config.NumberColumn("Tests loaded"), "o2_tested": "O₂ tested",
+        "pressure_tested": "Pressure tested", "data": "Data", "key_result": st.column_config.TextColumn("Key result", width="large")})
+    st.markdown("#### Open one investigation")
+    all_ids = sorted(inv.psi_id.tolist(), key=lambda k: str(inv.set_index("psi_id").at[k, "acronym"]).lower())
+    st.session_state.setdefault("inv_pick", "EXT-SAFFIRE-456" if "EXT-SAFFIRE-456" in all_ids else all_ids[0])
+    pick = st.selectbox("Investigation", all_ids, key="inv_pick",
+                        format_func=lambda k: f"{inv.set_index('psi_id').at[k, 'acronym']} ({k})")
+    r_ = inv.set_index("psi_id").loc[pick]
+    kind = "measured" if r_.data == "test data loaded" else "literature"
+    st.markdown(
+        f'<div class="inv">{badge(kind)} <span class="small">{r_.platform}{" · " + r_.years if r_.years else ""}'
+        f' · safety need: {r_.area or "—"}</span><h4>{r_.acronym}: {r_["name"]}</h4>'
+        f'<p><b>What it tested.</b> {r_.what}</p><p><b>Key result.</b> {r_.key_result}</p>'
+        f'<p class="small">Fuels: {r_.fuels} · O₂: {r_.o2_tested} · pressure: {r_.pressure_tested} · air speed: '
+        f'{r_.flow_tested} · tests loaded: {r_.n_tests} · relevance to this mission: {r_.relevance:.0f}/100</p>'
+        f'<p class="small">Source: <a href="{r_.link}" target="_blank">{r_.doi or r_.link}</a></p></div>',
+        unsafe_allow_html=True)
+    st.markdown("#### Compare side by side")
+    defaults = [x for x in ["EXT-SAFFIRE-456", "PSI-25", "PSI-159"] if x in inv.psi_id.values]
+    st.session_state.setdefault("inv_comp", defaults)
+    comp = st.multiselect("Choose two or three", all_ids, key="inv_comp", max_selections=3,
+                          format_func=lambda k: f"{inv.set_index('psi_id').at[k, 'acronym']} ({k})")
+    if len(comp) >= 2:
+        ct = inv.set_index("psi_id").loc[comp, ["acronym", "fire_type", "platform", "fuels", "o2_tested",
+                                                 "pressure_tested", "flow_tested", "n_tests", "data", "relevance",
+                                                 "key_result"]]
+        ct.index = [inv.set_index("psi_id").at[k, "acronym"] for k in comp]
+        ct.columns = ["Investigation", "Fire type", "Platform", "Fuels", "O₂ tested", "Pressure tested",
+                      "Air speed tested", "Tests loaded", "Data", "Relevance to mission", "Key result"]
+        ct["Relevance to mission"] = ct["Relevance to mission"].round(0).astype(int).astype(str) + " / 100"
+        st.dataframe(ct.drop(columns=["Investigation"]).T.astype(str), width="stretch")
+        st.caption("Conditions are shown as recorded by each investigation; different fire types are not pooled.")
+
+# ================================================================= ASK
+with tab_ask:
+    AR = load_archive()
+    st.subheader("Ask the archive")
+    st.markdown(f'<span class="small">Type a question in plain English. The archive searches {len(AR.P) + 6} passages: '
+                'the six findings recomputed for the atmosphere in the sidebar, a summary of every investigation, the model explanations, the gaps, '
+                'the recommended experiments and the objectives on the NASA investigation pages. It <b>retrieves and '
+                'cites</b>; it does not write new text, so it cannot invent a number. If nothing matches, it says so.'
+                '</span>', unsafe_allow_html=True)
+    examples = ["Will a fire go out if we stop the fans at 34 % oxygen?", "Do smoke detectors work in a lunar habitat?",
+                "Which materials still burn in oxygen-rich air?", "How do we put out a fire with CO2 or helium?",
+                "What about Moon or Mars gravity?", "Why does fire spread faster in small spaces?"]
+    st.session_state.setdefault("ask_q", examples[0])
+    ec = st.columns(3)
+    for i, ex in enumerate(examples):
+        if ec[i % 3].button(ex, key=f"ex{i}", width="stretch"):
+            st.session_state["ask_q"] = ex
+    q = st.text_input("Your question", key="ask_q")
+    hits = AR.ask(q, k=4, x_o2=o2, p=p, label=MISSION_LABEL) if q.strip() else []
+    if not hits:
+        st.markdown('<div class="ans" style="border-left-color:#a32020">' + badge("gap") +
+                    '<h4>The archive does not cover this question</h4><p>No passage in the NASA investigations, our '
+                    'findings or the gap list matches it. Try naming a fire type (fabric, plastic, droplet, gas '
+                    'flame, smoke), an atmosphere (oxygen, pressure) or a safety need (ventilation, detection, '
+                    'suppression).</p></div>', unsafe_allow_html=True)
+    for i, h in enumerate(hits):
+        strength = "best match" if i == 0 else f"also relevant (score {h['score']:.2f})"
+        st.markdown(f'<div class="ans">{badge(h["badge"])} <span class="small">{h["kind"]} · {strength}</span>'
+                    f'<h4>{h["title"]}</h4><p>{h["text"]}</p><p class="small">Source: {h["source"]}</p></div>',
+                    unsafe_allow_html=True)
+    st.caption("Search method: TF-IDF over words and word pairs with a short list of fire-safety synonyms "
+               "(e.g. fans → ventilation, plastic → PMMA), cosine similarity, top four passages above a minimum score.")
 
 # ================================================================= 3. PREDICT
 with tab_pred:
@@ -298,7 +489,7 @@ with tab_pred:
         fig.add_trace(go.Scatter(x=flows, y=earth, name="Earth cabin (21 %, 1 atm)", line=dict(color=MUTED, width=2, dash="dash"),
                                  hovertemplate="%{x:.1f} cm/s: %{y:.0%}<extra></extra>"))
         obs = tr[(tr.material_family == mat) & (tr.flow_direction == direc)]
-        fig.add_trace(go.Scatter(x=obs.flow_cm_s, y=obs.flame_sustained, mode="markers", name="Real tests (1 burned, 0 went out)",
+        fig.add_trace(go.Scatter(x=obs.flow_cm_s, y=obs.flame_sustained, mode="markers", name="Real tests at their own air (top: burned, bottom: went out)",
                                  marker=dict(color=INK, size=6, opacity=0.35), customdata=np.c_[obs.test_id, (obs.x_o2 * 100).round(1)],
                                  hovertemplate="%{customdata[0]}: %{customdata[1]} % O2, %{x} cm/s<extra></extra>"))
         base_layout(fig, 360, xaxis_title="Air speed (cm/s)", yaxis_title="Chance the flame keeps burning")
@@ -336,12 +527,12 @@ sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 at
         med = m.predict_median(G[feats]).to_numpy()
         surv = m.predict_survival_function(G[feats], times=[30.0]).T.iloc[:, 0].to_numpy()
         i = int(np.abs(o2s - o2).argmin())
-        gap = 0.25 < o2 < 0.34
+        gap = 0.234 < o2 < 0.332
         r1, r2, r3 = st.columns([1, 1, 2])
         kpi(r1, f"{med[i]:.0f} s", "predicted median burn time before the flame goes out by itself")
         kpi(r2, f"{surv[i]:.0%}", "chance it is still burning after 30 s")
         with r3:
-            lab = "outside tested range (no tests between 25 % and 34 % O2)" if gap or o2 > 0.40 or o2 < 0.18 else "inside tested range"
+            lab = "outside tested range (no tests between 24 % and 33 % O2)" if gap or o2 > 0.40 or o2 < 0.18 else "inside tested range"
             st.markdown(tag(lab), unsafe_allow_html=True)
             st.caption("Weibull survival model on 132 ignited ACME CFI-G flames (PSI-159); flames still burning when "
                        "the fuel was cut count as 'at least this long'. Leave-one-ISS-day-out concordance 0.75. "
@@ -349,7 +540,7 @@ sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 at
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=o2s * 100, y=med, name=f"Median burn at {p:.2f} atm", line=dict(color=BLUE, width=2.5),
                                  hovertemplate="%{x:.1f} % O2: %{y:.0f} s<extra></extra>"))
-        fig.add_vrect(x0=25, x1=34, fillcolor=MUTED, opacity=0.08, line_width=0)
+        fig.add_vrect(x0=23.4, x1=33.2, fillcolor=MUTED, opacity=0.08, line_width=0)
         fig.add_vline(x=o2 * 100, line=dict(color=CRITICAL, width=2, dash="dot"))
         base_layout(fig, 340, xaxis_title="Oxygen (%)", yaxis_title="Median burn time (s, log)", showlegend=False)
         fig.update_yaxes(type="log", tickvals=[1, 3, 10, 30, 100, 300], minor=dict(showgrid=False, ticks=""))
@@ -435,6 +626,9 @@ with tab_gap:
         st.markdown(f'<span class="tag {cls}">{g.status}</span> **{g.fire_type}**: {g.tests_near_mission} of '
                     f'{g.tests_total} tests within ±5 % O2 and ±0.2 atm · tested {g.o2_range}, {g.pressure_range} · '
                     f'closest {g.closest_test}', unsafe_allow_html=True)
+    st.markdown('<span class="tag gap">GAP: never tested</span> **Moon and Mars gravity (0.16 g, 0.38 g)**: 0 '
+                'tests in any PSI combustion investigation · every result in this dashboard comes from microgravity '
+                'or Earth gravity', unsafe_allow_html=True)
     st.write("")
     ft = st.selectbox("Coverage map for", list(gaps.fire_type))
     gm = R.gap_matrix()
@@ -481,9 +675,19 @@ with tab_data:
     st.subheader("Dataset v1: 1,517 tests, 10,107 measured values, 14 sources")
     st.markdown("Every value traces to its source file and line. Raw files are never edited; all 101 corrections are "
                 "logged. Units: O2 as mole fraction, pressure in atm, air speed in cm/s.")
-    st.dataframe(SRC.merge(CAT[["psi_id", "doi"]] if "doi" in CAT else CAT[["psi_id"]], left_on="investigation_id",
-                           right_on="psi_id", how="left").drop(columns=["psi_id"], errors="ignore"),
-                 hide_index=True, width="stretch")
+    src_t = SRC.merge(CAT[["psi_id", "doi"]] if "doi" in CAT else CAT[["psi_id"]], left_on="investigation_id",
+                      right_on="psi_id", how="left").drop(columns=["psi_id"], errors="ignore")
+    st.dataframe(src_t, hide_index=True, width="stretch", column_config={
+        "investigation_id": "ID", "acronym": "Investigation", "fuel_class": "Fire type", "tests": "Tests",
+        "evidence_rows": "Measured values",
+        "o2_min": st.column_config.NumberColumn("O2 min", format="%.3f"),
+        "o2_max": st.column_config.NumberColumn("O2 max", format="%.3f"),
+        "p_min": st.column_config.NumberColumn("Pressure min (atm)", format="%.2f"),
+        "p_max": st.column_config.NumberColumn("Pressure max (atm)", format="%.2f"),
+        "doi": "DOI"})
+    st.caption("Blank pressure: not recorded per test (BRE pressures come from its named atmospheres; the BASS-II test matrix "
+               "does not list pressure). O2 and pressure are the ranges of the loaded tests. SAME, SAME-R and SPICE are "
+               "loaded as test conditions only (0 measured values): they show where smoke and soot were studied, not the measured results.")
     c1, c2, c3 = st.columns(3)
     for col, f, lab in ((c1, "ml/v1/A_solids_flammability.csv", "Solids table (A)"),
                         (c2, "ml/v1/D_gas_flames.csv", "Gas flames table (D)"),

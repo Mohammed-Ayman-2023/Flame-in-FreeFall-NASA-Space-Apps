@@ -87,7 +87,7 @@ larger microgravity flames.
 | **Habitat, 30 % O2, 0.69 atm** | **25.1 s** | **41%** |
 | 34 % O2, 0.69 atm | 47.1 s | 69% |
 
-⚠ No CFI-G tests lie between 25 % and 34 % O2: the habitat value is interpolated and labelled as such.
+⚠ No CFI-G tests lie between 24 % and 33 % O2: the habitat value is interpolated and labelled as such.
 
 ## C. Droplets: burning rate and extinction size (`C_droplets.joblib`)
 Gaussian process regression (FLEX + PSI-117 experiments), anisotropic RBF + noise kernel.
@@ -122,5 +122,5 @@ habitat oxygen is untested, and queries with a suppressant at 30 % O2 are labell
 
 ## What the three models agree on
 At habitat conditions every fire type burns **faster and longer** than in Earth cabin air: solids that burn on Earth
-keep burning, still-air gas flames last about 4.5 times longer, and droplet flames burn 30-40 % faster. The models
+keep burning, still-air gas flames last about 4.6 times longer, and droplet flames burn 30-40 % faster. The models
 are screening tools; their uncertainty and applicability labels show where new experiments are needed.

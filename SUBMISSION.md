@@ -10,9 +10,11 @@ differently, and differently again in microgravity. Flame in Freefall turns NASA
 NASA reports), then ranks the investigations by relevance to the habitat atmosphere, predicts fire behaviour there
 with honest uncertainty, and maps what has never been tested. The headline finding: in still microgravity air,
 flames at Earth-like oxygen go out on their own within seconds, but at raised oxygen they keep burning. Our model
-predicts a flame at habitat conditions burns about 4.5 times longer, so cutting the ventilation, a standard first
+predicts a flame at habitat conditions burns about 4.6 times longer, so cutting the ventilation, a standard first
 response to a spacecraft fire, may not be enough. Smoke detection has never been tested near habitat air. An
-interactive dashboard lets anyone choose a mission atmosphere and explore the ranking, predictions and gaps.
+interactive dashboard opens on a crew briefing for the chosen atmosphere (habitat, ISS, or NASA's proposed lunar
+34 % / 8.2 psia air), with six takeaways, each with an action, a source and an evidence label, and lets anyone explore
+the ranking, compare investigations, ask the archive questions answered with citations, and download the briefing.
 
 ## Project details
 **What it does.** Four parts, all open source:
@@ -26,7 +28,12 @@ interactive dashboard lets anyone choose a mission atmosphere and explore the ra
 3. **Relevance ranking and gap map.** A transparent score (atmosphere match, fire-type importance, data quality,
    number of tests) for any mission atmosphere, with a reason for each investigation, plus a map of tests per fire
    type across oxygen and pressure.
-4. **Dashboard** (Streamlit): key findings, live ranking, predictions, gap map, data downloads and sources.
+4. **Dashboard** (Streamlit): mission presets (challenge habitat, ISS, NASA's 26.5 % / 10.2 psia and 34 % /
+   8.2 psia exploration atmospheres, or any O2 and pressure); a crew briefing of six takeaways that recompute for the
+   chosen air, downloadable as a one-page HTML file; the live ranking; an investigation explorer with side-by-side
+   comparison; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
+   it has no answer; predictions with "how this model decides" explanations; the gap map; data downloads and
+   sources. Every number is labelled NASA measurement, model prediction, NASA literature or data gap.
 
 **Benefits.** Mission and habitat designers get, in one place, which NASA experiments apply to their atmosphere,
 what they predict, and how confident that is. Researchers get a prioritised list of the experiments still missing.
@@ -34,16 +41,19 @@ what they predict, and how confident that is. Researchers get a prioritised list
 **Tools.** Python (pandas, NumPy, SciPy, scikit-learn, lifelines, Plotly, Streamlit), GitHub.
 
 **Findings.**
-- In still air, ACME CFI-G flames at ≤ 25 % O2 all self-extinguished (median 8 s); at 34-40 % O2 they burned a
+- In still air, ACME CFI-G flames at ≤ 25 % O2 all self-extinguished (median 8 s); at 33-40 % O2 they burned a
   median 50 s and 30 of 91 were still burning when the fuel was cut. ACME BRE reports the same for emulated solids.
 - Saffire V-VI: fabric, cotton and PMMA burned at 26-31 % O2 and 0.53-0.70 atm; Nomex did not ignite. PMMA raised
   cabin CO2 by 8,100-8,500 ppm and CO by about 320 ppm.
 - The same fabric spread 1.8 to 5.1 mm/s depending on the duct size around it.
 - SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.
+- At NASA's proposed lunar atmosphere (34 % O2, 8.2 psia), inside the range CFI-G tested, the model predicts a
+  median still-air burn of about 49 s, with 71 % of flames still burning after 30 s.
+- No PSI combustion investigation has burned anything at lunar or Martian gravity.
 
 **Recommended next experiments.** (1) Cabin solids at 28-32 % O2, 0.6-0.8 atm. (2) Smoke-detector response to smoke
-made in habitat air. (3) Still-air self-extinction at 26-33 % O2, where ACME CFI-G has no tests. (4) Publication of
-per-test FLEX-2 results.
+made in habitat air. (3) Still-air self-extinction at 24-33 % O2, where ACME CFI-G has no tests. (4) Publication of
+per-test FLEX-2 results. (5) Repeat key fabric and plastic burns at lunar (0.16 g) and Martian (0.38 g) gravity.
 
 ## NASA data used
 NASA Physical Sciences Informatics (CC0-1.0): BASS (PSI-26), BASS-II (PSI-25), Saffire I-III (PSI-98, PSI-99,

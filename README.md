@@ -22,14 +22,36 @@ detail. **Flame in Freefall** answers three questions from that archive:
 
 | Finding | Evidence |
 |---|---|
-| **Cutting ventilation may not put out a fire in an oxygen-rich habitat.** In still microgravity air, flames at ≤ 25 % O2 went out on their own within seconds; at 34-40 % O2 they kept burning, often until the fuel was shut off. | ACME CFI-G (PSI-159): all 41 flames at ≤ 25 % O2 self-extinguished (median 8 s); at 34-40 % O2 median 50 s, 30 of 91 still burning when fuel was cut, including at 0.5 atm. ACME BRE (PSI-20) reports the same for emulated solids. |
+| **Cutting ventilation may not put out a fire in an oxygen-rich habitat.** In still microgravity air, flames at ≤ 25 % O2 went out on their own within seconds; at 33-40 % O2 they kept burning, often until the fuel was shut off. | ACME CFI-G (PSI-159): all 41 flames at ≤ 25 % O2 self-extinguished (median 8 s); at 33-40 % O2 median 50 s, 30 of 91 still burning when fuel was cut, including at 0.5 atm. ACME BRE (PSI-20) reports the same for emulated solids. |
 | **Common cabin materials burn at habitat-like conditions; Nomex did not ignite.** | Saffire IV-VI: cotton-fiberglass fabric, cotton and PMMA all burned at 26-31 % O2 and 0.53-0.70 atm. |
 | **Burning plastics are an air-quality hazard, not just a fire hazard.** | Saffire VI: PMMA raised cabin CO2 by ~8,100-8,500 ppm and CO by ~310-320 ppm, several times more than fabrics. |
 | **Enclosure size changes how fast fire spreads.** | The same fabric spread at 1.8-5.1 mm/s depending only on the size of the duct around it. |
 | **Smoke detection has never been tested at habitat conditions.** | SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all in 21 % O2 at 1 atm. |
 
 The biggest gap: **no PSI solid-fuel burn above 22 % O2.** The only solid burns near habitat conditions come from
-the Saffire IV-VI flights, published in the NASA literature rather than in PSI.
+the Saffire IV-VI flights, published in the NASA literature rather than in PSI. And **no PSI combustion test has run
+at lunar (0.16 g) or Martian (0.38 g) gravity**, so every Moon and Mars answer here is the nearest evidence, not a
+measurement.
+
+## The dashboard
+
+Pick a mission atmosphere in the sidebar (presets: the challenge habitat 30 % O2 / 0.69 atm, ISS cabin air, and
+NASA's proposed exploration atmospheres 26.5 % / 10.2 psia and lunar 34 % / 8.2 psia, or set any O2 and pressure).
+Every tab recomputes for it.
+
+| Tab | What it gives |
+|---|---|
+| **Crew briefing** | Six plain-language takeaways (ventilation, materials, toxic gases, spilled fuel, tight spaces, smoke detection), each with a number, an action, its source and an evidence label. **Download** the whole briefing as a one-page HTML file. |
+| **Key findings** | The headline results with their charts. |
+| **Ranking** | Transparent relevance score for every investigation, with adjustable weights and a reason per row. |
+| **Investigations** | What each of the 24 investigations tested and found, filters by fire type and safety need, and a side-by-side comparison of up to three. |
+| **Ask the archive** | Questions answered only from the project's NASA sources, with citations and links; it says so when the archive has no answer. Retrieval only (TF-IDF), no text generation. |
+| **Predict a fire** | The three models with uncertainty bands, an "inside / outside the tested range" label and "how this model decides" explanations. |
+| **Gaps & next tests** | Tests near the mission atmosphere per fire type, the partial-gravity gap, and five recommended experiments. |
+| **Data & sources** | Downloads of every table and the source list. |
+
+Every number carries an evidence label: **NASA measurement**, **Model prediction**, **NASA literature** or
+**Data gap**, shown as text, not colour alone.
 
 ## The dataset
 
@@ -65,6 +87,7 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 | Predictive models (solids, gas flames, droplets) | ✅ Done: [`models/v1/MODELS.md`](models/v1/MODELS.md) |
 | Relevance ranking and gap map | ✅ Done: `reports/ranking/` (`python scripts/build_ranking.py`) |
 | Interactive dashboard (Streamlit) | ✅ Done: `streamlit run app/streamlit_app.py` |
+| Crew briefing, mission presets, Ask the archive, explorer | ✅ Done: `src/fif/knowledge.py` |
 
 ## Quick start
 
@@ -77,7 +100,7 @@ python scripts/build_data.py                   # rebuild data/processed/ from th
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
 python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
-pytest -q                                      # 19 checks: data layer + model physics and labels
+pytest -q                                      # 27 checks: data layer, model physics and labels, dashboard knowledge layer
 streamlit run app/streamlit_app.py             # open the dashboard
 ```
 
@@ -92,8 +115,9 @@ ml/SPEC.md                   ML column definitions, rules and limits
 models/v1/                   trained models, validation scores, habitat predictions (MODELS.md)
 qa/                          label spot-check against the original crew notes
 reports/                     load status per investigation, habitat ranking and gap map, PSI-117 findings
-app/                         Streamlit dashboard (findings, ranking, predictions, gap map, sources)
-src/fif/                     shared schema, loaders (one per investigation), build, ML tables, models, ranking
+app/                         Streamlit dashboard (crew briefing, findings, ranking, explorer, Ask, predictions, gaps, sources)
+src/fif/                     shared schema, loaders (one per investigation), build, ML tables, models, ranking,
+                             knowledge layer (mission presets, takeaways, investigation summaries, Ask, briefing)
 tests/                       automated data checks
 ```
 

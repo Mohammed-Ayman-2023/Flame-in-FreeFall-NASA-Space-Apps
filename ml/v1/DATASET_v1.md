@@ -32,7 +32,7 @@ Catalog only (no per-test data loaded): PSI-68 FLEX-2, PSI-106 SLICE, PSI-62, PS
 | D_gas_flames | Does a still-air gas flame ignite, and how long does it burn? | 179 | 172 ignition / 132 burn time | hot_ignition; burn_time_s with self_extinguished as event flag |
 
 ## Key findings carried into the ranking
-- Still-air flames: at <=25% O2 all 41 ACME CFI-G flames self-extinguished (median 8 s); at 34-40% O2 median 50 s and 30/91 still burning when fuel was cut (incl. 0.5 atm). ACME BRE reports the same: elevated-O2 emulated solids kept burning with no air flow.
+- Still-air flames: at <=25% O2 all 41 ACME CFI-G flames self-extinguished (median 8 s); at 33-40% O2 median 50 s and 30/91 still burning when fuel was cut (incl. 0.5 atm). ACME BRE reports the same: elevated-O2 emulated solids kept burning with no air flow.
 - Saffire IV-VI (external, NTRS 20240002981): SIBAL, cotton and PMMA all burned at 26-31% O2 and 0.53-0.70 atm; Nomex did not ignite. PMMA raised cabin CO2 by ~8,100-8,500 ppm and CO by ~310-320 ppm.
 - Spread rate of the same fabric depends on duct size (1.8-5.1 mm/s): enclosure geometry matters, not only atmosphere.
 - Smoke detection (SAME, SAME-R, SPICE): 86 smoke tests + 469 soot-point settings, all in 21% O2 / 1 atm. None at habitat conditions.

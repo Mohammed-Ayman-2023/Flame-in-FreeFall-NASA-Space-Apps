@@ -193,8 +193,8 @@ def train_D() -> dict:
     G = pd.DataFrame(grid)
     G["median_burn_s"] = final.predict_median(G[feats]).round(1).to_numpy()
     G["p_still_burning_30s"] = final.predict_survival_function(G[feats], times=[30.0]).T.iloc[:, 0].round(3).to_numpy()
-    G["applicability"] = np.where((G.x_o2 > 0.25) & (G.x_o2 < 0.34),
-                                  "outside tested range: no tests between 25 % and 34 % O2", "inside tested O2 range")
+    G["applicability"] = np.where((G.x_o2 > 0.234) & (G.x_o2 < 0.332),
+                                  "outside tested range: no tests between 24 % and 33 % O2", "inside tested O2 range")
     G.to_csv(OUT / "D_burn_time_grid.csv", index=False)
     summ = final.summary[["coef", "exp(coef)", "p"]].round(4)
     return dict(concordance_leave_one_day_out=round(float(np.mean(cis)), 3), n_days=len(cis), n=int(len(d)),

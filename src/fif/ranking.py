@@ -137,6 +137,11 @@ def gap_matrix() -> pd.DataFrame:
     return g.reset_index().assign(o2_band=lambda d: d["o2_band"].astype(str), p_band=lambda d: d["p_band"].astype(str))
 
 
+def _rng(lo, hi, fmt, unit=""):
+    a, b = fmt.format(lo), fmt.format(hi)
+    return f"{a}{unit} only" if a == b else f"{a}-{b}{unit}"
+
+
 def mission_gaps(target: dict | None = None) -> pd.DataFrame:
     """For each fire type: how many tests sit near the mission atmosphere, the closest one, and a recommendation."""
     target = target or HABITAT
@@ -157,8 +162,8 @@ def mission_gaps(target: dict | None = None) -> pd.DataFrame:
         if n and assumed > 0.5:
             status += " (pressure from BRE objectives, not recorded per test)"
         rows.append(dict(fire_type=label, tests_total=len(tt), tests_near_mission=n, status=status,
-                         o2_range=f"{tt.x_o2.min():.0%}-{tt.x_o2.max():.0%}",
-                         pressure_range=f"{tt.pressure_atm.min():.2f}-{tt.pressure_atm.max():.2f} atm",
+                         o2_range=_rng(tt.x_o2.min(), tt.x_o2.max(), "{:.0%}"),
+                         pressure_range=_rng(tt.pressure_atm.min(), tt.pressure_atm.max(), "{:.2f}", " atm"),
                          closest_test=f"{best['test_id']} ({best['x_o2']:.0%} O2, {best['pressure_atm']:.2f} atm)"))
     return pd.DataFrame(rows)
 
@@ -170,12 +175,15 @@ RECOMMENDATIONS = [
     dict(priority=2, experiment="Smoke-detector response to smoke made at 30 % O2 and 0.69 atm",
          why="SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.",
          builds_on="SAME-R (PSI-101), SPICE (PSI-107)"),
-    dict(priority=3, experiment="Still-air self-extinction of gas and emulated-solid flames at 26-33 % O2",
-         why="ACME CFI-G has no tests between 25 % and 34 % O2, exactly where the habitat sits; burn time rises ~4.5x from Earth air to habitat air.",
+    dict(priority=3, experiment="Still-air self-extinction of gas and emulated-solid flames at 24-33 % O2",
+         why="ACME CFI-G has no tests between 24 % and 33 % O2, exactly where the habitat sits; burn time rises about 4.6x from Earth air to habitat air.",
          builds_on="ACME CFI-G (PSI-159), ACME BRE (PSI-20)"),
     dict(priority=4, experiment="Release per-test FLEX-2 results (multicomponent droplets, 0.5-3 atm, up to 40 % O2)",
          why="FLEX-2 covers the habitat atmosphere on paper, but only its condition ranges are published in PSI.",
          builds_on="FLEX (PSI-69), FLEX-2 (PSI-68)"),
+    dict(priority=5, experiment="Repeat key fabric and plastic burns at lunar (0.16 g) and Martian (0.38 g) gravity",
+         why="No PSI combustion investigation has burned anything at partial gravity, so Moon and Mars surface decisions rest on microgravity and Earth tests alone.",
+         builds_on="BASS-II (PSI-25), Saffire I-VI"),
 ]
 
 

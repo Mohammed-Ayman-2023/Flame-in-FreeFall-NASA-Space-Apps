@@ -82,6 +82,6 @@ One row = one ACME CFI-G (PSI-159) test: spherical porous-burner diffusion flame
   (external Saffire V-VI, including the Nomex that did not ignite); no PSI solid burn above 22 % O2. Models must report uncertainty and an applicability label.
 * B has 10 rows: descriptive only.
 * C covers 12-34 % O2 and 0.5-5 atm: the habitat point (30 %, 0.69 atm) is inside C's range (FLEX: 17 tests at 30-34 % O2, ~0.7 atm).
-* D covers 18-40 % O2 at 0.5-3 atm but has no tests between 25 % and 34 % O2.
+* D covers 18-40 % O2 at 0.5-3 atm but has no tests between 24 % and 33 % O2.
 * Smoke / soot investigations (SAME, SAME-R, SPICE) are conditions only and are not in any ML table.
 * Not loaded: FLEX-2 per-test results (PSI-68), SLICE (PSI-106, no per-test table).
