@@ -30,3 +30,12 @@ def test_grouped_players_and_background():
 def test_loglinear():
     r = loglinear_contributions({"x": np.log(2)}, {"x": 3}, {"x": 1}, {"x": ["x"]})
     assert abs(r["x"] - 4.0) < 1e-9
+
+
+def test_buoyancy_physics():
+    from fif import knowledge as Kn
+    ub_e = Kn.buoyant_velocity(9.81, 1000, 0.02)
+    ub_m = Kn.buoyant_velocity(1.62, 1000, 0.02)
+    assert 0.7 < ub_e < 0.9 and abs(ub_m / ub_e - (1.62 / 9.81) ** 0.5) < 1e-9
+    assert Kn.buoyant_velocity(0.0, 1000, 0.02) == 0.0
+    assert abs(float(Kn.richardson(9.81, 1000, 0.02, ub_e)) - 1.0) < 1e-9

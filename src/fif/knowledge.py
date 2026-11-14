@@ -479,6 +479,12 @@ def corpus(K: dict) -> list[dict]:
     for r in equipment_table(K).itertuples():
         P.append(dict(title=f"Fire-safety equipment: {r.area}", text=f"{r.data} Next generation: {r.next_gen}",
                       source=r.investigations, badge=r.badge, kind="Controls and equipment"))
+    rk = bass2_ranking()
+    P.append(dict(title="Which materials make the most carbon monoxide when they burn (BASS-II)", badge="measured",
+                  kind="Air quality", source="BASS-II test matrix (PSI-25)",
+                  text="CO rise per ISS burn, median: " + "; ".join(
+                      f"{r.family} {r.co_rise_median:.0f} ppm ({r.co_tests} tests)" for r in rk.dropna(
+                          subset=["co_rise_median"]).itertuples()) + ". " + BASS2_GAS_NOTE))
     for e_ in EARTH_USES:
         P.append(dict(title=f"Fire safety on Earth: {e_['topic']}", text=e_["text"], source=f"{e_['source']}, {e_['url']}",
                       badge="literature", kind="Earth applications"))
@@ -941,6 +947,7 @@ def equipment_table(K: dict) -> pd.DataFrame:
     lo = d[d.x_o2 <= 0.25]
     a = K["A"]
     b2 = a[a.investigation_id == "PSI-25"]
+    rk2 = bass2_ranking()
     rows = [
         dict(area="Smoke and fire detectors",
              data=f"{len(smoke)} smoke and soot tests (SAME, SAME-R, SPICE), all at {smoke.x_o2.max():.0%} O₂ and "
@@ -970,8 +977,10 @@ def equipment_table(K: dict) -> pd.DataFrame:
              badge="measured"),
         dict(area="Air quality: scrubbers and crew masks",
              data=f"Burning acrylic (PMMA) on Cygnus raised cabin CO₂ by {pm.min():,.0f}-{pm.max():,.0f} ppm, several "
-                  "times more than fabric.",
-             investigations="Saffire VI (Urban et al. 2024, Table 2)",
+                  f"times more than fabric. In BASS-II's ISS burns, thick PMMA slabs raised CO by a median "
+                  f"{rk2.iloc[0].co_rise_median:.0f} ppm per burn, fabric by about "
+                  f"{rk2.set_index('family').at['SIBAL cotton-fiberglass fabric', 'co_rise_median']:.0f} ppm.",
+             investigations="Saffire VI (Urban et al. 2024, Table 2); BASS-II test matrix (PSI-25)",
              next_gen="Size CO₂ and CO removal and masks for plastic fires.", badge="measured"),
         dict(area="Enclosure and layout",
              data="The same fabric in nearly the same air spread 1.8 mm/s in a 51 cm duct and 5.1 mm/s in a 7.6 cm duct.",
@@ -1030,3 +1039,98 @@ def earth_benefits(K: dict) -> list[dict]:
             out.append(dict(psi=psi, acronym=str(acr.iloc[0]) if len(acr) else psi,
                             text=" ".join(m.group(1).split()), url=link_of(psi, doi_of(K, psi))))
     return out
+
+
+# ------------------------------------------------------------------------- BASS-II air quality
+BASS2_MATRIX = ROOT / "data/raw/PSI-25/BASS-II_Test_Matrix_by_PI_Final.xlsx"
+BASS2_GAS_NOTE = ("Measured inside the closed Microgravity Science Glovebox, not a cabin: initial and final O₂, CO₂ and "
+                  "CO for each BASS-II test (PSI-25 test matrix). Gases built up from one test to the next, so each "
+                  "test is scored by its own rise (final minus initial). Burn times and sample sizes differ. The O₂ "
+                  "sensor was corrected with a constant offset from the ISS reading; CO readings marked over range "
+                  "(about 1,000 ppm and above) or '>500' are counted but not averaged (BASS-II data FAQ).")
+
+
+def _num(v):
+    try:
+        return float(str(v).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _bass2_family(sheet: str, material: str) -> str:
+    m = str(material).lower()
+    if "candle" in m or "wax" in m:
+        return "Japan wax candle"
+    if "nomex" in m:
+        return "Nomex fabric"
+    if "sibal" in m:
+        return "SIBAL cotton-fiberglass fabric"
+    if "spher" in m:
+        return "PMMA spherical section"
+    if "rod" in m:
+        return "Black PMMA rod" if ("black" in m or "blac" in m) else "Clear PMMA rod"
+    if sheet == "Bhattacharjee":
+        return "Thin PMMA film (0.1-0.4 mm)"
+    if sheet == "Miller":
+        return "PMMA slab (1-5 mm)"
+    return "Other"
+
+
+def bass2_gas(K: dict | None = None) -> pd.DataFrame:
+    """Per-test gas readings from the BASS-II test matrix, with the source sheet and row of every value."""
+    x = pd.ExcelFile(BASS2_MATRIX)
+    rows = []
+    for sh in x.sheet_names:
+        d = x.parse(sh)
+        d.columns = [" ".join(str(c).split()) for c in d.columns]
+        for i, r in d.iterrows():
+            if pd.isna(r.get("Test no.")):
+                continue
+            o2i, o2f = _num(r.get("calibrated initial O2 % by vol")), _num(r.get("calibrated final O2 % by vol"))
+            c2i, c2f = _num(r.get("Initial CO2 % by vol")), _num(r.get("Final CO2 % by vol"))
+            coi, cof_raw = _num(r.get("Initial CO (ppm)")), r.get("Final CO (ppm)")
+            cof = _num(cof_raw)
+            over = isinstance(cof_raw, str) and cof_raw.strip().lower() in ("or", "over") or str(cof_raw).startswith(">")
+            d_o2 = (o2i - o2f) if None not in (o2i, o2f) else None
+            if d_o2 is not None and not (-0.5 <= d_o2 <= 5):   # e.g. 20.8 -> 0.6: a logging error, not combustion
+                d_o2 = None
+            rows.append(dict(test=str(r["Test no."]).strip(), material=str(r.get("Material")).strip(),
+                             family=_bass2_family(sh, r.get("Material")), pi_sheet=sh, source_row=i + 2,
+                             o2_initial=o2i, o2_consumed=d_o2,
+                             co2_rise=(c2f - c2i) if None not in (c2i, c2f) else None,
+                             co_rise=(cof - coi) if (None not in (cof, coi) and not over) else None,
+                             co_final=cof, co_over_range=bool(over)))
+    return pd.DataFrame(rows)
+
+
+def bass2_ranking(g: pd.DataFrame | None = None) -> pd.DataFrame:
+    g = bass2_gas() if g is None else g
+    out = []
+    for fam, h in g.groupby("family"):
+        co = h.co_rise.dropna()
+        out.append(dict(family=fam, tests=len(h), co_tests=len(co), co_over_range=int(h.co_over_range.sum()),
+                        co_rise_median=co.median() if len(co) else None,
+                        co_rise_q1=co.quantile(0.25) if len(co) else None, co_rise_q3=co.quantile(0.75) if len(co) else None,
+                        co_rise_max=co.max() if len(co) else None,
+                        co2_rise_median=h.co2_rise.dropna().median(), o2_consumed_median=h.o2_consumed.dropna().median(),
+                        o2_range=f"{h.o2_initial.min():.0f}-{h.o2_initial.max():.0f} %"))
+    return pd.DataFrame(out).sort_values("co_rise_median", ascending=False, na_position="last").reset_index(drop=True)
+
+
+# ------------------------------------------------------------------------- physics: buoyancy vs fan flow
+GRAVITY = {"Earth": 9.81, "Mars": 3.71, "Moon": 1.62}   # m/s², NASA Planetary Fact Sheet
+GRAVITY_SOURCE = "NASA Planetary Fact Sheet (nssdc.gsfc.nasa.gov/planetary/factsheet)"
+PHYSICS_NOTE = ("Physics estimate, not data and not a trained model. Buoyant velocity u_b = √(g·β·ΔT·L) with "
+                "β = 1/T_air (ideal gas); Richardson number Ri = (u_b/u)² compares buoyancy with the fan-driven "
+                "air speed u. Ri ≫ 1: buoyancy feeds the flame; Ri ≪ 1: the fans do; in orbit Ri ≈ 0 and only "
+                "the fans (or diffusion) bring fresh air. The 0.1-10 band for 'mixed' is a common rule of thumb.")
+
+
+def buoyant_velocity(g: float, dT: float, L: float, T_air: float = 295.0) -> float:
+    """m/s, for gravity g (m/s²), flame-to-air temperature difference dT (K) and flame size L (m)."""
+    return float(np.sqrt(max(g, 0.0) * dT / T_air * L))
+
+
+def richardson(g: float, dT: float, L: float, u, T_air: float = 295.0):
+    u = np.asarray(u, dtype=float)
+    return (buoyant_velocity(g, dT, L, T_air) / np.clip(u, 1e-6, None)) ** 2

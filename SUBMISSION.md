@@ -54,6 +54,8 @@ Gemini (optional AI answers), GitHub.
 - Saffire V-VI: fabric, cotton and PMMA burned at 26-31 % O2 and 0.53-0.70 atm; Nomex did not ignite. PMMA raised
   cabin CO2 by 8,100-8,500 ppm and CO by about 320 ppm.
 - The same fabric spread 1.8 to 5.1 mm/s depending on the duct size around it.
+- BASS-II measured O₂, CO₂ and CO around 129 ISS burns: thick PMMA slabs raised CO by a median 335 ppm per burn,
+  against 20 ppm for cotton-fiberglass fabric; Nomex produced none.
 - SAME, SAME-R and SPICE: 86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.
 - At NASA's proposed lunar atmosphere (34 % O2, 8.2 psia), inside the range CFI-G tested, the model predicts a
   median still-air burn of about 49 s, with 71 % of flames still burning after 30 s.

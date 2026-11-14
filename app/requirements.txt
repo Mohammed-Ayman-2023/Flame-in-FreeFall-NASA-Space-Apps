@@ -10,3 +10,4 @@ joblib==1.6.0
 chromadb==1.5.9
 langchain-core==1.8.0
 langchain-google-genai==4.5.0
+openpyxl==3.1.5

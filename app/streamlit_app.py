@@ -178,6 +178,12 @@ def droplet_shapley(fuel, d0, co2, he, o2_, p_):
     return out
 
 
+@st.cache_data(show_spinner=False)
+def bass2_tables():
+    g = Kn.bass2_gas()
+    return g, Kn.bass2_ranking(g)
+
+
 @st.cache_resource
 def load_knowledge():
     return Kn.load()
@@ -398,6 +404,37 @@ with tab_find:
     st.subheader("4 · Smoke detection has never been tested at habitat conditions")
     st.markdown("SAME and SAME-R measured how microgravity smoke can fool detectors; SPICE measured when flames start "
                 "releasing soot. Together: **86 smoke tests and 469 soot-point settings, all at 21 % O2 and 1 atm.**")
+
+    st.subheader("5 · Which cabin materials foul the air most when they burn?")
+    g2, rk2 = bass2_tables()
+    top = rk2.iloc[0]
+    st.markdown(f"{badge('measured')} BASS-II measured O₂, CO₂ and CO before and after each of its "
+                f"{len(g2)} ISS burns. **Thick acrylic (PMMA) slabs raised CO the most: a median "
+                f"{top.co_rise_median:.0f} ppm per burn**, against {rk2.set_index('family').at['SIBAL cotton-fiberglass fabric', 'co_rise_median']:.0f} ppm "
+                "for cotton-fiberglass fabric; Nomex produced none. Plastic fires are an air-quality emergency, as "
+                "Saffire VI also found at full scale.", unsafe_allow_html=True)
+    rk_plot = rk2.dropna(subset=["co_rise_median"]).iloc[::-1]
+    lab = [f"{r.family} ({r.co_tests} tests) · {max(r.co_rise_median, 0):.0f} ppm" for r in rk_plot.itertuples()]
+    fig = go.Figure(go.Bar(
+        x=rk_plot.co_rise_median.clip(lower=0), y=lab, orientation="h",
+        marker=dict(color=ORANGE, line=dict(color="white", width=2)),
+        error_x=dict(type="data", symmetric=False, array=(rk_plot.co_rise_q3 - rk_plot.co_rise_median).clip(lower=0),
+                     arrayminus=(rk_plot.co_rise_median - rk_plot.co_rise_q1.clip(lower=0)).clip(lower=0), color=INK2),
+        textposition="none",
+        customdata=np.c_[rk_plot.co2_rise_median.round(2), rk_plot.o2_consumed_median.round(1), rk_plot.co_over_range,
+                         rk_plot.o2_range],
+        hovertemplate="%{y}<br>median CO rise %{x:.0f} ppm<br>median CO₂ rise %{customdata[0]} % vol<br>"
+                      "median O₂ used %{customdata[1]} % vol<br>CO over range (not averaged): %{customdata[2]}<br>"
+                      "tested at %{customdata[3]} O₂<extra></extra>"))
+    base_layout(fig, 330, xaxis_title="CO rise during one burn, median (ppm); whiskers: middle half of tests",
+                showlegend=False)
+    fig.update_yaxes(showgrid=False)
+    fig.update_xaxes(range=[0, float((rk_plot.co_rise_q3.max() or 500) * 1.25)])
+    st.plotly_chart(fig, width="stretch")
+    st.caption(Kn.BASS2_GAS_NOTE + " Source: BASS-II test matrix (PSI-25), every value with its sheet and row in the "
+               "download below.")
+    st.download_button("Download the BASS-II gas readings (CSV)", g2.to_csv(index=False).encode(),
+                       file_name="bass2_gas_readings.csv", mime="text/csv")
 
 # ================================================================= 2. RANKING
 with tab_rank:
@@ -863,6 +900,44 @@ with tab_gap:
         link_ = f' · <a href="{url_}" target="_blank">open</a>' if url_ else ""
         st.markdown(f'<div class="inv">{badge(kind_)} <b>{title_}</b><p>{text_}</p>'
                     f'<p class="small">Source: {src_}{link_}</p></div>', unsafe_allow_html=True)
+    st.markdown("##### Physics: does buoyancy or the fan feed a fire on the Moon and Mars?")
+    st.markdown(f'<span class="tag thin">physics estimate</span> <span class="small">{Kn.PHYSICS_NOTE} Gravity: '
+                f'{Kn.GRAVITY_SOURCE}.</span>', unsafe_allow_html=True)
+    pc1, pc2 = st.columns(2)
+    dT = pc1.slider("Flame-to-air temperature difference ΔT (K)", 500, 1800, 1000, 50, key="ph_dT")
+    Lcm = pc2.slider("Flame size L (cm)", 1.0, 20.0, 2.0, 0.5, key="ph_L",
+                     help="2 cm is the width of the BASS and BASS-II fabric and film samples.")
+    us = np.linspace(0.5, 60, 240)
+    tr_a = load_models()[0]["train"]
+    umax = float(tr_a[tr_a.investigation_id.isin(["PSI-25", "PSI-26"])].flow_cm_s.max())
+    fig = go.Figure()
+    fig.add_hrect(y0=0.1, y1=10, fillcolor=MUTED, opacity=0.08, line_width=0)
+    fig.add_vrect(x0=0, x1=umax, fillcolor=BLUE, opacity=0.05, line_width=0)
+    fig.add_annotation(x=umax / 2, y=np.log10(3000), text=f"air speeds NASA's microgravity solid burns used (0-{umax:.0f} cm/s)",
+                       showarrow=False, font=dict(color=INK2, size=11))
+    fig.add_annotation(x=58, y=0, text="mixed", showarrow=False, xanchor="right", font=dict(color=INK2, size=11))
+    for (name, gv), col in zip(Kn.GRAVITY.items(), (INK, ORANGE, BLUE)):
+        ri = Kn.richardson(gv, dT, Lcm / 100, us / 100)
+        fig.add_trace(go.Scatter(x=us, y=ri, name=f"{name} ({gv} m/s²)", line=dict(color=col, width=2.5),
+                                 hovertemplate=f"{name}: Ri %{{y:.2f}} at %{{x:.1f}} cm/s<extra></extra>"))
+    base_layout(fig, 360, xaxis_title="Fan-driven air speed past the flame (cm/s)",
+                yaxis_title="Richardson number (buoyancy ÷ fan flow)")
+    fig.update_yaxes(type="log", range=[-2, 4])
+    st.plotly_chart(fig, width="stretch")
+    ub = {nm: Kn.buoyant_velocity(gv, dT, Lcm / 100) * 100 for nm, gv in Kn.GRAVITY.items()}
+    inside = [nm for nm in ("Moon", "Mars") if ub[nm] <= umax]
+    inside_txt = (f"The {' and '.join(inside)} self-induced flow falls inside the air speeds NASA's microgravity solid "
+                  f"burns explored (0-{umax:.0f} cm/s), where BASS-II found flames can keep burning, so microgravity "
+                  f"tests at that air speed are the closest analogue." if inside else
+                  f"Both exceed the air speeds NASA's microgravity solid burns explored (0-{umax:.0f} cm/s), so no "
+                  f"microgravity test matches this case.")
+    st.markdown(f"""A flame this size drives its own fresh-air flow of about **{ub['Earth']:.0f} cm/s** on Earth,
+**{ub['Mars']:.0f} cm/s** on Mars and **{ub['Moon']:.0f} cm/s** on the Moon, and essentially none in orbit, where the
+fans are the only supply; that is why still air starved the CFI-G flames at Earth-like oxygen. {inside_txt}
+This is consistent with NASA's FM2 finding that some materials burn at lower oxygen at lunar gravity: enough buoyant
+flow to feed the flame, with less heat loss than at 1 g. It shows why partial gravity cannot simply be read off the
+0 g or 1 g results; it is not a prediction.""")
+
     st.markdown("##### Bounding with our own data: Saffire materials at 0 g and 1 g")
     gb = Kn.gravity_bounds(load_knowledge())
     wrap_table(gb.rename(columns={"material": "Material", "microgravity": "Microgravity (Saffire I-III, Cygnus)",
