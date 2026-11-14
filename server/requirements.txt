@@ -1,0 +1,14 @@
+# API + website service (server/main.py). Pinned to the versions the dashboard uses (app/requirements.txt).
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+pandas==2.3.3
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+lifelines==0.30.3
+joblib==1.6.0
+openpyxl==3.1.5
+# AI answers (optional at runtime: only used when GOOGLE_API_KEY is set)
+chromadb==1.5.9
+langchain-core==1.8.0
+langchain-google-genai==4.5.0

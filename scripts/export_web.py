@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from fif import knowledge as KN  # noqa: E402
 from fif import models as MD  # noqa: E402
 from fif import ranking as RK  # noqa: E402
+from fif import webdata as WD  # noqa: E402
 
 OUT = ROOT / "web" / "src" / "data"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -53,46 +54,11 @@ def dump(name, obj):
 
 K = KN.load()
 
-# ------------------------------------------------------------------ missions (atmosphere presets)
-MISSIONS = [
-    dict(id="habitat", name="Challenge habitat", x_o2=0.30, p=0.69, air="30% O₂ · 0.69 atm",
-         note="The Moon-base and pressurized-rover air in the challenge brief: 30% oxygen or more at 10.2 psi or less."),
-    dict(id="iss", name="ISS cabin", x_o2=0.21, p=1.0, air="21% O₂ · 1 atm",
-         note="Earth-like air. Almost every NASA fire test in PSI ran here."),
-    dict(id="exploration", name="NASA exploration", x_o2=0.265, p=round(10.2 / 14.696, 3), air="26.5% O₂ · 10.2 psia",
-         note="An exploration atmosphere NASA has studied, also run in ACME BRE."),
-    dict(id="lunar", name="Lunar base", x_o2=0.34, p=round(8.2 / 14.696, 3), air="34% O₂ · 8.2 psia",
-         note="NASA's proposed lunar atmosphere, also run in ACME BRE."),
-]
+# ------------------------------------------------------------------ missions and investigations
+MISSIONS = WD.MISSIONS
 dump("missions", MISSIONS)
-
-# ------------------------------------------------------------------ investigations
 inv = KN.investigation_table(K)
-cat = K["cat"].set_index("psi_id")
-rank_h = RK.rank(dict(x_o2=0.30, pressure_atm=0.69)).set_index("psi_id")
-invs = []
-for psi in rank_h.index:
-    c = cat.loc[psi] if psi in cat.index else pd.Series(dtype=object)
-    meta = KN.INVESTIGATIONS.get(psi, {})
-    try:
-        var = KN.variables(K, psi)
-    except Exception:
-        var = dict(varied=[], same=[], n=0)
-    doi = KN.doi_of(K, psi)
-    row = dict(
-        id=psi, acronym=str(c.get("acronym", rank_h.loc[psi, "acronym"])), name=str(c.get("name", "")),
-        family=str(c.get("family", "")), fire_type=str(rank_h.loc[psi, "fire_type"]),
-        platform=meta.get("platform", str(c.get("platform", ""))), years=meta.get("years", ""),
-        area=meta.get("area", ""), what=meta.get("what", ""), fuels=str(c.get("fuels", "")),
-        geometry=str(c.get("geometry", "")), o2=[c.get("o2_min"), c.get("o2_max")], p=[c.get("p_min_atm"), c.get("p_max_atm")],
-        flow_max=c.get("flow_max_cm_s"), data_level=str(rank_h.loc[psi, "data_level"]), n_tests=int(rank_h.loc[psi, "n_tests"]),
-        key_result=KN.key_result(K, psi), hardware=KN.hardware_text(K, psi), sample=KN.sample_text(K, psi),
-        measurements=KN.measurements_text(K, psi), varied=var["varied"], same=var["same"],
-        context=KN.CONTEXT.get(psi, ""), derived=KN.derived_from(K, psi), doi=doi, link=KN.link_of(psi, doi),
-        hardware_group=KN.HW_OF.get(psi),
-    )
-    invs.append(row)
-dump("investigations", invs)
+dump("investigations", WD.investigations(K))
 dump("hardware", {k: dict(name=g.get("name", k), short=g.get("short", ""), members=g["members"]) for k, g in KN.HARDWARE.items()})
 
 # ------------------------------------------------------------------ rankings and takeaways per mission
