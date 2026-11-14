@@ -40,7 +40,9 @@ the ranking, compare investigations, ask the archive questions answered with cit
    sources; an "Equipment & Earth" view of which research informs next-generation detectors, extinguishers,
    ventilation procedures and material screening, and of NASA fire technology already used on Earth (fine-water-mist
    extinguishers, smoke detection, firefighter air tanks and protective clothing). Every number is labelled NASA
-   measurement, model prediction, NASA literature or data gap.
+   measurement, model prediction, NASA literature or data gap. Physics-informed throughout: monotone oxygen and
+   pressure effects, censored survival, a d²-law burn-out timeline validated on 188 FLEX burns (R² 0.975), a solids
+   flammability map, and labelled physics estimates of buoyancy and smoke-to-detector delay at Moon and Mars gravity.
 
 **Benefits.** Mission and habitat designers get, in one place, which NASA experiments apply to their atmosphere,
 what they predict, and how confident that is. Researchers get a prioritised list of the experiments still missing.

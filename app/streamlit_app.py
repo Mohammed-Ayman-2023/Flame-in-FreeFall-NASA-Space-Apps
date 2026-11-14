@@ -143,6 +143,28 @@ def waterfall(start_label, start, steps, end_label, fmt, title, height=320, ylim
     return fig
 
 
+@st.cache_data(show_spinner=False, max_entries=100)
+def flam_map(mat, geom, direc, p_):
+    A_pack = load_models()[0]
+    o2g = np.round(np.arange(0.12, 0.405, 0.01), 3)
+    fg = np.round(np.geomspace(0.5, 45, 40), 3)
+    O, F = np.meshgrid(o2g, fg)
+    q = pd.DataFrame(dict(material_family=mat, geometry_class=geom, flow_direction=direc, flow_cm_s=F.ravel(),
+                          x_o2=O.ravel(), pressure_atm=p_))
+    zs = []
+    for j in np.exp(np.linspace(-0.15, 0.15, 5)):  # same light smoothing over ±15 % air speed as the curves
+        X = M._a_features(q.assign(flow_cm_s=q.flow_cm_s * j))
+        zs.append(np.mean([b.predict_proba(X)[:, 1] for b in A_pack["boots"]], axis=0))
+    return o2g, fg, np.mean(zs, axis=0).reshape(F.shape)
+
+
+@st.cache_data(show_spinner=False)
+def d2_check():
+    v = Kn.d2_validation()
+    return {k: v[k] for k in ("n", "r2", "median_ratio", "median_abs_err_s", "investigations")}, \
+        v["frame"][["burn_time_s", "t_d2", "fuel"]]
+
+
 @st.cache_data(show_spinner=False, max_entries=300)
 def solid_shapley(mat, geom, direc, flow, o2_, p_):
     A_pack = load_models()[0]
@@ -620,6 +642,18 @@ with tab_pred:
     st.subheader(f"Predict a fire at {o2:.0%} O2 and {p:.2f} atm")
     st.markdown('<span class="small">Each answer comes with its uncertainty and with the closest real test. '
                 'Outside the tested range the number is shown but flagged.</span>', unsafe_allow_html=True)
+    with st.expander("Physics-informed: how physics is built into these models"):
+        st.markdown("""- **Monotone in oxygen and pressure (solids):** the model is constrained so more oxygen or more
+  pressure can never lower the chance of burning, as combustion physics requires.
+- **Censored survival (gas flames):** flames still burning when the fuel was cut are treated as "lasted at least this
+  long", not as finished burns, so the Weibull model does not underestimate burn times.
+- **Physical inputs:** air speed enters on a log scale with a squared term so the model can learn the quenching
+  (too little air) and blow-off (too much air) limits; pressure and oxygen enter as physical quantities.
+- **d²-law (droplets):** burn-out time follows the classic d²-law, checked against measured NASA burn times below.
+- **Applicability limits:** every prediction is labelled inside or outside the conditions NASA actually tested;
+  materials with too few tests are not modelled at all.
+- **Physics estimates kept separate:** buoyancy and smoke-transport panels use textbook scaling, labelled as estimates,
+  never mixed into the data-trained predictions.""")
     kind = st.radio("Fire type", ["Burning solid", "Gas flame in still air", "Fuel droplet"], horizontal=True)
 
     if kind == "Burning solid":
@@ -678,6 +712,37 @@ with tab_pred:
 
         fig.update_yaxes(range=[-0.05, 1.05], tickformat=".0%")
         st.plotly_chart(fig, width="stretch")
+        st.markdown("##### Flammability map: where can this material burn?")
+        o2g, fg, z = flam_map(mat, geom, direc, float(p))
+        fig = go.Figure(go.Contour(x=o2g * 100, y=fg, z=z, zmin=0, zmax=1, contours=dict(start=0.1, end=0.9, size=0.2),
+                                   colorscale=[[0, "#f4f3ef"], [0.5, "#f6c4a8"], [1, ORANGE]], line=dict(width=0.5, color=GRID),
+                                   colorbar=dict(title="chance it<br>keeps burning", tickformat=".0%", len=0.8),
+                                   hovertemplate="%{x:.0f} % O2, %{y:.1f} cm/s: %{z:.0%}<extra></extra>"))
+        fig.add_trace(go.Contour(x=o2g * 100, y=fg, z=z, contours=dict(start=0.5, end=0.5, coloring="none",
+                                 showlabels=True, labelfont=dict(color=INK, size=11)), line=dict(color=INK, width=2.5),
+                                 showscale=False, hoverinfo="skip", name="50 % boundary"))
+        ob = tr[(tr.material_family == mat) & (tr.flow_direction == direc)]
+        for val, nm, col, sym in ((1, "NASA test: kept burning", ORANGE, "circle"), (0, "NASA test: went out", BLUE, "x")):
+            o_ = ob[ob.flame_sustained == val]
+            fig.add_trace(go.Scatter(x=o_.x_o2 * 100, y=o_.flow_cm_s, mode="markers", name=nm,
+                                     marker=dict(color=col, size=8, symbol=sym, line=dict(color="white", width=1)),
+                                     customdata=np.c_[o_.test_id, o_.pressure_atm.round(2)],
+                                     hovertemplate="%{customdata[0]}: %{x:.1f} % O2, %{y:.1f} cm/s, %{customdata[1]} atm<extra></extra>"))
+        fig.add_trace(go.Scatter(x=[o2 * 100], y=[flow], mode="markers", name="Your selection",
+                                 marker=dict(color=CRITICAL, size=14, symbol="star", line=dict(color="white", width=1))))
+        if len(ob):
+            omax = float(ob.x_o2.max() * 100)
+            fig.add_vrect(x0=omax, x1=40.5, fillcolor="white", opacity=0.45, line_width=0)
+            fig.add_annotation(x=(omax + 40.5) / 2, y=np.log10(30), text=f"no tests above {omax:.0f} % O2:<br>extrapolation",
+                               showarrow=False, font=dict(color=INK2, size=12))
+        base_layout(fig, 400, xaxis_title="Oxygen (%)", yaxis_title="Air speed past the flame (cm/s, log)")
+        fig.update_yaxes(type="log", tickvals=[0.5, 1, 2, 5, 10, 20, 40], ticktext=["0.5", "1", "2", "5", "10", "20", "40"],
+                         minor=dict(showgrid=False, ticks=""))
+        st.plotly_chart(fig, width="stretch")
+        st.caption(f"Model surface at {p:.2f} atm for {mat}, {direc} flow ({geom}); black line: 50 % chance. Points: "
+                   "real NASA tests of this material and flow direction at their own pressure. The burnable region is "
+                   "bounded below by quenching (too little fresh air) and, for some materials, above by blow-off; it "
+                   "widens as oxygen rises. Outside the plotted tests the surface is an extrapolation.")
         with st.expander("Why this number? Each input's share of this prediction (exact Shapley values)", expanded=True):
             with st.spinner("Computing exact Shapley values…"):
                 base, phi, e_base, e_phi = solid_shapley(mat, geom, direc, float(flow), float(o2), float(p))
@@ -808,6 +873,38 @@ radiation, consistent with radiative extinction reported for spherical flames.""
             st.caption("Gaussian process on FLEX (PSI-69) and PSI-117 experiments; 5-fold R² 0.70 (burning rate) and "
                        "0.90 (extinction diameter). ± is one standard deviation. Not valid for fuels it has not seen. "
                        "Suppressant (CO2, He) tests only go up to 25 % O2, so suppression at habitat oxygen is untested.")
+        st.markdown("##### Burn-out timeline (d²-law)")
+        K_, dx_ = out["burning_rate_mm2_s"][0], out["extinction_diameter_mm"][0]
+        qe = q.assign(x_o2=0.21, pressure_atm=1.0)
+        oute = {}
+        for target, pk in C_pack.items():
+            X = M._c_features(qe, pk["fuels"])
+            Xs = np.column_stack([pk["scaler"].transform(X[:, :len(M.C_NUM)]), X[:, len(M.C_NUM):]])
+            oute[target] = float(pk["model"].predict(Xs)[0])
+        Ke, dxe = oute["burning_rate_mm2_s"], oute["extinction_diameter_mm"]
+        tb = (d0 ** 2 - min(dx_, d0) ** 2) / max(K_, 1e-6)
+        tbe = (d0 ** 2 - min(dxe, d0) ** 2) / max(Ke, 1e-6)
+        fig = go.Figure()
+        for K__, dx__, tb_, nm, col in ((Ke, dxe, tbe, "Earth cabin air (21 %, 1 atm)", MUTED),
+                                       (K_, dx_, tb, f"Mission ({o2:.0%}, {p:.2f} atm)", ORANGE)):
+            tt = np.linspace(0, tb_, 60)
+            fig.add_trace(go.Scatter(x=tt, y=d0 ** 2 - K__ * tt, name=nm, line=dict(color=col, width=2.5),
+                                     hovertemplate="%{x:.1f} s: d² %{y:.2f} mm²<extra></extra>"))
+            fig.add_trace(go.Scatter(x=[tb_], y=[d0 ** 2 - K__ * tb_], mode="markers", showlegend=False,
+                                     marker=dict(color=col, size=10, symbol="x"), hoverinfo="skip"))
+        base_layout(fig, 300, xaxis_title="Time after ignition (s)", yaxis_title="Droplet diameter² (mm²)")
+        l_, r_ = st.columns([3, 2])
+        l_.plotly_chart(fig, width="stretch")
+        dv, dvf = d2_check()
+        r_.markdown(f"""The d²-law: a burning droplet's diameter squared shrinks at a steady rate K, so the flame goes out
+after **t = (d₀² − d_out²) / K**. Here: **{tb:.1f} s** at the mission atmosphere vs **{tbe:.1f} s** in Earth cabin air
+(× marks flame-out).
+
+**Checked on NASA data:** using each FLEX test's own measured K, d₀ and flame-out size, the d²-law reproduces the
+measured burn times of **{dv['n']} tests with R² = {dv['r2']:.3f}** (median predicted / measured = {dv['median_ratio']:.2f};
+the small shortfall is the ignition transient).""")
+        st.caption("K and flame-out size come from the Gaussian-process model above; the d²-law check uses measured values "
+                   f"only ({dv['investigations']}).")
         with st.expander("Why this number? Each input's share against Earth cabin air (exact Shapley values)", expanded=True):
             sh = droplet_shapley(fuel, float(d0), 0.15 if sup.startswith("CO2") else 0.0,
                                  0.15 if sup.startswith("He") else 0.0, float(o2), float(p))
@@ -967,6 +1064,22 @@ with tab_eq:
     wrap_table(eq.rename(columns={"area": "Control or equipment", "data": "What NASA's data say",
                                   "investigations": "From", "next_gen": "For the next generation"})
                [["Control or equipment", "What NASA's data say", "From", "For the next generation", "Evidence"]])
+    st.markdown("##### Detectors: how long until smoke reaches one? (physics estimate)")
+    sd1, sd2, sd3 = st.columns(3)
+    dist = sd1.slider("Distance from fire to detector (m)", 0.2, 3.0, 1.0, 0.1, key="sd_d")
+    fan = sd2.slider("Fan air speed (cm/s)", 0.0, 30.0, 5.0, 0.5, key="sd_u")
+    sdT = sd3.slider("Smoke temperature above the cabin air (K)", 100, 1200, 600, 50, key="sd_T")
+    dl = Kn.smoke_delay(dist, fan, dT=sdT)
+    fig = go.Figure(go.Bar(x=dl.delay_s.replace(np.inf, np.nan), y=dl.place, orientation="h",
+                           marker=dict(color=[BLUE, BLUE, BLUE, MUTED], line=dict(color="white", width=2)),
+                           text=["never (diffusion only)" if np.isinf(v) else f"{v:.0f} s" for v in dl.delay_s],
+                           textposition="outside", hovertemplate="%{y}: %{x:.1f} s<extra></extra>"))
+    base_layout(fig, 230, xaxis_title="Estimated time for smoke to reach the detector (s)", showlegend=False)
+    fig.update_yaxes(autorange="reversed", showgrid=False)
+    finite = dl.delay_s.replace(np.inf, np.nan)
+    fig.update_xaxes(range=[0, float(np.nanmax(finite) * 1.35) if finite.notna().any() else 10])
+    st.plotly_chart(fig, width="stretch")
+    st.caption(Kn.SMOKE_NOTE + " Buoyant speed uses a 5 cm smoke source. Gravity: " + Kn.GRAVITY_SOURCE + ".")
     st.subheader("Fire safety on Earth")
     st.markdown('<span class="small">NASA fire research and technology that is already used on Earth, as named in the '
                 'challenge brief. Each card links to the NASA source.</span>', unsafe_allow_html=True)

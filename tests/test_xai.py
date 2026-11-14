@@ -39,3 +39,12 @@ def test_buoyancy_physics():
     assert 0.7 < ub_e < 0.9 and abs(ub_m / ub_e - (1.62 / 9.81) ** 0.5) < 1e-9
     assert Kn.buoyant_velocity(0.0, 1000, 0.02) == 0.0
     assert abs(float(Kn.richardson(9.81, 1000, 0.02, ub_e)) - 1.0) < 1e-9
+
+
+def test_d2_law_matches_flex_and_smoke_delay():
+    from fif import knowledge as Kn
+    v = Kn.d2_validation()
+    assert v["n"] > 150 and v["r2"] > 0.9 and 0.85 < v["median_ratio"] < 1.1
+    d = Kn.smoke_delay(1.0, 0.0).set_index("place")
+    assert d.at["Orbit (0 g)", "delay_s"] == float("inf")
+    assert d.at["Earth", "delay_s"] < d.at["Moon", "delay_s"]

@@ -1134,3 +1134,33 @@ def buoyant_velocity(g: float, dT: float, L: float, T_air: float = 295.0) -> flo
 def richardson(g: float, dT: float, L: float, u, T_air: float = 295.0):
     u = np.asarray(u, dtype=float)
     return (buoyant_velocity(g, dT, L, T_air) / np.clip(u, 1e-6, None)) ** 2
+
+
+# ------------------------------------------------------------------------- droplet d²-law and smoke transport
+def d2_validation(K: dict | None = None) -> dict:
+    """Check the d²-law t = (d0² - d_ext²)/K against measured FLEX burn times, using each test's own K."""
+    c = _read(ROOT / "ml/v1/C_droplets.csv")
+    v = c.dropna(subset=["d0_mm", "extinction_diameter_mm", "burning_rate_mm2_s", "burn_time_s"])
+    v = v[(v.burning_rate_mm2_s > 0) & (v.burn_time_s > 0)].copy()
+    v["t_d2"] = (v.d0_mm ** 2 - v.extinction_diameter_mm ** 2) / v.burning_rate_mm2_s
+    ss = float(((v.burn_time_s - v.t_d2) ** 2).sum())
+    st_ = float(((v.burn_time_s - v.burn_time_s.mean()) ** 2).sum())
+    return dict(n=len(v), r2=1 - ss / st_, median_ratio=float((v.t_d2 / v.burn_time_s).median()),
+                median_abs_err_s=float((v.burn_time_s - v.t_d2).abs().median()),
+                investigations=", ".join(sorted(v.investigation_id.unique())), frame=v)
+
+
+SMOKE_NOTE = ("Physics estimate, not data. Smoke is carried at roughly the larger of the fan air speed and the "
+              "buoyant plume speed √(g·β·ΔT·L) (combined here as √(u_fan² + u_b²)); delay = distance ÷ that speed. "
+              "It ignores mixing, dilution and the detector's own response time, so real delays are longer. In orbit "
+              "with the fans off only slow diffusion remains.")
+
+
+def smoke_delay(distance_m: float, fan_cm_s: float, dT: float = 600.0, L: float = 0.05) -> pd.DataFrame:
+    rows = []
+    for name, gv in [("Orbit (0 g)", 0.0), ("Moon", GRAVITY["Moon"]), ("Mars", GRAVITY["Mars"]), ("Earth", GRAVITY["Earth"])]:
+        ub = buoyant_velocity(gv, dT, L)
+        u = float(np.hypot(fan_cm_s / 100, ub))
+        rows.append(dict(place=name, gravity=gv, buoyant_cm_s=ub * 100, carrier_cm_s=u * 100,
+                         delay_s=(distance_m / u) if u > 0 else float("inf")))
+    return pd.DataFrame(rows)

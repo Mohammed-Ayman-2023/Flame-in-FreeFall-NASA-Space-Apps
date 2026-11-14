@@ -47,13 +47,24 @@ Every tab recomputes for it.
 | **Ranking** | Transparent relevance score for every investigation, with adjustable weights and a reason per row. |
 | **Investigations** | For each of the 24 investigations: objective, key result, hardware, sample or burner shape and size, instruments, **what changed between its tests and what stayed the same** (computed from the data), and context from the challenge brief. Side-by-side comparison of up to three with a similar / different summary, and the shared-hardware groups (ACME in the CIR, droplets in the MDCA, the glovebox flow duct, SAME smoke hardware, Saffire on Cygnus). |
 | **Ask the archive** | Two modes. **Cited search** (always on, offline): answers only from the project's NASA sources, with citations and links, and says so when the archive has no answer; retrieval only (TF-IDF), no text generation. **AI answer (Gemini, optional)**: the team's RAG module retrieves 10 of 4,086 passages from NASA PSI reports and NASA pages, and Gemini writes an answer only from them, citing them and saying "insufficient data" otherwise; the passages it read are shown. Needs a `GOOGLE_API_KEY` Streamlit secret. |
-| **Predict a fire** | The three models with uncertainty bands, an "inside / outside the tested range" label, global "how this model decides" explanations and a local **"Why this number?"** view: exact Shapley values (what SHAP estimates, computed exactly over every combination of inputs, no sampling) showing each input's share of this prediction, against the average NASA test and against Earth cabin air. For the gas-flame model the shares are exact burn-time multipliers. |
+| **Predict a fire** | A **flammability map** for solids (oxygen × air speed, NASA's kept-burning and went-out tests over the model's 50 % boundary, extrapolation shaded); a **d²-law burn-out timeline** for droplets, checked against 188 measured FLEX burn times (R² 0.975). The three models with uncertainty bands, an "inside / outside the tested range" label, global "how this model decides" explanations and a local **"Why this number?"** view: exact Shapley values (what SHAP estimates, computed exactly over every combination of inputs, no sampling) showing each input's share of this prediction, against the average NASA test and against Earth cabin air. For the gas-flame model the shares are exact burn-time multipliers. |
 | **Gaps & next tests** | Tests near the mission atmosphere per fire type; Moon and Mars gravity: what PSI lacks, LUCI and FM2, E-FIELD Flames, a physics panel (buoyant flow and Richardson number at Earth, Mars and Moon gravity against fan air speed, clearly labelled as an estimate), and a 0 g vs 1 g bound from the Saffire burns (silicone burned on Earth but not in microgravity); five recommended experiments. |
 | **Equipment & Earth** | Which research informs next-generation controls and equipment (detectors, extinguishers, ventilation procedures, material screening, air quality, layout), with numbers computed from the data; fire safety on Earth (fine-water-mist extinguishers, smoke detection, firefighter air tanks and clothing) from NASA Spinoff and NTRS; each NASA page's Earth-benefits text; scope note on rockets. |
 | **Data & sources** | Downloads of every table and the source list. |
 
 Every number carries an evidence label: **NASA measurement**, **Model prediction**, **NASA literature** or
 **Data gap**, shown as text, not colour alone.
+
+## Physics-informed by design
+
+- **Solids model:** constrained so more oxygen or pressure can never lower the chance of burning; air speed enters on a
+  log scale with a squared term so quenching (too little air) and blow-off (too much air) can be learned.
+- **Gas-flame model:** a censored survival model, so flames still burning when the fuel was cut count as "at least
+  this long".
+- **Droplets:** burn-out time from the d²-law, which reproduces 188 measured FLEX burn times with R² = 0.975.
+- **Physics estimates, kept separate and labelled:** buoyant flow and Richardson number at Earth, Mars and Moon
+  gravity; time for smoke to reach a detector at 0 g, Moon, Mars and Earth.
+- **Applicability:** every prediction is labelled inside or outside the conditions NASA tested.
 
 ## The dataset
 
