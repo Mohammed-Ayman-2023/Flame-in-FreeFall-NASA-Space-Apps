@@ -204,13 +204,13 @@ st.title("🔥 Flame in Freefall")
 st.markdown("##### Which NASA microgravity fire experiments matter for the air your crew will breathe, what do they "
             "predict, and what has never been tested?")
 st.markdown('<span class="small"><b>Where to start:</b> aerospace engineers and habitat designers → '
-            '<i>Crew briefing</i> and <i>Predict a fire</i> · researchers and graduate students → <i>Investigations</i>, '
+            '<i>Crew briefing</i>, <i>Predict a fire</i> and <i>Equipment &amp; Earth</i> · researchers and graduate students → <i>Investigations</i>, '
             '<i>Ask the archive</i> and <i>Data &amp; sources</i> · students and professors → <i>Key findings</i> and '
             '<i>Gaps &amp; next tests</i>.</span>', unsafe_allow_html=True)
 
-tab_brief, tab_find, tab_rank, tab_inv, tab_ask, tab_pred, tab_gap, tab_data = st.tabs(
+tab_brief, tab_find, tab_rank, tab_inv, tab_ask, tab_pred, tab_gap, tab_eq, tab_data = st.tabs(
     ["Crew briefing", "Key findings", "Ranking", "Investigations", "Ask the archive", "Predict a fire",
-     "Gaps & next tests", "Data & sources"])
+     "Gaps & next tests", "Equipment & Earth", "Data & sources"])
 
 # ================================================================= 0. CREW BRIEFING
 with tab_brief:
@@ -775,6 +775,33 @@ with tab_gap:
     for rec in R.RECOMMENDATIONS:
         st.markdown(f"**{rec['priority']}. {rec['experiment']}**  \n{rec['why']}  \n"
                     f'<span class="small">Builds on: {rec["builds_on"]}</span>', unsafe_allow_html=True)
+
+# ================================================================= EQUIPMENT & EARTH
+with tab_eq:
+    K = load_knowledge()
+    st.subheader("Which research informs next-generation fire-safety controls and equipment?")
+    st.markdown('<span class="small">For each kind of control or equipment: what the NASA data say (numbers computed '
+                'from the dataset), which investigations it comes from, and what it means for the next generation.'
+                '</span>', unsafe_allow_html=True)
+    eq = Kn.equipment_table(K)
+    eq["Evidence"] = eq.badge.map(BADGE_TXT)
+    wrap_table(eq.rename(columns={"area": "Control or equipment", "data": "What NASA's data say",
+                                  "investigations": "From", "next_gen": "For the next generation"})
+               [["Control or equipment", "What NASA's data say", "From", "For the next generation", "Evidence"]])
+    st.subheader("Fire safety on Earth")
+    st.markdown('<span class="small">NASA fire research and technology that is already used on Earth, as named in the '
+                'challenge brief. Each card links to the NASA source.</span>', unsafe_allow_html=True)
+    ec_ = st.columns(2)
+    for i, e_ in enumerate(Kn.EARTH_USES):
+        ec_[i % 2].markdown(f'<div class="inv">{badge("literature")} <b>{e_["topic"]}</b><p>{e_["text"]}</p>'
+                            f'<p class="small">Link to our data: {e_["link_to_data"]}</p>'
+                            f'<p class="small">Source: <a href="{e_["url"]}" target="_blank">{e_["source"]}</a></p></div>',
+                            unsafe_allow_html=True)
+    with st.expander("What each NASA investigation page says about benefits on Earth"):
+        for b_ in Kn.earth_benefits(K):
+            st.markdown(f'**{b_["acronym"]} ({b_["psi"]})** · <a href="{b_["url"]}" target="_blank">NASA record</a>  \n'
+                        f'{b_["text"]}', unsafe_allow_html=True)
+    st.caption(Kn.SCOPE_NOTE)
 
 # ================================================================= 5. DATA
 with tab_data:

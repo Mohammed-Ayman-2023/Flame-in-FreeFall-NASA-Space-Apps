@@ -403,6 +403,9 @@ SYNONYMS = {
     "spacesuit": "suit pre-breathe 4.3 psi", "suit": "spacesuit", "prebreathe": "pre-breathe spacesuit",
     "bends": "decompression pre-breathe", "gravity": "partial lunar g", "dust": "daft p-trak",
     "varied": "changed between tests", "differ": "changed different", "similar": "shared hardware",
+    "earth": "terrestrial firefighters", "firefighter": "firefighters earth turnout tanks", "firefighters": "earth",
+    "extinguisher": "suppression water mist suppressant", "mist": "water extinguisher", "rocket": "rockets propellants",
+    "equipment": "controls detectors extinguishers", "detectors": "smoke detection",
 }
 
 
@@ -446,6 +449,14 @@ def corpus(K: dict) -> list[dict]:
     for g in HARDWARE.values():
         P.append(dict(title=f"Shared hardware: {g['name']}", text=g["text"] + " Investigations: " + ", ".join(g["members"]),
                       source=HARDWARE_SOURCE, badge="literature", kind="Hardware"))
+    for r in equipment_table(K).itertuples():
+        P.append(dict(title=f"Fire-safety equipment: {r.area}", text=f"{r.data} Next generation: {r.next_gen}",
+                      source=r.investigations, badge=r.badge, kind="Controls and equipment"))
+    for e_ in EARTH_USES:
+        P.append(dict(title=f"Fire safety on Earth: {e_['topic']}", text=e_["text"], source=f"{e_['source']}, {e_['url']}",
+                      badge="literature", kind="Earth applications"))
+    P.append(dict(title="Scope: rockets and propellants", text=SCOPE_NOTE, source="Challenge brief", badge="gap",
+                  kind="Scope"))
     P.append(dict(title="Spacesuit, Earth and Moon base atmospheres: why habitats use oxygen-rich air",
                   text=" ".join(f"{r.where}: {r.o2} O₂ at {r.psi}. {r.why}" for r in ATMOSPHERES.itertuples()),
                   source=ATMOSPHERE_SOURCE, badge="literature", kind="Atmosphere"))
@@ -458,7 +469,7 @@ def corpus(K: dict) -> list[dict]:
     for page in sorted((ROOT / "data/raw").glob("*/*investigation_page.txt")):
         txt = page.read_text(errors="ignore")
         name = page.parent.name
-        for sec in ("Objectives", "Hypothesis", "Research Impacts/Earth Benefits"):
+        for sec in ("Objectives", "Approach", "Hypothesis", "Research Impacts/Earth Benefits"):
             m = re.search(sec + r"\s*\n(.*?)(?:\n(?:Approach|Hypothesis|Research Impacts|Contact)|\Z)", txt, re.S)
             if m and len(m.group(1).strip()) > 80:
                 P.append(dict(title=f"{name} investigation page: {sec.split('/')[0]}", text=" ".join(m.group(1).split())[:900],
@@ -858,3 +869,115 @@ def gravity_bounds(K: dict) -> pd.DataFrame:
             verdict = "bounds disagree: partial gravity unknown, test it first"
         rows.append(dict(material=mat, microgravity=out["0g"][0], earth_1g=out["1g"][0], partial_gravity=verdict))
     return pd.DataFrame(rows)
+
+
+# ------------------------------------------------------------------------- equipment and Earth uses
+SCOPE_NOTE = ("Out of scope: fires involving rockets and propellants. Gas speeds in rocket engines are so high that "
+              "their combustion is effectively independent of gravity, and PSI holds little research on them "
+              "(challenge brief).")
+
+
+def equipment_table(K: dict) -> pd.DataFrame:
+    """What the NASA data say for each kind of fire-safety control or equipment, with numbers computed from the data."""
+    t, ev, D = K["tests"], K["ev"], K["D"]
+    mu = t[t.gravity_g.fillna(0) == 0]
+    smoke = mu[mu.investigation_id.isin(["PSI-101", "PSI-102", "PSI-107"])]
+    smoke = smoke[smoke.parent_test.isna() & ~smoke.exclude.astype("boolean").fillna(False).astype(bool)]
+    flex = mu[mu.investigation_id == "PSI-69"]
+    supp = flex[(flex.x_co2.fillna(0) > 0) | (flex.x_he.fillna(0) > 0)]
+    x = ev[ev.investigation_id == "EXT-SAFFIRE-456"].pivot_table(index="test_id", columns="quantity", values="value")
+    pm = x.loc[[i for i in x.index if i.endswith(("VI-3", "VI-4"))], "co2_increase_ffd"]
+    d = D[D.ready_burn_time]
+    hi = d[d.x_o2 > 0.33]
+    lo = d[d.x_o2 <= 0.25]
+    a = K["A"]
+    b2 = a[a.investigation_id == "PSI-25"]
+    rows = [
+        dict(area="Smoke and fire detectors",
+             data=f"{len(smoke)} smoke and soot tests (SAME, SAME-R, SPICE), all at {smoke.x_o2.max():.0%} O₂ and "
+                  f"{smoke.pressure_atm.max():.0f} atm. SAME-R's page notes microgravity smoke particles may be "
+                  "larger and fool detectors; an earlier flight showed the Shuttle detector missing smoke it caught in 1 g.",
+             investigations="SAME (PSI-102), SAME-R (PSI-101), SPICE (PSI-107); CSD (NTRS 20010074094)",
+             next_gen="Calibrate detectors on smoke made in habitat air; the size shift means 1 g calibration is not enough.",
+             badge="gap"),
+        dict(area="Extinguishers and suppressants",
+             data=f"CO₂ and helium suppression of droplet flames: {len(supp)} FLEX tests, at up to "
+                  f"{supp.x_o2.max():.0%} O₂. The ISS replaced its CO₂ extinguishers with fine-water-mist ones, "
+                  "because CO₂ was unsafe with the crew's emergency breathing equipment.",
+             investigations="FLEX (PSI-69); ISS fine-water-mist extinguisher (NTRS 20130011664)",
+             next_gen="Test suppressant amounts at 30-34 % O₂ before relying on them in a habitat.", badge="gap"),
+        dict(area="Ventilation shutdown procedures",
+             data=f"In still air, all {len(lo)} CFI-G flames at ≤25 % O₂ went out by themselves; at 33-40 % O₂, "
+                  f"{int((hi.self_extinguished == 0).sum())} of {len(hi)} were still burning when the fuel was cut. "
+                  "BRE saw emulated solids keep burning without air flow at raised O₂.",
+             investigations="ACME CFI-G (PSI-159), ACME BRE (PSI-20)",
+             next_gen="In an oxygen-rich habitat, pair fan shutdown with active extinguishing.", badge="measured"),
+        dict(area="Material selection and screening",
+             data=f"BASS-II mapped flames starving at low air speed and blowing off at high speed ({int((b2.flame_sustained == 0).sum())} "
+                  "flame-outs). Saffire-II silicone burned in its 1 g comparison burns but not in microgravity; at "
+                  "lunar gravity some materials burn at lower oxygen than at 1 g (FM2 work).",
+             investigations="BASS (PSI-26), BASS-II (PSI-25), Saffire I-III (PSI-98-100); FM2 (NTRS 20240015307)",
+             next_gen="Screen habitat materials at habitat O₂, pressure, air speed and gravity, not only NASA-STD-6001 Test 1 in Earth air.",
+             badge="measured"),
+        dict(area="Air quality: scrubbers and crew masks",
+             data=f"Burning acrylic (PMMA) on Cygnus raised cabin CO₂ by {pm.min():,.0f}-{pm.max():,.0f} ppm, several "
+                  "times more than fabric.",
+             investigations="Saffire VI (Urban et al. 2024, Table 2)",
+             next_gen="Size CO₂ and CO removal and masks for plastic fires.", badge="measured"),
+        dict(area="Enclosure and layout",
+             data="The same fabric in nearly the same air spread 1.8 mm/s in a 51 cm duct and 5.1 mm/s in a 7.6 cm duct.",
+             investigations="Saffire I-IV, BASS; Olson et al., Table 1",
+             next_gen="Treat racks, ducts and stowage gaps as higher-risk zones for detection and suppression.",
+             badge="measured"),
+    ]
+    return pd.DataFrame(rows)
+
+
+# Earth applications named in the challenge brief, each from a NASA source.
+EARTH_USES = [
+    dict(topic="Fine-water-mist extinguishers",
+         text="NASA funded the development of a fine-water-mist portable extinguisher for the ISS; nine replaced the "
+              "carbon-dioxide extinguishers that did not suit the crew's emergency breathing equipment, the last "
+              "arriving in 2016. Its zero-leak valve now stops leaks in industries on Earth, and the same valve is "
+              "used in the extinguisher being developed for Orion.",
+         link_to_data="FLEX (PSI-69) tested CO₂ and helium suppression; Saffire VI shows how much CO₂ a fire adds.",
+         source="NASA Spinoff, 'Industrial Productivity' (spinoff.nasa.gov/node/11065); NTRS 20130011664",
+         url="https://spinoff.nasa.gov/node/11065"),
+    dict(topic="Smoke detection",
+         text="Spacecraft smoke detectors were first designed from Earth tests. A NASA flight experiment found the "
+              "Shuttle detector could be blind to smoke it caught in 1 g, showing detector design cannot rely on "
+              "1 g experience; SAME and SAME-R then measured microgravity smoke particles to design better "
+              "detectors, and NASA work compares spacecraft detector sensitivity with residential UL 217/268 "
+              "standards.",
+         link_to_data="SAME (PSI-102), SAME-R (PSI-101) and SPICE (PSI-107) are in this dashboard.",
+         source="NTRS 20010074094; NTRS 20170000248",
+         url="https://ntrs.nasa.gov/citations/20010074094"),
+    dict(topic="Firefighter air tanks",
+         text="NASA's composite overwrapped pressure vessels, built for spacecraft, made firefighters' breathing "
+              "tanks lighter: one 26-pound composite cylinder held as much air as a 41-pound steel one. "
+              "Composite cylinders are now commonly used by firefighters.",
+         link_to_data="Not a PSI investigation: a NASA technology spinoff.",
+         source="NASA Spinoff, 'Public Safety' (spinoff.nasa.gov/node/11031); NASA tech-transfer article",
+         url="https://spinoff.nasa.gov/node/11031"),
+    dict(topic="Firefighter protective clothing",
+         text="After Apollo 1, NASA contracted for fire-resistant PBI textiles for spacesuits and vehicles (1967). "
+              "Through NASA's Project FIRES they reached US fire services, and PBI fabric is now used in "
+              "firefighter turnout gear.",
+         link_to_data="Not a PSI investigation; the Saffire and BASS fabric results show why fabric flammability matters.",
+         source="NASA Spinoff, 'Public Safety' (spinoff.nasa.gov/node/10564); NTRS 20090002489",
+         url="https://spinoff.nasa.gov/node/10564"),
+]
+
+
+def earth_benefits(K: dict) -> list[dict]:
+    """The 'Research Impacts/Earth Benefits' section of each NASA investigation page we hold, verbatim."""
+    out = []
+    for page in sorted((ROOT / "data/raw").glob("*/*investigation_page.txt")):
+        txt = page.read_text(errors="ignore")
+        m = re.search(r"Research Impacts/Earth Benefits\s*\n(.*?)(?:\nContact|\Z)", txt, re.S)
+        if m and len(m.group(1).strip()) > 60:
+            psi = page.parent.name
+            acr = K["cat"].loc[K["cat"].psi_id == psi, "acronym"]
+            out.append(dict(psi=psi, acronym=str(acr.iloc[0]) if len(acr) else psi,
+                            text=" ".join(m.group(1).split()), url=link_of(psi, doi_of(K, psi))))
+    return out

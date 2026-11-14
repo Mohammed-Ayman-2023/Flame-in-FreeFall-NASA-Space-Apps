@@ -48,6 +48,7 @@ Every tab recomputes for it.
 | **Ask the archive** | Two modes. **Cited search** (always on, offline): answers only from the project's NASA sources, with citations and links, and says so when the archive has no answer; retrieval only (TF-IDF), no text generation. **AI answer (Gemini, optional)**: the team's RAG module retrieves 10 of 4,086 passages from NASA PSI reports and NASA pages, and Gemini writes an answer only from them, citing them and saying "insufficient data" otherwise; the passages it read are shown. Needs a `GOOGLE_API_KEY` Streamlit secret. |
 | **Predict a fire** | The three models with uncertainty bands, an "inside / outside the tested range" label and "how this model decides" explanations. |
 | **Gaps & next tests** | Tests near the mission atmosphere per fire type; Moon and Mars gravity: what PSI lacks, LUCI and FM2, E-FIELD Flames, and a 0 g vs 1 g bound from the Saffire burns (silicone burned on Earth but not in microgravity); five recommended experiments. |
+| **Equipment & Earth** | Which research informs next-generation controls and equipment (detectors, extinguishers, ventilation procedures, material screening, air quality, layout), with numbers computed from the data; fire safety on Earth (fine-water-mist extinguishers, smoke detection, firefighter air tanks and clothing) from NASA Spinoff and NTRS; each NASA page's Earth-benefits text; scope note on rockets. |
 | **Data & sources** | Downloads of every table and the source list. |
 
 Every number carries an evidence label: **NASA measurement**, **Model prediction**, **NASA literature** or
@@ -146,6 +147,7 @@ tests/                       automated data checks
 | NASA Space Apps 2026 challenge brief, *Flame in Freefall* | Shared-hardware groups, spacesuit and Moon-base atmospheres, CFI-G inverse flames, DAFT link, E-FIELD Flames | Challenge resource |
 | Ferkul et al., *Lunar Combustion Investigation: Flammability Results from a Rotating Sounding Rocket*, NASA NTRS [20250010653](https://ntrs.nasa.gov/citations/20250010653) | LUCI description and result | NASA Technical Reports Server, public |
 | NASA, [Flammability of Materials on the Moon (FM2)](https://www.nasa.gov/flammability-of-materials-on-the-moon-fm2/); Zayac et al., NASA NTRS [20240015307](https://ntrs.nasa.gov/citations/20240015307) | FM2 description; lunar-gravity flammability finding | NASA, public |
+| NASA Spinoff: [fine-water-mist extinguisher valve](https://spinoff.nasa.gov/node/11065), [composite air tanks](https://spinoff.nasa.gov/node/11031), [PBI protective fabric](https://spinoff.nasa.gov/node/10564); NTRS 20130011664 (ISS fine-water-mist extinguisher), 20010074094 (spacecraft smoke detection), 20170000248 (detector sensitivity), 20090002489 (PBI) | Equipment & Earth tab | NASA, public |
 | NASA Glenn, [Combustion Science](https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/) | DAFT used SAME's modified P-Trak | NASA, public |
 | Python: pandas, NumPy, SciPy, Matplotlib, openpyxl, pytest, Jupyter | Software | Open source (BSD / PSF / MIT) |
 

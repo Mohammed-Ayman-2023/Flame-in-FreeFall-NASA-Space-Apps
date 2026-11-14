@@ -36,7 +36,10 @@ the ranking, compare investigations, ask the archive questions answered with cit
    tests versus what stayed the same, with side-by-side comparison and shared-hardware groups; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
    it has no answer, plus an optional AI answer from the team's RAG assistant (Gemini over 4,086 passages of NASA
    reports, answering only from the passages it retrieved and showing them); predictions with "how this model decides" explanations; the gap map; data downloads and
-   sources. Every number is labelled NASA measurement, model prediction, NASA literature or data gap.
+   sources; an "Equipment & Earth" view of which research informs next-generation detectors, extinguishers,
+   ventilation procedures and material screening, and of NASA fire technology already used on Earth (fine-water-mist
+   extinguishers, smoke detection, firefighter air tanks and protective clothing). Every number is labelled NASA
+   measurement, model prediction, NASA literature or data gap.
 
 **Benefits.** Mission and habitat designers get, in one place, which NASA experiments apply to their atmosphere,
 what they predict, and how confident that is. Researchers get a prioritised list of the experiments still missing.
@@ -71,6 +74,8 @@ ICES-2021-266), NTRS 20180005168 (Saffire I-III).
 
 ## Other references
 - NASA Space Apps 2026 challenge brief, *Flame in Freefall* (shared hardware, atmospheres, CFI-G, DAFT, E-FIELD).
+- NASA Spinoff (spinoff.nasa.gov nodes 11065, 11031, 10564) and NTRS 20130011664, 20010074094, 20170000248,
+  20090002489 (equipment and Earth applications).
 - Ferkul et al., LUCI flammability results, NASA NTRS 20250010653; Zayac et al., FM2, NASA NTRS 20240015307;
   NASA FM2 page; NASA Glenn Combustion Science page (DAFT).
 - BASS-II data FAQ and science requirements document (PSI-25).
