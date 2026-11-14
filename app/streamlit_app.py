@@ -8,7 +8,10 @@ import joblib
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
+import json
+
 import streamlit as st
+import streamlit.components.v1 as components
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -141,6 +144,30 @@ def waterfall(start_label, start, steps, end_label, fmt, title, height=320, ylim
     if ylim:
         fig.update_yaxes(range=ylim)
     return fig
+
+
+SIM_HTML = (Path(__file__).parent / "assets" / "flame_sim.html").read_text()
+SIM_G = {"Orbit (ISS, 0 g)": 0.0, "Moon (1.62 m/s²)": 1.62, "Mars (3.71 m/s²)": 3.71, "Earth (9.81 m/s²)": 9.81}
+
+
+def sim_shape(g, air_cm_s, x_o2, p_atm, sooty=True):
+    """Flame look from buoyancy physics: upward stretch and flicker grow with buoyant flow, downstream stretch with
+    fan flow; soot and brightness rise with oxygen. Illustrative, not to scale."""
+    ub = Kn.buoyant_velocity(g, 1000, 0.02) * 100
+    ub_e = Kn.buoyant_velocity(9.81, 1000, 0.02) * 100
+    up = min(1.0, ub / ub_e) ** 0.6
+    down = air_cm_s / (air_cm_s + ub + 5.0)
+    soot = float(np.clip(0.15 + 0.6 * up + 0.5 * (x_o2 - 0.21) / 0.19, 0, 1)) if sooty else 0.0
+    return dict(up=up, down=down, soot=soot, bright=float(x_o2 / 0.21 * p_atm ** 0.3), flicker=up)
+
+
+def flame_sim(mode, panes, speed, key):
+    st.markdown("##### Flame simulator")
+    html = SIM_HTML.replace("PARAMS", json.dumps(dict(mode=mode, panes=panes, speed=speed)))
+    components.html(html, height=420)
+    st.caption("Timing and outcome come from our NASA-trained models (microgravity data). Flame shape follows buoyancy "
+               "physics for the gravity you pick; colours, glow and flame size are illustrative, not to scale. NASA has "
+               "no partial-gravity timing data, so at Moon, Mars or Earth gravity only the shape changes.")
 
 
 @st.cache_data(show_spinner=False, max_entries=100)
@@ -654,6 +681,10 @@ with tab_pred:
   materials with too few tests are not modelled at all.
 - **Physics estimates kept separate:** buoyancy and smoke-transport panels use textbook scaling, labelled as estimates,
   never mixed into the data-trained predictions.""")
+    st.info("Everything here is live: change oxygen and pressure in the sidebar, and the fire type, material, fuel, air "
+            "speed or droplet size below, and every number, chart and the flame simulator update at once.")
+    sim_g_label = st.selectbox("Gravity for the flame simulator", list(SIM_G), key="sim_g")
+    sim_g = SIM_G[sim_g_label]
     kind = st.radio("Fire type", ["Burning solid", "Gas flame in still air", "Fuel droplet"], horizontal=True)
 
     if kind == "Burning solid":
@@ -679,6 +710,14 @@ with tab_pred:
                         f"{app.get('gap_pressure_atm', 0):.2f} atm · geometry: {geom}")
             st.caption("Gradient boosting on 414 observations from 212 tests (BASS, BASS-II, Saffire I-VI); held-out "
                        "ROC-AUC 0.96. More oxygen or pressure may only raise the risk. Cotton, Nomex and silicone have too few tests to model.")
+        earth_p = float(np.mean([b.predict_proba(M._a_features(q.assign(x_o2=0.21, pressure_atm=1.0)))[0, 1]
+                                 for b in A_pack["boots"]]))
+        flame_sim("solid", [
+            dict(title="ISS cabin air · 21 % O₂, 1 atm, 0 g", gravity_label="0 g", air=float(flow), p_burn=earth_p, direction=direc,
+                 spread=2.2, t_end=30, q=sim_shape(0.0, flow, 0.21, 1.0)),
+            dict(title=f"Your conditions · {o2:.0%} O₂, {p:.2f} atm, {sim_g_label.split(' (')[0]}",
+                 gravity_label=sim_g_label, air=float(flow), p_burn=pm, direction=direc, spread=2.2, t_end=30,
+                 extra=("timing from microgravity data; shape from buoyancy" if sim_g > 0 else ""), q=sim_shape(sim_g, flow, o2, p))], speed=4, key="sim_s")
         flows = np.linspace(0.5, 40, 80)
         qq = pd.DataFrame(dict(material_family=mat, geometry_class=geom, flow_direction=direc, flow_cm_s=flows, **TARGET))
         Xq = M._a_features(qq)
@@ -800,6 +839,14 @@ sustained burning by {e['glass_box_odds_ratios']['+1 % O2']:.2f}**, each +0.1 at
             st.caption("Weibull survival model on 132 ignited ACME CFI-G flames (PSI-159); flames still burning when "
                        "the fuel was cut count as 'at least this long'. Leave-one-ISS-day-out concordance 0.75. "
                        "Fuel diluted to 30 % in N2.")
+        G21 = G.assign(x_o2=0.21, pressure_atm=1.0).iloc[[0]]
+        med21 = float(m.predict_median(G21[feats]).iloc[0])
+        flame_sim("gas", [
+            dict(title="ISS cabin air · 21 % O₂, 1 atm, 0 g, still air", gravity_label="0 g", air=0.0, size=1.0,
+                 t_end=min(med21, 999), q=sim_shape(0.0, 0.0, 0.21, 1.0)),
+            dict(title=f"Your conditions · {o2:.0%} O₂, {p:.2f} atm, {sim_g_label.split(' (')[0]}, still air",
+                 gravity_label=sim_g_label, air=0.0, size=float(np.clip((o2 / 0.21) ** 0.5, 0.8, 1.6)),
+                 t_end=min(float(med[i]), 999), extra=("timing from microgravity data; shape from buoyancy" if sim_g > 0 else ""), q=sim_shape(sim_g, 0.0, o2, p))], speed=6, key="sim_g")
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=o2s * 100, y=med, name=f"Median burn at {p:.2f} atm", line=dict(color=BLUE, width=2.5),
                                  hovertemplate="%{x:.1f} % O2: %{y:.0f} s<extra></extra>"))
@@ -905,6 +952,15 @@ measured burn times of **{dv['n']} tests with R² = {dv['r2']:.3f}** (median pre
 the small shortfall is the ignition transient).""")
         st.caption("K and flame-out size come from the Gaussian-process model above; the d²-law check uses measured values "
                    f"only ({dv['investigations']}).")
+        sooty = fuel != "methanol"
+        flame_sim("droplet", [
+            dict(title=f"ISS cabin air · 21 % O₂, 1 atm, 0 g · {fuel}", gravity_label="0 g", air=0.0, d0=float(d0),
+                 K=float(Ke), dext=float(min(dxe, d0)), t_end=float(tbe), standoff=float(6 * (0.21 / 0.21) ** 0.7),
+                 q=sim_shape(0.0, 0.0, 0.21, 1.0, sooty)),
+            dict(title=f"Your conditions · {o2:.0%} O₂, {p:.2f} atm, {sim_g_label.split(' (')[0]} · {fuel}",
+                 gravity_label=sim_g_label, air=0.0, d0=float(d0), K=float(K_), dext=float(min(dx_, d0)),
+                 t_end=float(tb), standoff=float(6 * (0.21 / o2) ** 0.7), extra=("timing from microgravity data; shape from buoyancy" if sim_g > 0 else ""), q=sim_shape(sim_g, 0.0, o2, p, sooty))],
+            speed=2, key="sim_d")
         with st.expander("Why this number? Each input's share against Earth cabin air (exact Shapley values)", expanded=True):
             sh = droplet_shapley(fuel, float(d0), 0.15 if sup.startswith("CO2") else 0.0,
                                  0.15 if sup.startswith("He") else 0.0, float(o2), float(p))
