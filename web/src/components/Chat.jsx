@@ -4,7 +4,7 @@ import synonyms from '../data/synonyms.json'
 import { useMission } from '../lib/mission'
 import { Ev, Mark } from './ui'
 import { apiStatus, post } from '../lib/api'
-import { getKey, setKey, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
+import { getKey, setKey, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown, warmUp } from '../lib/rag'
 
 // Cited search always runs here in the browser: it returns the NASA passages that answer the question,
 // each with its source, and says so when nothing matches. When the API (server/main.py) is up and has a
@@ -46,26 +46,40 @@ export default function Chat() {
   const [draft, setDraft] = useState('')
   const [serverAI, setServerAI] = useState(false)
   useEffect(() => { apiStatus().then(h => setServerAI(!!(h && h.ai_answers && h.ai_answers.available))) }, [])
-  useEffect(() => { if (open) setKeyState(getKey()) }, [open])
+  useEffect(() => { if (open) { setKeyState(getKey()); warmUp() } }, [open])
+  const lastQ = useRef(null)
+  const [now, setNow] = useState(Date.now())
+  useEffect(() => { if (!busy) return; const t = setInterval(() => setNow(Date.now()), 500); return () => clearInterval(t) }, [busy])
   const end = useRef(null)
   useEffect(() => { const on = () => setShow(true); on(); window.addEventListener('scroll', on, { passive: true }); window.addEventListener('hashchange', on); return () => { window.removeEventListener('scroll', on); window.removeEventListener('hashchange', on) } }, [])
-  useEffect(() => { end.current?.scrollIntoView({ block: 'end' }) }, [log, busy])
+  useEffect(() => { lastQ.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }, [log.length])
 
   async function ask(question) {
-    if (!question.trim()) return
+    if (!question.trim() || busy) return
     setQ(''); setBusy(true)
     const hits = search(question)
-    let ai = null
-    if (await apiStatus()) {
-      try { const r = await post('/api/ask', { question }); if (r.mode === 'ai' && r.answer) ai = r } catch { /* cited search below still answers */ }
+    const k = getKey(), willAI = serverAI || !!k || hasDefault
+    const id = Date.now() + Math.random()
+    // the question appears at once, with the cited findings; the AI answer streams in under the question
+    setLog(l => [...l, { id, q: question, hits, ai: willAI ? { pending: true, answer: '', t0: Date.now() } : null }])
+    const upd = patch => setLog(l => l.map(m => (m.id === id ? { ...m, ai: { ...m.ai, ...patch } } : m)))
+    try {
+      if (serverAI) {
+        const r = await post('/api/ask', { question })
+        if (r.mode === 'ai' && r.answer) upd({ pending: false, answer: r.answer, model: r.model, rag_sources: r.rag_sources })
+        else upd({ pending: false, error: `AI answer unavailable (${r.reason || 'server'}). The cited findings below still answer.` })
+      } else if (willAI) {
+        const onDelta = t => upd({ answer: t })
+        const onDocs = d => upd({ rag_sources: d.map(x => ({ section: x.h.join(' › ') || 'NASA report' })) })
+        const r = k ? await userAnswer(question, k, onDelta, onDocs) : await defaultAnswer(question, onDelta, onDocs)
+        upd({ pending: false, answer: r.answer, model: r.model })
+      }
+    } catch (e) {
+      upd({ pending: false, error: `The AI could not answer (${e.message}). The cited findings below still answer.` })
     }
-    const k = getKey()
-    if (!ai && (k || hasDefault)) {
-      try { const r = k ? await userAnswer(question, k) : await defaultAnswer(question); ai = { answer: r.answer, model: r.model, rag_sources: r.docs.map(d => ({ section: d.h.join(' › ') || 'NASA report' })) } }
-      catch (e) { ai = { error: `The AI could not answer (${e.message}). The cited findings below still answer.` } }
-    }
-    setLog(l => [...l, { q: question, hits, ai }]); setBusy(false)
+    setBusy(false)
   }
+
 
   if (!show && !open) return null
   return (
@@ -78,16 +92,22 @@ export default function Chat() {
           </header>
           <div style={{ padding: 16, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
             {log.length === 0 && <>
-              <p className="p" style={{ fontSize: 14 }}>Ask in plain words. You get the passages from NASA’s records that answer it, each with its source, and, with AI answers on, a Gemini answer written only from NASA report passages. If the archive has nothing, it says so.</p>
+              <p className="p" style={{ fontSize: 14 }}>Ask in plain words. You get the passages from NASA’s records that answer it, each with its source, and, with AI answers on, a AI answer written only from NASA report passages. If the archive has nothing, it says so.</p>
               <div className="wrap-row">{SUGGEST.map(s => <button key={s} type="button" className="chip" style={{ fontSize: 12 }} onClick={() => ask(s)}>{s}</button>)}</div>
             </>}
             {log.map((m, i) => (
-              <div key={i} className="col" style={{ gap: 10 }}>
+              <div key={m.id || i} className="col" style={{ gap: 10 }} ref={i === log.length - 1 ? lastQ : null}>
                 <div style={{ alignSelf: 'flex-end', background: 'var(--line2)', borderRadius: '12px 12px 2px 12px', padding: '10px 14px', fontSize: 14, maxWidth: '85%' }}>{m.q}</div>
+                {m.ai?.pending && !m.ai.answer && (
+                  <div style={{ border: '1px dashed var(--plasma)', borderRadius: 10, padding: 12, fontSize: 13, color: 'var(--muted)' }}>
+                    <span className="mono" style={{ fontSize: 10, color: 'var(--plasma)' }}>AI ANSWER · {(m.ai.model || (key ? 'YOUR KEY' : DEFAULT_MODEL)).toUpperCase()}</span>
+                    <div className="row" style={{ gap: 8, marginTop: 6 }}><span className="pulse" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--plasma)', display: 'inline-block' }} />
+                      {m.ai.rag_sources ? `Read ${m.ai.rag_sources.length} NASA report passages; writing the answer…` : 'Finding the NASA report passages…'} <span className="mono faint">{Math.max(0, Math.round((now - m.ai.t0) / 1000))} s</span></div>
+                  </div>)}
                 {m.ai?.answer && (
                   <div style={{ border: '1px solid var(--plasma)', borderRadius: 10, padding: 12, fontSize: 14, lineHeight: 1.55 }}>
-                    <div className="mono" style={{ fontSize: 10, color: 'var(--plasma)', marginBottom: 6 }}>AI ANSWER · {(m.ai.model || 'GEMINI').toUpperCase()} · RAG FROM {m.ai.rag_sources?.length || 0} NASA REPORT PASSAGES · NOT A MEASUREMENT</div><MiniMarkdown text={m.ai.answer} />
-                    {m.ai.rag_sources?.length > 0 && <details style={{ marginTop: 8 }}><summary className="mono faint" style={{ fontSize: 11, cursor: 'pointer' }}>Passages the AI read</summary>
+                    <div className="mono" style={{ fontSize: 10, color: 'var(--plasma)', marginBottom: 6 }}>AI ANSWER · {(m.ai.model || (key ? 'YOUR KEY' : DEFAULT_MODEL)).toUpperCase()} · RAG FROM {m.ai.rag_sources?.length || 0} NASA REPORT PASSAGES · NOT A MEASUREMENT{m.ai.pending ? ' · WRITING…' : ''}</div><MiniMarkdown text={m.ai.answer + (m.ai.pending ? ' ▍' : '')} />
+                    {!m.ai.pending && m.ai.rag_sources?.length > 0 && <details style={{ marginTop: 8 }}><summary className="mono faint" style={{ fontSize: 11, cursor: 'pointer' }}>Passages the AI read</summary>
                       <ol style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 12, color: 'var(--muted)' }}>{m.ai.rag_sources.map((d, k) => <li key={k} style={{ marginBottom: 4 }}><strong>{d.section}</strong></li>)}</ol></details>}
                   </div>
                 )}
@@ -103,7 +123,7 @@ export default function Chat() {
                     </div>))}
               </div>
             ))}
-            {busy && <span className="mono faint" style={{ fontSize: 12 }}>{key || serverAI || hasDefault ? 'Searching the archive and asking the AI…' : 'Searching the archive…'}</span>}
+            
             <div ref={end} />
           </div>
           <div style={{ padding: '10px 12px 0', borderTop: '1px solid var(--line)', fontSize: 12.5 }}>
@@ -120,7 +140,7 @@ export default function Chat() {
             <label htmlFor="chatq" className="sr">Your question</label>
             <input id="chatq" value={q} onChange={e => setQ(e.target.value)} placeholder="Ask about any NASA fire experiment…"
               style={{ flex: 1, minWidth: 0, background: 'var(--bg)', border: '1px solid var(--line2)', borderRadius: 8, color: 'var(--text)', fontSize: 14, padding: '12px 14px' }} />
-            <button type="submit" className="btn primary" aria-label="Send">→</button>
+            <button type="submit" className="btn primary" aria-label="Send" disabled={busy}>→</button>
           </form>
         </section>
       )}

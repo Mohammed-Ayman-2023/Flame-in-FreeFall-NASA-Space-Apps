@@ -2,7 +2,7 @@
 // the team's Gemini RAG), model explanations, data and sources, and the downloadable crew briefing.
 // Every number comes from the files exported by scripts/export_web.py and scripts/export_web_extras.py,
 // computed with the same code as the Streamlit dashboard (app/streamlit_app.py).
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Nav, Footer, PageHead, Ev, pct } from '../components/ui'
 import { Link } from '../lib/router'
 import { useMission } from '../lib/mission'
@@ -17,7 +17,7 @@ import findings from '../data/findings.json'
 import sources from '../data/sources.json'
 import bass2 from '../data/bass2_gas.json'
 import ragPrompt from '../data/rag_prompt.json'
-import { KEY_STORE, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown } from '../lib/rag'
+import { KEY_STORE, userAnswer, defaultAnswer, hasDefault, DEFAULT_MODEL, MiniMarkdown, warmUp } from '../lib/rag'
 
 const ax = { fill: '#868B93', fontFamily: 'IBM Plex Mono, monospace', fontSize: 11 }
 const BADGE = { measured: 'measurement', model: 'prediction', gap: 'gap', literature: 'literature' }
@@ -215,6 +215,7 @@ export function Ask() {
   const [ai, setAi] = useState(null)
   const [busy, setBusy] = useState(false)
   const serverAI = !!(api && api.ai_answers && api.ai_answers.available)
+  useEffect(() => { warmUp() }, [])
 
   async function askAI() {
     setBusy(true); setAi(null)
@@ -225,12 +226,12 @@ export function Ask() {
       }
       if (!key.trim()) {
         if (!hasDefault) { setAi({ error: 'Add a Gemini API key below to get an AI answer on this site.' }); return }
-        const d = await defaultAnswer(q)
+        const d = await defaultAnswer(q, t => setAi(a => ({ ...a, answer: t })), docs => setAi({ answer: '', docs, via: 'default', model: DEFAULT_MODEL, pending: true }))
         setAi({ answer: d.answer, docs: d.docs, via: 'default', model: d.model }); return
       }
       try { remember ? sessionStorage.setItem(KEY_STORE, key.trim()) : sessionStorage.removeItem(KEY_STORE) } catch { /* private mode */ }
-      const { answer, docs: got } = await userAnswer(q, key.trim())
-      setAi({ answer: answer || 'Gemini returned no text.', docs: got, via: 'browser', model: ragPrompt.model })
+      const { answer, docs: got } = await userAnswer(q, key.trim(), t => setAi(a => ({ ...a, answer: t })), docs => setAi({ answer: '', docs, via: 'browser', model: key.trim().startsWith('sk-or-') ? DEFAULT_MODEL : 'Gemini', pending: true }))
+      setAi({ answer: answer || 'The model returned no text.', docs: got, via: 'browser', model: key.trim().startsWith('sk-or-') ? DEFAULT_MODEL : ragPrompt.model })
     } catch (e) {
       setAi({ error: `The AI could not answer (${e.message}). The cited search above still works.` })
     } finally { setBusy(false) }
@@ -269,9 +270,10 @@ export function Ask() {
         </div>}
         <div><button type="button" className="btn primary" disabled={busy || !q.trim()} onClick={askAI}>{busy ? 'Retrieving NASA passages and asking the AI…' : 'Get an AI answer to this question'}</button></div>
         {ai?.error && <div className="muted" style={{ fontSize: 14, borderLeft: '3px solid var(--ember)', paddingLeft: 12 }}>{ai.error}</div>}
+        {ai?.pending && !ai.answer && <span className="muted" style={{ fontSize: 14 }}>Read {ai.docs.length} NASA report passages; {ai.model} is writing the answer…</span>}
         {ai?.answer && <div className="col" style={{ gap: 12, borderLeft: '3px solid #E8C15A', paddingLeft: 16 }}>
           <span className="mono faint" style={{ fontSize: 11 }}>{ai.model} · written from {ai.docs.length} retrieved passages · {ai.via === 'server' ? 'project API' : ai.via === 'default' ? 'site default model via OpenRouter' : 'your own key, in your browser'}</span>
-          <MiniMarkdown text={ai.answer} />
+          <MiniMarkdown text={ai.answer + (ai.pending ? ' ▍' : '')} />
           <details><summary style={{ fontSize: 14 }}>The {ai.docs.length} NASA passages Gemini read</summary>
             <div className="col" style={{ gap: 12, marginTop: 12 }}>{ai.docs.map((d, i) => <div key={i} className="col" style={{ gap: 4 }}><b style={{ fontSize: 13 }}>Document {i + 1}: {d.h.join(' › ') || 'NASA report'}</b><pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'var(--mono)', fontSize: 11.5, color: 'var(--muted)', lineHeight: 1.5 }}>{d.text.slice(0, 900)}{d.text.length > 900 ? ' …' : ''}</pre></div>)}</div>
           </details>

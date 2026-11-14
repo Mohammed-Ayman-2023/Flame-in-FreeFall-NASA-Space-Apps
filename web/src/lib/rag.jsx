@@ -37,16 +37,16 @@ export function MiniMarkdown({ text }) {
 export const getKey = () => { try { return sessionStorage.getItem(KEY_STORE) || '' } catch { return '' } }
 export const setKey = k => { try { k ? sessionStorage.setItem(KEY_STORE, k) : sessionStorage.removeItem(KEY_STORE) } catch { /* private mode */ } }
 
-export async function geminiAnswer(question, key) {
+export async function geminiAnswer(question, key, onDelta, onDocs) {
   const { got, prompt } = await retrieve(question)
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:generateContent`, {
+  onDocs?.(got)
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:streamGenerateContent?alt=sse`, {
     method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': key },
-    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.1 } }),
+    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.1, maxOutputTokens: 900 } }),
   })
-  const j = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
-  const answer = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('') || 'Gemini returned no text.'
-  return { answer, docs: got, model: ragPrompt.model }
+  if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
+  const answer = await readSSE(res, j => (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join(''), onDelta)
+  return { answer: answer || 'Gemini returned no text.', docs: got, model: ragPrompt.model }
 }
 
 /* ---------------------------------------------------------------- default AI (no visitor key needed)
@@ -61,6 +61,9 @@ const OR_KEY = import.meta.env.VITE_OPENROUTER_KEY || ''
 export const DEFAULT_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'google/gemma-4-31b-it:free'
 export const hasDefault = !!(PROXY || OR_KEY)
 
+/** Download the passages and build the search index ahead of the first question (called when the chat opens). */
+export function warmUp() { loadPassages().then(P => { if (!bm25) bm25 = buildBM25(P) }).catch(() => { passagesP = null }) }
+
 async function retrieve(question) {
   const P = await loadPassages()
   if (!bm25) bm25 = buildBM25(P)
@@ -69,29 +72,51 @@ async function retrieve(question) {
   return { got, prompt: buildPrompt(question, documents) }
 }
 
-async function openRouter(prompt, key, model) {
+// Server-sent events reader shared by both providers: calls onDelta(text) as tokens arrive.
+async function readSSE(res, pick, onDelta) {
+  const reader = res.body.getReader(), dec = new TextDecoder()
+  let buf = '', out = ''
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    buf += dec.decode(value, { stream: true })
+    let i
+    while ((i = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1)
+      if (!line.startsWith('data:')) continue
+      const data = line.slice(5).trim()
+      if (data === '[DONE]') return out
+      try { const t = pick(JSON.parse(data)); if (t) { out += t; onDelta?.(out) } } catch { /* keep-alive or partial line */ }
+    }
+  }
+  return out
+}
+
+async function openRouter(prompt, key, model, onDelta) {
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
-    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1 }),
+    body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 900, stream: true }),
   })
-  const j = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
-  return { answer: j.choices?.[0]?.message?.content || 'The model returned no text.', model: j.model || model }
+  if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j?.error?.message || `HTTP ${res.status}`) }
+  const answer = await readSSE(res, j => { if (j.error) throw new Error(j.error.message); return j.choices?.[0]?.delta?.content }, onDelta)
+  return { answer: answer || 'The model returned no text.', model }
 }
 
 /** A visitor's own key: OpenRouter keys start with "sk-or-", anything else is treated as a Gemini key. */
-export async function userAnswer(question, key) {
+export async function userAnswer(question, key, onDelta, onDocs) {
   if (key.startsWith('sk-or-')) {
     const { got, prompt } = await retrieve(question)
-    const r = await openRouter(prompt, key, DEFAULT_MODEL)
+    onDocs?.(got)
+    const r = await openRouter(prompt, key, DEFAULT_MODEL, onDelta)
     return { ...r, docs: got }
   }
-  return geminiAnswer(question, key)
+  return geminiAnswer(question, key, onDelta, onDocs)
 }
 
-export async function defaultAnswer(question) {
+export async function defaultAnswer(question, onDelta, onDocs) {
   const { got, prompt } = await retrieve(question)
+  onDocs?.(got)
   let res, j
   if (PROXY) {
     res = await fetch(PROXY, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt }) })
@@ -99,6 +124,6 @@ export async function defaultAnswer(question) {
     if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
     return { answer: j.answer || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
   }
-  const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL)
+  const r = await openRouter(prompt, OR_KEY, DEFAULT_MODEL, onDelta)
   return { ...r, docs: got }
 }
