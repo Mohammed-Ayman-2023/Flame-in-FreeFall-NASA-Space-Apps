@@ -4,6 +4,7 @@ import Chat from './components/Chat'
 import Landing from './pages/Landing'
 import { Learn1, Learn2, Learn3, Learn4 } from './pages/Learn'
 import FireLab from './pages/FireLab'
+import { Equipment } from './pages/Evidence'
 import { Explore, Investigation, Compare, Briefing, Gaps, Methods } from './pages/Archive'
 
 function Page({ route }) {
@@ -19,6 +20,7 @@ function Page({ route }) {
   if (path === '/compare') return <Compare />
   if (path === '/briefing') return <Briefing />
   if (path === '/gaps') return <Gaps />
+  if (path === '/equipment') return <Equipment />
   if (path === '/methods') return <Methods />
   return <Landing />
 }

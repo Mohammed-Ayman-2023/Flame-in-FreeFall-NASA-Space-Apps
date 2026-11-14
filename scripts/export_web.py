@@ -185,6 +185,19 @@ dump("methods", dict(metrics=json.loads((ROOT / "models/v1/metrics.json").read_t
                      issue_counts=issues.severity.value_counts().to_dict(),
                      ledger=dict(tests=int(len(t)), values=int(len(K["ev"])), corrections=int(len(issues)))))
 
+# ------------------------------------------------------------------ evidence also shown on the Streamlit dashboard
+dump("atmospheres", dict(rows=KN.ATMOSPHERES.to_dict("records"), source=KN.ATMOSPHERE_SOURCE))
+dump("equipment", KN.equipment_table(K).to_dict("records"))
+dump("earth", dict(uses=KN.EARTH_USES, benefits=KN.earth_benefits(K), scope=KN.SCOPE_NOTE))
+_g2 = KN.bass2_gas()
+dump("air_quality", dict(ranking=KN.bass2_ranking(_g2).to_dict("records"), note=KN.BASS2_GAS_NOTE, n_burns=int(len(_g2))))
+_d2 = KN.d2_validation()
+dump("d2_check", dict(n=_d2["n"], r2=_d2["r2"], median_ratio=_d2["median_ratio"],
+                      median_abs_err_s=_d2["median_abs_err_s"], investigations=_d2["investigations"],
+                      points=_d2["frame"][["burn_time_s", "t_d2"]].values.tolist()))
+dump("solid_tests", dA[["material_family", "flow_direction", "x_o2", "pressure_atm", "flow_cm_s", "flame_sustained", "test_id"]]
+     .assign(x_o2=lambda d: (d.x_o2 * 100).round(1)).values.tolist())
+
 # ------------------------------------------------------------------ search corpus (cited, retrieval only)
 dump("corpus", KN.corpus(K))
 dump("synonyms", KN.SYNONYMS)

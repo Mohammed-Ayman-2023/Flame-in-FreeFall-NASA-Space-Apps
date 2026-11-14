@@ -3,9 +3,10 @@ import { Link } from '../lib/router'
 import { Ev, Flame, pct } from '../components/ui'
 import { BurnChart } from '../components/charts'
 import { LessonHeader } from './Learn'
+import { FlammabilityMap } from './Evidence'
 import { useMission } from '../lib/mission'
 import { useApi, useLive } from '../lib/api'
-import { G, modelGas, modelSolids, modelDroplets, gasFlames, gasPredict, gasCurve, gasInGap, solidPredict, solidCurve, solidInside, dropPredict, dropInside, richardson, buoyantVelocity } from '../lib/data'
+import { G, modelGas, modelSolids, modelDroplets, gasFlames, gasPredict, gasCurve, gasInGap, solidPredict, solidCurve, solidInside, dropPredict, dropInside, richardson, buoyantVelocity, d2Check } from '../lib/data'
 
 const near = (arr, v) => arr.reduce((a, b) => (Math.abs(b - v) < Math.abs(a - v) ? b : a))
 const fp = v => (+v).toFixed(2).replace(/0$/, '')
@@ -258,6 +259,7 @@ function SolidsLab() {
             : <LineChart pts={curve} band x={o2} xlabel="oxygen (%)" ylabel="chance of burning" marks={[15, 21, 30, 40]} />}
           <div className="src" style={{ padding: '0 10px 8px' }}>Other inputs held at your settings · band = 10–90% bootstrap · {mat}</div>
         </div>}
+        {modelled && <FlammabilityMap mat={mat} p={pG} o2={o2} flow={flow} />}
         <div className="grid2">
           <div className="card pad col" style={{ gap: 12 }}>
             <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}><span className="lab">Flow regime at this air speed</span><div className="seg">{['Orbit', 'Moon', 'Mars', 'Earth'].map(k => <button key={k} type="button" className={grav === k ? 'on' : ''} onClick={() => setGrav(k)}>{k}</button>)}</div></div>
@@ -321,7 +323,7 @@ function DropLab() {
               <Big label="Burning rate" value={r.br.toFixed(2)} unit=" mm²/s" sub={`± ${r.brSd.toFixed(2)} · Earth air ${r0.br.toFixed(2)}`} />
               <Big label="Flame goes out at" value={r.ext.toFixed(2)} unit=" mm" sub={`± ${r.extSd.toFixed(2)} droplet size`} />
             </div>
-            <Big label="Burns for about (d²-law)" value={tb.toFixed(1)} unit=" s" sub="t = (d₀² − d_out²) / K" />
+            <Big label="Burns for about (d²-law)" value={tb.toFixed(1)} unit=" s" sub={`t = (d₀² − d_out²) / K · checked on ${d2Check.n} FLEX burns: R² ${d2Check.r2.toFixed(3)}, typical error ${d2Check.median_abs_err_s.toFixed(1)} s`} />
             <Range inside={inside} insideText={`Inside the tested range · ${tests.length} FLEX droplet${tests.length === 1 ? '' : 's'} nearby${measK.length ? ` (measured K ${Math.min(...measK).toFixed(2)}–${Math.max(...measK).toFixed(2)})` : ''}`} outsideText="Outside the conditions FLEX tested · extrapolation" />
           </div>
         </div>

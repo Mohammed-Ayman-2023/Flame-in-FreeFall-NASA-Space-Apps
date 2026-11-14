@@ -4,6 +4,7 @@ import { Link, go } from '../lib/router'
 import { Nav, Footer, PageHead, Ev, Flame } from '../components/ui'
 import { BurnChart, CoverageMap, CoverageLegend } from '../components/charts'
 import { useMission } from '../lib/mission'
+import { AtmosphereTable, GravityBounds, BuoyancyPanel } from './Evidence'
 import { investigations, invById, rankings, takeaways, recommendations, partialGravity, methods, hardware } from '../lib/data'
 
 const FAM = t => (t.startsWith('Burning') || t.startsWith('Emulated') ? 'solid' : t.startsWith('Fuel') ? 'droplet' : t.startsWith('Gas') ? 'gas' : 'smoke')
@@ -244,6 +245,7 @@ export function Briefing() {
           <tbody>{rank.map(r => <tr key={r.psi_id}><td className="mono faint">{r.rank}</td><td><Link to={'/investigation/' + r.psi_id} style={{ fontWeight: 600 }}>{r.acronym}</Link></td><td className="mono" style={{ color: 'var(--ember)' }}>{Math.round(r.relevance)}</td><td className="mono">{r.n_near_mission} / {r.n_tests}</td><td className="muted" style={{ fontSize: 13 }}>{r.why}</td></tr>)}</tbody>
         </table></div>
       </section>
+      <section style={{ marginTop: 56 }}><AtmosphereTable /></section>
     </main>
     <Footer />
   </>)
@@ -263,9 +265,13 @@ export function Gaps() {
         </div>
         <div className="col" style={{ gap: 14 }}>
           <Ev kind="gap" />
-          {partialGravity.slice(0, 4).map(([t, d, s, u]) => <div key={t} className="card pad col" style={{ gap: 8 }}><strong style={{ fontSize: 15 }}>{t}</strong><span className="muted" style={{ fontSize: 14, lineHeight: 1.55 }}>{d}</span><span className="src">{u ? <a href={u} target="_blank" rel="noreferrer">{s} ↗</a> : s}</span></div>)}
+          {partialGravity.map(([t, d, s, u]) => <div key={t} className="card pad col" style={{ gap: 8 }}><strong style={{ fontSize: 15 }}>{t}</strong><span className="muted" style={{ fontSize: 14, lineHeight: 1.55 }}>{d}</span><span className="src">{u ? <a href={u} target="_blank" rel="noreferrer">{s} ↗</a> : s}</span></div>)}
         </div>
       </div>
+      <section style={{ marginTop: 56 }} className="col">
+        <h2 className="h2" style={{ fontSize: 30, marginBottom: 4 }}>Moon and Mars: what we can say without partial-gravity data</h2>
+        <div style={{ display: 'grid', gap: 18 }}><GravityBounds /><BuoyancyPanel /></div>
+      </section>
       <section style={{ marginTop: 64 }}>
         <h2 className="h2" style={{ fontSize: 34, marginBottom: 12 }}>Five experiments NASA has not run yet</h2>
         <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>{recommendations.map(r => (

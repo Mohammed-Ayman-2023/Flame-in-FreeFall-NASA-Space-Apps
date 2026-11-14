@@ -14,9 +14,27 @@ import recommendations from '../data/recommendations.json'
 import partialGravity from '../data/partial_gravity.json'
 import methods from '../data/methods.json'
 import corpus from '../data/corpus.json'
+import gravityBounds from '../data/gravity_bounds.json'
+import atmospheres from '../data/atmospheres.json'
+import equipment from '../data/equipment.json'
+import earth from '../data/earth.json'
+import airQuality from '../data/air_quality.json'
+import d2Check from '../data/d2_check.json'
+import solidTests from '../data/solid_tests.json'
 
 export { missions, investigations, hardware, rankings, takeaways, coverage, gasFlames, modelGas, modelSolids,
-  modelDroplets, physics, recommendations, partialGravity, methods, corpus }
+  modelDroplets, physics, recommendations, partialGravity, methods, corpus, gravityBounds, atmospheres, equipment,
+  earth, airQuality, d2Check, solidTests }
+
+// smoke transport (same formula as src/fif/knowledge.py smoke_delay): delay = distance / sqrt(u_fan² + u_b²)
+export function smokeDelay(distM, fanCmS, dT = 600, L = 0.05) {
+  const places = [['Orbit (0 g)', 0], ['Moon', physics.gravity.Moon], ['Mars', physics.gravity.Mars], ['Earth', physics.gravity.Earth]]
+  return places.map(([name, g]) => {
+    const ub = buoyantVelocity(g, dT, L)
+    const u = Math.hypot(fanCmS / 100, ub)
+    return { name, g, ub: ub * 100, u: u * 100, delay: u > 0 ? distM / u : Infinity }
+  })
+}
 
 export const invById = Object.fromEntries(investigations.map(i => [i.id, i]))
 

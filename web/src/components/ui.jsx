@@ -67,7 +67,7 @@ export function MissionPicker({ compact }) {
   )
 }
 
-const NAV = [['Learn', '/learn/1'], ['Fire Lab', '/lab'], ['Investigations', '/explore'], ['Compare', '/compare'], ['Briefing', '/briefing'], ['Gaps', '/gaps'], ['Methods', '/methods']]
+const NAV = [['Learn', '/learn/1'], ['Fire Lab', '/lab'], ['Investigations', '/explore'], ['Compare', '/compare'], ['Briefing', '/briefing'], ['Gaps', '/gaps'], ['Equipment', '/equipment'], ['Methods', '/methods']]
 export function Nav({ active }) {
   return (
     <header style={{ borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 30, background: 'rgba(10,11,13,.92)', backdropFilter: 'blur(8px)' }}>
