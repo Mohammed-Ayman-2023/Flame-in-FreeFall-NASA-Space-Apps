@@ -113,8 +113,10 @@ INVESTIGATIONS = {
                    platform="ISS Combustion Integrated Rack", years=""),
     "PSI-23": dict(what="Structure and response of spherical gas diffusion flames.", area="fundamentals",
                    platform="ISS Combustion Integrated Rack", years=""),
-    "PSI-22": dict(what="Effects of electric fields on laminar gas flames.", area="fundamentals",
-                   platform="ISS Combustion Integrated Rack", years=""),
+    "PSI-22": dict(what="Methane and ethylene flames (diluted with nitrogen) in an electric field of up to 10 kV "
+                        "between the burner and a mesh above it, with and without a coflow of air: how the field "
+                        "drives ions in the flame, changes its stability and soot, and how fast it responds.",
+                   area="fundamentals", platform="ISS Combustion Integrated Rack", years="2016-2020"),
     "PSI-62": dict(what="A computer model of concurrent flame spread compared with BASS flame measurements.",
                    area="prevention", platform="simulation", years=""),
 }
@@ -197,9 +199,19 @@ def investigation_table(K: dict) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+# What the NASA page says was varied, for investigations without a loaded per-test table.
+PAGE_VARIABLES = {
+    "PSI-22": ("fuel (methane, ethylene), nitrogen dilution (stable to near-extinction flames), fuel flow rate, coflow "
+               "velocity (with and without coflow), field strength (up to 10 kV) and polarity (investigation page)",
+               "the ACME hardware in the CIR; mesh electrode above the burner (investigation page)"),
+}
+
+
 def _var_cols(K: dict, psi: str) -> dict:
     v = variables(K, psi)
     if not v["n"]:
+        if psi in PAGE_VARIABLES:
+            return dict(varied=PAGE_VARIABLES[psi][0], held_same=PAGE_VARIABLES[psi][1])
         return dict(varied="per-test data not loaded", held_same="per-test data not loaded")
     return dict(varied="; ".join(v["varied"]) or "nothing recorded as varying",
                 held_same="; ".join(v["same"]) or "nothing recorded as constant")
@@ -630,6 +642,9 @@ SENSORS = {
     "PSI-69": "droplet imaging for burning rate and extinction size, heat radiation, soot and temperature "
               "(investigation page goals)",
     "PSI-106": "over 4,000 high-resolution flame images over 13 test days (investigation page)",
+    "PSI-22": "high-resolution cameras for flame shape, luminosity and soot; spectral imaging with filters for "
+              "chemiluminescence and soot volume fraction; thermopile detectors for radiant emission; recorded "
+              "voltage-current curves (investigation page)",
     "PSI-107": "still and video cameras; measured flame height (luminous length), radiative heat loss and co-flow air "
                "velocity distribution; a flow duct with integrated nozzles and fuel delivery in the glovebox "
                "(investigation page)",
@@ -644,8 +659,10 @@ CONTEXT = {
               "in still air, as a function of material properties.",
     "PSI-107": "NASA's page gives co-flow speeds of 5.4-65 cm/s and 526 flames; the PSI table we loaded has 469 "
                "settings, 26 of them listed outside that speed range (0-85 cm/s). Values are shown as tabulated.",
-    "PSI-22": "Electric fields act on the ions that occur naturally in flames, which lets this experiment mimic "
-              "partial gravity: the closest PSI comes to Moon or Mars conditions.",
+    "PSI-22": "The challenge brief notes that this experiment mimicked partial gravity: the field acts on the ions "
+              "that flames make naturally (chemi-ionization) and drives ion-driven convection, a stand-in for "
+              "buoyancy. Its coflow tests used the same burner as ACME CLD Flame (PSI-21). Per-test data are not "
+              "in PSI's tables we loaded.",
     "PSI-102": "One SAME instrument, a modified P-Trak, was used to measure dust in DAFT and DAFT-2.",
     "PSI-101": "One SAME instrument, a modified P-Trak, was used to measure dust in DAFT and DAFT-2.",
 }
@@ -709,7 +726,7 @@ def sample_text(K: dict, psi: str) -> str:
             parts.append(f"{lab} {_fmt_vals(s[col], fmt)}")
     if not parts:
         g = c.loc[c.psi_id == psi, "geometry"].dropna()
-        parts.append(str(g.iloc[0]) + " (PSI listing)" if len(g) else "not listed")
+        parts.append(str(g.iloc[0]) + " (catalog, from the NASA page or listing)" if len(g) else "not listed")
     return "; ".join(parts)
 
 
@@ -783,9 +800,11 @@ PARTIAL_GRAVITY = [
      "feed the flame.",
      "NASA FM2 page; Zayac et al., NTRS 20240015307 (2024)", NASA_FM2),
     ("Mimicked partial gravity: ACME E-FIELD Flames (PSI-22)",
-     "Electric fields acting on the ions in a flame can imitate buoyancy, so E-FIELD Flames is the closest PSI "
-     "comes to partial gravity. Its per-test data are not loaded here.",
-     "Challenge brief", ""),
+     "A field of up to 10 kV between the burner and a mesh above it pushes on the ions a flame makes "
+     "(chemi-ionization), driving ion-driven convection that stands in for buoyancy; microgravity lets this be "
+     "studied without real buoyancy. That makes E-FIELD Flames the closest PSI comes to partial gravity. Its "
+     "per-test data are not in the tables loaded here.",
+     "PSI-22 investigation page; challenge brief", "https://doi.org/10.60555/se5a-8c73"),
     ("Bounding with 0 g and 1 g, and its limit",
      "Microgravity and Earth results can bracket intermediate gravity: where a material behaves the same at both, "
      "that is the best available guess for the Moon. But the FM2 work shows the bracket is not always safe, since "
