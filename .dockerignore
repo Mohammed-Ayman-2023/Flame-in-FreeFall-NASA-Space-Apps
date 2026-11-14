@@ -1,0 +1,14 @@
+.git
+**/node_modules
+web/dist
+**/__pycache__
+.pytest_cache
+.venv
+.env
+*.env
+.streamlit/secrets.toml
+notebooks
+slides
+qa
+data/raw/**/*.pdf
+data/raw/**/*.docx

@@ -102,6 +102,8 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 | Interactive dashboard (Streamlit) | ✅ Done: `streamlit run app/streamlit_app.py` |
 | Crew briefing, mission presets, Ask the archive, explorer | ✅ Done: `src/fif/knowledge.py` |
 | RAG assistant (Gemini over NASA reports) | ✅ Done: `RAG/` (team module), wired into the dashboard by `src/fif/genai.py` |
+| Website (React) + API (FastAPI) running the models live | ✅ Done: `web/` and `server/`; how they connect: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| One-container deployment | ✅ Ready: `Dockerfile`, `render.yaml`; steps in [`DEPLOY.md`](DEPLOY.md) |
 
 ## Quick start
 
@@ -114,9 +116,22 @@ python scripts/build_data.py                   # rebuild data/processed/ from th
 python scripts/build_ml.py                     # rebuild the ML tables in ml/v1/
 python scripts/train_models.py                 # train the models into models/v1/
 python scripts/build_ranking.py                # habitat ranking, gap map, recommendations -> reports/ranking/
-pytest -q                                      # 36 checks: data layer, model physics and labels, knowledge layer, explanations and physics helpers
+pytest -q                                      # 46 checks: data layer, model physics and labels, knowledge layer, explanations, physics helpers, website API
 streamlit run app/streamlit_app.py             # open the dashboard
 ```
+
+### The website and its API
+
+```bash
+pip install -r server/requirements.txt
+cd web && npm ci && npm run build && cd ..      # builds the site into web/dist
+uvicorn server.main:app --port 8000             # site at http://localhost:8000, API docs at /api/docs
+```
+
+For front-end work run `uvicorn server.main:app --port 8000` and, in `web/`, `npm run dev` (it forwards `/api`
+to port 8000). Copy `.env.example` to `.env` to add an optional `GOOGLE_API_KEY` for Gemini answers. With no
+API running, the site falls back to the model grids exported by `python scripts/export_web.py` and says so.
+Deployment: [`DEPLOY.md`](DEPLOY.md).
 
 ## Repository layout
 
@@ -130,6 +145,10 @@ models/v1/                   trained models, validation scores, habitat predicti
 qa/                          label spot-check against the original crew notes
 reports/                     load status per investigation, habitat ranking and gap map, PSI-117 findings
 app/                         Streamlit dashboard (crew briefing, findings, ranking, explorer, Ask, predictions, gaps, sources)
+web/                         the website (React + Vite): lessons, live simulations, Fire Lab, archive, compare, chat
+server/                      FastAPI service: live models, records, ranking, compare, cited Ask; serves web/dist
+docs/ARCHITECTURE.md         website feature → API → dataset / model map, and known limits
+Dockerfile, render.yaml      one-container deployment (DEPLOY.md)
 src/fif/                     shared schema, loaders (one per investigation), build, ML tables, models, ranking,
                              knowledge layer (mission presets, takeaways, investigation summaries, Ask, briefing)
 tests/                       automated data checks

@@ -54,7 +54,7 @@ def status() -> tuple[bool, str]:
         if importlib.util.find_spec(mod) is None:
             return False, f"the package '{mod}' is not installed"
     if not api_key():
-        return False, "no Google API key is set (add GOOGLE_API_KEY to the Streamlit secrets)"
+        return False, "no Google API key is set (set the GOOGLE_API_KEY environment variable, or the Streamlit secret on the dashboard)"
     return True, ""
 
 
