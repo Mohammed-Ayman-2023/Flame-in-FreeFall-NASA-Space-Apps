@@ -77,7 +77,7 @@ A guided, visual product for crews, students and the public, which also works fo
 | **Gaps** | Tested / thin / gap status per fire type near the mission air; coverage map of oxygen × pressure tested by NASA against your mission; partial-gravity evidence (LUCI, FM2, E-FIELD); the 0 g / 1 g bound from Saffire materials; an interactive buoyancy chart; five recommended experiments. |
 | **Equipment** | Next-generation detectors, extinguishers, ventilation procedures, material screening, air quality and layout, each with numbers from the data; BASS-II carbon-monoxide ranking of cabin materials; interactive smoke-to-detector delay at 0 g, Moon, Mars and Earth; NASA fire technology used on Earth (water-mist extinguishers, smoke detection, firefighter air tanks and clothing). |
 | **Methods** | Dataset audit (every logged correction), models tested on held-out data, the Saffire IV-VI hardest test, **how each model decides** (permutation importance, glass-box odds ratios, survival-model burn-time multipliers, Gaussian-process input relevance), and **data and sources** (per-investigation table, CSV downloads, references). |
-| **Ask the archive** (page, plus a chat on every page) | **Cited search** over the NASA-sourced summaries and the mission findings (TF-IDF with fire-safety synonyms, as in the dashboard), and the team's **Gemini RAG** answer: written only from retrieved passages of the 4,086 NASA report chunks, with the team's prompt rules, showing the passages it read. With the API running it uses the team's vector database; on the static site it searches the passages in the browser (BM25) and calls Gemini with the visitor's own key, which never leaves their browser except to Google. |
+| **Ask the archive** (page, plus a chat on every page) | **Cited search** over the NASA-sourced summaries and the mission findings (TF-IDF with fire-safety synonyms, as in the dashboard), and the team's **Gemini RAG** answer: written only from retrieved passages of the 4,086 NASA report chunks, with the team's prompt rules, showing the passages it read. With the API running it uses the team's vector database; on the static site it searches the passages in the browser (BM25) and calls Gemini with the visitor's own key, which never leaves their browser except to Google, or, with no key, the site's default model (OpenRouter's free-models router) through a small proxy that keeps the project's key secret (`deploy/openrouter-proxy/`). |
 
 The site calls the live API when one is running and otherwise works fully offline from model grids and data exported
 by `scripts/export_web.py`, telling the user which mode it is in.
@@ -254,6 +254,8 @@ Rebuild everything from the raw files: `python scripts/build_data.py`, `build_ml
 **Optional Gemini answers:** copy `.env.example` to `.env` and set `GOOGLE_API_KEY` (or add it as a secret on the
 host). `.env` and `.streamlit/secrets.toml` are git-ignored; never commit a key or paste it into a chat. Without a key
 everything works and the cited search answers instead.
+
+**Default AI answers:** set the repository variable `RAG_PROXY_URL` (proxy in `deploy/openrouter-proxy/`, key kept secret) or, less safely, the secret `OPENROUTER_API_KEY`; steps in [`deploy/openrouter-proxy/README.md`](deploy/openrouter-proxy/README.md).
 
 **Deploy:** the website is published to GitHub Pages by `.github/workflows/pages.yml` (Settings → Pages → Source:
 GitHub Actions). The full site with the live API runs from the `Dockerfile`; see [`DEPLOY.md`](DEPLOY.md).

@@ -33,6 +33,10 @@ jobs:
         working-directory: web
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          # default AI answers (see deploy/openrouter-proxy/README.md): a proxy URL (key stays secret) or a key
+          VITE_RAG_PROXY_URL: ${{ vars.RAG_PROXY_URL }}
+          VITE_OPENROUTER_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          VITE_OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
         run: |
           npm ci
           npm run build

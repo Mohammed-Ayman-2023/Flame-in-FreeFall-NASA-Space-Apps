@@ -38,16 +38,51 @@ export const getKey = () => { try { return sessionStorage.getItem(KEY_STORE) || 
 export const setKey = k => { try { k ? sessionStorage.setItem(KEY_STORE, k) : sessionStorage.removeItem(KEY_STORE) } catch { /* private mode */ } }
 
 export async function geminiAnswer(question, key) {
-  const P = await loadPassages()
-  if (!bm25) bm25 = buildBM25(P)
-  const got = bm25(question, 10)
-  const documents = 'Documents Retrieved From The Research Reports Data Base That Are Most Relevant To The Question: \n\n' + got.map((d, i) => `Document ${i + 1} [${d.h.join(' > ') || 'NASA report'}]:\n${d.text}`).join('\n\n')
+  const { got, prompt } = await retrieve(question)
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ragPrompt.model}:generateContent`, {
     method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': key },
-    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: buildPrompt(question, documents) }] }], generationConfig: { temperature: 0.1 } }),
+    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.1 } }),
   })
   const j = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
   const answer = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('') || 'Gemini returned no text.'
   return { answer, docs: got, model: ragPrompt.model }
+}
+
+/* ---------------------------------------------------------------- default AI (no visitor key needed)
+   Set at build time by .github/workflows/pages.yml from repository settings:
+   - VITE_RAG_PROXY_URL (recommended): a small proxy (deploy/openrouter-proxy) that keeps the OpenRouter key secret.
+   - VITE_OPENROUTER_KEY (simplest): the key is built into the page, so anyone can read it; use only a key with a
+     $0 credit limit and a free model.
+   VITE_OPENROUTER_MODEL defaults to the free-models router. */
+const PROXY = (import.meta.env.VITE_RAG_PROXY_URL || '').replace(/\/$/, '')
+const OR_KEY = import.meta.env.VITE_OPENROUTER_KEY || ''
+export const DEFAULT_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'openrouter/free'
+export const hasDefault = !!(PROXY || OR_KEY)
+
+async function retrieve(question) {
+  const P = await loadPassages()
+  if (!bm25) bm25 = buildBM25(P)
+  const got = bm25(question, 10)
+  const documents = 'Documents Retrieved From The Research Reports Data Base That Are Most Relevant To The Question: \n\n' + got.map((d, i) => `Document ${i + 1} [${d.h.join(' > ') || 'NASA report'}]:\n${d.text}`).join('\n\n')
+  return { got, prompt: buildPrompt(question, documents) }
+}
+
+export async function defaultAnswer(question) {
+  const { got, prompt } = await retrieve(question)
+  let res, j
+  if (PROXY) {
+    res = await fetch(PROXY, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ prompt }) })
+    j = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(j?.error || `HTTP ${res.status}`)
+    return { answer: j.answer || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
+  }
+  res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${OR_KEY}`, 'HTTP-Referer': window.location.origin, 'X-Title': 'Flame in Freefall' },
+    body: JSON.stringify({ model: DEFAULT_MODEL, messages: [{ role: 'user', content: prompt }], temperature: 0.1 }),
+  })
+  j = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(j?.error?.message || `HTTP ${res.status}`)
+  return { answer: j.choices?.[0]?.message?.content || 'The model returned no text.', docs: got, model: j.model || DEFAULT_MODEL }
 }
