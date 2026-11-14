@@ -7,7 +7,7 @@ Team from **Zewail City of Science and Technology** and **Cairo University** ([t
 
 | | |
 |---|---|
-| 🌐 **Website** (React, runs in any browser) | <https://mohammed-ayman-2023.github.io/flame-in-freefall-nasa-space-apps/> |
+| 🌐 **Website** (React, runs in any browser) | <https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/> |
 | 📊 **Analyst dashboard** (Streamlit) | `streamlit run app/streamlit_app.py` ([deploy notes](DEPLOY.md)) |
 | ⚙️ **Live API + website in one container** | `Dockerfile` ([DEPLOY.md](DEPLOY.md): Hugging Face Spaces or Render) |
 | 📄 **Submission summary** | [`SUBMISSION.md`](SUBMISSION.md) |
@@ -231,8 +231,8 @@ Dockerfile, render.yaml        one-container deployment; .github/workflows/pages
 ## Run it
 
 ```bash
-git clone https://github.com/Mohammed-Ayman-2023/flame-in-freefall-nasa-space-apps.git
-cd flame-in-freefall-nasa-space-apps
+git clone https://github.com/Mohammed-Ayman-2023/Flame-in-FreeFall-NASA-Space-Apps.git
+cd Flame-in-FreeFall-NASA-Space-Apps
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt -r server/requirements.txt
 

@@ -102,8 +102,8 @@ flags or mission insignia are used or modified. AI use is also declared in the r
 metadata.
 
 ## Links
-- Code and data: https://github.com/Mohammed-Ayman-2023/flame-in-freefall-nasa-space-apps
-- Website: https://mohammed-ayman-2023.github.io/flame-in-freefall-nasa-space-apps/
+- Code and data: https://github.com/Mohammed-Ayman-2023/Flame-in-FreeFall-NASA-Space-Apps
+- Website: https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/
 - Website with live API (optional): [add the Hugging Face Space or Render link after deploying]
 - Analyst dashboard (Streamlit, optional): [add the Streamlit link after deploying]
 - Slides (7): [add the public link or PDF]
