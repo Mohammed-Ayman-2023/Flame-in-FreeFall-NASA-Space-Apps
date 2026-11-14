@@ -190,6 +190,10 @@ TARGET = dict(x_o2=o2, pressure_atm=p)
 st.title("🔥 Flame in Freefall")
 st.markdown("##### Which NASA microgravity fire experiments matter for the air your crew will breathe, what do they "
             "predict, and what has never been tested?")
+st.markdown('<span class="small"><b>Where to start:</b> aerospace engineers and habitat designers → '
+            '<i>Crew briefing</i> and <i>Predict a fire</i> · researchers and graduate students → <i>Investigations</i>, '
+            '<i>Ask the archive</i> and <i>Data &amp; sources</i> · students and professors → <i>Key findings</i> and '
+            '<i>Gaps &amp; next tests</i>.</span>', unsafe_allow_html=True)
 
 tab_brief, tab_find, tab_rank, tab_inv, tab_ask, tab_pred, tab_gap, tab_data = st.tabs(
     ["Crew briefing", "Key findings", "Ranking", "Investigations", "Ask the archive", "Predict a fire",
