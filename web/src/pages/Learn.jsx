@@ -3,6 +3,7 @@ import { Link } from '../lib/router'
 import { Mark, Flame, Ev } from '../components/ui'
 import SmokeSim from '../sims/SmokeSim'
 import PlumeSandbox from '../sims/PlumeSandbox'
+import { HARDWARE, ModuleScene, Cutaway } from '../components/ModuleScene'
 
 export const STEPS = [['Why fires start', '/learn/1'], ['How fire behaves', '/learn/2'], ['Prevention', '/learn/3'], ['Second line of defense', '/learn/4'], ['Try it yourself', '/lab']]
 
@@ -42,47 +43,10 @@ function LessonFoot({ k }) {
 }
 
 /* ---------------------------------------------------------------- 1 · why fires start */
-const HW = [
-  { id: 'batt', x: 560, y: 190, name: 'Lithium-ion batteries', tag: 'Malfunction · the fastest-growing risk',
-    text: 'About 100 laptops fly on the ISS, plus tablets, cameras and tools. A damaged or faulty cell can go into thermal runaway: it heats itself, vents gas and can burn. Most of that gas is CO₂ and carbon monoxide, and the station is much better at scrubbing CO₂ than CO.',
-    src: 'NASA NTRS 20200000365 · NASA JSC, Li-ion propagation risk (2019)' },
-  { id: 'elec', x: 330, y: 118, name: 'Electronics and wiring', tag: 'Malfunction · the most likely source',
-    text: 'Overheated circuits and wire insulation are the most likely source of fire and smoke in space. ESA astronaut Tim Peake: electricity is the most likely cause of a fire on board, so the first move is to cut the power.',
-    src: 'NIST/NASA SAME study (2018) · ESA astronaut Tim Peake (2016)' },
-  { id: 'oxy', x: 150, y: 210, name: 'Oxygen generator', tag: 'Malfunction · it has happened',
-    text: 'In February 1997 an oxygen-generating canister on the Mir station burst into flame and filled the station with smoke. The ISS carries similar generators, redesigned after Mir with a protective screen.',
-    src: 'NASA APPEL · NASA “Fire Prevention in Space” (2004)' },
-  { id: 'insul', x: 420, y: 300, name: 'Hot insulation and plastics', tag: 'Malfunction · hard to detect',
-    text: 'When Teflon and Kapton, used all over electronics, overheat, they make very small smoke particles. In NASA’s SAME tests, the station’s smoke detector often missed them.',
-    src: 'NIST/NASA SAME, Fire Safety Journal 98 (2018)' },
-  { id: 'trash', x: 245, y: 322, name: 'Trash and stowage', tag: 'Fuel · what a small fire grows on',
-    text: 'Bags, clothing, packing foam and stored trash are fuel. NASA lists ignition of accumulated trash among the ways spacecraft fires start, and limits how much flammable material can sit together.',
-    src: 'NASA TM-1999-209285, Fire Safety in the Low-Gravity Spacecraft Environment' },
-]
-
-function Module() {
-  const racks = []
-  for (let x = 64; x < 660; x += 102) racks.push(<g key={x}><rect x={x} y="60" width="90" height="52" rx="5" fill="#151920" stroke="#252930" /><rect x={x} y="308" width="90" height="52" rx="5" fill="#151920" stroke="#252930" /></g>)
-  return (
-    <svg viewBox="0 0 720 420" width="100%" aria-hidden="true" style={{ display: 'block' }}>
-      <rect x="6" y="20" width="708" height="380" rx="175" fill="#0d0f12" stroke="#33373F" strokeWidth="2" />
-      <rect x="50" y="52" width="620" height="316" rx="16" fill="#101318" stroke="#252930" />
-      {racks}
-      <path d="M64 120 C 240 110, 420 132, 656 116" fill="none" stroke="#3a3f48" strokeWidth="3" />
-      <rect x="128" y="168" width="44" height="78" rx="8" fill="#1d222a" stroke="#4a505a" />
-      <rect x="520" y="166" width="84" height="52" rx="4" fill="#1d222a" stroke="#4a505a" /><rect x="527" y="172" width="70" height="36" fill="#0a0c0f" />
-      <rect x="200" y="292" width="100" height="56" rx="14" fill="#2a2620" stroke="#5a5040" />
-      <rect x="372" y="286" width="110" height="22" rx="3" fill="#25303a" stroke="#4a5866" />
-      <rect x="600" y="230" width="56" height="74" rx="5" fill="#141a22" stroke="#7DB4FF" strokeOpacity=".55" /><circle cx="628" cy="262" r="14" fill="none" stroke="#7DB4FF" strokeOpacity=".7" />
-      <text x="628" y="318" textAnchor="middle" fill="#7DB4FF" fontFamily="IBM Plex Mono" fontSize="9">EXPERIMENT RACK</text>
-      <text x="360" y="414" textAnchor="middle" fill="#868B93" fontFamily="IBM Plex Mono" fontSize="10">INSIDE A STATION MODULE · ILLUSTRATION</text>
-    </svg>
-  )
-}
-
 export function Learn1() {
-  const [hw, setHw] = useState('batt')
-  const cur = HW.find(h => h.id === hw)
+  const [hw, setHw] = useState('battery')
+  const cur = HARDWARE.find(h => h.id === hw)
+  const onPurpose = hw === 'cir', info = hw === 'detector'
   return (<>
     <LessonHeader k={0} />
     <main className="wrap" style={{ paddingTop: 40 }}>
@@ -90,47 +54,53 @@ export function Learn1() {
         <div className="eyebrow ember">Step 1 · Why fires start on a space station</div>
         <h1 className="h1" style={{ fontSize: 'clamp(34px, 4.5vw, 52px)' }}>Two kinds of fire: the ones we light, and the ones nobody wants.</h1>
       </div>
-      <div className="split" style={{ display: 'grid', gridTemplateColumns: '400px minmax(0,1fr)', gap: 28 }}>
-        <section className="card pad col enter" style={{ gap: 14 }}>
+      <div className="split" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,2fr)', gap: 28, marginBottom: 36 }}>
+        <section className="card pad col enter" style={{ gap: 12 }}>
           <span className="eyebrow plasma">Cause 1 · fires we light on purpose</span>
-          <span className="h2" style={{ fontSize: 28 }}>Combustion experiments</span>
-          <p className="p" style={{ fontSize: 15 }}>Scientists burn fuels on the station on purpose, sealed inside racks built for it. Why? Most of humanity’s energy still comes from burning things:</p>
-          <div className="row" style={{ alignItems: 'baseline' }}><span className="h1" style={{ fontSize: 56 }}>86%</span><span className="muted" style={{ fontSize: 13 }}>of world energy came from fossil fuels in 2025</span></div>
+          <span className="h2" style={{ fontSize: 26 }}>Combustion experiments</span>
+          <p className="p" style={{ fontSize: 15 }}>Scientists burn fuels on the station on purpose, sealed inside the Combustion Integrated Rack. Why? Most of humanity’s energy still comes from burning things:</p>
+          <div className="row" style={{ alignItems: 'baseline' }}><span className="h1" style={{ fontSize: 52 }}>86%</span><span className="muted" style={{ fontSize: 13 }}>of world energy came from fossil fuels in 2025</span></div>
           <div className="bar" style={{ height: 8 }}><span className="grow" style={{ width: '86%' }} /></div>
-          <p className="p" style={{ fontSize: 15 }}>Burning them releases CO₂ and soot that warm the planet. On Earth, gravity makes flames flicker and hides their chemistry. In orbit a flame is steady, so it can be measured exactly, and that knowledge helps design engines and burners that waste less and pollute less.</p>
-          <div style={{ padding: '12px 14px', border: '1px dashed var(--line2)', borderRadius: 8, fontSize: 13, lineHeight: 1.5, color: 'var(--muted)' }}>These fires are controlled and contained. The fires crews worry about are the ones nobody planned. →</div>
+          <p className="p" style={{ fontSize: 15 }}>Burning them releases CO₂ and soot that warm the planet. On Earth, gravity makes flames flicker and hides their chemistry. In orbit a flame is steady and can be measured exactly, which helps design engines and burners that waste less and pollute less.</p>
+          <button type="button" className="btn sm" style={{ alignSelf: 'flex-start' }} onClick={() => setHw('cir')}>See the combustion rack in the module →</button>
           <span className="src">Energy Institute Statistical Review 2026 · NASA ACME: about 85% of the energy we use comes from combustion</span>
         </section>
-        <section className="col" style={{ gap: 14, minWidth: 0 }}>
-          <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap' }}>
-            <div className="col" style={{ gap: 6 }}><span className="eyebrow ember">Cause 2 · fires nobody wants</span><h2 className="h2" style={{ fontSize: 34 }}>What can go wrong on board?</h2></div>
-            <span className="muted" style={{ fontSize: 13 }}>Tap a glowing point or a name.</span>
-          </div>
-          <div className="split" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.5fr) minmax(0,1fr)', gap: 20 }}>
-            <div className="col" style={{ gap: 12 }}>
-              <div style={{ position: 'relative' }}>
-                <Module />
-                {HW.map(h => (
-                  <button key={h.id} type="button" aria-label={h.name} aria-pressed={hw === h.id} onClick={() => setHw(h.id)}
-                    style={{ position: 'absolute', left: `${h.x / 7.2}%`, top: `${h.y / 4.2}%`, width: 44, height: 44, margin: '-22px 0 0 -22px', border: 0, background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span className="pulse" style={{ position: 'absolute', width: 18, height: 18, borderRadius: '50%', border: '2px solid var(--ember)' }} />
-                    <span style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid var(--ember)', background: hw === h.id ? 'var(--ember)' : 'rgba(255,122,61,.3)' }} />
-                  </button>
-                ))}
-              </div>
-              <div className="wrap-row" style={{ gap: 4 }}>
-                {HW.map(h => <button key={h.id} type="button" onClick={() => setHw(h.id)} style={{ border: 0, borderLeft: `2px solid ${hw === h.id ? 'var(--ember)' : 'transparent'}`, background: hw === h.id ? 'var(--panel2)' : 'transparent', color: hw === h.id ? 'var(--text)' : 'var(--muted)', padding: '8px 12px', fontSize: 13, cursor: 'pointer' }}>{h.name}</button>)}
-              </div>
-            </div>
-            <div key={hw} className="card pad col enter" style={{ gap: 12 }}>
-              <span className="eyebrow ember" style={{ fontSize: 11 }}>{cur.tag}</span>
-              <span className="h2" style={{ fontSize: 26 }}>{cur.name}</span>
-              <span style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--muted)' }}>{cur.text}</span>
-              <span className="src" style={{ marginTop: 'auto' }}>{cur.src}</span>
-            </div>
+        <section className="col enter" style={{ gap: 10, justifyContent: 'center' }}>
+          <span className="eyebrow ember">Cause 2 · fires nobody wants</span>
+          <h2 className="h2" style={{ fontSize: 34 }}>What can go wrong on board?</h2>
+          <p className="p" style={{ fontSize: 16 }}>A station is packed with powered hardware, oxygen equipment and soft materials. Tap any glowing point in the module below to look inside the hardware and see, step by step, how it can start a fire.</p>
+          <div className="wrap-row" style={{ marginTop: 6 }}>
+            {HARDWARE.map(h => <button key={h.id} type="button" className={'chip' + (hw === h.id ? ' on' : '')} onClick={() => setHw(h.id)}>{h.name}</button>)}
           </div>
         </section>
       </div>
+      <div className="card" style={{ padding: 14, background: '#07080a' }}><ModuleScene sel={hw} onPick={setHw} /></div>
+      <section key={hw} className="split enter" style={{ marginTop: 20, display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr)', gap: 20 }}>
+        <div className="card pad col" style={{ gap: 12 }}>
+          <span className="eyebrow" style={{ fontSize: 11, color: onPurpose || info ? 'var(--plasma)' : 'var(--ember)' }}>{cur.tag}</span>
+          <span className="h2" style={{ fontSize: 26 }}>{cur.name}</span>
+          <span className="mono faint" style={{ fontSize: 12 }}>{cur.where}</span>
+          <div style={{ border: '1px solid var(--line)', borderRadius: 8, background: '#07080a', padding: 8 }}><Cutaway id={hw} /></div>
+          <div className="grid3" style={{ gap: 8 }}>{cur.facts.map(([n, t]) => <div key={t} className="col" style={{ gap: 4 }}><span className="mono" style={{ fontSize: 16, color: 'var(--text)' }}>{n}</span><span className="faint" style={{ fontSize: 11, lineHeight: 1.35 }}>{t}</span></div>)}</div>
+        </div>
+        <div className="card pad col" style={{ gap: 4 }}>
+          <span className="lab" style={{ marginBottom: 8 }}>{onPurpose ? 'How a controlled fire runs' : info ? 'How it works' : 'How it turns into a fire'}</span>
+          <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            {cur.chain.map(([t, d], i) => (
+              <li key={t} style={{ display: 'grid', gridTemplateColumns: '34px minmax(0,1fr)', gap: 12, padding: '12px 0', borderTop: i ? '1px solid var(--line)' : 0 }}>
+                <span className="mono" style={{ width: 26, height: 26, borderRadius: '50%', border: `1.5px solid ${onPurpose || info ? 'var(--plasma)' : 'var(--ember)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11 }}>{i + 1}</span>
+                <span className="col" style={{ gap: 3 }}><strong style={{ fontSize: 15 }}>{t}</strong><span className="muted" style={{ fontSize: 14, lineHeight: 1.5 }}>{d}</span></span>
+              </li>))}
+          </ol>
+        </div>
+        <div className="card pad col" style={{ gap: 12 }}>
+          <span className="lab">{onPurpose ? 'Why it is safe' : 'What NASA does about it'}</span>
+          <span style={{ fontSize: 15, lineHeight: 1.6 }}>{cur.nasa}</span>
+          {info && <Link to="/learn/2" className="btn sm" style={{ alignSelf: 'flex-start' }}>Watch the smoke race →</Link>}
+          {hw === 'stowage' && <Link to="/lab" className="btn sm" style={{ alignSelf: 'flex-start' }}>Will it burn at 30% O₂? Fire Lab →</Link>}
+          <span className="src" style={{ marginTop: 'auto' }}>{cur.src}</span>
+        </div>
+      </section>
     </main>
     <LessonFoot k={0} />
   </>)
