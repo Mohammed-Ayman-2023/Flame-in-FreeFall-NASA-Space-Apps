@@ -12,6 +12,7 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from fif import genai as GA  # noqa: E402
 from fif import knowledge as Kn  # noqa: E402
 from fif import models as M  # noqa: E402
 from fif import ranking as R  # noqa: E402
@@ -39,6 +40,7 @@ h1, h2, h3 {letter-spacing: -0.01em;}
 .badge {display:inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; letter-spacing: .01em;}
 .b-measured {background:#dcefdc; color:#1f6b2a;} .b-model {background:#dbe8f8; color:#1d4f91;}
 .b-literature {background:#ece3f5; color:#5b2d82;} .b-gap {background:#f7dcdc; color:#a32020;}
+.b-ai {background:#fdf0d5; color:#7a4b00;}
 .tk {border: 1px solid #e6e5e1; border-radius: 12px; padding: 16px 18px; background: #ffffff; height: 100%;}
 .tk .num {font-size: 1.9rem; font-weight: 700; color: #b8441a; line-height: 1.15; margin-top: 6px;}
 .tk h4 {font-size: 1.02rem; margin: 6px 0 6px 0; color: #0b0b0b; padding: 0;}
@@ -53,7 +55,8 @@ h1, h2, h3 {letter-spacing: -0.01em;}
 .ans h4 {font-size: 1rem; margin: 6px 0 4px 0; padding: 0;} .ans p {font-size: 0.9rem; margin: 4px 0; color: #3a4556;}
 </style>""", unsafe_allow_html=True)
 
-BADGE_TXT = dict(measured="NASA measurement", model="Model prediction", literature="NASA literature", gap="Data gap")
+BADGE_TXT = dict(measured="NASA measurement", model="Model prediction", literature="NASA literature", gap="Data gap",
+                 ai="AI-generated (Gemini)")
 
 
 def wrap_table(df: pd.DataFrame, index: bool = False) -> None:
@@ -129,6 +132,16 @@ def load_knowledge():
 @st.cache_resource
 def load_archive():
     return Kn.Archive(load_knowledge())
+
+
+@st.cache_resource(show_spinner=False)
+def load_rag():
+    return GA.GeminiRAG()
+
+
+@st.cache_data(show_spinner=False, max_entries=200)
+def ai_answer(question: str) -> dict:
+    return load_rag().answer(question)
 
 
 @st.cache_data
@@ -478,6 +491,37 @@ with tab_ask:
                     unsafe_allow_html=True)
     st.caption("Search method: TF-IDF over words and word pairs with a short list of fire-safety synonyms "
                "(e.g. fans → ventilation, plastic → PMMA), cosine similarity, top four passages above a minimum score.")
+
+    st.markdown("#### Or get an AI answer from the NASA reports")
+    st.markdown('<span class="small">The team\'s RAG assistant searches 4,086 passages of NASA PSI reports and NASA '
+                'pages, then Gemini writes an answer <b>only from the passages it retrieved</b>, cites them, says '
+                '"insufficient data" when they do not answer the question, and never extrapolates to Moon or Mars '
+                'gravity. It is generative AI, so it can still be wrong: read the passages it used.</span>',
+                unsafe_allow_html=True)
+    ai_ok, ai_why = GA.status()
+    if not ai_ok:
+        st.info(f"AI answers are switched off in this deployment: {ai_why}. The cited search above works without them.")
+    elif q.strip():
+        if st.button("Ask Gemini about this question", key="ai_go", type="primary"):
+            try:
+                with st.spinner("Retrieving NASA passages and asking Gemini…"):
+                    st.session_state["ai_res"] = (q, ai_answer(q))
+            except Exception as exc:  # network, quota or key problems: never break the dashboard
+                st.session_state.pop("ai_res", None)
+                st.warning(f"Gemini could not answer right now ({type(exc).__name__}). The cited search above still works.")
+        res = st.session_state.get("ai_res")
+        if res and res[0] == q:
+            out = res[1]
+            st.markdown(f'<div class="ans" style="border-left-color:#c98a1a">{badge("ai")} '
+                        f'<span class="small">{out["model"]} · answer written from {len(out["documents"])} retrieved '
+                        f'passages</span></div>', unsafe_allow_html=True)
+            st.markdown(out["answer"])
+            with st.expander(f"The {len(out['documents'])} NASA passages Gemini read"):
+                for i, d in enumerate(out["documents"], 1):
+                    st.markdown(f"**Document {i}: {d['section']}**")
+                    st.text(d["text"][:900] + (" …" if len(d["text"]) > 900 else ""))
+    st.caption("AI answers: team RAG module (RAG/, LangChain + Chroma + Gemini embeddings); prompt rules in "
+               "RAG/src/prompts.py. Declared as AI use in the repository.")
 
 # ================================================================= 3. PREDICT
 with tab_pred:

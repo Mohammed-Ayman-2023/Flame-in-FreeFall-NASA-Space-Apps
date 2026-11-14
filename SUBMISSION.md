@@ -34,13 +34,15 @@ the ranking, compare investigations, ask the archive questions answered with cit
    chosen air, downloadable as a one-page HTML file; the live ranking; an investigation explorer that shows, for
    every investigation, its hardware, sample or burner shapes and sizes, instruments, and what changed between its
    tests versus what stayed the same, with side-by-side comparison and shared-hardware groups; "Ask the archive", which answers only from the project's NASA sources with citations and says so when
-   it has no answer; predictions with "how this model decides" explanations; the gap map; data downloads and
+   it has no answer, plus an optional AI answer from the team's RAG assistant (Gemini over 4,086 passages of NASA
+   reports, answering only from the passages it retrieved and showing them); predictions with "how this model decides" explanations; the gap map; data downloads and
    sources. Every number is labelled NASA measurement, model prediction, NASA literature or data gap.
 
 **Benefits.** Mission and habitat designers get, in one place, which NASA experiments apply to their atmosphere,
 what they predict, and how confident that is. Researchers get a prioritised list of the experiments still missing.
 
-**Tools.** Python (pandas, NumPy, SciPy, scikit-learn, lifelines, Plotly, Streamlit), GitHub.
+**Tools.** Python (pandas, NumPy, SciPy, scikit-learn, lifelines, Plotly, Streamlit), LangChain, Chroma, Google
+Gemini (optional AI answers), GitHub.
 
 **Findings.**
 - In still air, ACME CFI-G flames at ≤ 25 % O2 all self-extinguished (median 8 s); at 33-40 % O2 they burned a
@@ -81,7 +83,10 @@ ICES-2021-266), NTRS 20180005168 (Saffire I-III).
 This project used Claude (Anthropic), an AI assistant, as a development aid: writing and debugging code (data
 loaders, models, ranking, dashboard), transcribing values from paper tables (verified by the author against the
 original PDFs), and drafting documentation and slide text. All scientific data come from NASA and the cited
-publications; no data values are AI-generated. No AI-generated images, audio or video are used, and no NASA logos,
+publications; no data values are AI-generated. In the product, the optional AI answer in "Ask the archive" uses
+Google Gemini through the team's RAG module: it answers only from retrieved NASA report passages, shows those passages,
+and is labelled "AI-generated (Gemini)"; the default cited search, the models and every number shown do not use
+generative AI. No AI-generated images, audio or video are used, and no NASA logos,
 flags or mission insignia are used or modified. AI use is also declared in the repository README and in commit
 metadata.
 

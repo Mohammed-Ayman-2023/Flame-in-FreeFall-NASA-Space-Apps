@@ -45,7 +45,7 @@ Every tab recomputes for it.
 | **Key findings** | The headline results with their charts. |
 | **Ranking** | Transparent relevance score for every investigation, with adjustable weights and a reason per row. |
 | **Investigations** | For each of the 24 investigations: objective, key result, hardware, sample or burner shape and size, instruments, **what changed between its tests and what stayed the same** (computed from the data), and context from the challenge brief. Side-by-side comparison of up to three with a similar / different summary, and the shared-hardware groups (ACME in the CIR, droplets in the MDCA, the glovebox flow duct, SAME smoke hardware, Saffire on Cygnus). |
-| **Ask the archive** | Questions answered only from the project's NASA sources, with citations and links; it says so when the archive has no answer. Retrieval only (TF-IDF), no text generation. |
+| **Ask the archive** | Two modes. **Cited search** (always on, offline): answers only from the project's NASA sources, with citations and links, and says so when the archive has no answer; retrieval only (TF-IDF), no text generation. **AI answer (Gemini, optional)**: the team's RAG module retrieves 10 of 4,086 passages from NASA PSI reports and NASA pages, and Gemini writes an answer only from them, citing them and saying "insufficient data" otherwise; the passages it read are shown. Needs a `GOOGLE_API_KEY` Streamlit secret. |
 | **Predict a fire** | The three models with uncertainty bands, an "inside / outside the tested range" label and "how this model decides" explanations. |
 | **Gaps & next tests** | Tests near the mission atmosphere per fire type; Moon and Mars gravity: what PSI lacks, LUCI and FM2, E-FIELD Flames, and a 0 g vs 1 g bound from the Saffire burns (silicone burned on Earth but not in microgravity); five recommended experiments. |
 | **Data & sources** | Downloads of every table and the source list. |
@@ -88,6 +88,7 @@ column definitions and modelling rules: [`ml/SPEC.md`](ml/SPEC.md).
 | Relevance ranking and gap map | ✅ Done: `reports/ranking/` (`python scripts/build_ranking.py`) |
 | Interactive dashboard (Streamlit) | ✅ Done: `streamlit run app/streamlit_app.py` |
 | Crew briefing, mission presets, Ask the archive, explorer | ✅ Done: `src/fif/knowledge.py` |
+| RAG assistant (Gemini over NASA reports) | ✅ Done: `RAG/` (team module), wired into the dashboard by `src/fif/genai.py` |
 
 ## Quick start
 
@@ -159,6 +160,10 @@ rules, AI involvement is declared here and in commit metadata (`Co-Authored-By` 
   verified by the author against the original tables; flame-out labels were spot-checked against the original
   crew notes (`qa/`).
 - **Documentation:** this README and the files in `ml/` were drafted with AI assistance.
+- **In the product:** the optional AI answer in *Ask the archive* uses **Google Gemini** (`gemini-3.1-flash-lite`, with
+  `gemini-embedding-2` embeddings) through the team's RAG module in `RAG/`. It answers only from retrieved NASA
+  passages, shows them, and is labelled "AI-generated (Gemini)" in the dashboard. The default cited search, the
+  crew briefing, the models and every number in the dashboard do not use generative AI.
 - No AI-generated images are used. No NASA logos, flags or mission insignia are used or modified.
 
 All scientific data come from NASA and the cited publications; nothing in the dataset is AI-generated.
@@ -172,5 +177,13 @@ Original code and documentation: [Apache License 2.0](LICENSE). NASA data remain
 **Mohammed Ayman** · [GitHub](https://github.com/Mohammed-Ayman-2023)
 
 Project lead: data collection, validation, dataset design, modelling and analysis (with AI assistance, see above).
+
+RAG assistant (`RAG/`): Omar, team member.
+
+### Running the AI answer locally or on Streamlit Cloud
+
+Add a Google AI Studio key as `GOOGLE_API_KEY`: in a local `.env` file or environment variable, or in Streamlit
+Cloud under *App settings → Secrets* as `GOOGLE_API_KEY = "..."`. Both `.env` and `.streamlit/secrets.toml` are in
+`.gitignore`. Without a key the dashboard runs normally and the AI answer says it is switched off.
 
 Developed for the NASA Space Apps Challenge 2026.
