@@ -24,8 +24,19 @@ CHAT_MODEL = "gemini-3.1-flash-lite"    # as in RAG/src/gemini.py
 K = 10                                  # passages retrieved, as in RAG/src/data.py
 
 
+def _from_env_file() -> str | None:
+    """Read GOOGLE_API_KEY from a .env file in the repository root or RAG/ (never committed: see .gitignore)."""
+    for p in (ROOT / ".env", RAG_DIR / ".env", RAG_DIR / "src" / ".env"):
+        if p.exists():
+            for line in p.read_text(errors="ignore").splitlines():
+                k, _, v = line.partition("=")
+                if k.strip() == "GOOGLE_API_KEY" and v.strip():
+                    return v.strip().strip('"').strip("'")
+    return None
+
+
 def api_key() -> str | None:
-    key = os.environ.get("GOOGLE_API_KEY")
+    key = os.environ.get("GOOGLE_API_KEY") or _from_env_file()
     if key:
         return key
     try:

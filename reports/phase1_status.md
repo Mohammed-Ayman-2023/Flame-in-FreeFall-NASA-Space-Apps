@@ -1,6 +1,6 @@
 # Phase 1 status: data layer
 
-Built 2026-11-14 06:38. 14 of 25 in-scope investigations loaded; 1517 tests and 10107 values in the merged tables.
+Built 2026-11-14 06:49. 14 of 25 in-scope investigations loaded; 1517 tests and 10107 values in the merged tables.
 
 | psi_id | acronym | priority_tier | data_status | state | tests | evidence | high_issues | schema |
 |---|---|---|---|---|---|---|---|---|

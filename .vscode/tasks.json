@@ -4,15 +4,20 @@
     {
       "label": "1. Create environment and install packages",
       "type": "shell",
-      "command": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt",
-      "windows": { "command": "py -m venv .venv; .venv\\Scripts\\python -m pip install -r requirements.txt" },
+      "command": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt -r app/requirements.txt",
+      "windows": {
+        "command": "py -3.13 -m venv .venv; .venv\\Scripts\\python -m pip install -r requirements.txt -r app/requirements.txt"
+      },
       "problemMatcher": []
     },
     {
       "label": "2. Build the data layer",
       "type": "shell",
       "command": "${command:python.interpreterPath} scripts/build_data.py",
-      "group": { "kind": "build", "isDefault": true },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": []
     },
     {
@@ -27,9 +32,20 @@
       "command": "${command:python.interpreterPath} -m pytest -q",
       "group": "test",
       "problemMatcher": []
+    },
+    {
+      "label": "5. Run the dashboard",
+      "type": "shell",
+      "command": "${command:python.interpreterPath} -m streamlit run app/streamlit_app.py",
+      "problemMatcher": []
     }
   ],
   "inputs": [
-    { "id": "psi", "type": "promptString", "description": "PSI ID", "default": "PSI-25" }
+    {
+      "id": "psi",
+      "type": "promptString",
+      "description": "PSI ID",
+      "default": "PSI-25"
+    }
   ]
 }
