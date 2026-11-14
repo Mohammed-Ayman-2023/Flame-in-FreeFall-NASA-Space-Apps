@@ -117,8 +117,10 @@ INVESTIGATIONS = {
                         "from the burner), in drop towers and on the ISS: when soot starts to form and when the flame "
                         "goes out, as flow rate, mixture fraction (Zst), N₂ or CO₂ dilution and pressure change.",
                    area="fundamentals", platform="ISS Combustion Integrated Rack + drop towers", years="1999-2025"),
-    "PSI-23": dict(what="Structure and response of spherical gas diffusion flames.", area="fundamentals",
-                   platform="ISS Combustion Integrated Rack", years=""),
+    "PSI-23": dict(what="Hydrogen, methane and ethylene, diluted with nitrogen, helium or CO₂, issued from a spherical "
+                        "porous burner into an oxidizing environment: the structure of soot-free and sooty spherical "
+                        "flames, their extinction limits and pulsating instabilities, compared with detailed simulations.",
+                   area="fundamentals", platform="ISS Combustion Integrated Rack", years="2015-2019"),
     "PSI-22": dict(what="Methane and ethylene flames (diluted with nitrogen) in an electric field of up to 10 kV "
                         "between the burner and a mesh above it, with and without a coflow of air: how the field "
                         "drives ions in the flame, changes its stability and soot, and how fast it responds.",
@@ -207,6 +209,7 @@ def investigation_table(K: dict) -> pd.DataFrame:
 
 # Sample or burner details stated on the NASA page, where the test table has none.
 PAGE_SAMPLES = {
+    "PSI-23": "spherical porous burner giving a nominally spherical, one-dimensional flame (investigation page)",
     "PSI-21": "coflow burner: a fuel jet surrounded by a slow coflow of air (investigation page)",
     "PSI-10": "spherical burner for normal and inverse spherical flames; coflow flames as well (investigation page)",
     "PSI-39": "droplets suspended between hypodermic needles or tethered on silicon-carbide fibres; hot-wire igniter "
@@ -217,6 +220,9 @@ PAGE_SAMPLES = {
 
 # What the NASA page says was varied, for investigations without a loaded per-test table.
 PAGE_VARIABLES = {
+    "PSI-23": ("fuel/diluent mixture (H₂/CH₄/diluent for soot-free flames, C₂H₄/diluent for sooty ones), diluent (N₂, He, "
+               "CO₂) and flow rate (investigation page)",
+               "spherical porous burner in the ACME hardware (investigation page)"),
     "PSI-21": ("fuel (methane, ethylene), fuel dilution (dilute to heavily sooting) and flow velocity (investigation page)",
                "coflow burner in the ACME hardware (investigation page)"),
     "PSI-10": ("fuel (C₂H₄, CH₄), flow rate, stoichiometric mixture fraction Zst, inert (N₂ or CO₂) amount, pressure, and "
@@ -681,6 +687,9 @@ SENSORS = {
               "extinction for soot temperature and volume fraction; thin-filament pyrometry for gas temperature "
               "(investigation page)",
     "PSI-10": "cameras, radiometers, photomultiplier tubes and thermocouples (investigation page)",
+    "PSI-23": "spectrally resolved flame imaging, flame and burner temperatures, radiative flux, and operating conditions "
+              "(reactant flow rates, ambient temperature, pressure, acceleration levels), all synchronized "
+              "(investigation page)",
     "PSI-39": "black-and-white camera for droplet size; UV camera for OH* emission and flame size; narrow-band and "
               "wide-band radiometers for flame radiation; high-resolution cameras for monitoring (investigation page)",
     "PSI-107": "still and video cameras; measured flame height (luminous length), radiative heat loss and co-flow air "
@@ -785,6 +794,8 @@ def measurements_text(K: dict, psi: str) -> str:
     km = c.loc[c.psi_id == psi, "key_measurements"].dropna()
     meas = str(km.iloc[0]) if len(km) else ""
     sens = SENSORS.get(psi, "")
+    if not sens and derived_from(K, psi):
+        sens = f"none of its own: a model or analysis investigation that uses data from {derived_from(K, psi)}"
     if sens and meas:
         return f"{meas}. Instruments: {sens}"
     return sens or meas or "not listed"
