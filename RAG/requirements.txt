@@ -1,0 +1,9 @@
+pymupdf4llm
+rapidocr_onnxruntime
+langchain-chroma
+langchain-text-splitters
+langchain-google-genai
+langchain-core
+python-dotenv
+langgraph
+trafilatura

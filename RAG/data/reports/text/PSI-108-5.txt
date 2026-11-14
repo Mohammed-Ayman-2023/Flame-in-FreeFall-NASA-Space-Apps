@@ -1,0 +1,181 @@
+<mark>https://ntrs.nasa.gov/search.jsp?R=19900008606 2018-02-20T19:16:39+00:00Z</mark> 
+
+
+
+# N90-17922 
+
+## DEVELOPMENT OF AN INFRARED IMAGING SYSTEM FOR THE SURFACE TENSION DRIVEN CONVECTION EXPERIMENT 
+
+## Alexander D. Pline 
+
+NASA Lewis Research Center Cleveland, Ohio44135 
+
+ABSTRACT 
+
+An infrared imaging system is used to quantify the imposed surface temperature distribution along a liquid/gas free surface in support of the Surface Tension Driven Convection Experiment, a planned Space Transportation System flight experiment.For ground-based work a commcrcially available instrument was used to determine the feasibility of using this type of imaging system for this experiment. The ground-based work was used as a baseline for compiling specifications for a flight qualified imager to be designed, fabricated, tested and qualified for flight. The requirements and the specifications for the flight model are given along with the reasons for with operating an imaging system on orbit are also discussed. 
+
+### INTRODUCTION 
+
+A non-contact surface temperature measurement systcm is being developed in rcsponse to the need for quantitative, full field characterization of the resulting surface temperaturc distributions during the Surface Tension Driven Convection Experiment (STDCE).The STDCE is a space flight cxperiment to study thermocapillary flows, during the USML-1 Spacclab mission. The currcnt STDCE schedule is lo havc flight hardware ready for shipment by April 1, 1991 for the USML-1 Spacclab mission planned for March 1992. Thcrmocapillary flows are gcneratcd by a thermally induced surface tension variation which acts as a surface tractive force along a liquid/gas temperature). 
+
+During the STDCE a 10 cm diameter by 5 cm decp cylindrical container of siliconc oil is heated centrally either internally or externally while the resulting thermocapillary flows are visualized by illuminating a cross section with a shcet of light. Thc internal heating case (or CT experiment) uses a 1.1cmdiamclcr by 5 cm height resistancc heater (heated wall) placed centrally in the test cell (cooled wall) to establish thc temperature gradient along the free surface. For thc externally heated case (CF cxperiment) the resistance heatcr is rcmoved and the free 
+
+surface heated using focused CO2 laser radiation. 
+
+Because liquid/gas free surfaces are ubiquitous to containcrless proccesses, the understanding 
+
+284 
+
+of surfacetensiondrivenflows in reducedgravityas well as terrestrialgravityis importantin the 1 commercializationof containerlessmaterialsprocessingtechniques. The surfacetemperature distributionis a critical parameterfor thesetypesof flows as it is the driving force.2'3 In reducedgravity,a liquid/gasfree surfacemay not be stationarydue to small accelerations,called g-jitter, aboardthe vehicle. Consequently,whenthe thermalboundarylayeralongthe free surface is thin contact surfacetemperaturemeasurementmethodsare sensitiveto these disturbances. Therefore,developmentof a non-contacttemperaturemeasurementsystem to quantitatively characterizethe thermalsignatureis an essentialpart of the developmentof the STDCE. 
+
+The systemdevelopmentis divided into two phases:a testingphase,to study the feasibilityof usinga commerciallyavailableinfraredimagingsystemto characterizethe surface temperaturedistributions,and a flight hardwaredevelopmentphase. The testingphasewas based on the science objectivesput forth by the Principal Investigator,S. Ostrach and the Co-Investigator,Y. Kamotani,both of CaseWesternReserveUniversity,in the STDCEScience RequirementsDocument.4 An absorptionstudyof siliconeoil was conductedto determinethe mostappropriateoperatingwavelengthfor the imagerand the surfacelayer thicknessmeasuredby the imager. Basedon studyresults,the Model600 InfraredImagingSystemwas purchasedfrom InframetricsInc. Testingwas conductedusingthis systemto determineits accuracycomparedto thermocouplemeasurementsand numericalcalculationsas well as an effectiveemissivityfor these experimentalconditions(reference5). 
+
+The flight hardwaredevelopmentphaseconsistsof procuringa spaceflight qualified infraredimager. In additionto the technicalspecificationsderivedfrom the testingphase, the Statementof Work (SOW) in the Requestfor proposal(RFP) also containsa plethoraof requirementswhich _the manufacturer_ must meet in order to fly on the Spacelab. These requirements include related development work, design reviews, vibration levels, safety and qualification/acceptance testing which must be met within the constrained schedule associated with the USML-1 deadlines. This procurement will result in a fully tested and space flight qualified infrared imager delivered to NASA Lewis Research Center for integration with the balance of the STDCE hardware. 
+
+#### DEVELOPMENTAL TESTING 
+
+Science Requirements 
+
+The requirements for the surface temperature measurement system are for a full field non-intrusive measurement using a thermographic technique. The operational wavelength should be chosen so that the detected radiation comes from a region as close to the surface as possible. The spatial resolution should be less than or equal to 1 mm and the temporal resolution should 0.1 second or less. The accuracy of the instrument should be within +5% of the AT between 
+
+285 
+
+the centerand side wall exceptnearthe centerand wall regionswhere +10% is acceptable. To satisfy these requirements, the technique should be calibrated by thermocouple measurement as well as be consistent with numerical analysis. Absorption Study 
+
+The absorption characteristics of silicone oil must be known in order to select the operational wavelength of the imager and to determine how deep the imager "sees" into the oil. Using an infrared spectrophotometer, transmission of radiation as a function of wavelength through a variable thickness of silicone oil was measured. From this data an empirical relationship in the form of the most simplified version of Bouguer's Law was determined. The thickness of fluid which attenuates nearly 100 percent of the incident radiation in the imager operating wavelength region is called the "surface" thickness. The transmission versus wavelength results show that silicone oil is quite transparent at wavelengths of less than 8 micrometers (I.t). Therefore an imager which operates in the far infrared (8-121.t) is needed. In order to find how silicone oil attenuates radiation in this region, transmission was averaged numerically and plotted against fluid thickness. In addition transmission at 10.6],t was ploued against fluid thickness to determine the pentetration of CO 2 laser radiation. From these relationships (Fig. 1), the fluid thickness which attenuates nearly 100% of the incoming radiation is found **to** 1 be 0.200 mm and 0.256 mm 0.9 **0.8** A 8-12 micron for the 8-12}.1. region and 10.6 0.7 wavelength respecively. Therefore, it is concluded that _0.6 t/ _ **t** tans_sslii'i=ii_°n o.5 the "surface" the imager "sees" is 0.200 mm thick. The fact 0.4 0.3 that the CO 2 laser radiation 0.2 penetrates deeper than this is 0.1 advantageous. If the situation 0 **0 0.02 0.04 0.06 0.08 0.l 0.12 0.14 0.16 0.18 0.2** were reversed, the temperature sample thickness d (mm) indicated by the imager would Figure **l. Transmission** as a function of fluid thickness be an average over a region where a much larger temp-- 
+
+erature gradient would exist. 
+
+Imager Selection 
+
+The conclusions drawn above indicate the need for an imager which operates in the far infrared. Satisfying this requirement, as well as the other science requirements, based on manufacturers specifications, the Inframetrics Model 600 and Thermal Image Processing System were 
+
+286 
+
+**purchased.** The Model 600 has a spatial resolution of 2 milliradians (mr), **or** 0.8 mm at 40 cm working distance, and a temporal resolution of 0.033 seconds (RS-170 video frame rate). A more complete description of the Model 600 can be found in references 5 and 6. Effective Emissivity 
+
+Because no surface is an ideal radiator, there is an emissivity (<1) associated with that surface. This emissivity value is needed as an input to the thermal image processing system to account for non-ideal radiation and reflected background radiation. Due to the lack of existing literature documenting the emissivity of silicone oil, an emissivity was determined empirically by comparison of the imager surface temperature data with other techniques. This emissivity value of 0.90 is called the "effective emissivity" because it accounts for all the non-ideal radiative properties of silicone oil only for _this imager_ under _these experimental conditions._ At;curacy Data acquired using the infrared imaging system were analyzed and compared to thermocouple measurements and a calculated surface temperature distribution to establish the accuracy of the system for **this** experiment. Both heating modes used during the STDCE were analyzed. Comparison of the three techniques is shown in Figure 2 for the maximum temperature gradient expected during the CT Experiment where the AT is near 50 oC. This is the most difficult (i.e. sharpest temperature gradient) _CT_ measurement case with an input power **to** the heater of 17.7 W. Plotted in 60 the figure **is** the surface temp50 CT EXPERIMENT P=17.7 W erature difference between the n TttERMOCOUPLE **40** **_•_ IR** IMAGER (e=0.ch0) oil surface the test chamber )_ **-** NUMERICAL CALCULATION _t__ Tc_23.0 _ wall against nondimensional 30 radial position, measured with 20 **M_2"63XI03** a _ta_ D **13o** the target emissivity set to 10 **o o o •** • **oo** 0.90. The agreement among % **o** the three techniques for this 0 012 ' 0J4 0J6 **'** 0;8 ' case is +5% of the overall AT NON-DIMENSIONAL **RADIAL** POSITION Figure 2. **Comparisonof** numerical, thermooauple, and IR excluding the near wall regions. **lrnager** surface temperature distributions for the CT _The_ errors in the wall regions Experiment when the input power is 17.7 W and Tc=23.0C. are +10% of the AT and are caused, predominantly, by the imager spatial resolution, which is not small enough to resolve these gradients. Similar results were obtained for the CF experiment except measurement errors near the center were a result of the thinner thermal boundary layer and consequent averaging of cooler bulk fluid. 
+
+287 
+
+#### FLIGHT HARDWARE DEVELOPMENT 
+
+The development work described was used **as a** baseline from which specifications for the flight model were developed. In addition to the technical specifications, other design and qualification requirements were compiled to guide the manufacturer in the design, fabrication and testing so that the final instrument is a _fully space flight qualified_ imager, which will meet all performance specifications for the STDCE and satisfy all STS requirements. Technical Specifications The major technical specifications of the desired imager are summarized in Table 1. Like the ground based imager it will produce an analog output in the form of an RS-170 video signal which can be recorded and analyzed after the fact. Care was given not to specify any **operational** characteristics particular to the commercial equipment such as the image acquisition scheme (i.e. scanners versus focal plane arrays). The intention was to procure a black box which would produce data per the specifications without regard to the operational details, because the design of a new imager or redesign of a commercial system to meet the space qualification requirements is the responsibility of _the contractor._ By writing the specifications in this manner a maximum number of manufacturers could be eligible. The major deviations from the commercial equipment are the detector cooling, the spatial resolution and the minimum sensitivity (NETD). The liquid nitrogen detector cooling scheme used for the commercial equipment is not acceptable for space applications for obvious reasons. Both a Joule-Thompson (J-T) cryostat and a Stirling Cycle cryocooler were considered to replace the LN 2 dewar. The Stirling Cycle cryocooler was chosen because it is inherently safer than a J-T cooler while providing non--exhaustible cooling. This type of cooler is also routinely used for military applications (e.g.U.S. Army common module). Due to errors caused by sharp temperature gradients near the side and heater walls, the spatial resolution (IFOV) specification was tightened from 2 mr for the commercial instrument to 1 mr. This increase in spatial resolution will allow the instrument to better resolve the sharp temperature gradients. The minimum sensitivity of the solicited instrument is also better than the commercial imager, improving the low temperature range sensitivity, in order to resolve small amplitude temporal thermal oscillations likely to be encountered during the STDCE. Other specifications were changed to accommodate the STDCE packaging and STS restraints. The size specified was the maximum envelope allotted for the imager during the packaging/layout of the STDCE hardware. The 30 pound specified weight, an increase of approximately 5 times over the ground-based weight should accommodate the added weight of the cryocooler and space flight qualified structure. The differences in electrical specifications include the input voltage, power consumption and computer interface. 28 VDC was specified as the input voltage for compatibility with the STDCE 
+
+288 
+
+maincircuit,although12 VDC couldbe usedbecausethereare other 12 VDC componentsin the 
+
+|Table1.<br>MajorTechnic|alSpecifications|
+|---|---|
+
+
+
+|specification|flight|ground-based|
+|---|---|---|
+|spectralresponse<br>|8-12 _t|8-14|
+|NETD<br>|0.1<br>**oC**|0.2<br>oC|
+|MRTD<br>|0.1<br>oC|**0.1**<br>oC|
+|detectorcooling<br>|closed<br>cycle<br>cryocooler|LN2|
+|FOV<br>|15o V x 200 H|15o<br>V × 20o<br>H|
+|IFOV|I mr (50% response)|2 mr (50%<br>response)|
+|dynamicrange<br>|minimum<br>of 48 dB|42 dB|
+|framerate|30 Hz (2:1**interlace)**|30 Hz<br>(2:1<br>interlace)|
+|outputformat|RS-170 video|RS-170<br>video|
+|measurement<br>ranges|5,10,20,50,I00,200**oC**<br>movable between<br>0 and<br>500<br>oC|5,10,20,50,100,200<br>oC<br>movable<br>between<br>-20<br>and<br>400<br>**oC** + x-rng|
+||both<br>man/auto<br>select|center<br>man/auto<br>select|
+|**Post** flight|||
+|Image<br>**analysis**|similar<br>to Thermoteknix|Thermoteknix|
+||system|system|
+|size|||
+|sensor<br>head|8.0"D<br>x 9.0"W<br>× 9.0"H|8.1"D<br>× 4.8"W<br>× 4.9"H|
+|electronics|9.3"D<br>× 10.3"W<br>× 3.8"H|9.3"D<br>×<br>10.3"W<br>x 5.4"H|
+|weight|||
+|sensor<br>head|30 lbs|6.5 lbs|
+|electronics|7.5 lbs|7.5 lbs|
+|power<br>consumption|maximum<br>of 150 watts|10 watts|
+|input<br>voltage|28 VDC|11-17<br>VDC|
+|non-operational|||
+|shelf<br>life|2 years|NA|
+
+
+
+STDCE package. Power consumption was increased to account mainly for the added draw by the cryocooler. It is not expected that 150 W will be needed but was the maximum available. The RS-232 computer interface specified will be used to control the imager during operation. Temperature range and center temperature will be selectable or, if desired, will be set to automatic via this interface. The ground-based equipment has automatic center temperature but not automatic range selection. Automatic operation of both the temperature range and center temperature is required because of the largely automated nature of the STDCE. Contractor Development Phases 
+
+Three phases of development are specified in the SOW. The first is the design phase. The milestones associated with the design phase are at 50% completion and at final design review. In order to assure the design concept is sound and will meet NASA requirements for design of safety critical structures, materials usage, and safety, the pertinent NASA documentation was researched and incorporated into the design and test requirements (Table 2.). From the STS point 
+
+289 
+
+of view, safety is **the** most important **aspect** of the flight qualification procedure. This is reflected by the nature of most of these documents. If the safety guidelines for design are followed, the payload developer is assured that his equipment will not harm the STS or its crew. In addition to the design, a safety verification plan must be presented to show the design meets these safety requirements. NHB 1700.7A outlines the requirements "intended to protect **flight** and ground personnel, the STS, other payloads, ground support equipment, the general public, public-private property, and the environment from payload related hazards." Not listed in Table 2 is JA-012D Payload Safety Implementation Approach, which is issued to implement NHB 1700.7A. It is not part of the contract because these requirements are the responsibility of the STDCE. The purpose of the document is to "delineate the activities leading to safety certification of instruments that constitute an STS payload for which the Spacelab Payload Project Office has management and integration responsibility." The second phase of the development is the fabrication/inspection during which the hardware shall be built to the NASA approved design. During the third phase the space flight qualification testing will be performed in an environment similar, if not more rigorous, than that of the STS. The major tests which must be conducted for qualification are vibration, electromagnetic compatibility (EMC) and toxic offgassing. Toxic offgassing tests will insure that in the event the Spacelab module depressurizes no potentially harmful gases will be produced. EMC tests are conducted to insure that the equipment will not interfere electrically, either by radiation or conduction, with the Spacelab instruments or power bus. 
+
+||Table<br>2.<br>Documentation<br>Requirements|
+|---|---|
+|Document<br>#|Document<br>Name|
+|NHB<br>1700.7A<br>MSFC<br>HB 527<br>SLP/2104<br>NHB<br>8060.1B<br>JA--418|Safety<br>Policy<br>and<br>Requirements<br>for<br>Payloads<br>using<br>the STS<br>Materials<br>Selection<br>List<br>for<br>Space<br>Hardware<br>Systems<br>Spacelab<br>Payload<br>Accommodation<br>Handbook<br>Flammability,<br>Odor,<br>and<br>Offgassing<br>Requirements<br>and<br>Test<br>Procedures<br>for Materials<br>in Environments<br>that<br>Support<br>Combustion<br>Payload<br>Flight<br>Equipment<br>Requirements<br>for<br>Safety-Critical<br>Structures|
+|JA-016B|Payload<br>Mission<br>Manager<br>Interface<br>and<br>Safety<br>Verification<br>Requirements<br>for<br>Instruments,<br>Facilities,<br>MPE<br>and<br>ECE<br>on<br>STS<br>Spacelab<br>Payload<br>Missions|
+|JSC<br>11123|STS<br>Payload<br>Safety<br>Guidelines<br>Handbook|
+
+
+
+In conjunction with safety, survivability/reliability testing is a prime concern of the payload element developer. Both periodic and random vibration tests are conducted to insure survivability against low frequency transient responses due to engine ignition and cutoff, separation, and docking, 
+
+**290** 
+
+and random vibrations caused by the Spacelab response to acoustic noise in the cargo bay. **The** levels to which this imager will be subjected are found in the Spacelab Payload Accommodations Handbook (SLP/2104). Because the equipment is situated in a Spacelab rack the vibration levels at the rack/module interface are used. An example of these levels is given in Table 3. In addition to these levels, a magnification factor is added to account for amplification of the vibration levels by the rack and STDCE structure: five times above the levels shown. This magnification factor may be changed as data becomes available from the STDCE engineering model analyses using a dummy mass in lieu of the imager. Because two units will be built and tested, the first will be a protoflight-qualified unit and the second a flight qualified unit. The protoflight unit will be tested to 5 times the levels in SPAH/2104 (prototype testing), refurbished and retested to 1.5 times SPAH levels (qualification testing). This unit will be used as a spare. The second unit is tested only to qualification levels and will be the primary **flight** unit. 
+
+||Table<br>3.<br>Random<br>V|ibration<br>Testing<br>_Levels_||
+|---|---|---|---|
+|Frequency<br>(Hz)||Level<br>(g2/Hz)||
+||**X** axis|Y **axis**|Z axis|
+|20|0.005|0.002|0.002|
+|20-80|+3 dB/oct|+6 dB/oct|+5 dB/oct|
+|80-200|0.02|0.015|0.01|
+|200--2000|-4<br>dB/oct|-4<br>dB/oct|-4 dB/oct|
+|2000|0.00093|0.00047|0.00063|
+|comp.<br>g (rms)|3.1|2.4|2.4|
+|comp.<br>g×5|15.5|12.0|12.0|
+
+
+
+duration: 60 seconds per axis 
+
+#### ON-ORBIT CONCERNS 
+
+Several problems are expected which are ubiquitous to operation of the STDCE aboard Spacelab. These include the effect of direct CO 2 laser beam reflections, automatic operation of the imager and angular emissivity variations due to the curved free surface. Because silicone oil reflects specularly, reflections from the CO 2 laser beam, directed normal to the surface, are not incident on the imager detector when the imager is positioned approximately 15 degrees from axis of the test chamber. During operation on Spacelab, however, if the free surface deforms due to g-jitter, direct reflections may be incident on the detector. The reflected **flux** is low (=0.4 W/cm 2) and will result in saturation of the detector resulting in data loss during this **time.** But, no damage of the imager will occur and if the reflections are periodic there will be intervals in which data can be analyzed. 
+
+291 
+
+Thesereflectionsmay affect the automaticoperationof the imager. During automatic operationthe imagerselectsthe temperaturerangeand centertemperaturebasedon the maximum intensitiesin the field of view. If reflectionscausesaturationof the detector,this may, dependingon the duration,influencethe automaticrangeand centertemperatureselection. The time constantshouldbe sufficientlylong in order to decreasethe sensitivityto this type of transient. 
+
+Thirdly,targetemissivityis angularlydependent.Duringthe STDCEtestsconductedusing curvedsurfaces,the surfacenormalwill be between0 and 70 degreesfrom the axis of the test chamber. The directionalspectralemissivitypredictedfrom electromagne **t** icheoryas a functionof emittedray anglemeasuredfrom the unit normal7 showsthat there is little variationuntil the angleis larger than 45 degrees. Therefore,only near the walls wherethe anglebetweenthe surfacenormal and the axis of the test chamberincreasespast 45 degreeswill substantial measurementerrorsoccur. Additionalground-basedtestingin this areais planedto fully evaluate theseeffects. 
+
+#### SUMMARY 
+
+While most of the development work is complete at this time, developmental testing is an ongoing activity. Concerns associated with operating the imaging system on orbit are being addressed as well as problems involving integration of the system with the STDCE hardware. Until a flight unit is delivered, the commercial unit will be used as an engineering model and will be integrated with the STDCE engineering model hardware. 
+
+Flight hardware development was begun in August, 1988 with the compilation of technical specifications, schedule, design and qualification requirements in parallel with the advertised announcement of procurement. The RFP was released on September 19, 1988 and responses received November 1. The contract, expected to be awarded on February 1, 1989, provides 15 months for development, design, manufacture, and qualification testing. 
+
+#### ACKNOWLEDGEMENTS 
+
+The author would like to acknowledge the efforts of the members **of** the STDCE design team for their research into the STS qualification requirements and the organization of the procurement process. David Petrarca wrote the Statement of Work for the Request for proposal for the Flight qualified Infrared Imaging System and William Coho was responsible for coordinating the entire procurement process. Also, NASA Lewis Research Center's Procurement Division was instrumental in expediting the release of the Request for Proposals. 
+
+292 
+
+REFERENCES 
+
+- , Ostrach, S., "Low Gravity Fluid Flows," Annual Review of Fluid Mechanics, vol. 14, 1982, pp. 314-375 
+
+   - Ostrach, S, "Convection Due to Surface Tension Gradients", COSPAR Space Research, Vol. 19, M.J. Rycroft, ed., 1979, pp. 563-570 
+
+- , Kamotani, Y. and Ostrach, S., Design of a Thermocapillary Flow Experiment in Reduced Gravity, _J. Thermophys. Heat Trans.,_ vol. 1, no. 1, Jan. 1987, pp. 83-89 
+
+4. Ostrach, S. and Kamotani, Y., "Science Requirements Document for the Surface Tension Driven Convection Experiment in Reduced Gravity", Department of Mechanical and Aerospace Engineering, Case Western Reserve University., 1987 
+
+- . Pline, A., "Surface Temperature Measurements for the Surface Tension Driven Convection Experiement", NASA TM 101353, 1988 
+
+- , Lee, M., ed., Non-Contact Temperature Measurement, NASA CP-2503, 1987 
+
+7. Siegel, R and Howell, J., Thermal Radiation Heat Transfer, Mc-Graw Hill, 1972, p. 103 
+
+293 
+

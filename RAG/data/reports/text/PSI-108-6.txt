@@ -1,0 +1,783 @@
+https://ntrs.nasa.gov/search.jsp?R=19890011853 2018-02-20T19:31:24+00:00Z 
+
+
+
+NASA Technical Memorandum 101353 
+
+# Infrared Surface Temperature Measurements for the Surface Tension Driven Convection Experiment 
+
+Alexander D. Pline Lewis Research Center Cleveland, Ohio 
+
+(NASA-TM-101353) INPEIRED SUEFACE TENPEEATUFEHEASUEEMENTS FCE TEF SUEFACE N89-21224 TENSION DRIVEN CCNVECTICN EXEEEIEENIN.S. 1988ihesis - Case(NASA) western Eeserye Uriv.. Aug.29 F Unclas CSCL 14B G3/35 0204477 
+
+N89-21224 
+
+March 1989 
+
+VSVN 
+
+NASA Technical Memorandum 10 1353 
+
+Infrared Surface Temperature Measurements for the Surface Tension Driven Convection Experiment 
+
+Alexander D. Pline 
+
+March 1989 
+
+National Aeronautics and Space Administration 
+
+**Lewis Research Center** Cleveland. Ohio **44135** 
+
+Trade names or manufacturers’ names are used in this report for identification only. This usage does not constitute an official endorsement, either expressed or implied, **by** the National Aeronautics and Space Administration. 
+
+### **Contents** 
+
+||Page|
+|---|---|
+|Summary..............................................................................................................|1|
+|Introduction...........................................................................................................|**1**|
+|Symbols................................................................................................................|**2**|
+|Surface Tension Driven Convection Experiment..............................................................|**2**|
+|Basic Description..................................................................................................|**2**|
+|Science Requirements............................................................................................|**4**|
+|Measurement of Absorption Coefficients of Silicone Oil....................................................|**4**|
+|Absorption Coefficients..........................................................................................|**4**|
+|Apparatus and Procedure........................................................................................|5|
+|Results and Discussion of Absorption Coefficient Measurements.......................................|**6**|
+|Surface Temperature Measurements.............................................................................|8|
+|Apparatus...........................................................................................................|**8**|
+|Procedure...........................................................................................................|**12**|
+|Results and Discussion.............................................................................................|**13**|
+|Effective Emissivity of Silicone Oil...........................................................................|**13**|
+|Thermocouple Measurements and Calculated Surface Temperature Distribution.....................|**13**|
+|Constant Temperature Experiment.............................................................................|**14**|
+|Constant Flux Experiment.......................................................................................|**16**|
+|Concluding Remarks................................................................................................|**18**|
+|Acknowledgments....................................................................................................|**18**|
+|Appendix-Inframetrics Thermal Imaging System Specifications..........................................|**19**|
+|References.............................................................................................................|**24**|
+
+
+
+**111** ... 
+
+### **Summary** 
+
+In support of the Surface Tension Driven Convection Experiment (STDCE), a planned space transportation system (STS) flight experiment, a commercially available infrared thermal imaging system is used to quantify the imposed thermal signature along the free surface. The system was tested and calibrated for the STDCE with ground-based equivalents of the STDCE hardware. Before using the system, consideration was given to the radiation characteristics of the target (silicone oil). Absorption coefficients were calculated to understand the “surface” depth as seen by the imager and the penetration depth of the surface heater (C02 laser). The performance and operational specifications for, the imager and image processing system are described in detail to provide an understanding of the equipment. Measurements made with the system were compared with thermocouple measurements and a calculated surface temperature distribution. This comparison showed that in certain regions the IR imager measurements were within **f** **_5_** percent of the overall temperature difference across the free surface. In other regions the measurements were within **f** 10 percent of the overall temperature gradient across the free surface. The effective emissivity of silicone oil for these experimental conditions was also determined. Measurement errors and their possible solutions are discussed. 
+
+### **Introduction** 
+
+Noncontact surface temperature measurement methods have a distinct advantage over intrusive temperature measurement methods; it may be undesirable, or in some instances impossible, to contact the surface whose temperature is to be measured. Examples of such situations include dynamic targets at substantial distances (flying aircraft, remote earth sensing applications), large targets (buildings), harsh environments (applications in industrial areas), and processes which are sensitive to disturbances (fluid flow in microgravity). 
+
+The Surface Tension Driven Convection Experiment (STDCE) is a planned space transportation system (STS) or space shuttle microgravity flight experiment to study thermocapillary flows in a reduced-gravity environment. Thermocapillary flow is driven by a thermally induced surface tension variation along a liquid free surface. This surface tension gradient, established by heating the surface, is a surface-tractive force that creates a flow parallel to the liquid free surface from regions of low 
+
+surface tension to high surface tension. Although natural convection generally predominates in a normal earth environment, thermocapillary flows in reduced gravity may become significant (ref. 1); these flows could, under certain conditions, detrimentally impact planned commercial space activities in which a free surface exists (e.g., containerless processing). The STDCE is a flight experiment to quantitatively investigate thermocapillary flows in reduced gravity. 
+
+The theoretical development for these types of flows as well as the influence of configuration and parametric changes on the flows are discussed in detail in references 2 and 3, respectively. From these analyses the thermal signature along the free surface emerges as a very important parameter, because it is the driving force for these flows. Therefore, quantification of the thermal signature is essential for both ground-based research and the STS flight experiment. Temperature measurement by a contact method is sensitive to free-surface position fluctuations caused by motion of the free surface. Such measurements may result in inaccurate data, especially when the thermal boundary layer along the free surface is thin, as in the case of the STDCE. In the microgravity environment of the STS a liquid/gas free surface is not stationary, because of small accelerations aboard the vehicle; therefore, a noncontact temperature measurement system is sought for both the STDCE ground-based research and the flight experiment. 
+
+In recent years, developments in photo-optical instrumentation technology have made high resolution, noncontact, infrared temperature measurements possible for an experimenter who does not have the time or resources to develop such a system. Even though a basic system is commercially available, it must be tested with, and calibrated for, a particular application before it can be used with confidence. Consideration must be given to the radiation characteristics of the target and the accuracy of the equipment under the expected experimental conditions. The absorption characteristics of the target indicate the thickness of the “surface” seen by an infrared temperature measurement device. For semitransparent targets, generally liquids and gases, radiation is emitted (absorbed) over varying depths depending on the wavelength of the radiation and the properties of the material. If this depth over which radiation is emitted is small (e.g. the total depth of fluid **_H_** %- **l/k,** where k is the extinction coefficient), the measurement of the emitted radiation is considered to be from the “surface”. The emissivity of the target must also be known to correct for non-ideal radiators. Most important, the ability 
+
+of the instrument to accurately measure the surface temperature for a given set of experimental conditions must be checked via calibration with other techniques. 
+
+Commercially available infrared imaging equipment has been used quite extensively in the field for a variety of applications (refs. **4** and _3,_ but little documentation exists for its laboratory use for fluid surface temperature measurement, specifically, thermocapillary flow with the STDCE configuration. Moreover, there is little documentation of the absorption characteristics of silicone oil, the STDCE test fluid. Only one such reference was found (ref. 6), but it is not applicable to this problem. The reference data for silicone oil in solution cannot be used for pure silicone oil because absorption bands may undergo intensity or wavelength changes when the component is in solution (ref. 7). No reference was found containing data on the emissivity of silicone oil. 
+
+In support of the STDCE **an** infrared thermal imaging system was used to measure the surface temperature of a thermocapillary flow under the conditions and parameters which are presently representative of the flight experiment. The absorption characteristics of silicone oil were measured and the absorption coefficients were calculated prior to acquisition of the system; these were used to determine its operating wavelength (region of strongest absorption) and the reported “surface” thickness. In order to assess the ability of the thermal imaging system to perform the measurements required by the STDCE, thermocouple measurements made on identical flows were compared with the IR temperature data and a calculated surface temperature distribution. The effective emissivity of silicone oil for these experimental conditions was also determined. The techniques and procedures used in these measurements are detailed, and the results and problems are discussed. The work described herein supported the decision to use this type of measurement equipment for the STDCE. 
+
+A secondary purpose of this work was to provide guidelines for future users of commercially available imagers. A basic explanation of the types of available infrared measurement equipment and the performance specifications of the selected infrared imager are given to provide the reader with some background information on these types of equipment and to help in the selection of the device best suited for a given application. 
+
+### **Symbols** 
+
+- **_D_** diameter, cm 
+
+- **_d_** sample thickness, mm 
+
+- **_H_** depth, mm 
+
+- **_I_** radiation intensity k extinction coefficient, mm -’ Ma Marangoni number 
+
+- P pressure, Pa 
+
+- Pr Prandtl number 
+
+- P power, W _R_ test cell radius, cm 
+
+- Ra Rayleigh number _r_ radial position, cm 
+
+- _rlR_ nondimensionalized radial position T temperature at any point on surface, “C z depth of thermocouple, in. **_CY_** absorption coefficient, mm-’ **_E_** emissivity X wavelength, pm **_7_** transmission 
+
+Subscripts: 
+
+- a average 
+
+- b background 
+
+- **_c_** sidewall 
+
+- **_r_** reference **_t_** target 
+
+- w window X at wavelength X 
+
+- 0 initial 
+
+- 1 beginning of interval 
+
+- 2 end of interval 8-12 8 to 12 pm 
+
+- 10.6 10.6 pm 
+
+### **Surface Tension Driven Convection Experiment** 
+
+###### **Basic Description** 
+
+The basic experimental configurations for the STDCE are illustrated in figures 1 and 2. The figures show the two experimental configurations that will be studied: a constant temperature boundary condition (called CT experiment hereinafter), which will be imposed by maintaining a temperature difference along the free surface between the inside and outside walls, and a constant flux boundary condition (called CF experiment hereinafter), which will be created by heating the free surface with a radiant heater, thereby imposing different thermal signatures along the free surface. Two configurations will be studied for several reasons. In the CT experiment the total temperature difference along the free surface, which is related to the magnitude of 
+
+**2** 
+
+
+
+<!-- Start of picture text -->
+-COOLED<br>SIDE<br>WALL<br>- L I Q U I D<br>LCYLINDR  ICAL<br>tb)  CONTAINER<br>(a) Flat free surface.<br>(b) Curved free surface.<br>Figure  1 .-Constant temperature experiment.<br><!-- End of picture text -->
+
+the driving force (ref. 2), can be imposed and directly measured. In the CF experiment various heat flux distributions can be imposed along the free surface, and their effect on the flow studied (ref. 8). 
+
+Both experimental configurations will use a cylindrical container 10 cm in diameter and **_5_** cm in height. The STDCE will be conducted as two discrete experiments. For the CT experiment a 1.1-cm-diam by 5-cm-high resistance heater will be placed in the center of the test cell. For the CF experiment the resistance heater will be removed, and the free surface heated with a radiant heater. For both the CT and the CF experiments the test container will be filled to different levels in order to create both flat and curved free surfaces. Since the thermocapillary driving force acts tangentially to the local free surface, variations in free-surface shape permit different driving forces to be used as an experimental parameter. A flat free surface greatly simplifies both the theoretical and experimental analyses and, therefore, will be used for most of the experiments. Although a curved free surface allows investigation of a different driving force, it is unique to a low-gravity environment and cannot be studied terrestrially. Consequently, surface temperature measurements on a curved free surface are not included in the present work. Test matrices, which include AT, Marangoni number (ref. 2), heater power, freesurface shape, and duration for both CT and CF experiments, 
+
+
+
+<!-- Start of picture text -->
+-COOLED<br>SIDE<br>WALL<br>IQUlD<br>LCYLINDRICAL  CONTAINER<br>HEATING SOURCE<br>-COOLED<br>SIDE<br>WALL<br>- L I Q U I D<br>LCYLINDRICAL  CONTAINER<br>(b)<br>(a) Flat free surface.<br>(b)  Curved free surface.<br>Figure 2.-Constant flux experiment.<br><!-- End of picture text -->
+
+**TABLE 1.-CONSTANT TEMPERATURE EXPERIMENT TEST MATRIX** 
+
+|**Test**<br>**number**|**Temperature**<br>**difference,**<br>AT,**"C**|**Marangoni**<br>**number,b**<br>**Ma**|**Heater**<br>**power,a**<br>W|**Free surface**<br>**shape**|**Duration,**<br>**min**1<br>I|
+|---|---|---|---|---|---|
+|**8**|**10**|**3 . 9 ~ 1 0 **|**~1.5**|**flat**||
+|**9**|**25**|**l.2X105**|**6.8**|**flat**||
+|**IO**|**_60_**|**4 . 1 X 1 6**|**32.8**|**flat**||
+|**1 1**|**10**|**3 . 2 ~ 1 0 **|**~1.5**|**CUNed**||
+|**12**|**_60_**|**3 . 3 ~ 1 0 **|**~ 32.8**|**C U N e d**|**10**|
+
+
+
+**aValues for flat surface tests are computed numerically, and those for the curved surface are estimates** 
+
+**bBased on average liquid deplh** 
+
+are presented in tables I and 11. A more detailed explanation of other experimental considerations and parameters is given in references 1, 2, 3, and 8. 
+
+The experimental hardware for the STDCE is presently in a design phase, with the basic concepts in place. The test chamber will be made of copper to insure good thermal boundary conditions at the side wall. A 10-cSt silicone oil will be used as the test fluid because it is insensitive to surface contamination (a common problem with surface tension experiments), it is safe, and its viscosity represents the best compromise between flow speed and susceptibility to free 
+
+**3** 
+
+### **Measurement of Absorption Coefficients of Silicone Oil** 
+
+**TABLE n.-CONSTANT** FLUX **EXPERIMENT TEST MATRIX** 
+
+|**Tesr**<br>**number**|**Heating**<br>**zone**<br>**diameter,**<br>mm|**Total**<br>**power,**<br>**W**|**Temperature**<br>**difference,’**<br>**_AT,_“C**|**Marangoni**<br>**Ma**|Free**surface**<br>-4|**Duration,**<br>-|
+|---|---|---|---|---|---|---|
+|**1**|**10**|**0.5**|**10.4**|**4 . 2 X I e**|<br>**flat**<br>I|<br> <br>**_60_**|
+|**2**|**10**|**3.0**|**36.8**|**1.5X16**|||
+|**3**|**30**|**3.0**|**12.4**|**5 . 0 X I e**|||
+|**4**|**5**|**.2**|**10.2**|**4.1X I @**|||
+|**5**|**5**|**3.0**|**_64.7_**|**4.4X16**|||
+|**_6_**|**_5_**|**3.0**|**64.7**|**2 . 2 x 1 6**|**CUNed**<br>||
+|**_I_**|**30**|**3.0**|**12.4**|**23x104**|**CUNed**||
+
+
+
+disturbances. A planar cross section will be illuminated by using a 1-mm-wide helium-neon laser light sheet that is reflected by seed particles in the fluid, thereby allowing observation of the flows. Since this geometry produces an axisymmetric flow under most conditions, illumination of only one cross section will be needed. The flow data will be observed with an intensified video camera (which views the light sheet through a viewport in the copper chamber) and recorded with a videocassette recorder for post-flight analysis. 
+
+Bulk flow temperatures will be measured by placing temperature probes in the fluid. The heating systems used will be a resistance heater (CT experiment) and a C02 laser (CF experiment). The infrared imager data will also be recorded on videotape and reduced after flight in a manner similar to that outlined in this paper. 
+
+###### **Absorption Coefficients** 
+
+To understand how silicone oil emits and absorbs electromagnetic radiation, knowledge of its absorption coefficients is necessary. Lambert’s law states that the absorbance of a material is directly proportional to the thickness of the material in the optical path. The absorption coefficient is the proportionality constant, which is a material property; it indicates how strongly the material will absorb and emit electromagnetic radiation. Consider a slab of an isotropic fluid of thickness **_dr_** with incident radiation _lox_ at wavelength A, and _lox_ + **_dlox_** the radiation leaving the slab (fig. 3). The decrease in radiation intensity through the slab is 
+
+where k is the extinction coefficient, which is equal to the absorption coefficient **_a_** in the absence of scattering; that is, 
+
+
+
+<!-- Start of picture text -->
+k(X,T,P)  =  a(A,T,P)  (2)<br><!-- End of picture text -->
+
+These two coefficients are, in general, functions of wavelength A, temperature **_T,_** and pressure P. The samples used in the measurement of the extinction coefficient are at the same pressure and temperature; therefore, 
+
+Integrating equation (1) over the sample thickness d gives 
+
+###### **Science Requirements** 
+
+The intent of this work was to develop and calibrate an infrared surface temperature measurement system that will meet the science requirements for the STDCE. The complete science requirements are detailed in reference 8. The science requirements for the surface temperature measurement system are given here as a reference for the following sections. 
+
+“To obtain information on the temperature distribution along the free surface a thermography technique is employed. An IR scanner is placed above the free surface to construct a thermogram of the surface, from which the temperature distribution is determined. The wavelength range should be chosen so that the measured radiation comes from the region as close to the surface as possible. The surface temperature measurement error should be within **_&5%_** of AT and the spatial resolution should be less than 1 mm. To satisfy those requirements the technique should be carefully calibrated against measurement by fine thermocouples as well as against the numerical analysis. The response time should be less than 0.1 seconds.” (ref. 8) 
+
+
+
+<!-- Start of picture text -->
+Jo<br>‘Oh  /<br>‘Oh  ’  dlOh<br>I<br><!-- End of picture text -->
+
+**Figure 3.-Normal incident radiation on absorbing medium of thickness ak.** 
+
+**4** 
+
+where _d*_ is a dummy variable. Under the assumption that **_k_** does not vary with **_x ,_** equation **(4)** reduces to 
+
+where ZA(d)/ZA(O) (or _r)_ is the fraction of energy at wavelength X transmitted through a thickness of material _d;_ and **_kh_** is the extinction coefficient at wavelength X (ref. 9). This relationship is, in most cases, determined by experiment. Percent transmission, _r_ X 100, was measured as a function of wavelength for four fluid thicknesses of 100 percent silicone oil. When percent transmission was plotted with respect to fluid thickness, the resulting curve had the form of equation (5). It is more convenient to take the natural log of equation (5) and plot -In _r_ as a function of sample thickness _d._ This yields a straight line whose slope is equal to the absorption coefficient. Since infrared temperature devices generally operate in a specific wavelength range because of atmospheric transmission losses in certain regions, an average transmission _r,_ was calculated for a wavelength range XI to X2, 
+
+
+
+<!-- Start of picture text -->
+,-HOLDER<br>,<br>,  -VARIABLE<br>WIDTH<br>SPACER<br>,--NaCI WINDOWS<br>/<br><!-- End of picture text -->
+
+Figure 4.-Fluid sample holder for Perkin-Elmer Model 780 spectrophometer. 
+
+The integral was evaluated numerically by using Simpson's rule (ref. 10). The wavelength range for the calculated average transmission was determined by the operational wavelength ranges of available IR equipment and the regions where silicone oil best absorbs electromagnetic radiation. Since the C02 laser radiation determines the thermocapillary flow driving force, the absorption coefficient is also calculated at the COz laser wavelength (approximately 10.6 pm). 
+
+###### **Apparatus and Procedure** 
+
+A Perkin-Elmer Model 780 spectrophotometer was used to measure the percent transmission _r_ as a function of wave number, the reciprocal of wavelength. The wave number range covered by the spectrophotometer is **4000** to 500 cm-I (2.5 to 20 pm). The spectrophotometer has two optical paths-a measurement path and a reference path. A sample holder (fig. **4)** consisting of two sodium chloride (NaC1) windows (1.5 in. high, 0.75 in. wide, and 0.25 in. thick) separated by a spacer of variable thickness is placed in the measurement path, and a dummy sample holder, in the reference path. Sodium chloride is used for the window material because it has a flat transmission curve in the infrared. The sample of fluid is injected into the cavity between the two windows. The dummy sample of a single OS-in.-thick NaCl window is placed in the reference beam to account for the transmission loss through the NaCl windows in the sample holder. 
+
+All control commands for the spectrophotometer are executed through a personal computer (PC) interfaced with the spectrophotometer. During operation the spectrophotometer emits a single beam which is split into two beams of constant intensity but varying wave number. After the beams pass through the respective samples, the intensity of each beam is measured. The two measurements are compared, and the result, percent _r,_ is calculated and plotted as a function of wave number. The data and associated graph are then stored on a floppy disk for later analysis. A block diagram of the apparatus is shown in figure **_5 ._** 
+
+Four tests were conducted at 25 **OC,** with different sample thicknesses: 0.025, 0.050, 0.100, and 0.200 111111. After smoothing the data to eliminate small peaks caused by noise in the spectrophotometer, the percent _r_ as a function of wave number was extracted via a user program on the PC. 
+
+Absorption coefficient in the 8- to **_12-pm_** region.-To calculate the percent _r,,_ a user program was written to extract data at intervals of 10 wave numbers in the region 1250 cm-' to 830 cm-' (8 to 12 pm). The program, using Simpson's rule, calculates the area under the curve of percent _r_ as a function of wave number; then it divides this result by the interval length (420 cm-') to give percent **_7,._** This procedure was repeated for each of the four sample thicknesses. The average percent transmission was plotted with respect to sample thickness; this curve is the empirical relationship described by equation (5). These data were plotted again as -In _r_ with respect to sample thickness, and a linear least squares regression (ref. 11) yielded **_a,_** the slope of the line. 
+
+**_5_** 
+
+TABLE IV.-ABSORPTION COEFFICIENTS FROM LEAST SQUARES REGRESSION 
+
+
+
+<!-- Start of picture text -->
+r m A S U R E K N T  BEAM<br>,  I  J X L -<br>/  IoA  -1  I  1 1  ' A<br>-  I I<br>NaCl WINDOWS<br>'Oh  -m  Ir  A<br>-<br>\<br>\<br>\<br>DATA STORAGE AND ANALYSIS<br><!-- End of picture text -->
+
+|Wavelength range,<br>|Absorption coefficient,<br>**_a,_**<br>r n - I|
+|---|---|
+|8 to 12<br>I||
+|<br>10.6||
+
+
+
+TABLE V.-TRANSMISSION AS A FUNCTION OF WAVE NUMBER FOR FOUR SAMPLE THICKNESSES (RAW DATA) 
+
+||Wave||Sample<br>|thickness,||
+|---|---|---|---|---|---|
+||lumber,||d,|<br>mm||
+||1/X,|||||
+||cm-I|0.025|0.050|0.100|0.200|
+|**DATA STORAGE AND ANALYSIS**|1250|14.25|4.18|0.25|-0.54|
+||1240|38.81|17.95|4.70|-**_.09_**|
+|Figure 5.-Spectrophotometer block diagram.|1230|59.75|34.69|12.40|1.59|
+||1220|67.22|45.05|19.68|3.62|
+||1210|68.24|47.06|21.85|4.15|
+|**_n coefficientat10.6pm_**.-The expected output|1200|65.49|42.78|18.57|2.80|
+|of the**_C 0 2_**laser used by the STDCE is10.6pm|1190|58.49|33.68|11.81|0.99|
+|. The values of percent**_7_**at wave numbers|1180|47.69|22.75|5.65|-.05|
+|(10.64pm) and 950 cm-'(10.52pm) were|1170<br>|35.02|12.73<br>|1.88<br>|-.31<br>|
+|<br>r each of the four sample thicknesses, and from|1160<br>1150|22.92<br>1231|5.57<br>142|.33<br>-31|-.29<br>-38|
+|re described previously, the absorption coefficient|<br>1140|.<br>4.61|.<br>-.14|.<br>-.63|.<br>**_-.55_**|
+|elength was determined.|1130|.51|-.49|-.65|-.41|
+||1120|-.39|-.46|-.54|-.19|
+|**d Discussion of Absorption**|1110|-.43|**-.44**|-.42|-.36<br>|
+|<br>**Measurements**|1100|-.48|-.48|-.40|-.57|
+||1090|-.77|-.46|-.35|-.68|
+|ption coefficient results are summarized in tables|1080<br>|-.76<br>|-.42<br>|-.02<br>|-.46<br>|
+|<br>The raw data of percent**_7_**as a function of wave|1070<br>1060|-.62<br>12|.01<br>46|.14<br>12|-.19<br> 05|
+|he four sample thicknesses are presentedintableV.|<br>1050|-.<br>.07|.<br>.37|.<br>**_-.09_**|-.<br>-.03|
+|a plot of percent**_7_**as a function of wavelength|<br>1040|<br>.04|<br>-.I1|<br>-.09|<br>.02|
+|cent silicone oil in the**4000-**to 500-cm-'**_(2.5-_**|1030|-.27|-.20|-.06|-.06|
+|egion with fluid thicknesses of0.100,0.025,and|1020|-.77|-.30|**-.05**|-.09|
+|<br>The dataforthe sample thickness of0.050mm|1010<br>|-.34<br>|-.47<br>|-.17<br>|-.28<br>|
+|<br>rd n  dik nd thrfr r nt ilbl in|lo00|5.39|**_.06_**|-.22|-.33|
+|e o a s a, eeoe, ae o avaae|990|18.03|3.98|.I3|-.42|
+||980|33.71|11.72|1.60|-.17|
+||970<br>960|47.21<br>5724|22.13<br>3239|5.02<br>1054|.09<br>91|
+||<br>950|.<br>64.10|.<br>40.51|.<br>16.12|.<br>2.26|
+||940|67.19|44.61|19.49|3.22|
+|Sample<br>Wavelength range,X,**_p n_**|930<br>|66.19<br>|43.26<br>|18.59<br>|2.75<br>|
+|<br> <br>   <br>'|920|61.40|37.20|13.93|1.35|
+|thickness,<br> <br> <br>|910|5212|2671|756|17|
+|**_d ,_**rn<br>8 to 12<br>10.6|<br>900|.<br>37.00|.<br>14.31|.<br>2.29|.<br>.56|
+|<br>|890|19.79|4.40|-.33|-.74|
+|**la**<br>-In**la**<br>**la**<br>-In**_7a_**|<br>880|<br>7.70|<br>-.O|<br>-.78|<br>-.62|
+|_0.o00_<br>1.o00<br>0.00<br>**1.o00**<br>0.00|870|3.18|-.66|-.29|-.56|
+|,025<br>.225<br>1.41<br>,657<br>.42|860|2.00|-.40|. l l|-**_.64_**|
+|<br>,050<br>,130<br>2.05<br>.426<br>.85|850|.48|-.42|.15|**_-.60_**|
+|,100<br>**_,045_**<br>3.11<br>,178<br>1.73|840|-.39|-.42|-.28|-.46|
+|,200<br>,003<br>5.74<br>,027<br>3.60|830|-.27|-.40|-.56|-.52|
+
+
+
+Figure 5.-Spectrophotometer block diagram. 
+
+**_Absorption coefficient at 10.6 pm_** . -The expected output wavelength of the **_C 0 2_** laser used by the STDCE is 10.6 pm (943 cm-I). The values of percent **_7_** at wave numbers 940cm-' (10.64 pm) and 950 cm-' (10.52 pm) were averaged for each of the four sample thicknesses, and from the procedure described previously, the absorption coefficient at this wavelength was determined. 
+
+###### **Results and Discussion of Absorption** 
+
+###### **Coefficient Measurements** 
+
+The absorption coefficient results are summarized in tables **III** and IV. The raw data of percent **_7_** as a function of wave number for the four sample thicknesses are presented in table V. Figure 6 is a plot of percent **_7_** as a function of wavelength for 100 percent silicone oil in the **4000-** to 500-cm-' **_(2.5-_** to 20-pm) region with fluid thicknesses of 0.100, 0.025, and 0.200 mm. The data for the sample thickness of 0.050 mm were not stored on a disk and, therefore, are not available in 
+
+1 6 
+
+
+
+<!-- Start of picture text -->
+(a) Thickness  =  0.025  nun.<br>(b)  Thickness  =  0.100  mm.<br>(c) Thickness  =  0.200  mm.<br><!-- End of picture text -->
+
+**Figure 6.-Transmission as a function of wave number for three silicone oil sample thicknesses.** 
+
+graphic form. These plots show that the region of strongest absorption was between 1250 and 700 cm-’ (8 and 14 pm). This result combined with the availability of an imager which operates in the 8- to 14-pm region determined the region to be averaged. The percent **_7,_** was calculated for the region between 1250 and 830 cm-’ (8 and 12 pm) because the commercial imagers that were available at the time operated in this region. Adding the contribution of the **12-** to 14-pm region would not have a profound impact on the “surface” as seen by the imager since the imager detector response decreases sharply in this region (as will be discussed later), thus de-emphasizing its contribution. 
+
+Table **I11** lists the **_T~_** of sample thicknesses for both wavelength ranges; these data are shown graphically in figure 7. The results of the regression on both data sets are listed in table IV and are plotted in figure 8. In figure 7 the reduction in transmission of radiation by a factor of l/e (or 63.2 percent absorbed) in the 8- to 12-pm region occurs at a sample thickness of approximately 0.012 mm. Similarly, for radiation at 10.6 pm the sample thickness is 0.060 mm. This thickness is commonly known as the mean penetration length and is larger for the data at 10.6 pm because there is a minor transmission window around that wavelength. The transmission in the 8- to 12-pm region at a sample thickness of 0.200 mm is nearly zero. Therefore the “surface” as seen by an imager is approximately 0.200 mm thick. A comparison of the results shown graphically in figure 6 and tabularly in table III indicates that the C02 laser radiation penetrates deeper than the surface the imager sees. This is advantageous since, if the situation were opposite, the temperature indicated by an infrared temperature measurement device would be an average temperature of the region where a temperature gradient exists due to the **_C 0 2_** laser heating. 
+
+### **Surface Temperature Measurements** 
+
+###### **Apparatus** 
+
+**_Infrared temperature measurement equipment._** -Presently there are several types of noncontact infrared temperature measurement devices of differing levels of sophistication: spot radiometers, qualitative infrared imagers, and quantitative infrared imagers (ref. 12). The basic operation of the three types is similar. All targets radiate energy whose intensity is a function of temperature and wavelength. For a black-body the functional relationship is the Planck function, and for a gray-body the functional relationship is proportional to the Planck function, where the proportionality constant is called the emissivity. The emitted energy is received by a detector in the device that produces an output signal related to the emitted intensity. 
+
+Spot radiometers (also called infrared pyrometers), in general, use pyroelectric detectors, which develop an electrical surface charge when the surface temperature is changed. These 
+
+
+
+<!-- Start of picture text -->
+1 . O Q  WAVELENGTH,<br>I  A.<br>PM<br>p  .8  8  TO  12<br>L  10.6<br>El<br>v) ‘0  .6<br>m<br>L<br>4  =  TRANSMISSION  =  l/e<br>+  . 4<br>w  W  1  (63  PERCENT ABSORBED)<br>w  2  P  .2  I<br>n<br>U<br>-~  pp3<br>0  .02  .04  .06  .08  .10  .12  . l 4  .16  .18  .20<br>SAMPLE THICKNESS,  d.  MM<br><!-- End of picture text -->
+
+Figure 7.-Average transmission of silicone oil as a function of sample thickness _d._ 
+
+
+
+<!-- Start of picture text -->
+WAVELENGTH,<br>I<br>A.<br>6 4  PM<br>0  8  TO  12<br>p 5 0  10.6<br>L  -  - I N  T  =  18.0(d)  -  0.03<br>f:  fn  4 -  _ _  - I N  T  =  27.0(d)  +  0.44  /<br>‘“  /<br>SE  L  v)  /  /  -3<br>B+ 3I /  P’  , ,-<br>/<br>w  4  W  o / /  ,,/-,<br>5 2<br>P  C / ’<br>- Z I /<br>I  1 -  d<br>/ ,<br>l ,  l ~ p ~  ~  -  p - ~<br>0  .02  .04  .06  .08  .10  .12  .14  .16  .18  .20<br>SAMPLE THICKNESS,  d.  MM<br><!-- End of picture text -->
+
+Figure 8 -Plot of -In of average transmission as a function of sample thickness _d._ Slope of line is absorption coefficient **01** 
+
+instruments are small and easily portable but have two major drawbacks-a single point measurement and a large response time (seconds). 
+
+Both qualitative and quantitative infrared imagers (also called thermographic devices) use quantum detectors (photodetectors), such as mercury cadmium telluride semiconductors in which the electrons are raised from nonconducting to conducting states by the energy contained in photons arriving from the target. The result is an electrical charge proportional to the intensity of the incoming radiation. Imagers produce a **full** twodimensional temperature field by scanning a detector field of view, called an instantaneous field of view (IFOV), either over the entire field of view of the imager (scanning imagers) or by staring at the target with an array of detectors, called a focal plane array. The output is either displayed at 1/30 sec (for TV-compatible systems) on a video monitor or digitized and stored on a disk. Imagers overcome the previously mentioned problems of spot radiometers, but they introduce other constraints. Quantum detectors require cooling (generally to 
+
+**8** 
+
+liquid nitrogen temperatures) to achieve sensitivity to infrared wavelengths, and they are sophisticated, delicate instruments, which reduces their portability. 
+
+The distinction between quantitative and qualitative imagers is determined by whether the instrument has the ability to measure absolute temperatures or merely display intensities (e.g. night vision equipment). The quantitative imager has the ability to extract accurate temperature data from the image, whereas the qualitative imager provides the ability to detect and recognize active radiation emitted from a target (as opposed to visible radiation, which is reflected). 
+
+Selection criteria.-The class of infrared imagers that is most suited for the STDCE, based on the aforementioned characteristics, is a quantitative infrared imager. As stated previously, the STDCE requires a **full** field noncontact temperature measurement device that has a response time of less than 0.1 sec, a spatial resolution of 1 mm, and the ability to extract qualitative surface temperature data from the image. The commercially available infrared imagers (henceforth, imager refers to a scanning imager) are typically offered with spectral sensitivities in three wavelength ranges: short band (1 to 5 pm), long band (8 to 14 pm), and broad band (3 to 14 pm). The wavelength range of the imager is decidkd by two factorsthe absorption characteristics of the target and the expected temperatures of the target. The expected STDCE surface temperatures are less than 100 "C above normal ambient temperatures (25 "C). Since the peak wavelength of a blackbody at these temperatures is approximately 10 pm, an imager with a peak detector sensitivity near this point is desirable to achieve the highest signal-to-noise ratio. The area of strongest absorption for silicone oil is between 8 and 14 pm; therefore a long band imager is best suited for use with the STDCE. 
+
+A long band infrared imager and image processing system were purchased from Inframetrics, Inc. The state-of-the-art measurement performance of the Inframetrics Model 600 infrared imager and its user features make it an excellent choice for this particular application. 
+
+In frametries thermul imuge processing system. -The target absorption coefficient must be known and the performance of the imaging system understood before the measurements can be interpreted. Specifications such as detector type, band pass, thermal sensitivity, information rate, image resolution, dynamic range, and calculation of absolute temperatures are the factors that determine how the imager measures radiation from, and calculates the temperature of, a surface. 
+
+The basic operational concept of the Inframetrics Model _600_ and image processing system is presented herein to provide a general understanding of the equipment. Detailed descriptions of each of the performance specifications are presented in the appendix for readers interested in understanding the complete operation of the Inframetrics system. 
+
+**_Model_** 600 **_thermal infrared imager:_** The Inframetrics infrared imager (henceforth called the Model 600) is a scanning-type imager. An instantaneous field of view (IFOV) is scanned over the field of view (FOV) of the scanner. 
+
+Radiation from the IFOV is focused on the mercury cadmium telluride detector as the IFOV is scanned over the FOV at 60 frames per sec, thereby constructing the thermographic image. The image is digitized into discrete gray levels, and the intensity of each pixel is converted in real time to a temperature via factory supplied calibration curves. The image is converted to a standard TV signal (EIA RS-170 or NTSC composite) and displayed on a standard TV monitor in false color proportional to temperature. User inputs to the system are target emissivity (effective emissivity) and background temperature; these account for nonblack-body radiation and background reflection radiation from the target. The spatial resolution of the Model _600_ is 0.8 mm (for a working distance from the scanner to the target of 40 cm), and the response time is 0.033 sec. Both satisfy the science requirements. 
+
+The Model _600_ has many features available to the user. The temperature ranges available are 5, 10, 20, 50, 100, and 200 "C (normal range) and 500 and lo00 "C (extended range). These temperature ranges are called the temperature window. The center temperature of the window is user selectable thereby allowing these two variables to be combined to maintain full sensitivity-that is, the smallest number of, or fraction of, degrees per gray level while keeping the temperature of all desired objects within the minimum and maximum selected temperature. 
+
+As the image is displayed on the TV monitor the user can select any one of three measurement modes: point, area, and line scan. In point mode the temperature of a single picture element (pixel) is reported when a set of cross hairs is positioned on that pixel. Line scan mode allows the user to select a cross section of an image and display the temperature profile of that cross section. These modes, as well as target emissivity, background temperature, and a variety of other housekeeping functions, are selected from the keypad on the control unit. 
+
+**_i%mnoteknix thermal image processing system:_** The combination of the Model 600 scanner, electronics and control unit, and monitor is a stand-alone, quantitative thermal imaging system capable of solving the radiometric equation in real time. The system can be made even more powerful with the addition of the Thermoteknix thermal image processing system. The Thermoteknix system is an IBM PC/AT-based dedicated image processing and measurement system that includes all features available on the standard Model 600 (point, line, and area modes) plus a plethora of other functions. These functions include continuous 8-bit digitization, digital disk image storage, three point measurement modes, thermal gradient, image magnification, thermal magnification, image averaging, and color hardcopy. Since the image processing system contains all the necessary calibration curves to convert intensity levels from the image into absolute temperatures, the Model _600_ electronics and control unit is used only for construction of the image, scan conversion to television format, temperature range and center temperature selection, and some housekeeping details. 
+
+**9** 
+
+In addition to the Model 600 and Thermoteknix image processing system (shown in fig. 9), the experimental hardware consists of the test cell, test fluid, heating systems, and thermocouple instrumentation. All hardware is assembled on a Melles Griot breadboard (fig. 10). 
+
+Test ceZZandfluid.-The test cell used for both the CT and CF experiments was a 10.2-cm-diam by 6.2-cm-high copper cylinder with a 0.16-cm wall thickness, which is the approximate size of the test cell required in the STDCE. A 0.16-cm copper plate was soldered to the end of the copper cylinder to provide a bottom. In order to maintain a constant temperature boundary condition at the side and bottom walls, constant temperature water was circulated through a 1 .O-cm-diam copper tube soldered to the outside diameter and bottom of 
+
+the test cell (fig. 11). A Hotpack Corp. Model 603340 constant temperature recirculating bath circulated constant temperature water through the tubing at approximately 12 litedmin with a temperature control of &0.01 "C. A Plexiglas shield was placed over the test cell to reduce reflected background radiation. The fluid used for these experiments and with the STDCE was Dow Corning 200 fluid (silicone oil) of 10-cSt viscosity. 
+
+Heating systems.-The external heating system for the CF experiment was an 8-W RF-excited **_C 0 2_** laser manufactured by m a n Electro-optics (now Melles Griot Laser Products). The laser delivered a constant energy flux to the fluid surface at normal incidence. Since the C02 laser beam is outside visible wavelength region, a 5-mW Spectra Physics Model 159 
+
+
+
+<!-- Start of picture text -->
+. -.<br><!-- End of picture text -->
+
+Figure 9.--Infrared imaging system. 
+
+Figure 10.-Experimental hardware 
+
+**WIdJNAL PAGE CQLBR PHOTOGRAPH** 
+
+
+
+<!-- Start of picture text -->
+C02  LASER BEAM<br>(CONSTANT FLUX<br>EXPERIMENT)  7<br>/‘<br>: :  : i/  /<br>. .<br>rHEATER LEADS  . .  HEATER AND WALL<br>. . .  .  THERMOCOUPLE57<br>i I 1  / I<br>SHAPED<br>ERMO-<br>UPLE<br>CARTR IDGE HEATER<br>(CONSTANT TEMPER-<br>ATURE EXPERIMENT)<br><!-- End of picture text -->
+
+**Figure 11 .-Test cell.** 
+
+helium-neon laser facilitated alignment of the beam as shown in figure 12. The He-Ne laser was combined with the C02 beam by means of a beam combiner manufactured by TwoSix, Inc. This optic reflected the He-Ne beam while transmitting the C02 beam, thereby allowing concentric alignment of the two beams. Since the two beams followed identical paths, the optics were aligned only when the C02 laser was off and the He-Ne laser on, thereby reducing the possibility of injury caused by the more dangerous C02 laser. The laser power was read in watts directly from a Coherent, Inc., Model 201 power meter. Because the C02 laser required such a large power input (225 W) to deliver a small output, there was a considerable amount of waste heat that was removed via a water-cooled baseplate. The output stability of the laser 
+
+was dependent on the thermal control of the laser cavity. Tap water provided a coolant that was stable enough to maintain the laser output to approximately a 5-percent variation. Because of the beam geometry, the C02 laser could produce a 5-mm-diam beam without any lenses in its optical path. 
+
+A cartridge heater press-fit into a 1.1-cm-0.d. by 5-cm-high copper shell heated the fluid for the CT experiment. The cartridge is essentially a resistance that produces heat when an electrical current is passed through the circuit. For the CT experiment the center of the test cell was located; then the cartridge heater inside the copper shell was fastened to the bottom wall with epoxy cement (fig. 11). This configuration yielded a constant temperature boundary condition between the heater and the side wall. A variable AC power supply provided the power source for the heater. The voltage and current were measured with a John Fluke Mfg. Co., Inc., Model **8840** A multimeter. 
+
+Thermocouple **_instrumentation._** -Thermocouples measured the flow, wall, and background temperatures. The background temperature was measured with a type-E thermocouple mounted on the Plexiglas radiation shield above the test chamber. This location was chosen because the background radiation that was reflected from the fluid surface and seen by the IR imager originated from this surface. Therefore, this temperature was the most accurate measure of the background radiation. During the CT experiment, type-T thermocouples were mounted on the heater and side walls, whereas during the CF experiment only the sidewall thermocouple was used because the cartridge heater was removed. For the thermocouple surface temperature measurement, a type-E thermocouple with a 0.001-in. bead was attached to a J-shaped probe positioned by using a three-axis linear translation stage so that the probe did not penetrate the surface in the vicinity of the bead (fig. 13). The thermocouples’ emf was read on the Fluke multimeter with electronic cold junction compensation performed by Omega Engineering **Corp.-CJ** (type-E and type-T) cold junction compensators. 
+
+
+
+<!-- Start of picture text -->
+’  rFRONT SURFACE<br>r M I R R O R S  I  “IRRoR<br>He-Ne  LASER<br>C02 LASER<br>BEAM  COMBINERA  I R IMAGERA<br>FREE SURFACE<br><!-- End of picture text -->
+
+**Figure 12.-Optical paths.** 
+
+**Figure 13.--J-shaped thermocouple probe and measurement location.** 
+
+**11** 
+
+###### **Procedure** 
+
+Methodohgy.-With the knowledge of the absorption characteristics of silicone oil and an understanding of the operating and performance characteristics of the Model _600,_ surface temperature measurements were made and interpreted. The understanding of these characteristics provided the background to explain the sources of error in the infrared surface temperature measurements. 
+
+Two other methods were used as standards with which to compare the data from the Model _600._ For the CT experiment (internal heating), thermocouple measurements and a calculated surface temperature distribution were used. For the CF experiment (external heating), only the calculated surface temperatures were used, for reasons which will be explained in the section Thermocouple Measurements and Calculated Temperature Distribution. 
+
+Constant temperature experiment. -The test cell was washed with soap and hot water and leveled on the breadboard. A barrier coating (3M FC-723) was applied to the heater edge to ensure that the fluid would not spill over the edge (fig. 11). The test **cell** was then **filled** to the edge of the heater wall **_(5_** cm from the bottom wall) with silicone oil. Before **data** were taken, the distance between the edge of the cartridge heater and side wall at the azimuthal angle **_8_** (fig. 14), where the measurements were to be taken, was measured with a dial caliper. This length plus half the heater diameter was used as the test cell radius **_R_** to nondimensionalize the radial position (Le., **_r/R)._** The three-dimensional positioner was adjusted such that one axis was parallel to the desired radius. The thermocouple was traversed along and normal to this radius for each measurement by adjusting the translation stage micrometers, which are calibrated to 0.01 mm. The pixel locations in the IR image that corresponded to the center of the heater and the side wall were determined. The distance between these locations was 
+
+
+
+<!-- Start of picture text -->
+2<br>l o /<br>Figure  14.-Coordinate system.<br><!-- End of picture text -->
+
+used to nondimensionalize the radial position for the IR Imger data. The intermediate pixels were addressed, and the temperature distribution as a function of pixel location was extracted. 
+
+Power applied to the cartridge heater and constant temperature water (23 "C setpoint) circulating around the test **cell** initiated the experiment. The experiment was run for about 2 hr so that the surface temperature could reach steady state for comparison with the calculated surface temperature distribution, which was computed assuming a steady-state model. 
+
+At the start of the run the IR image was stored. The image used for extraction of temperatures was the average of 10 frames acquired at 1 sec intervals. This reduced the noise in the image by a factor of the square root of the number of frames averaged. Immediately following the storage of the image, the surface temperature was measured by traversing the thermocouple along the measurement radius at intervals of 0.5-mm from **_rlR_** = 0.1 to 0.24 (near the heater); 1 mm from **_rlR_** = 0.24 to 0.34; 5 mm from **_rlR_** = 0.34 to 0.94; and 1 mm from **_rlR_** = 0.94 to 1.00. The grid size was changed to accommodate a sharp temperature gradient near the walls. The position of the thermocouple in relation to the surface is extremely critical. The accepted method for positioning the thermocouple is to traverse the probe, starting from the bulk, normal to the surface until the bead begins to distort the surface. At this position the reading was taken (fig. 13). The position was readjusted for each measurement point. Following the acquisition of surface temperature data, the side wall, heater, and background temperatures were again measured to determine whether the experimental conditions had changed. 
+
+Constant **_flux_** experiment.-Between the CT and CF experiments, the test cell was disassembled (the cartridge heater removed), washed with soap and hot water, releveled, and secured to the breadboard. The test cell was filled with clean silicone oil to a level of 5.5 cm from the bottom. The procedure for aligning the thermocouple, outlined previously, was repeated with the following changes. Since there was no inner wall (cartridge heater), the center of the test cell was determined by the intersection of two diameters at right angles. Again, the distance from this point to the side wall, along the radius where the measurement would be made, was measured. The pixel location of the side wall, along the measurement radius, in an IR image of the test cell was determined. 
+
+The C02 laser beam was aimed at the center of the test cell (as determined above) at nearly normal incidence. Fine adjustments to the beam position were made by rotating the turning mirror that directed the beam toward the fluid surface. The beam was adjusted until the output of the thermocouple placed at the center of the test cell was at a maximum, thereby indicating that the maximum intensity (center) of the beam coincided with the center of the test cell. The pixel location reporting the highest temperature on the IR image was recorded as **_r_** = 0. 
+
+**12** 
+
+After powering up the laser, the output power was stabilized (0.5 hr) with the test cell cooling water at the **23** "C setpoint. To initiate the experiment the beam block was removed, thereby allowing the laser to heat the surface. Again the experiment was run for about **2** hr to allow a steady-state condition to be reached. The background and wall temperatures were recorded at the beginning and end of the data acquisition. The power meter was momentarily placed in the beam path to record the laser power. After removing the power meter and waiting 5 min, when the thermocouple output was again steady, the IR image was averaged and recorded in the same manner as before. The thermocouple was traversed across the surface, and measurements were taken at radial locations identical to the CT experiment, except the measurements extended to the center at intervals of 0.5 mm. 
+
+Data reduction. -The thermocouple data reduction consisted of converting the measured voltage to temperature with a basic computer program that incorporates the Omega Engineering Corp. temperature-to-voltage chart (type E). The program linearly interpolated between values in the table to determine the temperature of the corresponding measured voltage. The results where plotted as a temperature difference (T - **_T',),_** where **_T,_** is the thermocouple-measured side wall temperature, as a function of radial position **_rlR._** 
+
+The surface temperature data from the IR imager was extracted from the image stored on the hard disk of the image processing computer. Since the end points of the measurement radius were determined, a nondimensional radial position, in terms of screen pixels, was determined. After the background temperature and target emissivity were input, the surface temperatures at specified pixel locations were extracted from the image by the point measurement mode. The pixel locations sampled were determined by using a grid size similar to that used with the thermocouple measurements. A variable grid size was used because of the sharp gradient near **_rlR_** = 0 and **_rlR_** = 1. These data were plotted as a temperature difference _(T_ - **_T,)_** where _T,_ was the side wall temperature measured by a thermocouple. This difference was plotted with respect to radial position **_rlR_** on the same graph with the calculated surface temperature distributions. 
+
+### **Results and Discussion** 
+
+###### **Effective Emissivity of Silicone Oil** 
+
+The user inputs to the Model _600_ are the background temperature and the target emissivity. Arriving at the background temperature measurement was not a problem because it can easily be measured with a variety of devices. Determining the target emissivity, on the other hand, was not as straightforward. Since the emissivity of silicone oil was not to be found in the literature, the effective emissivity was determined empirically. This value is called the effective value because it was not measured but implied by comparison of the IR 
+
+imager surface temperature data with the thermocouple and calculated surface temperature distributions. This implied emissivity, or effective emissivity, is the effective average. spectral directional emissivity. The spectral characteristic was determined by the operating wavelength of the imager (8 to 14 pm), whereas the directional characteristic was determined by the angle at which the imager viewed the surface. In order to accommodate the optical path of the C02 laser (fig. 12), the imager must view the target at a small angle from the unit normal. In reference 9 the directional spectral emissivity is predicted from electromagnetic theory as a function of emitted ray angle 0 measured from the unit normal. However, these results indicate that the directional spectral emissivity does not vary until 0 becomes larger than 45" (ref. 9). Therefore, viewing the surface at an angle of approximately 10" should not affect the reported surface temperature. 
+
+###### **Thermocouple Measurements and Calculated Surface Temperature Distribution** 
+
+Before thermocouple measurements were made for the CT and CF experiments, Kamotani (ref. **3)** calculated the temperature distribution using a numerical model developed to supplement the STDCE and to assist in its design. The thermocouple measurements made in the CT experiment by using the aforementioned procedures agree very well with the calculated surface temperature distribution. 
+
+A major problem was encountered with the thermocouple measurements made in the CF experiment. Many of the thermocouple surface temperature measurements made were not repeatable. The problem was caused by attempting to measure the surface temperature under the laser beam by using the positioning technique previously described. The thermocouple was heated directly by the laser, which resulted in a distorted measurement. This direct heating made it impossible to determine if the thermocouple was reporting the flow temperature or the temperature resulting from direct heating. Therefore, the temperature reported by the thermocouple fluctuated greatly depending on its placement in relation to the surface and heating depth. Figure **15** shows the surface temperature distribution measured by the thermocouple at different vertical (z) locations as a function of **_rlR._** The thermocouple was traversed across the surface five times at different vertical locations, given in thousandths of an inch. These numbers are a measure of the thermocouple position relative to an arbitrary zero. In order to determine the relationship between the thermal boundary layer and the heating depth, measurements were made (fig. 16) by traversing the thermocouple in the z-direction starting from the bulk fluid. The line between the thermal boundary layer and the direct heating region is not well defined, but the approximate boundary layer thickness is 0.15 mm (0.006 in.) Recall that the depth at which the thermocouple should be placed to avoid direct heating is 0.265 mm (Le., the depth at which 99 percent of the heater radiation is absorbed). The thermocouple could not be placed 
+
+**13** 
+
+#### **ORlQlNAL PAGE IS Of POOR QUALITY** 
+
+tive emissivity was determined empirically by comparison of imager data with thermocouple and calculated surface temperature distributions. The effective emissivity was varied until the best agreement between the IR imager data and the data from other techniques was achieved. On the basis of experience with a spot radiometer and qualitative experience with the Model **_600,_** the effective emissivity was placed near 0.9. Figure 17 is a plot of temperature difference (T - **_T,)_** as a function of radial position **_rlR_** for the three techniques, with three values of effective emissivity for the imager technique. The agreement between the thermocouple measurements and the calculated surface temperature distribution is very close, which is a confirmation of the accuracy of the numerical model. The values of effective emissivity plotted are E = 0.95, 0.90, and 0.85. Of these, the value of 0.90 resulted in the best comparison over the temperature range produced under the experimental conditions (input power to the cartridge heater = 17.7 W and wall temperature = 23.0 "C). From these data it was evident that different values of effective emissivity produce a better comparison in certain regions (temperature ranges). Effective emissivity, then, is dependent on temperature. In regions of higher temperature the value of higher temperature the value higher temperature the value **_E_** = 0.95 produced the produced the best comparison, and in regions of lower temperature the value **_e_** = 0.85 produced the best comparison. 
+
+
+
+<!-- Start of picture text -->
+70  ,-LASER  THERMOCOUPLE<br>4  BEAM  mASUREMENT<br>HEAT  I  NG  DEPTH.<br>"0 60  ZONE  I N .<br>c<br>J  - 1 . 0 ~ 1 0 - ~<br>2  W  50  -1.5<br>4  0  -2.0<br>ps  W  a  L.  -3.0<br>2 4 0  x  -4.0<br>W U  4  =L L<br>30<br>1  . . . . . e<br>=<br>.4  .6  .8  1 .o<br>RADIAL POSITION,  r/R<br><!-- End of picture text -->
+
+Figure 15.--Surface temperature as a function of radial postion at different thermocouple locations for constant flux experiment. Zero location is arbitratry, **_p_** = 2.7 W, and beam diameter = 5 nun. 
+
+
+
+<!-- Start of picture text -->
+4  a better comparison in certain regions (temperature ranges).<br>Effective emissivity, then, is dependent on temperature. In<br>20  ~  regions of higher temperature the value of higher temperature the value higher temperature the value  E  =  0.95 produced the produced the<br>best comparison, and in regions of lower temperature the value<br>15  ~  e  =  0.85 produced the best comparison.<br>The data presented in figures 18 and 19 show two different<br>experimental conditions (input power levels). The choice of<br>z  5  -  - - - -  DIRECT  expected to be encountered in the STDCE. Figure 18 is experimental conditions was decided by the temperatures<br>=  HEATING  identical to figure 17 except that the only value of effective<br>N  I  o y + -  -5  FROM LASER  I  emissivity plotted is  e  =  0.90.  A  photograph of the actual<br>c  w  CL  ~~  image from which the IR temperature data were taken is shown<br>n  >  T  --'-<br>-5  7  0 "  APPROXIMATE BOUNDARY  THERMOCOUPLE  in figure 20. The temperature (in degrees C) is proportional figure 20. The temperature (in degrees C) is proportional 20. The temperature (in degrees C) is proportional The temperature (in degrees C) is proportional<br>D  c  LAYER  THICKNESS  RADIAL POSITION.  to the color, as indicated in the scale on the left side of the<br>f*<br>-10  -  ~  r/R  photograph. This condition represents the probable maximum<br>0  0.5  temperature difference expected in the STDCE for the CT<br>-15  X  -08  experiment. Figure 19 shows the CT experiment with a power<br>D  .06<br>0  .04<br>+  -02  60<br>0 0 U  r  THERMCOUPLE<br>2  50  (  t  IR IMAGER.  E  =  0.95<br>-25-  -1 1-  -  --I  c  U  IR IMAGER.  E  =  0.90<br>20  40  60  80  100  120  0  I R  IMAGER.  E  =  0.85<br>TEMPERATURE.  1,  OC  5  40  --  NUMERICAL CALCULATION<br>Figure 16 -Themcouple boundary layer temperature distnbutions for constant<br>flux  expement when zero IS IS  arb~trary,  p = 2  7 W, and W, and and  beam  d1ameter=5 mm mm<br>both beyond this absorption depth and in the thermal boundary<br>layer. For these reasons the thermocouple surface temperature<br>measurements were not used to assess the accuracy of the IR<br>imager measurements.  61<br>0  .2  .4  .6  .8  1 .o<br>Constant Temperature Experiment  RADIAL POSITION,  r/R<br><!-- End of picture text -->
+
+The data presented in figures 18 and 19 show two different experimental conditions (input power levels). The choice of experimental conditions was decided by the temperatures expected to be encountered in the STDCE. Figure 18 is experimental conditions was decided by the temperatures identical to figure 17 except that the only value of effective emissivity plotted is e = 0.90. A photograph of the actual image from which the IR temperature data were taken is shown in figure 20. The temperature (in degrees C) is proportional figure 20. The temperature (in degrees C) is proportional 20. The temperature (in degrees C) is proportional The temperature (in degrees C) is proportional to the color, as indicated in the scale on the left side of the photograph. This condition represents the probable maximum temperature difference expected in the STDCE for the CT experiment. Figure 19 shows the CT experiment with a power 
+
+Figure 16 -Themcouple boundary layer temperature distnbutions for constant **flux** expement when zero IS IS **arb~trary,** **_p = 2_** 7 W, and W, and and beam d1ameter=5 mm mm 
+
+both beyond this absorption depth and in the thermal boundary layer. For these reasons the thermocouple surface temperature measurements were not used to assess the accuracy of the IR imager measurements. 
+
+###### **Constant Temperature Experiment** 
+
+Figure 17.-Comparison of thermocouple and calculated surface temperature distributions with those of IR imager at three emissivities for constant temperature experiment with **_p_** = 17.7 W and **_T,_** = 23.0 "C. Numerical calculation used Ma = 2.63 **X** lo5, Ra = 1.OX **lo8,** and Pr = 68.5. 
+
+In **all** experimental runs the difference between the beginning and ending wall, background, and heater temperatures was less than 0.2 "C for each. As mentioned previously, the effec- 
+
+**14** 
+
+
+
+<!-- Start of picture text -->
+ORIGINAL  PAGE<br>CQLQR  PHOTOGRAPH<br><!-- End of picture text -->
+
+
+
+<!-- Start of picture text -->
+0"  60  l8 1<br>0"  1 6 1  1<br>2  50<br>c  u  u ' 14  0  THERMOCOUPLE<br>I  c  THERMOCOUPLE  0  IR  IMAGER  (E  =  0.90)<br>40  _ _  0  NUMERICAL CALCULATION I R IMAGER  (E  =  0.90)  ; v  12-  r ;  __  NUMERICAL CALCULATION<br>PI  2  W  30<br>22<br>W<br>P<br>20<br>W V<br>2  10<br>=  Lo  ,  -  HEATER WALL<br>I<br>0  . 2  .4  . 6  .8  1  .o<br>RADIAL POSITION, r/R  0  .2  .4  .6  .8  1  .o<br>RADIAL POSITION, r/R<br>Figure 18.-Comparison of numerical, thermocouple, and IR imager surface<br>Figure 19.-Com~arison ofthe numerical, themcouple, and IR imager surface<br>temperature distributions for  temperature experiment with  E  =  o,90,<br>temperature distributions for the constant temperature experiment with<br>p =  17.7  W, and  T,  =  23.0 "C.  Numerical  calculation used Ma  =  2 . 6 3 16,  ~<br>Ra  =  1 . 0 IO8.  ~  and Pr  =  68.5.  E  =  0.90,  p  =  5.0 W, and W, and and  T,  =  22.8 "C.  The  numerical calculation used<br><!-- End of picture text -->
+
+
+
+<!-- Start of picture text -->
+Figure 19.-Com~arison ofthe numerical, themcouple, and IR imager surface<br>temperature distributions for the constant temperature experiment with<br>E  =  0.90,  p  =  5.0 W, and W, and and  T,  =  22.8 "C.  The  numerical calculation used<br>Ma  =  6 . 2 104,  ~  Ra  =  2 . 4 IO',  ~  and Pr  =  94.0.<br><!-- End of picture text -->
+
+
+
+<!-- Start of picture text -->
+TEMPERATURE.<br>OC<br>69.1<br>66.2<br>63.3<br>60.3<br>57.1<br>53.9<br>50.6<br>47.3<br>43.8<br>40.5<br>37.2<br>33.6<br>30.1<br>26.5<br>22.7<br>18.9<br><!-- End of picture text -->
+
+**Figure 20.-Constant temperature experiment IR image for** **_T_** = **43.4 "C,** **_R_** = **50,** **_E_** = **0.90, and** **_p_** = 17.7 W. 
+
+input of 5.0 W. The agreement among the three techniques for the 17.7- and 5.0-W power levels is **_* 5_** percent of the ATbetween the heater and side wall in the region _rlR_ = 0.125 to 0.90. Outside this region (or near the side walls) the measurement errors increase substantially to approximately **f** 10 percent of the AT. These errors can be explained by using the imager slit response function (SRF). (See the appendix for a detailed discussion of the slit response function.) Since there is such a sharp temperature gradient near the side wall, the imager does not follow exactly the nearly step change in temperature. The effect of the slit response function is given by 
+
+**Tapparent** = **SRF** Tobject -k (l - **SRF) Tsurround** 
+
+Since this gradient exists over a smaller distance than a 5-IFOV length, some measurement error is expected. To compound the problem, the emissivity of the copper test cell is very low (approximately 0. lo), which reduces the radiation intensity seen by the imager (i.e., reports a low temperature) and exaggerates the displayed temperature gradient. The error near the heater wall is confined to a more narrow region _(r/R_ = 0.1 to 0.17) but is similar in magnitude to the error at the side wall. In this case the lower emissivity surface is at a higher temperature than the surroundings; the increase in the radiation intensity due to higher temperature is offset by the loss in intensity due to the low emissivity, and thus, the emissivity effect is less pronounced. Applying a high 
+
+**15** 
+
+emissivity coating to the heater and copper chamber surfaces might offer a partial solution to this problem. This coating would aid in the resolution of the temperature gradient. Since the height of the test chamber is 6.2 cm but it is only filled to 5 cm, a meniscus is formed at the side wall. There is no meniscus at the heater wall because the fluid level is equal to the level of the heater edge (fig. 21). Silicone oil exhibits a near-zero contact angle on copper, and therefore, the emitted ray angle will range from 0" to **90".** The presence of this meniscus at the side wall may influence the reported temperature because of the previously described angular dependence of the emissivity. 
+
+Because a thermocouple measurement was taken at the heater wall, we know the inside endpoint of the surface temperature distribution and can, therefore, extrapolate the imager data to this point. The adoption of the above solutions should help decrease the measurement errors at the walls. 
+
+###### **Constant Flux Experiment** 
+
+Figure 22 shows a typical surface temperature distribution under the constant heat flux condition. The power level and beam diameter were set by the STDCE requirements. The most 
+
+difficult CF experiment measurement case for the STDCE will be at the highest power level and smallest beam diameter (3 W and 5 mm), because these parameters produce the sharpest temperature gradients, which are the most difficult to resolve. For figure 22 the laser power was 2.7 W (3.0 W measured minus 10 percent reflected), and the wall temperature was 22.7 "C. Analysis of this plot shows that the IR imager distribution is within **f** **_5_** percent of the numerical calculation distribution with the exception of several points in the region **_rlR_** = 0.05 to 0.15. Again, measurement errors are present at the side wall and are attributed to the problems mentioned in the CT experiment. There is some error at **_rlR_** = 0 caused by the imager reporting the average temperature of a layer 0.2 mm thick. The boundary layer temperature changes greatly over this layer, so the imager was expected to report a lower temperature than the numerical calculation because it was averaging the temperature of the boundary layer and the cooler bulk fluid. Figure 23 is an image of the thermocapillary flow under these same conditions, but it is not the image used for data reduction. Figure 24, which is the identical image of figure 23 shown in relief, gives a qualitative picture of the temperature distribution. 
+
+
+
+<!-- Start of picture text -->
+RAY SEEN<br>BY IMAGER1<br>I<br>I<br>UNIT<br>NORMAL  - \<br>\  t  40  ~<br>0  I R IMAGER  (E  =  0.90)<br>I  ~  NUMERICAL CALCULATION<br>WALL<br>CARTRIDGE<br>HEATER<br>NEAR ZERO<br>CONTACT  ~<br>ANGLE  0  .2  .4  .6  .8  1 .o<br>RADIAL  POSITION,  r/R<br><!-- End of picture text -->
+
+Figure 21 .-Meniscus at edge of test cell. 
+
+Figure 22.-Comparison of numerical and IR imager surface temperature distribution for constant flux experiment with e = 0.90, **_p_** = 2.7 W, Tc=22.7 **"C,** and beam diameter=5 **mm.** Numerical calculation used Ma=1.27X105 and Ra=4.87x107. 
+
+16 
+
+##### **ORlQINAL PAGE COLOR PHOTOGRAPH** 
+
+
+
+<!-- Start of picture text -->
+TEMPERATURE.<br>OC<br>64.0<br>61  .O<br>58.0<br>55.2<br>52.2<br>49.1<br>45.8<br>42.5<br>39.3<br>36.0<br>32.6<br>29.3<br>25.8<br>22.2<br>18.6<br>15.1<br><!-- End of picture text -->
+
+**Figure 23.-Constant flux experiment IR image for** **_T_** = **38.7 "C, R** = **50, E** = **0.90,** **_p_** = **2.7** W, **and beam diameter** = **5 mm** 
+
+
+
+<!-- Start of picture text -->
+TEMPERATURE.<br>OC<br>50.6<br>47.4<br>34.3<br>31.1<br>27.7<br>24.1<br>t 20.6 17.1<br><!-- End of picture text -->
+
+**Figure 24.-Constant flux experiment IR image in relief for** **_T =_ 43.2 "C, R** = **50, E** = **0.90,** **_p_** = **2.7** W, **and beam diameter** = **5 mm.** 
+
+**17** 
+
+### **Concluding Remarks** 
+
+The work described herein was performed as support for the Surface Tension Driven Convection Experiment. The infrared imaging system was investigated to determine the feasability of using this type of measurement device for the STDCE. The following conclusions are drawn from this work: 
+
+1. An infrared imager operating in the 8- to 12-pm region, with a spectral bandpass similar to that of the Inframetrics Model _600,_ measured the temperature of a layer of silicone that was approximately 0.200 mm thick. 
+
+2. Using a calculated absorption coefficient for silicone oil allowed the C02 laser radiation to be determined as 99 percent absorbed over a depth of 0.256 mm of silicone oil. 
+
+3. The effective spectral directional emissivity of silicone oil for these experiments was 0.90. 
+
+**4.** The Model 600 infrared imager measured the surface , temperature of the thermocapillary flow for the constant temperature experiment to within + **_5_** percent of the overall **_AT_** (except for regions near the heater wall and side wall), based on the comparisons with thermocouple measurements and numerical calculations. In the excepted regions, measurement errors were as high as * 10 percent of the overall **_AT._** 
+
+5. For the constant flux experiment, the Model 600 measured the surface temperature of the capillary flow to within f 5 percent of the overall **_AT_** except for the region near the side wall and at **_rlR_** = 0. In these regions measurement errors were as high as **f** 10 percent of the overall **_AT._** 
+
+6. Improvements in surface emissivity of the heater and side walls may decrease measurement errors in these regions. 
+
+### **Acknowledgments** 
+
+I extend my gratitude to Thomas Jacobson at NASA Lewis for managing and sponsoring my Resident Research Associate position, for helping considerably in preparing the STDCE Lab, and for completing the paper work for procurement of the Inframetrics Model 600. I thank the STDCE design team from the NASA Lewis Engineering Directorate for their effort in procuring some of the STDCE equipment used for this research. And I am grateful to Inframetrics, Inc., North Billerica, MA 01862-2598, for permission to reprint figures 25,26,28, and 30 and the Model _600_ Specification Summary from **_Installation and Operations of the Infrarnetrics Model_** 600 **_IR Imaging Radiometer._** 
+
+### **Appendix-Inframetrics Thermal Imaging System Specifications** 
+
+###### **Explanation of Specifications** 
+
+The factors which determine the performance of the IR imaging system are described here. Some of this basic information can be found, although lacking detail and clarity, in the operating literature (ref. 13) of the Model **600.** A complete list of the specifications for the Model **600** is also included in this appendix. 
+
+**_Detector_** type.-The Model _600_ uses a single element mercury cadmium telluride (HgCdTe) detector which is liquid nitrogen cooled (77 K). The detector is mounted inside an evacuated metal cryogenic dewar where it is in direct contact with the liquid nitrogen (fig. **25),** which makes the detector sensitive to radiation in the 8- to 14-pm region. The response of the detector over this spectral bandpass is shown in figure **26.** 
+
+Thermal sensitivity. -The thermal sensitivity can be characterized by two parameters-the minimum resolvable temperature difference (MRTD) and the noise equivalent temperature difference (NETD). The MRTD is appropriate to define the thermal sensitivity **_of_** the system in terms of small temperature differences which are displayed on the monitor. The MRTD is determined by a test pattern of small vertical bars of different temperatures, which are seen on the monitor by a human observer. The temperature difference between the bars is decreased until the observer can no longer distinguish a contrast. This resulting temperature difference is the MRTD. The NETD is used to characterize the thermal sensitivity of a quantitative imager. The NETD is the temperature difference between two objects that results in a signal equal to the random background noise of the system. The MRTD and the NETD 
+
+
+
+<!-- Start of picture text -->
+SEALED SCANNER MODULE<br>l--------1<br>REFERENCE  Fl , 1<br>THERMAL  -,*<br>MIRROR<br>DETECTOR<br>FILTER  FOCUS<br>MECHANISM  MECHANISM<br>I<br>I<br>I<br>I<br>r-------1  I  I<br>j  DETECTOR SIGNAL  i  I  ANALOG DIGITAL TO  -  SCAN CONVERT T . V . FORMAT  -  DIGITAL  TO<br>I  PROCESSING  CONVERT  MEASUREMENT  ANALOG<br>I  I  DETECTOR  1  / I  CONVERSION<br>I<br>I  1  1  SCANNER  MICROPROCESSOR  MTSC/PAL<br>I  SCANNER  DRIVE  -  CONTROL/CALIBRATION  -  COLOR<br>I  I !  SERVOS  SYSTEM<br>RS-232<br>INTERFACE<br>SWITCHING DC/DC  POWER<br>RS-232<br>SUPPLY AND REGULATOR<br>2-WIRE<br>L -----------<br>tb)<br>(a) Scanner head.<br>(b) Electronics and control unit.<br><!-- End of picture text -->
+
+Figure **25** .-Inframetrics Model 600 block diagrams (reprinted by permission of Inframetrics, Inc.). 
+
+**19** 
+
+
+
+<!-- Start of picture text -->
+3  4  5  G  7  8 9 1 1  1 3 1 5<br>WAVELENGTH.  h.  D M<br><!-- End of picture text -->
+
+**Figure 26.-Detector spectral bandpass-relative response of** Model _600_ **system (reprinted by permission** of **Inframetrics, Inc.).** 
+
+for the Model 600 are 0.1 and 0.2 "C, respectively. The NETD can be reduced to 0.05 "C with the use of the image averager option. 
+
+**_Image Resolution_** .-To describe image resolution, field of view (FOV), instantaneous field of view (IFOV), and slit response function (SRF) must be considered. 
+
+**_Field of view:_** The FOV of the Model 600 is described in angular terms-20" horizontal by 15' vertical. Therefore the size of the object that can be viewed is dependent on the distance from the scanner to the optics. 
+
+**_Instantaneousjeld of view:_** The Model 600 is a scanning imager because a smaller field of view or instantaneous field **of** view, commonly known as the spotsize, is scanned over the total FOV. The radiation from each IFOV is focused on the detector; as the IFOV is scanned over the FOV the complete image is constructed. The size of the IFOV is determined by the characteristics **of** the optics and detector. The IFOV size (fig. 27) for the Model 600 is 2 by 2 mrad (0.11 by 0.11 "), or 0.08 by 0.08 cm, at a distance of 40 cm. An IFOV of this size allows 175 horizontal by 130 vertical IFBV's per image. After being constructed in the manner described above, each image is digitized into pixels (256 by 256 for the Model 600), which are smaller than the detector elements (IFOV's). In this way the pixel digitization does not reduce the system performance. One must realize that a 256 by 256 pixel image does not contain nearly that many true image resolution elements (IFOV'S) (ref. 13); therefore the resolution of the image is determined by the scanner, not digitization by the electronics. 
+
+
+
+<!-- Start of picture text -->
+F O V i<br><!-- End of picture text -->
+
+**Figure 27.-Fields** of **view: FOV is 15" vertical by 20" horizontal and IFOV is 2 by 2 mrad.** 
+
+**_Slit response function:_** The spatial resolution is defined by the SRF. Figure 28 shows a three-dimensional plot of the response of a typical imaging system to a point radiation source, where the vertical axis represents intensity (temperature) and the **x-** and y-axes are spatial representations. Notice that the response of the system does not correspond to the step change in intensity (fig. **29).** The system response to the input is less than 100 percent; that is, the reported intensity is less than 100 percent of the amount emitted by the target. This happens because the detector cannot fully respond as the IFOV is scanned over a point source. As this point source becomes larger, the response approaches 100 percent. It is convenient to characterize this aspect of a thermal imaging system by the variation in response to a vertical slit of varying widths, which is essentially a step change in temperature over the slit. The curve of the variation in response as a function of slit width is called the slit response function (fig. 30). The measured temperature of an object whose approximate SRF is known is a function of the object temperature and average surrounding temperature; that is, 
+
+
+
+<!-- Start of picture text -->
+INTENSITY<br>(TEMPERATURE)<br>T<br>VERTICAL<br>HOR  I  ZONTAI<br>SCAN<br><!-- End of picture text -->
+
+**Figure 28.-Three-dimensional imager response** to **a point radiation source (reprinted by permission of Inframetrics, Inc.).** 
+
+- **STEP CHANGE I N INTENSITY (TEMPERATURE)** --- **RESPONSE OF THE MODEL GOO** 
+
+**Figure 29.--Imager response to a step change in intensity.** 
+
+**20** 
+
+Even though the horizontal scan speed of the displayed image, 53 psec per line, is faster than the horizontal scan speed of the acquired image, the horizontal acquisition rate of 125 psec per line is the limiting factor; thus the acquisition rate determines the response time of the instrument. 
+
+
+
+<!-- Start of picture text -->
+LL  CT<br>2 0 k<br><!-- End of picture text -->
+
+The error between apparent and true temperature is greater when a large difference exists between the object and surrounding temperatures (ref. 13). The Model 600 detector subtends a 2 by 2 mrad solid angle, which is the IFOV. When the vertical slit width is equal to the detector angle (2 mrad), the detector output is approximately 60 percent of the actual temperature. (See fig. 30.) This causes some error in the reported temperature. Industry convention suggests that a target be five times the size of the IFOV in order to produce an accurate temperature (ref. 14). If there are sharp thermal gradients present on the target, some error in the reported temperature will result because of the response of the system. Infonnation rate.-The information rate depends on image acquisition, image display, and the scanning mechansim. 
+
+**_Image acquisition:_** Scan speed is the parameter that determines how quickly the instrument will respond to temperature changes. The scan speed is the rate at which complete thermal images, or full two-dimensional temperature fields, are updated. Each frame is acquired at intervals of 1/60 sec, which is called the vertical scan speed. To acquire a complete image the Model 600 scans 130 horizontal lines at 125 psec per line or the entire field of view in 1/60 sec (60 Hz). The time required to scan the IFOV's in each line of the frame is called the horizontal scan speed. The output of the detector is continuous as the IFOV is scanned over each line in the FOV. This continuous signal comprises the complete thermal image, which is then digitized by the electronics. After digital conversion and processing, the digital image is converted to, and displayed as, a television industry standard analog signal (EIA RS-170 or NTSC composite). 
+
+Image display: The format of the Model _600_ displayed image is defined by television industry standards. This format allows the Model 600 to output a TV signal which can be viewed on a conventional TV monitor. The detected image is digitized into 256 horizontal by 100 vertical samples. The images are processed and converted back to, and displayed as, analog TV signals (100 horizontal lines displayed at 1/60 sec). Two successive frames are interlaced (combined by alternating TV lines from each frame) to produce a picture with 200 vertical lines. The resulting frame rate, the rate at which each image is updated on the monitor, is 1/30 sec. Because of the interlacing, the response time of the Model 600 is 1/30 sec. 
+
+**_Scanning mechanism:_** The Model 600 uses electromechanical galvanometers to perform the horizontal and vertical scanning. A magnetic field rotates a mirror back and forth several degrees against a stiff spring under closed-loop electrical control. The horizontal scanning is done in a sinusoidal mode, and the vertical scanning, in a sawtooth mode (ref. 13). The scanning mechanism is enclosed in **an** evacuated module that reduces acoustic noise caused by the rotating hardware (see fig. 26). 
+
+Dynamic Range.-The dynamic range of the Model 600 is 7 bits. After digitization, each pixel in the image is coded into 128 discrete gray levels. The smallest temperature difference, at higher temperature ranges, that can be detected quantitatively by the Model 600 is determined by the dynamic range and the selected temperature range. If, for example, the temperature range selected is 100 "C, then there would be 100/128 "C per discrete gray level (0.8 "C sensitivity). The dynamic range can be extended to 8 bits (256 discrete gray levels) if the image averager option, which averages either **2,4,or** 16 successive frames, is used. 
+
+Calculation of absolute temperatures.-Because the Model _600_ only measures radiation emitted from a target, the absolute temperature must be calculated from this information. The relationship between radiation received by the Model 600 and the temperature of the radiating body is determined empirically through unique sets of calibration curves (which correlate received radiation with target temperature) and by viewing a reference source. **_An_** internal microprocessor selects the proper calibration curve for the current operating conditions. The calibration curves for each unit are determined by the manufacturer prior to shipment of the equipment. Before **the** conversion to absolute temperature takes place, the radiometric equation (ref. 14) must first be solved to account for factors such as target emissivity **et** and background radiation. With the assumption that the reference source, optics, and background temperatures are all equal, the Model 600 measures 
+
+**_AZ_** = **7,[Etlt** + (1 - **_E,)Zb]_** - _I,_ 
+
+where **_AZ_** is the difference between apparent radiation intensities of the target and the reference source. The bracketed quantity is the sum of the radiation intensity emitted from the target and the background radition intensity reflected by the target, and **_7,,,_** is the transmission of the optics. The reference used by the Model 600 is sampled internally at approximately 60-Hz intervals. The target emissivity and the background temperature are user input. After **_AZ_** is calculated, the absolute temperature is determined from the appropriate calibration curve on the basis of the selected temperature range. (A 
+
+**21** 
+
+graphic representation of a typical calibration curve is shown in fig. 31.) The process is repeated for each pixel in the digitized image of every frame. Therefore, the Model 600 is able to display the temperature of each pixel at intervals of 1/30 sec. 
+
+
+
+<!-- Start of picture text -->
+-<br>v)<br>t  I t<br>L  3<br>><br>CL<br>z  I ,<br>t<br>m  CL<br>4,<br>><br>t<br>z  In  W +<br>E<br>Tr  Tt<br>TEMPERATURE<br><!-- End of picture text -->
+
+**Figure 31.-Typical calibration curve where** **_I,, lr,_ and** **_T,_ are known and** _T,_ **is calculated.** 
+
+###### **Inframetrics Model** **_600_** 
+
+## SPECIFICATION SUMMARY ' 
+
+###### SCANNER TYPE AND SPECTRAL BANDPASS 
+
+Scanner Type: Spectral Bandpass (Model 600, 600L): Spectral Bandpass (Model 610) Infrared Detector Type: 
+
+Dual Galvanometer Reflective in sealed enclosure 8-14 pm (Std.) 3-6 pm (Opt.), 3-14 pm (Opt.) 3-6 pm and 8-14 pm (two channels) simultaneous HgCdTe; Liquid Nitrogen Cooling 
+
+###### THERMAL SENSITIVITY 
+
+Noise Equivalent Temperature Difference: 0.2 "C (8-14 pm), 0.4 "C (3-6 pm) Minimum Detectable Temperature Difference: 0.1 "C (8-14 pm), 0.2 "C (3-6 pm) Integrated measurements NETD: 0.05 "C (8-14 pm), 0.1 "C (3-6 pm) 
+
+###### SCAN SPEED 
+
+Scan Rate (Image Acquisition): Output Rate (Image Display): 
+
+4 KHz Horizontal, 60 Hz Vertical 15 750 Hz Horizontal, 60 Hz Vertical 
+
+###### IMAGE RESOLUTION 
+
+Total Scanned Field of View: Electro-Optical Zoom: 
+
+15" Vertical by 20" Horizontal 
+
+**8X** continuously adjustable (4X for Model 600L) 
+
+|Resolution Parameter|600, 610 (8-14**_pm)_**|600L (8-14 pm)|600,610 (3-6 pm)|
+|---|---|---|---|
+|Horizontal IFOV|2 mRad|3 mRad|4 mRad|
+|IFOV's per Line|175|116|87|
+|Pixels per Line|256|256|256|
+|Vertial IFOV|2 mRad|3 mRad|4 mRad|
+|IFOV's per field|131|87|65|
+|Lines per Frame|200|200|200|
+
+
+
+Scan Linearity: Better than 5 % , typical 2 % Horizontal and Vertical Output Format: EIA RS-170 (RS-330) Monochrome, NTSC Color, 2: 1 Interlace (3.58 MHz color subcarrier is not locked to H sync) 
+
+**'Reprinted with permission granted by Infrarnetrics, Inc., North Billerica, MA 01862-2598,** from **_Installation and Operation_ of** **_the Infrarnetrics Model_** 600 **_IR Imaging Radiometer._** 
+
+**22** 
+
+###### SPECIFICATION SUMMARY 
+
+###### MEASUREMENT PERFORMANCE 
+
+Dynamic Range: 7 bits, 128 levels, 42 dB ( x 2 with Image Averager) Calibration: Internal reference sampled 60 times per second Calibration updated every 1/2 second Temperature Ranges: 5, 10, 20, 50, 100, 200 (Normal Range) 500, 1O00, Max. (Extended Range) Center Temperature -20" to +400 "C (Normal Range) Adjustment Range: 0" to **_3_** + loo0 "C (Extended Range) Temperature Readout: 3 digits Readout Accuracy: +2% of (reading -25 "C) or 1 "C (typical) +5% of (reading -25 "C) or 2 "C (maximum) User Field Calibration process restores system to typical. Specs. are for standard (8-14 pm) system without filters and at ambient of 25 "C. Typical performance degrades to maximum at extremes of ambient operating temperatures. 
+
+###### PHYSICAL/ELECTRICAL PROPERTIES (600, 600L) 
+
+Power Requirements: System; 11-17 VDC, 10 Watts Monitor; 11-15 VDC, 15 Watts Image Averager option adds 5 Watts to system A. C . Power Supplies: 108-125 VAC @ less than 25 Watts each Size and Weight: Scanner; 8.1X4.9x4.8 in., 6.5 lbs. Electronics; 9.3X5.4x10.3 in., 7.5 lbs Monitor; 12.7X4.9x6.3 in., 8.5 lbs. Operating Ambient: -20 to +5 "C (Model _6OO),_ 0 "C to +40 "C (Model 6OOL) 
+
+###### Operating Ambient: 
+
+###### PHYSICAL/ELECTRONICS PROPERTIES (610) 
+
+Power Requirements: System; 11-17 VDC, 20 Watts Monitors; 11-15 VDC, 35 Watts X2 Image Averager option adds 10 Watts to system A.C. Power Supplies: Total 115 VAC @ less than 200 Watts Size and Weight: Scanner; 9.8x4.9x4.8 in., 6.5 Ibs. (Complete) Control Electronics Units; 27.8 x25 x25.7 in. 106 lbs. Size and Weight Electronics Unit 19.0x7.0x10.2 in., 15 lbs. (Discrete Units) Control Panel 19.0X7.0X5.0 in., 4 lbs. Monitors 1 9 . 0 ~ 8 . 0 ~ 1 5 . 8 in., 57 lbs. Operating Ambient: -20 to +50 "C 
+
+Operating Ambient: 
+
+COMPUTER INTERFACE (600,610) 
+
+Type: RS-232c bidirectional Serial (Dual for 610) Speed: 4800 BAUD Protection Optically isolated input 
+
+**23** 
+
+|**1. Report No.**<br>NASA TM-101353<br>**2. Government Accession No.**|**3.Recipient’s Catalog No.**|
+|---|---|
+|**4. Title and Subtitle**|**5.Report Date**|
+|Infrared Surface Temperature Measurements for the Surface Tension Driven<br>Convection Experiment|March 1989<br>**6.Performing Organization Code**|
+|**7.Author@)**|**8. Performing Organization Report No.**|
+|Alexander D. Pline|E-4383|
+||**10. Work Unit No.**<br>694-03-03|
+|**12. Sponsoring Agency Name and Address**|<br>Technical Memorandum|
+|National Aeronautics and Space Administration<br>Washington, D.C. 20546-0001|**14. Sponsoring Agency Code**i<br>I|
+
+
+
+###### **15. Supplementary Notes** 
+
+This report was a thesis submitted in partial fulfillment of the requirements for the degree of Master of Science to the Department of Mechanical and Aerospace Engineering, Case Western Reserve University, in August 1988. 
+
+**16. Abstract** 
+
+In support of the Surface Tension Driven Convection Experiment (STDCE), a planned space transportation system (STS) flight experiment, a commercially available infrared thermal imaging system is used to quantify the imposed thermal signature along the free surface. The system was tested and calibrated for the STDCE with ground-based equivalents of the STDCE hardware. Before using the system, consideration was given to the radiation characteristics of the target (silicone oil). Absorption coefficients were calculated to understand the “surface” depth as seen by the imager and the penetration depth of the surface heater (C02 laser). The performance and operational specifications for the imager and image processing system are described in detail to provide an understanding of the equipment. Measurements made with the system were compared to thermocouple measurements and a calculated surface temperature distribution. This comparison showed that in certain regions the IR imager measurements were within 5 percent of the overall temperature difference across the free surface. In other regions the measurements were within **f** 10 percent of the overall temperature gradient across the free surface. The effective emissivity of silicone oil for these experimental conditions was also determined. Measurement errors and their possible solutions are discussed. 
+
+**7. Key Words (Suggested by Author@)) 18. Distribution Statement** IR imager; IR temperature measurements; Unclassified - Unlimited Thermocapillary flow; Surface Tension Driven Subject Category 35 Convection Experiment; Absorption coefficients 
+
+|**9.Security Classif. (of this report)**|**20.Security Classif. (of this page)**|**21. No of pages**|**22. Price’**|
+|---|---|---|---|
+|Unclassified|Unclassified|28|A03|
+
+
+
