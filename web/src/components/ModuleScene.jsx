@@ -1,3 +1,4 @@
+import { methods } from '../lib/data'
 /* A station module, drawn as a side cut-away, with the hardware that can start a fire.
    Illustration only, not to scale. Every fact in HARDWARE carries its NASA source. */
 
@@ -69,7 +70,7 @@ export const HARDWARE = [
       ['Sealed chamber', 'Fuel and gas are loaded into a strong, closed chamber, apart from the cabin air.'],
       ['Ignite and film', 'The flame is lit by command and filmed by the rack’s cameras and sensors.'],
       ['Contain', 'The flame and its products stay inside the chamber, apart from the cabin air.'],
-      ['Data to Earth', 'The results go to NASA’s PSI archive: the 1,517 tests on this site.'],
+      ['Data to Earth', `The results go to NASA’s PSI archive: the ${methods.ledger.tests.toLocaleString()} tests on this site.`],
     ],
     nasa: 'These are the fires we light on purpose, to make engines on Earth cleaner and spacecraft safer. They are contained by design.',
     src: 'NASA Glenn, Combustion Integrated Rack · Astronomy (2023) · NASA PSI',

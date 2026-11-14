@@ -3,10 +3,12 @@ import { corpus, takeaways } from '../lib/data'
 import synonyms from '../data/synonyms.json'
 import { useMission } from '../lib/mission'
 import { Ev, Mark } from './ui'
+import { apiStatus, post } from '../lib/api'
 
-// Retrieval only, like the dashboard's "Ask the archive": it returns the NASA passages that answer the
-// question, each with its source, and says so when nothing matches. If VITE_ASK_URL points at the team's
-// Gemini RAG service, a generated, cited answer is shown on top.
+// Cited search always runs here in the browser: it returns the NASA passages that answer the question,
+// each with its source, and says so when nothing matches. When the API (server/main.py) is up and has a
+// GOOGLE_API_KEY, /api/ask adds the team's Gemini RAG answer, written only from retrieved NASA passages
+// and shown as AI interpretation, separate from the cited findings.
 const STOP = new Set('a an the of in on at to is are was were be been it its this that these those and or for with from by as what which who how why when where do does did can could would should will i you we they my our your about into than then there here if not no yes any all some more most very just also so such has have had please tell me know like use used using make makes best good way really'.split(' '))
 const norm = s => s.toLowerCase().replace(/₂/g, '2').replace(/\b([a-z]+)-(ii|iii|i|r|g|2)\b/g, '$1$2 $1-$2')
 const toks = s => { const w = norm(s).match(/[a-z0-9]+/g) || []; const out = w.filter(x => !STOP.has(x)); w.forEach(x => { if (synonyms[x]) out.push(...synonyms[x].split(' ')) }); return out }
@@ -47,12 +49,8 @@ export default function Chat() {
     setQ(''); setBusy(true)
     const hits = search(question)
     let ai = null
-    const url = import.meta.env.VITE_ASK_URL
-    if (url) {
-      try {
-        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }) })
-        if (r.ok) ai = await r.json()
-      } catch { /* fall back to retrieval */ }
+    if (await apiStatus()) {
+      try { const r = await post('/api/ask', { question }); if (r.mode === 'ai' && r.answer) ai = r } catch { /* cited search below still answers */ }
     }
     setLog(l => [...l, { q: question, hits, ai }]); setBusy(false)
   }
@@ -75,10 +73,13 @@ export default function Chat() {
               <div key={i} className="col" style={{ gap: 10 }}>
                 <div style={{ alignSelf: 'flex-end', background: 'var(--line2)', borderRadius: '12px 12px 2px 12px', padding: '10px 14px', fontSize: 14, maxWidth: '85%' }}>{m.q}</div>
                 {m.ai?.answer && (
-                  <div style={{ border: '1px solid var(--plasma)', borderRadius: 10, padding: 12, fontSize: 14, lineHeight: 1.55 }}>
-                    <div className="mono" style={{ fontSize: 10, color: 'var(--plasma)', marginBottom: 6 }}>AI ANSWER · GEMINI RAG · CHECK THE SOURCES</div>{m.ai.answer}
+                  <div style={{ border: '1px solid var(--plasma)', borderRadius: 10, padding: 12, fontSize: 14, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>
+                    <div className="mono" style={{ fontSize: 10, color: 'var(--plasma)', marginBottom: 6 }}>AI INTERPRETATION · GEMINI, FROM {m.ai.rag_sources?.length || 0} NASA PASSAGES · NOT A MEASUREMENT</div>{m.ai.answer}
+                    {m.ai.rag_sources?.length > 0 && <details style={{ marginTop: 8 }}><summary className="mono faint" style={{ fontSize: 11, cursor: 'pointer' }}>Passages the AI read</summary>
+                      <ol style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 12, color: 'var(--muted)' }}>{m.ai.rag_sources.map((d, k) => <li key={k} style={{ marginBottom: 4 }}><strong>{d.section}</strong></li>)}</ol></details>}
                   </div>
                 )}
+                {m.hits.length > 0 && <span className="mono faint" style={{ fontSize: 10 }}>CITED FINDINGS FROM THE ARCHIVE</span>}
                 {m.hits.length === 0
                   ? <div style={{ border: '1px dashed var(--muted)', borderRadius: 10, padding: 12, fontSize: 14 }}>The archive has no passage that answers this. NASA’s PSI data may not cover it.</div>
                   : m.hits.map((h, j) => (

@@ -6,4 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   build: { chunkSizeWarningLimit: 1500 },
+  // `npm run dev` talks to the API on :8000 (uvicorn server.main:app --port 8000)
+  server: { proxy: { '/api': 'http://localhost:8000' } },
 })

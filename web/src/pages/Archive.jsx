@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useApi, useGet } from '../lib/api'
 import { Link, go } from '../lib/router'
 import { Nav, Footer, PageHead, Ev, Flame } from '../components/ui'
 import { BurnChart, CoverageMap, CoverageLegend } from '../components/charts'
@@ -32,13 +33,18 @@ export function Explore() {
   const [view, setView] = useState('grid')
   const [sel, toggle] = useCompare()
   const rank = rankings[mission.id]
+  const api = useApi()
+  // With the API up, search runs over every field of every record on the server; offline, over the main fields here.
+  const qs = q.trim()
+  const srv = useGet(qs.length >= 2 ? `/api/investigations?q=${encodeURIComponent(qs)}` : null, !!api)
+  const hitIds = srv.data ? new Set(srv.data.map(r => r.id)) : null
   const rows = useMemo(() => rank.map(r => ({ ...r, inv: invById[r.psi_id], fam: FAM(r.fire_type) })).filter(r => r.inv)
     .filter(r => fam === 'all' || r.fam === fam)
-    .filter(r => !q || `${r.inv.acronym} ${r.inv.name} ${r.inv.fuels} ${r.inv.what} ${r.psi_id} ${r.inv.measurements}`.toLowerCase().includes(q.toLowerCase())), [rank, fam, q])
+    .filter(r => !qs || (hitIds ? hitIds.has(r.psi_id) : `${r.inv.acronym} ${r.inv.name} ${r.inv.fuels} ${r.inv.what} ${r.psi_id} ${r.inv.measurements}`.toLowerCase().includes(qs.toLowerCase()))), [rank, fam, qs, srv.data]) // eslint-disable-line react-hooks/exhaustive-deps
   return (<>
     <Nav active="Investigations" />
     <main className="wrap" style={{ paddingTop: 48, paddingBottom: 120 }}>
-      <PageHead eyebrow="NASA Physical Sciences Informatics · combustion science" title="24 investigations, ordered by how much they tell your mission."
+      <PageHead eyebrow="NASA Physical Sciences Informatics · combustion science" title={`${investigations.length} investigations, ordered by how much they tell your mission.`}
         right={<p className="p" style={{ maxWidth: 360, fontSize: 14 }}>Sorted by relevance to <span style={{ color: 'var(--ember)' }}>{mission.air}</span>. Change the mission air in the top bar and the order changes.</p>} />
       <div className="row" style={{ flexWrap: 'wrap', justifyContent: 'space-between', padding: '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', gap: 12 }}>
         <div className="wrap-row" style={{ alignItems: 'center' }}>
@@ -48,7 +54,8 @@ export function Explore() {
         </div>
         <div className="seg" role="group" aria-label="View">{[['grid', 'Gallery'], ['table', 'Table']].map(([k, n]) => <button key={k} type="button" className={view === k ? 'on' : ''} onClick={() => setView(k)}>{n}</button>)}</div>
       </div>
-      <div className="mono faint" style={{ fontSize: 12, padding: '14px 0 22px' }}>{rows.length} SHOWN · DIMMED = CATALOGUED ONLY, NO PER-TEST DATA</div>
+      <div className="mono faint" role="status" style={{ fontSize: 12, padding: '14px 0 22px' }}>{rows.length} SHOWN · DIMMED = CATALOGUED ONLY, NO PER-TEST DATA{qs && (srv.loading ? ' · SEARCHING THE FULL RECORDS…' : srv.data ? ' · FULL-RECORD SEARCH ON THE SERVER' : '')}</div>
+      {rows.length === 0 && <div className="card pad col" style={{ gap: 8, marginBottom: 24 }}><strong>No investigation matches “{qs}”{fam !== 'all' ? ' in this category' : ''}.</strong><span className="muted" style={{ fontSize: 14 }}>NASA’s PSI combustion data may not cover it. Try a fuel (propane, cotton), an instrument (camera, radiometer) or an experiment name (Saffire, FLEX).</span><button type="button" className="btn sm" style={{ alignSelf: 'flex-start' }} onClick={() => { setQ(''); setFam('all') }}>Clear search</button></div>}
       {view === 'grid' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
           {rows.map(r => (
@@ -167,6 +174,9 @@ export function Compare() {
     ['Closest test', i => rank[i.id]?.closest_condition || '—'], ['Hardware', i => i.hardware], ['Measurements', i => i.measurements], ['Key result', i => i.key_result],
   ]
   const same = rows.filter(([, f]) => list.length > 1 && new Set(list.map(f)).size === 1).map(([k]) => k)
+  const api = useApi()
+  const cmp = useGet(list.length >= 2 ? `/api/compare?ids=${list.map(i => i.id).join(',')}` : null, !!api)
+  const gaps = list.length > 1 ? rows.filter(([, f]) => list.some(i => f(i) === '—' || !f(i))).map(([k]) => k) : []
   return (<>
     <Nav active="Compare" />
     <main className="wrap" style={{ paddingTop: 48, paddingBottom: 60 }}>
@@ -177,6 +187,14 @@ export function Compare() {
           <div className="card pad col" style={{ gap: 8 }}><span className="lab">The same in all</span><span style={{ fontSize: 15 }}>{same.length ? same.join(' · ') : 'Nothing: these differ in every attribute shown.'}</span></div>
           <div className="card pad col" style={{ gap: 8 }}><span className="lab">Relevance to {mission.air}</span><span style={{ fontSize: 15 }}>{list.map(i => `${i.acronym} ${rank[i.id] ? Math.round(rank[i.id].relevance) : '—'}`).join(' · ')}</span></div>
         </div>}
+        {list.length > 1 && (cmp.data || cmp.loading) && <div className="card pad col" style={{ gap: 10, marginBottom: 24, borderColor: 'var(--plasma)' }}>
+          <span className="eyebrow plasma" style={{ fontSize: 11 }}>Can these results be compared? · computed from the test records on the server</span>
+          {cmp.loading && !cmp.data ? <span className="muted" style={{ fontSize: 14 }}>Checking hardware, conditions and measurements…</span> : <div className="grid2" style={{ gap: 20 }}>
+            <div className="col" style={{ gap: 6 }}><span className="lab">Shared</span>{cmp.data.same.length ? cmp.data.same.map(t => <span key={t} style={{ fontSize: 14, lineHeight: 1.5 }}>✓ {t}</span>) : <span className="muted" style={{ fontSize: 14 }}>No shared hardware or conditions: compare trends, not exact numbers.</span>}</div>
+            <div className="col" style={{ gap: 6 }}><span className="lab">Different</span>{cmp.data.different.map(t => <span key={t} style={{ fontSize: 14, lineHeight: 1.5 }}>≠ {t}</span>)}</div>
+          </div>}
+        </div>}
+        {gaps.length > 0 && <p className="muted" style={{ fontSize: 13, margin: '0 0 20px' }}>— marks data the archive does not have for that investigation ({gaps.join(', ')}). Those rows cannot be compared.</p>}
         <div className="scroll-x"><div style={{ minWidth: 300 + list.length * 280 }}>
           <div style={{ display: 'grid', gridTemplateColumns: `200px repeat(${list.length}, minmax(0,1fr))`, gap: '0 28px', paddingBottom: 20 }}>
             <span />
