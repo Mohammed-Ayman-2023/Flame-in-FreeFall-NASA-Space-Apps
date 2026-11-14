@@ -56,8 +56,9 @@ export async function geminiAnswer(question, key) {
      $0 credit limit and a free model.
    VITE_OPENROUTER_MODEL defaults to the free-models router. */
 const PROXY = (import.meta.env.VITE_RAG_PROXY_URL || '').replace(/\/$/, '')
+// Default key: the repository secret OPENROUTER_API_KEY, built in by the Pages workflow (never stored in the repo).
 const OR_KEY = import.meta.env.VITE_OPENROUTER_KEY || ''
-export const DEFAULT_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'openrouter/free'
+export const DEFAULT_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'google/gemma-4-31b-it:free'
 export const hasDefault = !!(PROXY || OR_KEY)
 
 async function retrieve(question) {
