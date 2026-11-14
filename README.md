@@ -5,9 +5,22 @@
 **NASA Space Apps Challenge 2026 · Challenge: *Flame in Freefall***
 Team from **Zewail City of Science and Technology** and **Cairo University** ([team](#team))
 
+<p align="center">
+  <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/"><img alt="Open the live website" src="https://img.shields.io/badge/%F0%9F%9A%80%20Live%20website-Open%20Flame%20in%20Freefall-FF7A3D?style=for-the-badge"></a>
+</p>
+
+<h3 align="center">👉 <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/">https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/</a></h3>
+
+<p align="center">No login or install: open it in any browser, on a computer or a phone. The AI chat works without a key.<br>
+Start with <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/#views">Choose your view</a>
+· <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/#findings">Key findings</a>
+· <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/#lab">Fire Lab</a>
+· <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/#ranking">Ranking</a>
+· <a href="https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/#ask">Ask the archive</a></p>
+
 | | |
 |---|---|
-| 🌐 **Website** (React, runs in any browser) | <https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/> |
+| 🌐 **Website** (live, runs in any browser) | **<https://mohammed-ayman-2023.github.io/Flame-in-FreeFall-NASA-Space-Apps/>** |
 | 📊 **Analyst dashboard** (Streamlit) | `streamlit run app/streamlit_app.py` ([deploy notes](DEPLOY.md)) |
 | ⚙️ **Live API + website in one container** | `Dockerfile` ([DEPLOY.md](DEPLOY.md): Hugging Face Spaces or Render) |
 | 📄 **Submission summary** | [`SUBMISSION.md`](SUBMISSION.md) |
